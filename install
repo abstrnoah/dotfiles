@@ -1,3 +1,8 @@
 #!/bin/bash
 
-cp ./vimrc "$HOME/.vimrc"
+vim="$HOME/.vim"
+vimrc="$HOME/.vimrc"
+
+ln -s $( readlink -f ./vimrc ) "$vimrc"
+
+ln -s $( readlink -f ./plugin )  "$vim/plugin"
