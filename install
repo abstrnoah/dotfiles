@@ -3,6 +3,8 @@
 vim="$HOME/.vim"
 vimrc="$HOME/.vimrc"
 
+mkdir --parents "$vim"
+
 ln -s $( readlink -f ./vimrc ) "$vimrc"
 
 ln -s $( readlink -f ./plugin )  "$vim/plugin"
