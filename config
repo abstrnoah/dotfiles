@@ -156,6 +156,15 @@ bar {
         tray_output primary
 }
 
-exec --no-startup-id feh --bg-fill /home/analyticalnoa/.wallpaper
-# exec --no-startup-id synclient VertScrollDelta=-101
-# exec --no-startup-id synclient HorizScrollDelta=-101
+# USER DEFINED CONFIG
+
+set $home /home/analyticalnoa
+set $keybinds /home/analyticalnoa/.config/i3/keybinds
+
+# wallpaper
+exec --no-startup-id feh --bg-fill $home/.wallpaper
+
+# audio keybinds
+bindsym XF86AudioRaiseVolume exec $keybinds audio_vol_up
+bindsym XF86AudioLowerVolume exec $keybinds audio_vol_down
+bindsym XF86AudioMute exec $keybinds audio_vol_mute
