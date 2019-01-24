@@ -161,3 +161,7 @@ bindsym XF86AudioMute exec $keybinds audio_vol_mute
 
 # lock
 bindsym $mod+l exec i3lock
+
+# brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 2
+bindsym XF86MonBrightnessDown exec xbacklight -dec 2
