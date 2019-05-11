@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# audio
+
+vol_step="5%"
+
+audio_get_dsink() {
+  pactl info | awk 'BEGIN { FS=": " } $1=="Default Sink" { print $2 }'
+}
+
+audio_vol_up() {
+  pactl set-sink-volume $( audio_get_dsink ) "+$vol_step"
+}
+audio_vol_down() {
+  pactl set-sink-volume $( audio_get_dsink ) "-$vol_step"
+}
+audio_vol_mute() {
+  pactl set-sink-mute $( audio_get_dsink ) toggle
+}
+
+# command switch
+
+case $1 in
+  audio_vol_up) audio_vol_up;;
+  audio_vol_down) audio_vol_down;;
+  audio_vol_mute) audio_vol_mute;;
+esac
