@@ -1,0 +1,12 @@
+# ~/.tmuxinator/env.yml
+
+name: ge1
+root: ~/repository/know/inst/curr/ugrad/ge1
+
+windows:
+  - main:
+      layout: even-vertical
+      panes:
+        - ranger
+        - git branch -vva && git status
+        - git log --oneline --decorate --graph --all

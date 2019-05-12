@@ -1,0 +1,12 @@
+# ~/.tmuxinator/env.yml
+
+name: ph1ca
+root: ~/repository/know/inst/curr/ugrad/ph1ca
+
+windows:
+  - main:
+      layout: even-vertical
+      panes:
+        - ranger
+        - git branch -vva && git status
+        - git log --oneline --decorate --graph --all

@@ -1,0 +1,11 @@
+# ~/.tmuxinator/env.yml
+
+name: main
+root: ~/
+
+windows:
+  - main:
+      layout: even-vertical
+      panes:
+        - ranger
+        - tail -f /var/log/syslog

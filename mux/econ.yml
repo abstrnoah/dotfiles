@@ -1,0 +1,12 @@
+# ~/.tmuxinator/econ.yml
+
+name: econ
+root: ~/repository/xentity/econ
+
+windows:
+  - main:
+      layout: even-vertical
+      panes:
+        - ranger
+        - git branch -vva && git status
+        - git log --oneline --decorate --graph --first-parent master
