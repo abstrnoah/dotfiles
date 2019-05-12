@@ -7,7 +7,7 @@ link = ln -fs
 makelink = $(link) $(call fullpath,$<) "$@"
 
 
-all: mkdirs bash vim wm
+all: mkdirs bash vim wm $(HOME)/.tmuxinator
 
 mkdirs:
 	mkdir -p $(DIRDEPS)
@@ -53,5 +53,11 @@ $(HOME)/.wallpaperlock: wm/wallpaper-lock.png
 	$(makelink)
 
 $(HOME)/.i3status.conf: wm/i3status.conf
+	$(makelink)
+# ----------------------------------------------------------------------------------------
+
+# wm
+# ----------------------------------------------------------------------------------------
+$(HOME)/.tmuxinator: mux
 	$(makelink)
 # ----------------------------------------------------------------------------------------
