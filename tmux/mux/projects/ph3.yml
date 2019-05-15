@@ -1,0 +1,12 @@
+# ~/.tmuxinator/ph3.yml
+
+name: ph3
+root: ~/repository/know/inst/curr/ugrad/ph3
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - ranger
+        - git branch -vva && git status -s

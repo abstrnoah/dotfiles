@@ -10,8 +10,3 @@ windows:
         - ranger
         - git branch -vva && git status
         - git log --oneline --decorate --graph --first-parent master
-  - edit:
-      layout: even-horizontal
-      panes:
-        - ranger
-        - git branch -vva && git status

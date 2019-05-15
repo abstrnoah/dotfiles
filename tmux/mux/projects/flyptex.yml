@@ -1,11 +1,12 @@
-# ~/.tmuxinator/env.yml
+# ~/.tmuxinator/flyptex.yml
 
 name: flyptex
 root: ~/repository/know/explore/computation/flyptex
 
 windows:
-  - edit:
+  - main:
       layout: main-vertical
       panes:
         - ranger
-        - git branch -vva && git status
+        - ranger
+        - git branch -vva && git status -s

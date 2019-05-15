@@ -1,0 +1,12 @@
+# ~/.tmuxinator/<%= name %>.yml
+
+name: <%= name %>
+root: ~/repository/
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - ranger
+        - git branch -vva && git status -s

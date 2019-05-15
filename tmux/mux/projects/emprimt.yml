@@ -1,0 +1,12 @@
+# ~/.tmuxinator/emprimt.yml
+
+name: emprimt
+root: ~/repository/know/explore/computation/emprimt
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - ranger
+        - git branch -vva && git status -s

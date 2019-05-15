@@ -5,8 +5,8 @@ root: ~/repository/xentity/vocare/teach
 
 windows:
   - main:
-      layout: even-vertical
+      layout: main-vertical
       panes:
         - ranger
-        - git branch -vva && git status
-        - git log --oneline --decorate --graph --all
+        - ranger
+        - git branch -vva && git status -s

@@ -58,11 +58,15 @@ $(HOME)/.i3status.conf: wm/i3status.conf
 
 # tmux
 # ------------------------------------------------------------------------------
-tmux: $(HOME)/.tmuxinator $(HOME)/.tmux.conf
+tmux: $(HOME)/.tmuxinator $(HOME)/.tmux.conf \
+		/usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml
 
-$(HOME)/.tmuxinator: tmux/mux
+$(HOME)/.tmuxinator: tmux/mux/projects
 	$(makelink)
 
 $(HOME)/.tmux.conf: tmux/tmux.conf
 	$(makelink)
+
+/usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml: tmux/mux/sample.yml
+	sudo $(makelink)
 # ------------------------------------------------------------------------------

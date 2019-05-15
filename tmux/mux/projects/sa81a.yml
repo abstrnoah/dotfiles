@@ -1,0 +1,12 @@
+# ~/.tmuxinator/sa81a.yml
+
+name: sa81a
+root: ~/repository/know/inst/curr/ugrad/sa81a
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - ranger
+        - git branch -vva && git status -s

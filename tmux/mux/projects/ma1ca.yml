@@ -1,0 +1,12 @@
+# ~/.tmuxinator/ma1ca.yml
+
+name: ma1ca
+root: ~/repository/know/inst/curr/ugrad/ma1ca
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - ranger
+        - git branch -vva && git status -s

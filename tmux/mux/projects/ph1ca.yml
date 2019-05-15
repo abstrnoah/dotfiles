@@ -1,0 +1,12 @@
+# ~/.tmuxinator/ph1ca.yml
+
+name: ph1ca
+root: ~/repository/know/inst/curr/ugrad/ph1ca
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - ranger
+        - git branch -vva && git status -s
