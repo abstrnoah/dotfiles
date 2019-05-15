@@ -1,1 +1,6 @@
 set number
+set colorcolumn=80
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
+set incsearch
+set hlsearch

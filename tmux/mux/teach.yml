@@ -1,7 +1,7 @@
-# ~/.tmuxinator/env.yml
+# ~/.tmuxinator/teach.yml
 
-name: env
-root: ~/repository/appa/cyber/stack/env.config
+name: teach
+root: ~/repository/xentity/vocare/teach
 
 windows:
   - main:

@@ -4,9 +4,8 @@ name: flyptex
 root: ~/repository/know/explore/computation/flyptex
 
 windows:
-  - main:
-      layout: even-vertical
+  - edit:
+      layout: main-vertical
       panes:
         - ranger
         - git branch -vva && git status
-        - git log --oneline --decorate --graph --all
