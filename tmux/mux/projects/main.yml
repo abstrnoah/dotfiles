@@ -4,8 +4,9 @@ name: main
 root: ~/
 
 windows:
-  - main:
+  - main: ranger
+  - log:
       layout: even-vertical
       panes:
-        - ranger
+        - top
         - tail -f /var/log/syslog
