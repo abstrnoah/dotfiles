@@ -1,4 +1,5 @@
 set number
+set scrolloff=3
 
 set colorcolumn=81
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
