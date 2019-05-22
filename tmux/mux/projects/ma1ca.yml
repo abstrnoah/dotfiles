@@ -8,5 +8,4 @@ windows:
       layout: main-vertical
       panes:
         - ranger
-        - ranger
         - git branch -vva && git status -s

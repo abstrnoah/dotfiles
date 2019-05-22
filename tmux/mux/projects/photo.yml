@@ -1,7 +1,9 @@
-# ~/.tmuxinator/<%= name %>.yml
+# ~/.tmuxinator/photo.yml
 
-name: <%= name %>
-root: ~/repository/
+name: photo
+root: ~/repository/recreation
+
+pre_window: cd photo || cd photo.local
 
 windows:
   - main:
