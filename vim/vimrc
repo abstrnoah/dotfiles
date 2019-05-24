@@ -1,3 +1,5 @@
+set nocompatible
+
 set number
 set scrolloff=3
 
@@ -13,3 +15,13 @@ let g:auto_save_in_insert_mode = 0
 set tabstop=4 expandtab softtabstop=2
 set wrap linebreak nolist textwidth=80
 set autoindent
+
+" fix arrow keys
+nnoremap <silent> <ESC>OA <Nop>
+nnoremap <silent> <ESC>OB <Nop>
+nnoremap <silent> <ESC>OC <Nop>
+nnoremap <silent> <ESC>OD <Nop>
+inoremap <silent> <ESC>OA <Nop>
+inoremap <silent> <ESC>OB <Nop>
+inoremap <silent> <ESC>OC <Nop>
+inoremap <silent> <ESC>OD <Nop>
