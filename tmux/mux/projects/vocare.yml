@@ -1,0 +1,10 @@
+# ~/.tmuxinator/vocare.yml
+
+name: vocare
+root: ~/repository/xentity/vocare
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
