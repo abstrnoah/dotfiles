@@ -41,7 +41,7 @@ wm: $(HOME)/.config/i3/config wallpaper $(HOME)/.i3status.conf
 
 wallpaper: $(HOME)/.wallpaper $(HOME)/.wallpaperlock
 
-$(HOME)/.config/i3/config: wm/i3wm.config
+$(HOME)/.config/i3/config: wm/i3wm.config $(HOME)/.config/i3/keybinds
 	$(makelink)
 
 $(HOME)/.config/i3/keybinds: wm/keybinds
