@@ -1,17 +1,26 @@
 set nocompatible
 
+" number, scroll
 set number
 set scrolloff=3
 
+" statusline
+set laststatus=2
+set statusline=%<%F\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
+
+" vertical bar
 set colorcolumn=81
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
+" highlighting
 set incsearch hlsearch
 nnoremap <silent> <esc> :noh<return><esc>
 
+" autosave
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
+" indentation
 set tabstop=4 expandtab softtabstop=2
 set wrap linebreak nolist textwidth=80
 set autoindent
