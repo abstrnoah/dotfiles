@@ -1,0 +1,10 @@
+# ~/.tmuxinator/caltech.yml
+
+name: caltech
+root: ~/repository/xentity/vocare/caltech
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
