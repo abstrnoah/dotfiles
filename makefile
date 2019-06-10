@@ -7,7 +7,7 @@ link = ln -fs
 makelink = $(link) $(call fullpath,$<) "$@"
 
 
-all: mkdirs bash zsh vim wm tmux
+all: mkdirs bash zsh vim wm tmux luakit
 
 mkdirs:
 	mkdir -p $(DIRDEPS)
@@ -71,4 +71,12 @@ $(HOME)/.tmux.conf: tmux/tmux.conf
 
 /usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml: tmux/mux/sample.yml
 	sudo $(makelink)
+# ------------------------------------------------------------------------------
+
+# browser
+# ------------------------------------------------------------------------------
+luakit: $(HOME)/.config/luakit
+
+$(HOME)/.config/luakit: browser/luakit
+	$(makelink)
 # ------------------------------------------------------------------------------
