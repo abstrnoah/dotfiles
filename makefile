@@ -1,4 +1,4 @@
-.PHONY = all mkdirs bash vim wm wallpaper tmux
+.PHONY = all mkdirs bash zsh vim wm wallpaper tmux
 
 DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
 
@@ -7,19 +7,24 @@ link = ln -fs
 makelink = $(link) $(call fullpath,$<) "$@"
 
 
-all: mkdirs bash vim wm tmux
+all: mkdirs bash zsh vim wm tmux
 
 mkdirs:
 	mkdir -p $(DIRDEPS)
 
-# bash
+# shell
 # ------------------------------------------------------------------------------
 bash: $(HOME)/.bashrc $(HOME)/.bash_aliases
 
-$(HOME)/.bashrc: bash/bashrc
+$(HOME)/.bashrc: shell/bashrc
 	$(makelink)
 
-$(HOME)/.bash_aliases: bash/bash_aliases
+$(HOME)/.bash_aliases: shell/bash_aliases
+	$(makelink)
+
+zsh: $(HOME)/.zshrc
+
+$(HOME)/.zshrc: shell/zshrc
 	$(makelink)
 
 # ------------------------------------------------------------------------------

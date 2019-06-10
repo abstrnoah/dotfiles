@@ -1,0 +1,32 @@
+# history
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=2000
+
+# config
+setopt appendhistory autocd extendedglob nomatch notify no_beep
+
+# env vars
+export EDITOR='vim'
+export KEYTIMEOUT=1
+
+# zle
+bindkey -v
+bindkey "^r" history-incremental-pattern-search-backward
+
+# zstyle
+zstyle :compinstall filename '/home/analyticalnoa/.zshrc'
+autoload -Uz compinit
+compinit
+
+# prompt
+PROMPT='%BZ.%b '
+RPROMPT=$'%s%B%#%<<%~:%n%b (%?)'
+
+# alias
+alias rezsh='. ~/.zshrc'
+alias ll='ls -alF'
+
+# thefuck
+eval $(thefuck --alias)
+eval $(thefuck --alias F)
