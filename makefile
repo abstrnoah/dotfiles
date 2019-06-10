@@ -14,12 +14,9 @@ mkdirs:
 
 # shell
 # ------------------------------------------------------------------------------
-bash: $(HOME)/.bashrc $(HOME)/.bash_aliases
+bash: $(HOME)/.bashrc
 
 $(HOME)/.bashrc: shell/bashrc
-	$(makelink)
-
-$(HOME)/.bash_aliases: shell/bash_aliases
 	$(makelink)
 
 zsh: $(HOME)/.zshrc
