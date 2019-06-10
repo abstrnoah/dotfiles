@@ -75,11 +75,11 @@ $(HOME)/.tmux.conf: tmux/tmux.conf
 
 # browser
 # ------------------------------------------------------------------------------
-luakit: $(HOME)/.config/luakit /usr/local/bin/luakit_pinner
+luakit: $(HOME)/.config/luakit /usr/local/bin/pinluakit
 
 $(HOME)/.config/luakit: browser/luakit
 	$(makelink)
 
-/usr/local/bin/luakit_pinner: browser/luakit/luakit_pinner
+/usr/local/bin/pinluakit: browser/luakit/pinluakit
 	sudo $(makelink)
 # ------------------------------------------------------------------------------
