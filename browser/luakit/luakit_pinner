@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. $HOME/.config/luakit/pinlist
+
+luakit "${pin[@]}"
