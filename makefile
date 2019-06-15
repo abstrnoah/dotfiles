@@ -7,7 +7,8 @@ link = ln -fs
 makelink = $(link) $(call fullpath,$<) "$@"
 
 
-all: mkdirs bash zsh vim wm tmux luakit
+all: mkdirs bash zsh vim wm tmux
+xtras: luakit
 
 mkdirs:
 	mkdir -p $(DIRDEPS)
@@ -20,6 +21,7 @@ $(HOME)/.bashrc: shell/bashrc
 	$(makelink)
 
 zsh: $(HOME)/.zshrc
+	chsh -s $$( which zsh )
 
 $(HOME)/.zshrc: shell/zshrc
 	$(makelink)
