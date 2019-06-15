@@ -4,7 +4,9 @@ HISTSIZE=1000
 SAVEHIST=2000
 
 # config
-setopt appendhistory autocd extendedglob nomatch notify no_beep
+setopt appendhistory 
+setopt autocd extendedglob nomatch notify no_beep
+setopt no_prompt_sp
 
 # env vars
 export EDITOR='vim'
