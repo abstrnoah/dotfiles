@@ -23,7 +23,7 @@ compinit
 
 # prompt
 PROMPT='%BZ.%b '
-RPROMPT='%s%B%#%~:%n@%14<..<%M%b (%?)'
+RPROMPT='%s%B%#%80<..<%~:%n@%M%b (%?)'
 
 # alias
 alias rezsh='. ~/.zshrc'
