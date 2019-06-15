@@ -5,7 +5,7 @@ DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
 fullpath = $$( readlink -f "$(1)" )
 link = ln -fs
 makelink = $(link) $(call fullpath,$<) "$@"
-
+getshell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
 
 all: mkdirs bash zsh vim wm tmux
 xtras: luakit
@@ -21,7 +21,7 @@ $(HOME)/.bashrc: shell/bashrc
 	$(makelink)
 
 zsh: $(HOME)/.zshrc
-	chsh -s $$( which zsh )
+	[ $(getshell) = $$( which zsh ) ] || chsh -s $$( which zsh )
 
 $(HOME)/.zshrc: shell/zshrc
 	$(makelink)
