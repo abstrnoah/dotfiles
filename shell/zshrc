@@ -33,3 +33,6 @@ alias ll='ls -alF'
 # thefuck
 eval $(thefuck --alias)
 eval $(thefuck --alias F)
+
+# mux
+. ~/.env.config/shell/comp-mux.zsh

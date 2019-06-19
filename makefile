@@ -1,4 +1,6 @@
-.PHONY = all mkdirs bash zsh vim wm wallpaper tmux luakit
+SHELL = /bin/zsh
+
+.PHONY = all xtras mkdirs bash zsh vim wm wallpaper tmux luakit
 
 DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
 
@@ -10,8 +12,11 @@ getshell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
 all: mkdirs bash zsh vim wm tmux
 xtras: luakit
 
-mkdirs:
+mkdirs: $(HOME)/.env.config
 	mkdir -p $(DIRDEPS)
+
+$(HOME)/.env.config: ./.
+	$(makelink)
 
 # shell
 # ------------------------------------------------------------------------------
