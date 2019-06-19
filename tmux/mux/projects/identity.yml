@@ -1,0 +1,11 @@
+# ~/.tmuxinator/identity.yml
+
+name: identity
+root: ~/repository/xentity/identity
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - git branch -vva && git status -s
