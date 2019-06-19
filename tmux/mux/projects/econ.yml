@@ -5,7 +5,7 @@ root: ~/repository/xentity/econ
 
 windows:
   - main:
-      layout: even-vertical
+      layout: main-vertical
       panes:
         - ranger
         - git branch -vva && git status
