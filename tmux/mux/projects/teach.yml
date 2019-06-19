@@ -4,7 +4,13 @@ name: teach
 root: ~/repository/xentity/vocare/teach
 
 windows:
-  - main:
+  - vocare:
+      layout: main-vertical
+      panes:
+        - ranger
+        - git branch -vva && git status -s
+  - know:
+      root: ~/repository/know/teach
       layout: main-vertical
       panes:
         - ranger
