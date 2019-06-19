@@ -27,6 +27,7 @@ RPROMPT='%s%B%#%80<..<%~:%n@%M%b (%?)'
 
 # alias
 alias rezsh='. ~/.zshrc'
+alias retmux='tmux source-file ~/.tmux.conf'
 alias ll='ls -alF'
 
 # thefuck
