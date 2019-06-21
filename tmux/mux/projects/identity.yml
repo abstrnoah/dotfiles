@@ -5,7 +5,8 @@ root: ~/repository/xentity/identity
 
 windows:
   - main:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
         - ranger
         - git branch -vva && git status -s
+  - log: git log --oneline --decorate --graph --all
