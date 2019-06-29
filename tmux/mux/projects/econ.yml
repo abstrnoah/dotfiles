@@ -5,8 +5,8 @@ root: ~/repository/xentity/econ
 
 windows:
   - main:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
         - ranger
         - git branch -vva && git status
-        - git log --oneline --decorate --graph --first-parent master
+  - log: git log --oneline --decorate --graph --all
