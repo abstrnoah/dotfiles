@@ -1,6 +1,6 @@
 SHELL = /bin/zsh
 
-.PHONY = all xtras mkdirs bash zsh vim wm wallpaper tmux luakit
+.PHONY = all xtras mkdirs shell bash zsh vim wm wallpaper tmux luakit
 
 DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
 
@@ -9,7 +9,7 @@ link = ln -fs
 makelink = $(link) $(call fullpath,$<) "$@"
 getshell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
 
-all: mkdirs bash zsh vim wm tmux
+all: mkdirs shell vim wm tmux
 xtras: luakit
 
 mkdirs: $(HOME)/.env.config
@@ -20,6 +20,8 @@ $(HOME)/.env.config: ./.
 
 # shell
 # ------------------------------------------------------------------------------
+shell: zsh
+
 bash: $(HOME)/.bashrc
 
 $(HOME)/.bashrc: shell/bashrc
@@ -30,7 +32,6 @@ zsh: $(HOME)/.zshrc
 
 $(HOME)/.zshrc: shell/zshrc
 	$(makelink)
-
 # ------------------------------------------------------------------------------
 
 # vim
@@ -67,8 +68,7 @@ $(HOME)/.i3status.conf: wm/i3status.conf
 
 # tmux
 # ------------------------------------------------------------------------------
-tmux: $(HOME)/.tmuxinator $(HOME)/.tmux.conf \
-		/usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml
+tmux: $(HOME)/.tmuxinator $(HOME)/.tmux.conf
 
 $(HOME)/.tmuxinator: tmux/mux/projects
 	$(makelink)
