@@ -17,7 +17,7 @@ mkdirs: $(HOME)/.env.config
 	mkdir -p $(DIRDEPS)
 
 $(HOME)/.env.config: ./.
-    [ $(call fullpath,$@) = $(call fullpath,$<) ] || $(makelink)
+	[ $(call fullpath,$@) = $(call fullpath,$<) ] || $(makelink)
 
 # shell
 # ------------------------------------------------------------------------------
