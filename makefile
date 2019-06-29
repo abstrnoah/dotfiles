@@ -29,7 +29,7 @@ $(HOME)/.bashrc: shell/bashrc
 	$(makelink)
 
 zsh: $(HOME)/.zshrc
-	[ $(getshell) = $$( which zsh ) ] || chsh -s $$( which zsh )
+	[ $(getshell) = $(SHELL) ] || chsh -s $(SHELL)
 
 $(HOME)/.zshrc: shell/zshrc
 	$(makelink)
@@ -52,10 +52,7 @@ wm: $(HOME)/.config/i3/config wallpaper $(HOME)/.i3status.conf
 
 wallpaper: $(HOME)/.wallpaper $(HOME)/.wallpaperlock
 
-$(HOME)/.config/i3/config: wm/i3wm.config $(HOME)/.config/i3/keybinds
-	$(makelink)
-
-$(HOME)/.config/i3/keybinds: wm/keybinds
+$(HOME)/.config/i3/config: wm/i3wm.config
 	$(makelink)
 
 $(HOME)/.wallpaper: wm/wallpaper-home.png

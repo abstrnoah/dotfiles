@@ -1,7 +1,7 @@
 # ~/.tmuxinator/econ.yml
 
 name: econ
-root: ~/repository/xentity/econ
+root: <%= ENV["ANE_REPOROOT"] %>/xentity/econ
 
 windows:
   - main:

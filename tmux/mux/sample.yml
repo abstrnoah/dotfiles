@@ -1,7 +1,7 @@
 # ~/.tmuxinator/<%= name %>.yml
 
 name: <%= name %>
-root: ~/repository/
+root: <%= ENV["ANE_REPOROOT"] %>
 
 windows:
   - main:

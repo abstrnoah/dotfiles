@@ -11,6 +11,7 @@ setopt no_prompt_sp
 # env vars
 export EDITOR='vim'
 export KEYTIMEOUT=1
+export ANE_REPOROOT="$HOME/repository"
 
 # zle
 bindkey -v
@@ -31,8 +32,10 @@ alias retmux='tmux source-file ~/.tmux.conf'
 alias ll='ls -alF'
 
 # thefuck
-eval $(thefuck --alias)
-eval $(thefuck --alias F)
+if which thefuck &> /dev/null; then
+  eval $(thefuck --alias)
+  eval $(thefuck --alias F)
+fi
 
 # mux
 . ~/.env.config/shell/comp-mux.zsh
