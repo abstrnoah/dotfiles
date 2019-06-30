@@ -1,6 +1,6 @@
 SHELL = /bin/zsh
 
-.PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit
+.PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit uninstall
 
 DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
 
@@ -87,4 +87,21 @@ $(HOME)/.config/luakit: browser/luakit
 
 /usr/local/bin/pinluakit: browser/luakit/pinluakit
 	sudo $(makelink)
+# ------------------------------------------------------------------------------
+
+# uninstall
+# ------------------------------------------------------------------------------
+uninstall:
+	rm -vf $(HOME)/.env.config
+	rm -vf $(HOME)/.bashrc
+	rm -vf $(HOME)/.zshrc
+	rm -vf $(HOME)/.vimrc
+	rm -vf $(HOME)/.vim/plugin
+	rm -vf $(HOME)/.config/i3/config
+	rm -vf $(HOME)/.i3status.conf
+	rm -vf $(HOME)/.wallpaper
+	rm -vf $(HOME)/.wallpaperlock
+	rm -vf $(HOME)/.tmuxinator
+	rm -vf $(HOME)/.tmux.conf
+	rm -vf $(HOME)/.config/luakit
 # ------------------------------------------------------------------------------

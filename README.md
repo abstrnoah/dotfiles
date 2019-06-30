@@ -1,12 +1,12 @@
 ## Dependencies
 
-The following versions are known to work.
+The listed versions are known to work properly.
 
 #### Required
 - zsh 5.1
 - ranger 1.9
 - python 3.5
-- tmux 2.1
+- tmux 2.0,2.1
 - tmuxinator 0.7
 
 #### Optional
