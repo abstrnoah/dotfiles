@@ -1,0 +1,17 @@
+# ~/.tmuxinator/rogue.yml
+
+name: rogue
+root: ~/
+
+pre_window: >
+  if [ -n "<%= @settings['remote'] %>" ]; then
+    ssh "<%= @settings['remote'] %>"
+  fi
+
+windows:
+  - main: >
+      if [ -f ~/rogue.save ]; then
+        rogue ~/rogue.save
+      else
+        rogue
+      fi
