@@ -1,6 +1,7 @@
 SHELL = /bin/zsh
 
-.PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit uninstall
+.PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit \
+  uninstall mux_sample
 
 DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
 
@@ -73,6 +74,8 @@ $(HOME)/.tmuxinator: tmux/mux/projects
 
 $(HOME)/.tmux.conf: tmux/tmux.conf
 	$(makelink)
+
+mux_sample: /usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml
 
 /usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml: tmux/mux/sample.yml
 	sudo $(makelink)
