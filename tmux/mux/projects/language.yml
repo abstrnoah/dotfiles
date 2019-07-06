@@ -1,0 +1,11 @@
+# ~/.tmuxinator/language.yml
+
+name: language
+root: <%= ENV["ANE_REPOROOT"] %>/know/explore/language
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - git branch -vva && git status -s
