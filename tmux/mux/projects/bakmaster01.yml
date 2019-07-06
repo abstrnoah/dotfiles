@@ -1,0 +1,17 @@
+# ~/.tmuxinator/bakmaster01.yml
+
+name: bakmaster01
+root: <%= ENV["ANE_REPOROOT"] %>/appa/cyber.lgcy/filesystem/bakup
+
+on_project_first_start: udisksctl mount -b /dev/disk/by-label/archive01
+on_project_stop: udisksctl unmount -b /dev/disk/by-label/archive01
+
+windows:
+  - bakup:
+      layout: main-horizontal
+      panes:
+        - tail -F /var/log/voluble/analyticalnoa/retain-master01.log
+        - tmux select-pane -t 1 && retain -h
+        - >
+          ranger --cmd='set show_hidden true' \
+            /media/analyticalnoa/archive01/master01.bak
