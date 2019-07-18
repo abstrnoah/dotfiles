@@ -1,0 +1,11 @@
+# ~/.tmuxinator/knowinst.yml
+
+name: knowinst
+root: <%= ENV["ANE_REPOROOT"] %>/know/inst
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        - ranger
+        - git branch -vva && git status -s
