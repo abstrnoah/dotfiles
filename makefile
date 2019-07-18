@@ -29,10 +29,13 @@ bash: $(HOME)/.bashrc
 $(HOME)/.bashrc: shell/bashrc
 	$(makelink)
 
-zsh: $(HOME)/.zshrc
+zsh: $(HOME)/.zshrc $(HOME)/.zshenv
 	[ $(getshell) = $(SHELL) ] || chsh -s $(SHELL)
 
 $(HOME)/.zshrc: shell/zshrc
+	$(makelink)
+
+$(HOME)/.zshenv: shell/zshenv
 	$(makelink)
 # ------------------------------------------------------------------------------
 
