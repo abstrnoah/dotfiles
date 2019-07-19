@@ -23,7 +23,8 @@ autoload -Uz compinit
 compinit
 
 # prompt
-PROMPT='%BZ.%b '
+ANE_PROMPTCHAR=◈
+PROMPT="%B$ANE_PROMPTCHAR%b "
 RPROMPT='%s%B%#%80<..<%~:%n@%M%b (%?)'
 
 # alias
