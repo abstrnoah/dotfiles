@@ -101,6 +101,7 @@ uninstall:
 	rm -vf $(HOME)/.env.config
 	rm -vf $(HOME)/.bashrc
 	rm -vf $(HOME)/.zshrc
+	rm -vf $(HOME)/.zshenv
 	rm -vf $(HOME)/.vimrc
 	rm -vf $(HOME)/.vim/plugin
 	rm -vf $(HOME)/.config/i3/config
