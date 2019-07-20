@@ -9,7 +9,6 @@ setopt autocd extendedglob nomatch notify no_beep
 setopt prompt_cr prompt_sp
 
 # env vars
-export EDITOR='vim'
 export KEYTIMEOUT=1
 export ANE_REPOROOT="$HOME/repository"
 
@@ -40,3 +39,6 @@ fi
 
 # mux
 . ~/.env.conf/shell/comp-mux.zsh
+
+# papis
+eval "$(_PAPIS_COMPLETE=source_zsh papis)"

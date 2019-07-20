@@ -1,9 +1,9 @@
 SHELL = /bin/zsh
 
 .PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit \
-  uninstall mux_sample
+  uninstall mux_sample papis
 
-DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
+DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3 $(HOME)/.config/papis
 
 fullpath = $$( readlink -f "$(1)" )
 link = ln -fs
@@ -11,7 +11,7 @@ makelink = $(link) $(call fullpath,$<) "$@"
 getshell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
 
 all: core wm
-core: mkdirs shell vim tmux
+core: mkdirs shell vim tmux papis
 xtras: luakit
 
 mkdirs: $(HOME)/.env.conf
@@ -95,6 +95,14 @@ $(HOME)/.config/luakit: browser/luakit
 	sudo $(makelink)
 # ------------------------------------------------------------------------------
 
+# fs
+# ------------------------------------------------------------------------------
+papis: $(HOME)/.config/papis/config
+
+$(HOME)/.config/papis/config: fs/papis.config
+	$(makelink)
+# ------------------------------------------------------------------------------
+
 # uninstall
 # ------------------------------------------------------------------------------
 uninstall:
@@ -112,4 +120,5 @@ uninstall:
 	rm -vf $(HOME)/.tmuxinator
 	rm -vf $(HOME)/.tmux.conf
 	rm -vf $(HOME)/.config/luakit -r
+	rm -vf $(HOME)/.config/papis/config
 # ------------------------------------------------------------------------------

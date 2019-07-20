@@ -1,0 +1,18 @@
+# ~/.tmuxinator/library.yml
+
+name: library
+root: <%= ENV["ANE_REPOROOT"] %>/know/library/papislib
+
+windows:
+  - main:
+      layout: main-vertical
+      panes:
+        -
+  - lingua:
+      root: <%= ENV["ANE_REPOROOT"] %>/know/library/papislib/lingua
+      panes:
+        -
+  - config:
+      root: <%= ENV["ANE_REPOROOT"] %>/appa/cyber/env.config/fs
+      panes:
+        - vim papis.config
