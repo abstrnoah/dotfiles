@@ -39,4 +39,4 @@ if which thefuck &> /dev/null; then
 fi
 
 # mux
-. ~/.env.config/shell/comp-mux.zsh
+. ~/.env.conf/shell/comp-mux.zsh

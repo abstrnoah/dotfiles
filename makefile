@@ -14,10 +14,10 @@ all: core wm
 core: mkdirs shell vim tmux
 xtras: luakit
 
-mkdirs: $(HOME)/.env.config
+mkdirs: $(HOME)/.env.conf
 	mkdir -p $(DIRDEPS)
 
-$(HOME)/.env.config: ./.
+$(HOME)/.env.conf: ./.
 	[ $(call fullpath,$@) = $(call fullpath,$<) ] || $(makelink)
 
 # shell
@@ -56,7 +56,7 @@ wm: $(HOME)/.config/i3/config wallpaper $(HOME)/.i3status.conf
 
 wallpaper: $(HOME)/.wallpaper $(HOME)/.wallpaperlock
 
-$(HOME)/.config/i3/config: wm/i3wm.config
+$(HOME)/.config/i3/config: wm/i3wm.conf
 	$(makelink)
 
 $(HOME)/.wallpaper: wm/wallpaper-home.png
@@ -98,7 +98,8 @@ $(HOME)/.config/luakit: browser/luakit
 # uninstall
 # ------------------------------------------------------------------------------
 uninstall:
-	rm -vf $(HOME)/.env.config
+	rm -vf $(HOME)/.env.config          # legacy
+	rm -vf $(HOME)/.env.conf
 	rm -vf $(HOME)/.bashrc
 	rm -vf $(HOME)/.zshrc
 	rm -vf $(HOME)/.zshenv
@@ -110,5 +111,5 @@ uninstall:
 	rm -vf $(HOME)/.wallpaperlock
 	rm -vf $(HOME)/.tmuxinator
 	rm -vf $(HOME)/.tmux.conf
-	rm -vf $(HOME)/.config/luakit
+	rm -vf $(HOME)/.config/luakit -r
 # ------------------------------------------------------------------------------
