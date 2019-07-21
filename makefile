@@ -99,14 +99,14 @@ $(HOME)/.config/luakit: browser/luakit
 # ------------------------------------------------------------------------------
 papis: $(HOME)/.config/papis/config
 
-$(HOME)/.config/papis/config: fs/papis.config
+$(HOME)/.config/papis/config: fs/papis.conf
 	$(makelink)
 # ------------------------------------------------------------------------------
 
 # uninstall
 # ------------------------------------------------------------------------------
 uninstall:
-	rm -vf $(HOME)/.env.config          # legacy
+	rm -vf $(HOME)/.env.config            # legacy
 	rm -vf $(HOME)/.env.conf
 	rm -vf $(HOME)/.bashrc
 	rm -vf $(HOME)/.zshrc
@@ -120,5 +120,6 @@ uninstall:
 	rm -vf $(HOME)/.tmuxinator
 	rm -vf $(HOME)/.tmux.conf
 	rm -vf $(HOME)/.config/luakit -r
-	rm -vf $(HOME)/.config/papis/config
+	rm -vf $(HOME)/.config/papis/config   # legacy
+	rm -vf $(HOME)/.config/papis/conf
 # ------------------------------------------------------------------------------

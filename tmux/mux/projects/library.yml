@@ -7,12 +7,8 @@ windows:
   - main:
       layout: main-vertical
       panes:
-        -
-  - lingua:
-      root: <%= ENV["ANE_REPOROOT"] %>/know/library/papislib/lingua
-      panes:
-        -
+        - papis git status
   - config:
-      root: <%= ENV["ANE_REPOROOT"] %>/appa/cyber/env.config/fs
+      root: ~/.env.conf/fs
       panes:
-        - vim papis.config
+        - vim papis.conf
