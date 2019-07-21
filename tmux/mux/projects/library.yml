@@ -7,7 +7,7 @@ windows:
   - main:
       layout: main-vertical
       panes:
-        - papis git status
+        - papis git branch -vva && papis git status -s
   - config:
       root: ~/.env.conf/fs
       panes:
