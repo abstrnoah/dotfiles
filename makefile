@@ -3,7 +3,7 @@ SHELL = /bin/zsh
 .PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit \
   uninstall mux_sample papis
 
-DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3 $(HOME)/.config/papis
+DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3
 
 fullpath = $$( readlink -f "$(1)" )
 link = ln -fs
@@ -97,9 +97,9 @@ $(HOME)/.config/luakit: browser/luakit
 
 # fs
 # ------------------------------------------------------------------------------
-papis: $(HOME)/.config/papis/config
+papis: $(HOME)/.config/papis
 
-$(HOME)/.config/papis/config: fs/papis.conf
+$(HOME)/.config/papis: fs/papis
 	$(makelink)
 # ------------------------------------------------------------------------------
 
@@ -120,6 +120,5 @@ uninstall:
 	rm -vf $(HOME)/.tmuxinator
 	rm -vf $(HOME)/.tmux.conf
 	rm -vf $(HOME)/.config/luakit -r
-	rm -vf $(HOME)/.config/papis/config   # legacy
-	rm -vf $(HOME)/.config/papis/conf
+	rm -vf $(HOME)/.config/papis -r
 # ------------------------------------------------------------------------------
