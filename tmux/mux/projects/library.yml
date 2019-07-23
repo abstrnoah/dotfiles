@@ -8,11 +8,11 @@ windows:
       layout: main-vertical
       panes:
         - papis list -p && papis git branch -vva && papis git status -s
-  - config:
-      root: ~/.env.conf/fs
-      panes:
-        - vim papis/config
   - note:
       layout: tiled
       panes:
         - papis note list
+  - config:
+      root: ~/.env.conf/fs
+      panes:
+        - vim papis/config
