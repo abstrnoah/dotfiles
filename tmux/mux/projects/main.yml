@@ -2,11 +2,9 @@
 
 name: main
 root: ~/
+startup_window: <%= @args[0] %>
 
 windows:
-  - main: ranger
-  - log:
-      layout: even-vertical
-      panes:
-        - top
-        - journalctl --follow
+  - explore: ranger <%= ENV["ANE_REPOROOT"] %>
+  - monitor: htop
+  - log: journalctl --follow
