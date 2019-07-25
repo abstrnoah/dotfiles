@@ -41,4 +41,6 @@ fi
 . ~/.env.conf/shell/comp-mux.zsh
 
 # papis
-eval "$(_PAPIS_COMPLETE=source_zsh papis)"
+if which papis &> /dev/null; then
+  eval "$(_PAPIS_COMPLETE=source_zsh papis)"
+fi
