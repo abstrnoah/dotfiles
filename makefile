@@ -10,8 +10,8 @@ link = ln -fs
 makelink = $(link) $(call fullpath,$<) "$@"
 getshell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
 
-all: core wm
-core: mkdirs shell vim tmux papis htop
+all: core wm papis
+core: mkdirs shell vim tmux htop
 xtras: luakit
 
 mkdirs: $(HOME)/.env.conf
