@@ -24,8 +24,8 @@ compinit
 
 # prompt
 ANE_PROMPTCHAR=◈
-PROMPT="%B$ANE_PROMPTCHAR%b "
-RPROMPT='%s%B%#%80<..<%~:%n@%M%b (%?)'
+PROMPT="%B%n $ANE_PROMPTCHAR%b "
+RPROMPT='%s%B %70<..<%~ %M%b %? %#'
 
 # alias
 alias rezsh='. ~/.zshrc'
