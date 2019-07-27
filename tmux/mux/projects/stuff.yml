@@ -1,7 +1,7 @@
-# ~/.tmuxinator/<%= name %>.yml
+# ~/.tmuxinator/stuff.yml
 
-name: <%= name %>
-root: <%= ENV["ANE_REPOROOT"] %>
+name: stuff
+root: <%= ENV["ANE_REPOROOT"] %>/appa/habitat/stuff
 
 windows:
   - main:
