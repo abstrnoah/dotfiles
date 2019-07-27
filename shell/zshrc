@@ -14,7 +14,8 @@ export ANE_REPOROOT="$HOME/repository"
 
 # zle
 bindkey -v
-bindkey "^r" history-incremental-pattern-search-backward
+bindkey -v "^r" history-incremental-pattern-search-backward
+bindkey -v "^ " push-line-or-edit
 
 # zstyle
 zstyle :compinstall filename '/home/analyticalnoa/.zshrc'
