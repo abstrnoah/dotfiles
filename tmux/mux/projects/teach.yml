@@ -5,13 +5,13 @@ root: ~/repository/xentity/vocare/teach
 
 windows:
   - vocare:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
         - ranger
-        - git branch -vva && git status -s
+        - tmux select-pane -t 1 && git branch -vva && git status -s
   - know:
       root: ~/repository/know/teach
-      layout: main-vertical
+      layout: main-horizontal
       panes:
         - ranger
-        - git branch -vva && git status -s
+        - tmux select-pane -t 1 && git branch -vva && git status -s
