@@ -115,7 +115,7 @@ $(HOME)/.config/papis: fs/papis
 # ------------------------------------------------------------------------------
 uninstall:
 	rm -vf $(HOME)/.env.config            # legacy
-	rm -vf $(HOME)/.env.conf
+	[ "$(PWD)" = "$(HOME)/.env.conf" ] || rm -vf $(HOME)/.env.conf
 	rm -vf $(HOME)/.bashrc
 	rm -vf $(HOME)/.zshrc
 	rm -vf $(HOME)/.zshenv
