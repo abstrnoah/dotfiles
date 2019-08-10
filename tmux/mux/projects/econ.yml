@@ -8,5 +8,5 @@ windows:
       layout: main-horizontal
       panes:
         - ranger
-        - git branch -vva && git status
+        - tmux select-pane -t 1 && git branch -vva && git status -s
   - log: git log --oneline --decorate --graph --all
