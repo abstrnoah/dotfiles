@@ -5,7 +5,7 @@ root: <%= ENV["ANE_REPOROOT"] %>/know/explore/language
 
 windows:
   - main:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
         - ranger
-        - git branch -vva && git status -s
+        - tmux select-pane -t 1 && git branch -vva && git status -s
