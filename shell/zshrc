@@ -31,6 +31,8 @@ RPROMPT='%s%B %70<..<%~ %M%b %? %#'
 alias rezsh='. ~/.zshrc'
 alias retmux='tmux source-file ~/.tmux.conf'
 alias ll='ls -alF'
+alias Y='xclip -selection clipboard'
+alias P='xclip -selection clipboard -o'
 
 # thefuck
 if which thefuck &> /dev/null; then
