@@ -1,0 +1,12 @@
+# ~/.tmuxinator/curr.yml
+
+name: <%= @args[0] %>
+root: <%= ENV["ANE_REPOROOT"] %>/know/inst/curr/ugrad/<%= @args[0] %>
+
+windows:
+  - main:
+      layout: main-horizontal
+      panes:
+        - ranger
+        - tmux select-pane -t 1 && git branch -vva && git status -s
+
