@@ -1,7 +1,7 @@
 # ~/.tmuxinator/computation.yml
 
 name: <%= @args[0] %>
-root: <%= ENV["ANE_REPOROOT"] %>/know/explore/computation/<%= @args[0] %>
+root: <%= ENV["ANE_REPOROOT"] %>/know/explore/computation/<%= @args[1] %>
 
 windows:
   - main:
