@@ -8,9 +8,10 @@ windows:
       layout: main-horizontal
       panes:
         - ranger
-        - >
-          if [[ <%= @settings["git"] %> == "true" ]]; then
-            tmux select-pane -t 1 && git branch -vva && git status -s
+        - |
+          tmux select-pane -t 1
+          if [[ -d ".git" ]]; then
+            git branch -vva && git status -s
           else
             tmux kill-pane
           fi
