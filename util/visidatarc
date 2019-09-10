@@ -1,1 +1,9 @@
+from datetime import timedelta as _timedelta
+
 vdtype(currency, '$', '{:,.02f} $')
+
+def parse_timedelta(s):
+    if not s:
+        return _timedelta(0)
+    v = [ int(f) for f in s.split(':') ]
+    return _timedelta( hours=v[0], minutes=v[1], seconds=v[2] )
