@@ -1,0 +1,1 @@
+vdtype(currency, '$', '{:,.02f} $')
