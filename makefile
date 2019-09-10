@@ -135,4 +135,5 @@ uninstall:
 	rm -vf $(HOME)/.config/luakit -r
 	rm -vf $(HOME)/.config/papis -r
 	rm -vf $(HOME)/.config/htop/htoprc
+	rm -vf $(HOME)/.visidatarc
 # ------------------------------------------------------------------------------
