@@ -4,13 +4,7 @@ name: teach
 root: ~/repository/xentity/vocare/teach
 
 windows:
-  - vocare:
-      layout: main-horizontal
-      panes:
-        - ranger
-        - tmux select-pane -t 1 && git branch -vva && git status -s
-  - know:
-      root: ~/repository/know/teach
+  - main:
       layout: main-horizontal
       panes:
         - ranger
