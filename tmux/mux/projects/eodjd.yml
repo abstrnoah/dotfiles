@@ -4,9 +4,9 @@ name: eodjd_finance
 root: <%= ENV["ANE_REPOROOT"] %>/xentity/vocare/daniel_carolyn/eodjd_finance
 
 windows:
-  - main:
+  - explore:
       layout: main-horizontal
       panes:
         - ranger
         - tmux select-pane -t 1 && git branch -vva && git status -s
-  - log: git log --oneline --decorate --graph --all
+  - vd: cd statement && vd -p cmdlog.vd
