@@ -33,6 +33,23 @@ alias retmux='tmux source-file ~/.tmux.conf'
 alias ll='ls -alF'
 alias Y='xclip -selection clipboard'
 alias P='xclip -selection clipboard -o'
+vdp() { # most excilerating recursive function to write, to date.
+  if [ -z "$1" ] || [[ $(readlink -f '.') == $(readlink -f "$1") ]]; then
+    vdp db
+  elif [ ! -d "$1" ]; then
+    echo "Bad db."
+    return 1
+  elif [[ $(dirname "$1") != '.' ]]; then
+    pwd_old="$PWD"
+    cd $( dirname "$1" )
+    vdp ${1/$(dirname "$1")\/}
+    cd "$pwd_old"
+  elif [ ! -f "$1/.vd" ]; then
+    vdp "$1/db"
+  else
+    vd -p "$1/.vd"
+  fi
+}
 
 # thefuck
 if which thefuck &> /dev/null; then
