@@ -24,6 +24,7 @@ let g:auto_save_in_insert_mode = 0
 set tabstop=4 expandtab softtabstop=2
 set wrap linebreak nolist textwidth=80
 set autoindent
+set shiftwidth=4
 
 " fix arrow keys
 nnoremap <silent> <ESC>OA <Nop>
