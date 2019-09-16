@@ -1,0 +1,7 @@
+[user]
+	name = Noah D. Ortiz
+	email = analyticalnoa@gmail.com
+[merge]
+	conflict = diff3
+[push]
+	default = simple

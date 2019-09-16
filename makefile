@@ -1,7 +1,7 @@
 SHELL = /bin/zsh
 
 .PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit \
-  uninstall mux_sample papis htop vd gnometerm
+  uninstall mux_sample papis htop vd gnometerm git
 
 DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3 $(HOME)/.config/htop
 
@@ -11,7 +11,7 @@ makelink = $(link) $(call fullpath,$<) "$@"
 getshell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
 
 all: core wm papis
-core: mkdirs shell vim tmux htop vd
+core: mkdirs shell vim tmux htop vd git
 xtras: luakit
 
 mkdirs: $(HOME)/.env.conf
@@ -109,6 +109,11 @@ vd: $(HOME)/.visidatarc
 
 $(HOME)/.visidatarc: util/visidatarc
 	$(makelink)
+
+git: $(HOME)/.gitconfig
+
+$(HOME)/.gitconfig: util/gitconfig
+	$(makelink)
 # ------------------------------------------------------------------------------
 
 # fs
@@ -139,4 +144,5 @@ uninstall:
 	rm -vf $(HOME)/.config/papis -r
 	rm -vf $(HOME)/.config/htop/htoprc
 	rm -vf $(HOME)/.visidatarc
+	rm -vf $(HOME)/.gitconfig
 # ------------------------------------------------------------------------------
