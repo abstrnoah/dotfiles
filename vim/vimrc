@@ -21,7 +21,7 @@ let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
 " indentation
-set tabstop=4 expandtab softtabstop=2
+set tabstop=4 expandtab softtabstop=4
 set wrap linebreak nolist textwidth=80
 set autoindent
 set shiftwidth=4
