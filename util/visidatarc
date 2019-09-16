@@ -7,3 +7,7 @@ def parse_timedelta(s):
         return _timedelta(0)
     v = [ int(f) for f in s.split(':') ]
     return _timedelta( hours=v[0], minutes=v[1], seconds=v[2] )
+
+dat = {
+  'unit_transport_cost': 0.10
+}
