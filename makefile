@@ -113,7 +113,7 @@ $(HOME)/.visidatarc: util/visidatarc
 git: $(HOME)/.gitconfig
 
 $(HOME)/.gitconfig: util/gitconfig
-	$(makelink)
+	cp "$<" "$@"
 # ------------------------------------------------------------------------------
 
 # fs
