@@ -11,6 +11,7 @@ The listed versions are known to work properly.
 - htop 2.0.1
 - xclip 0.12
 - xbaclight 1.2.1
+- git 2.21.0
 
 #### Optional
 - thefuck 3.29
