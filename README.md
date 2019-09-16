@@ -16,3 +16,4 @@ The listed versions are known to work properly.
 - thefuck 3.29
 - i3wm 4.11
 - papis 0.8.2
+- visidata 1.5.2
