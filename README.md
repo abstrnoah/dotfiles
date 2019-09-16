@@ -10,6 +10,7 @@ The listed versions are known to work properly.
 - tmuxinator 0.7
 - htop 2.0.1
 - xclip 0.12
+- xbaclight 1.2.1
 
 #### Optional
 - thefuck 3.29
