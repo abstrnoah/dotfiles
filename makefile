@@ -1,7 +1,7 @@
 SHELL = /bin/zsh
 
 .PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit \
-  uninstall mux_sample papis htop vd
+  uninstall mux_sample papis htop vd gnometerm
 
 DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3 $(HOME)/.config/htop
 
@@ -22,7 +22,7 @@ $(HOME)/.env.conf: ./.
 
 # shell
 # ------------------------------------------------------------------------------
-shell: zsh
+shell: zsh gnometerm
 
 bash: $(HOME)/.bashrc
 
@@ -37,6 +37,9 @@ $(HOME)/.zshrc: shell/zshrc
 
 $(HOME)/.zshenv: shell/zshenv
 	$(makelink)
+
+gnometerm: shell/org-gnome-terminal.dconf
+	dconf load /org/gnome/terminal/ < "$<"
 # ------------------------------------------------------------------------------
 
 # vim
