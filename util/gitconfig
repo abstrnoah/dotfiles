@@ -5,3 +5,6 @@
 	conflict = diff3
 [push]
 	default = simple
+
+[url "client01:master01/repository/"]
+    insteadOf = master01:
