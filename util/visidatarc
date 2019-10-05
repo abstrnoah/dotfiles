@@ -1,5 +1,9 @@
 from datetime import timedelta as _timedelta
 
+options.confirm_overwrite = False
+options.quitguard = True
+options.disp_date_fmt = "%Y-%m-%d %H:%M"
+
 vdtype(currency, '$', '{:,.02f} $')
 
 def parse_timedelta(s):
