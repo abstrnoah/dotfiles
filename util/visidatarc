@@ -6,6 +6,8 @@ options.disp_date_fmt = "%Y-%m-%d %H:%M"
 
 vdtype(currency, '$', '{:,.02f} $')
 
+bindkey('i', 'edit-cell')
+
 def parse_timedelta(s):
     if not s:
         return _timedelta(0)
