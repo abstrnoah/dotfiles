@@ -33,7 +33,7 @@ alias retmux='tmux source-file ~/.tmux.conf'
 alias ll='ls -alF'
 alias Y='xclip -selection clipboard'
 alias P='xclip -selection clipboard -o'
-vdp() { # most excilerating recursive function to write, to date.
+vdp() {
   if [ -z "$1" ] || [[ $(readlink -f '.') == $(readlink -f "$1") ]]; then
     vdp db
   elif [ ! -d "$1" ]; then
