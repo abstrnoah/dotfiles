@@ -1,6 +1,8 @@
 SHELL = /bin/bash
 
 ANENV_NIXPKGS=$(HOME)/nixpkgs
+ANENV_WALLPAPER=./share/wallpaper-home.png
+ANENV_WALLPAPER=./share/wallpaper-lock.png
 
 rm_cmd = rm -vf
 
