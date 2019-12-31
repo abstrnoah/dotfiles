@@ -17,6 +17,9 @@ The *stack* is the set of packages configured by this repository.
 The `./packages` directory contains installation and configuration files for each
 package in the stack and the `./share` directory contains common files.
 
+You can put this repository anywhere, but should leave it there, as symlinks
+will be made to its contents.
+
 **Usage**:
 
     make <command>[-<spec>][-undo] [ VAR=<value> ... ]
@@ -28,7 +31,6 @@ defaults.
 
 **TL;DR**, to **install** the complete stack, run
 
-    make setup-anenv  # opens a list of variables to be set in $EDITOR.
     make all
 
 and to **uninstall** the complete stack, run
@@ -84,12 +86,16 @@ independent of install operations, so if you have trouble installing a
 particular package and need to do it manually, you can still use this repository
 to handle configuration.
 
+    make all
+
+> Equivelant to running `make setup-anenv install setup`.
+
     make setup-anenv
 
 > Open `./anenv` in `$EDITOR`, which will contain a list of variables. You
 > should set these as desired and then save/quit. The variables will exported to
-> the environment. (Currently variables specified on the command line will be
-> ignored.)
+> the environment. Then `./anenv` will be linked from `$HOME/.anenv`. (Currently
+> variables specified on the command line will be ignored for this operation.)
 
     make install
 
