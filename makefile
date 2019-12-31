@@ -1,11 +1,6 @@
-SHELL = /bin/bash
+include header.mk
+.PHONY = missing_command help all all-undo install install-undo setup setup-undo
 
-.PHONY = missing_command help all
-
-# functions
-# ------------------------------------------------------------------------------
-make-pkg = $(MAKE) -C package/$(1)
-# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 missing_command: help
