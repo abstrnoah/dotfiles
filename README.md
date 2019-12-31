@@ -22,10 +22,10 @@ will be made to its contents.
 
 **Usage**:
 
-    make <command>[-<spec>][-undo] [ VAR=<value> ... ]
+    make [un]<command>[-<spec>] [ VAR=<value> ... ]
 
-where `<spec>` is a package, group, or other (see below) name. The `-undo`
-suffix means preform the inverse command. Environment variables specified on the
+where `<spec>` is a package, group, or other (see below) name. The `un`
+prefix means preform the inverse command. Environment variables specified on the
 shell override the current environment overrides those in `./anenv` override
 defaults.
 
@@ -35,7 +35,7 @@ defaults.
 
 and to **uninstall** the complete stack, run
 
-    make all-undo
+    make unall
 
 
 ## the stack

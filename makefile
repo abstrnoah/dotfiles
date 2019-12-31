@@ -1,5 +1,5 @@
 include header.mk
-.PHONY = missing_command help all all-undo install install-undo setup setup-undo
+.PHONY = missing_command help all
 
 
 # ------------------------------------------------------------------------------
@@ -13,18 +13,18 @@ help:
 # all
 # ------------------------------------------------------------------------------
 all: install setup
-all-undo: install-undo setup-undo
+unall: uninstall unsetup
 # ------------------------------------------------------------------------------
 
 # install
 # ------------------------------------------------------------------------------
 install: install-required install-core install-optional
-install-undo: install-required-undo install-core-undo install-optional-undo
+uninstall: uninstall-required uninstall-core uninstall-optional
 
 install-required: install-nix \
         install-git
-install-required-undo: install-nix-undo \
-        install-nix-undo
+uninstall-required: uninstall-nix \
+        uninstall-nix
 
 install-core: install-zsh \
         install-i3wm \
@@ -32,12 +32,12 @@ install-core: install-zsh \
         install-tmuxinator \
         install-ranger \
         install-vim
-install-core-undo: install-zsh-undo \
-        install-i3wm-undo \
-        install-tmux-undo \
-        install-tmuxinator-undo \
-        install-ranger-undo \
-        install-vim-undo
+uninstall-core: uninstall-zsh \
+        uninstall-i3wm \
+        uninstall-tmux \
+        uninstall-tmuxinator \
+        uninstall-ranger \
+        uninstall-vim
         
 install-xclip install-htop:
 	$(error "Not yet supported: $@.")
@@ -46,12 +46,12 @@ install-xclip install-htop:
 # setup
 # ------------------------------------------------------------------------------
 setup: setup-required setup-core setup-optional
-setup-undo: setup-required-undo setup-core-undo setup-optional-undo
+unsetup: unsetup-required unsetup-core unsetup-optional
 
 setup-required: setup-nix \
         setup-git
-setup-required-undo: setup-nix-undo \
-        setup-nix-undo
+unsetup-required: unsetup-nix \
+        unsetup-nix
 
 setup-core: setup-zsh \
         setup-i3wm \
@@ -59,12 +59,12 @@ setup-core: setup-zsh \
         setup-tmuxinator \
         setup-ranger \
         setup-vim
-setup-core-undo: setup-zsh-undo \
-        setup-i3wm-undo \
-        setup-tmux-undo \
-        setup-tmuxinator-undo \
-        setup-ranger-undo \
-        setup-vim-undo
+unsetup-core: unsetup-zsh \
+        unsetup-i3wm \
+        unsetup-tmux \
+        unsetup-tmuxinator \
+        unsetup-ranger \
+        unsetup-vim
         
 setup-xclip setup-htop:
 	$(error "Not yet supported: $@.")

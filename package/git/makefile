@@ -1,5 +1,5 @@
 include ../../header.mk
-.PHONY = missing_command install install-undo setup setup-undo
+.PHONY = missing_command install
 
 missing_command:
 	$(error "Missing command. See README.md")
@@ -20,5 +20,5 @@ install_2_24_1: $(ANENV_NIXPKGS)
 	$(call install_nix_pkg\
         ,62ef779f2a5050549772722665bedf52f01268d2,gitAndTools.gitFull)
 
-install-und
+uninstall:
 # ------------------------------------------------------------------------------
