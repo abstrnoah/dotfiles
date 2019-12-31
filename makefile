@@ -35,7 +35,7 @@ uninstall-core: uninstall-zsh \
         uninstall-tmuxinator \
         uninstall-vim
         
-install-xclip install-htop install-nix install-ranger:
+install-xclip install-nix install-ranger:
 	$(error "Not yet supported: $@.")
 # ------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ unsetup-core: unsetup-zsh \
         unsetup-tmuxinator \
         unsetup-vim
         
-setup-xclip setup-htop:
+setup-xclip :
 	$(error "Not yet supported: $@.")
 # ------------------------------------------------------------------------------
 
@@ -86,4 +86,157 @@ $(HOME)/.wallpaper: $(ANENV_WALLPAPER)
 
 $(HOME)/.wallpaperlock: $(ANENV_WALLPAPER_LOCK)
 	$(make_link)
+# ------------------------------------------------------------------------------
+
+# instatiate git
+# ------------------------------------------------------------------------------
+.PHONY: install-git
+install-git:
+	$(MAKE) -C package/git install  # TODO: pass environment to $(MAKE) -C 's
+
+.PHONY: uninstall-git
+uninstall-git:
+	$(MAKE) -C package/git uninstall
+
+.PHONY: setup-git
+setup-git:
+	$(MAKE) -C package/git setup
+
+.PHONY: unsetup-git
+unsetup-git:
+	$(MAKE) -C package/git unsetup
+# ------------------------------------------------------------------------------
+
+# instatiate htop
+# ------------------------------------------------------------------------------
+.PHONY: install-htop
+install-htop:
+	$(MAKE) -C package/htop install
+
+.PHONY: uninstall-htop
+uninstall-htop:
+	$(MAKE) -C package/htop uninstall
+
+.PHONY: setup-htop
+setup-htop:
+	$(MAKE) -C package/htop setup
+
+.PHONY: unsetup-htop
+unsetup-htop:
+	$(MAKE) -C package/htop unsetup
+# ------------------------------------------------------------------------------
+
+# instatiate i3wm
+# ------------------------------------------------------------------------------
+.PHONY: install-i3wm
+install-i3wm:
+	$(MAKE) -C package/i3wm install
+
+.PHONY: uninstall-i3wm
+uninstall-i3wm:
+	$(MAKE) -C package/i3wm uninstall
+
+.PHONY: setup-i3wm
+setup-i3wm:
+	$(MAKE) -C package/i3wm setup
+
+.PHONY: unsetup-i3wm
+unsetup-i3wm:
+	$(MAKE) -C package/i3wm unsetup
+# ------------------------------------------------------------------------------
+
+# instatiate tmux
+# ------------------------------------------------------------------------------
+.PHONY: install-tmux
+install-tmux:
+	$(MAKE) -C package/tmux install
+
+.PHONY: uninstall-tmux
+uninstall-tmux:
+	$(MAKE) -C package/tmux uninstall
+
+.PHONY: setup-tmux
+setup-tmux:
+	$(MAKE) -C package/tmux setup
+
+.PHONY: unsetup-tmux
+unsetup-tmux:
+	$(MAKE) -C package/tmux unsetup
+# ------------------------------------------------------------------------------
+
+# instatiate tmuxinator
+# ------------------------------------------------------------------------------
+.PHONY: install-tmuxinator
+install-tmuxinator:
+	$(MAKE) -C package/tmuxinator install
+
+.PHONY: uninstall-tmuxinator
+uninstall-tmuxinator:
+	$(MAKE) -C package/tmuxinator uninstall
+
+.PHONY: setup-tmuxinator
+setup-tmuxinator:
+	$(MAKE) -C package/tmuxinator setup
+
+.PHONY: unsetup-tmuxinator
+unsetup-tmuxinator:
+	$(MAKE) -C package/tmuxinator unsetup
+# ------------------------------------------------------------------------------
+
+
+# instatiate vim
+# ------------------------------------------------------------------------------
+.PHONY: install-vim
+install-vim:
+	$(MAKE) -C package/vim install
+
+.PHONY: uninstall-vim
+uninstall-vim:
+	$(MAKE) -C package/vim uninstall
+
+.PHONY: setup-vim
+setup-vim:
+	$(MAKE) -C package/vim setup
+
+.PHONY: unsetup-vim
+unsetup-vim:
+	$(MAKE) -C package/vim unsetup
+# ------------------------------------------------------------------------------
+
+# instatiate visidata
+# ------------------------------------------------------------------------------
+.PHONY: install-visidata
+install-visidata:
+	$(MAKE) -C package/visidata install
+
+.PHONY: uninstall-visidata
+uninstall-visidata:
+	$(MAKE) -C package/visidata uninstall
+
+.PHONY: setup-visidata
+setup-visidata:
+	$(MAKE) -C package/visidata setup
+
+.PHONY: unsetup-visidata
+unsetup-visidata:
+	$(MAKE) -C package/visidata unsetup
+# ------------------------------------------------------------------------------
+
+# instatiate zsh
+# ------------------------------------------------------------------------------
+.PHONY: install-zsh
+install-zsh:
+	$(MAKE) -C package/zsh install
+
+.PHONY: uninstall-zsh
+uninstall-zsh:
+	$(MAKE) -C package/zsh uninstall
+
+.PHONY: setup-zsh
+setup-zsh:
+	$(MAKE) -C package/zsh setup
+
+.PHONY: unsetup-zsh
+unsetup-zsh:
+	$(MAKE) -C package/zsh unsetup
 # ------------------------------------------------------------------------------
