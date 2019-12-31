@@ -1,10 +1,5 @@
 include ../../header.mk
 
-
-.PHONY: missing_command
-missing_command:
-	$(error "Missing command. See README.md")
-
 # setup
 # ------------------------------------------------------------------------------
 .PHONY: setup
