@@ -15,7 +15,7 @@ unsetup: unsetup-wallpaper
 $(HOME)/.config/i3/config: i3wm.conf
 	$(make_link)
 
-$(HOME)/.config/i3status.conf: i3status.conf
+$(HOME)/.i3status.conf: i3status.conf
 	$(make_link)
 
 .PHONY: setup-wallpaper

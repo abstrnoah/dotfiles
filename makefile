@@ -73,5 +73,5 @@ $(HOME)/.wallpaper: $(ANENV_WALLPAPER)
 	$(make_link)
 
 $(HOME)/.wallpaperlock: $(ANENV_WALLPAPER_LOCK)
-    $(make_link)
+	$(make_link)
 # ------------------------------------------------------------------------------
