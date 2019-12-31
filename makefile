@@ -21,11 +21,14 @@ install-required: install-git
 .PHONY: uninstall-required
 uninstall-required: uninstall-git
 
+.PHONY: install-core
 install-core: install-zsh \
         install-i3wm \
         install-tmux \
         install-tmuxinator \
         install-vim
+
+.PHONY: uninstall-core
 uninstall-core: uninstall-zsh \
         uninstall-i3wm \
         uninstall-tmux \
@@ -38,17 +41,26 @@ install-xclip install-htop install-nix install-ranger:
 
 # setup
 # ------------------------------------------------------------------------------
+.PHONY: setup
 setup: setup-required setup-core setup-optional
+
+.PHONY: unsetup
 unsetup: unsetup-required unsetup-core unsetup-optional
 
+.PHONY: setup-required
 setup-required: setup-git
+
+.PHONY: unsetup-required
 unsetup-required: unsetup-git
 
+.PHONY: setup-core
 setup-core: setup-zsh \
         setup-i3wm \
         setup-tmux \
         setup-tmuxinator \
         setup-vim
+
+.PHONY: unsetup-core
 unsetup-core: unsetup-zsh \
         unsetup-i3wm \
         unsetup-tmux \
