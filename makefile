@@ -1,148 +1,76 @@
-SHELL = /bin/zsh
+SHELL = /bin/bash
 
-.PHONY = all xtras core mkdirs shell bash zsh vim wm wallpaper tmux luakit \
-  uninstall mux_sample papis htop vd gnometerm git
+.PHONY = missing_command help all
 
-DIRDEPS = $(HOME)/.vim $(HOME)/.config/i3 $(HOME)/.config/htop
-
-fullpath = $$( readlink -f "$(1)" )
-link = ln -fs
-makelink = $(link) $(call fullpath,$<) "$@"
-getshell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
-
-all: core wm papis
-core: mkdirs shell vim tmux htop vd git
-xtras: luakit
-
-mkdirs: $(HOME)/.env.conf
-	mkdir -p $(DIRDEPS)
-
-$(HOME)/.env.conf: ./.
-	[ $(call fullpath,$@) = $(call fullpath,$<) ] || $(makelink)
-
-# shell
+# functions
 # ------------------------------------------------------------------------------
-shell: zsh gnometerm
-
-bash: $(HOME)/.bashrc
-
-$(HOME)/.bashrc: shell/bashrc
-	$(makelink)
-
-zsh: $(HOME)/.zshrc $(HOME)/.zshenv
-	[ $(getshell) = $(SHELL) ] || chsh -s $(SHELL)
-
-$(HOME)/.zshrc: shell/zshrc
-	$(makelink)
-
-$(HOME)/.zshenv: shell/zshenv
-	$(makelink)
-
-gnometerm: shell/org-gnome-terminal.dconf
-	dconf load /org/gnome/terminal/ < "$<"
+make-pkg = $(MAKE) -C package/$(1)
 # ------------------------------------------------------------------------------
 
-# vim
 # ------------------------------------------------------------------------------
-vim: $(HOME)/.vimrc $(HOME)/.vim/plugin
+missing_command: help
+	@echo "Missing command. See \`make help'."
 
-$(HOME)/.vimrc: vim/vimrc
-	$(makelink)
-
-$(HOME)/.vim/plugin: vim/plugin
-	$(makelink)
+help:
+	less README.md
 # ------------------------------------------------------------------------------
 
-# wm
+# all
 # ------------------------------------------------------------------------------
-wm: $(HOME)/.config/i3/config wallpaper $(HOME)/.i3status.conf
-
-wallpaper: $(HOME)/.wallpaper $(HOME)/.wallpaperlock
-
-$(HOME)/.config/i3/config: wm/i3wm.conf
-	$(makelink)
-
-$(HOME)/.wallpaper: wm/wallpaper-home.png
-	$(makelink)
-
-$(HOME)/.wallpaperlock: wm/wallpaper-lock.png
-	$(makelink)
-
-$(HOME)/.i3status.conf: wm/i3status.conf
-	$(makelink)
-
-# tmux
-# ------------------------------------------------------------------------------
-tmux: $(HOME)/.tmuxinator $(HOME)/.tmux.conf
-
-$(HOME)/.tmuxinator: tmux/mux/projects
-	$(makelink)
-
-$(HOME)/.tmux.conf: tmux/tmux.conf
-	$(makelink)
-
-mux_sample: /usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml
-
-/usr/lib/ruby/vendor_ruby/tmuxinator/assets/sample.yml: tmux/mux/sample.yml
-	sudo $(makelink)
+all: install setup
+all-undo: install-undo setup-undo
 # ------------------------------------------------------------------------------
 
-# browser
+# install
 # ------------------------------------------------------------------------------
-luakit: $(HOME)/.config/luakit /usr/local/bin/pinluakit
+install: install-required install-core install-optional
+install-undo: install-required-undo install-core-undo install-optional-undo
 
-$(HOME)/.config/luakit: browser/luakit
-	$(makelink)
+install-required: install-nix \
+        install-git
+install-required-undo: install-nix-undo \
+        install-nix-undo
 
-/usr/local/bin/pinluakit: browser/luakit/pinluakit
-	sudo $(makelink)
-# ------------------------------------------------------------------------------
-
-# util
-# ------------------------------------------------------------------------------
-htop: $(HOME)/.config/htop/htoprc
-
-$(HOME)/.config/htop/htoprc: util/htoprc
-	$(makelink)
-
-vd: $(HOME)/.visidatarc
-
-$(HOME)/.visidatarc: util/visidatarc
-	$(makelink)
-
-git: $(HOME)/.gitconfig
-
-$(HOME)/.gitconfig: util/gitconfig
-	cp "$<" "$@"
+install-core: install-zsh \
+        install-i3wm \
+        install-tmux \
+        install-tmuxinator \
+        install-ranger \
+        install-vim
+install-core-undo: install-zsh-undo \
+        install-i3wm-undo \
+        install-tmux-undo \
+        install-tmuxinator-undo \
+        install-ranger-undo \
+        install-vim-undo
+        
+install-xclip install-htop:
+	$(error "Not yet supported: $@.")
 # ------------------------------------------------------------------------------
 
-# fs
+# setup
 # ------------------------------------------------------------------------------
-papis: $(HOME)/.config/papis
+setup: setup-required setup-core setup-optional
+setup-undo: setup-required-undo setup-core-undo setup-optional-undo
 
-$(HOME)/.config/papis: fs/papis
-	$(makelink)
-# ------------------------------------------------------------------------------
+setup-required: setup-nix \
+        setup-git
+setup-required-undo: setup-nix-undo \
+        setup-nix-undo
 
-# uninstall
-# ------------------------------------------------------------------------------
-uninstall:
-	rm -vf $(HOME)/.env.config            # legacy
-	[ "$(PWD)" = "$(HOME)/.env.conf" ] || rm -vf $(HOME)/.env.conf
-	rm -vf $(HOME)/.bashrc
-	rm -vf $(HOME)/.zshrc
-	rm -vf $(HOME)/.zshenv
-	rm -vf $(HOME)/.vimrc
-	rm -vf $(HOME)/.vim/plugin
-	rm -vf $(HOME)/.config/i3/config
-	rm -vf $(HOME)/.i3status.conf
-	rm -vf $(HOME)/.wallpaper
-	rm -vf $(HOME)/.wallpaperlock
-	rm -vf $(HOME)/.tmuxinator
-	rm -vf $(HOME)/.tmux.conf
-	rm -vf $(HOME)/.config/luakit -r
-	rm -vf $(HOME)/.config/papis -r
-	rm -vf $(HOME)/.config/htop/htoprc
-	rm -vf $(HOME)/.visidatarc
-	rm -vf $(HOME)/.gitconfig
+setup-core: setup-zsh \
+        setup-i3wm \
+        setup-tmux \
+        setup-tmuxinator \
+        setup-ranger \
+        setup-vim
+setup-core-undo: setup-zsh-undo \
+        setup-i3wm-undo \
+        setup-tmux-undo \
+        setup-tmuxinator-undo \
+        setup-ranger-undo \
+        setup-vim-undo
+        
+setup-xclip setup-htop:
+	$(error "Not yet supported: $@.")
 # ------------------------------------------------------------------------------
