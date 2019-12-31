@@ -8,6 +8,7 @@ fullpath = $$( readlink -f "$(1)" )
 
 link_cmd = ln -fs
 make_link = $(link_cmd) $(call fullpath,$<) "$@"
+unmake_link = [ ! -L $(1) ] || $(rm_cmd) $(1)
 
 get_shell = $$( awk -F: '$$1=="'"$$USER"'" {print $$7}' /etc/passwd )
 
