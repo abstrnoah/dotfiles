@@ -42,7 +42,8 @@ and to **uninstall** the complete stack, run
 
 Packages and their versions are put under their `<group>` name. All packages are
 managed by nix unless otherwise mentioned (_preinstall_ means this repository
-requires the package but provides no install script). Since nix ensures that
+requires the package but provides no install script; _manual_ means that install
+script for the package haven't been written). Since nix ensures that
 each package has access to the correct versions of its dependencies, versions
 for dependencies sake is not so significant. However, some packages (eg tmux)
 have disturbingly different configuration syntax between versions. Links point
@@ -65,15 +66,15 @@ to the packages' homepages.
   terminal multiplexer.
 - [_**ranger**_](https://ranger.github.io/) _1.7.1_ - file manager.
 - [_**vim**_](https://www.vim.org/) _7.4_, with some plugins - text editor.
-- [_**xclip**_](https://launchpad.net/xclip) _0.12_ - clipboard tool.
-- [_**htop**_](https://hisham.hm/htop/) _2.0.1_ - system monitor.
+- [_**xclip**_](https://launchpad.net/xclip) _0.12_ - (manual) clipboard tool.
+- [_**htop**_](https://hisham.hm/htop/) _2.0.1_ - (manual) system monitor.
 
 ### optional
 
 - [_**visidata**_](http://visidata.org/) _1.5.2_ - tabular data editor.
 - [_**firefox**_](https://www.mozilla.org/firefox/) _71.0_ - browser.
-- [_**xbacklight**_](https://github.com/tcatm/xbacklight) _1.2.1_ - screen
-  brightness tool.
+- [_**xbacklight**_](https://github.com/tcatm/xbacklight) _1.2.1_ - (manual)
+  screen brightness tool.
 - [_**thefuck**_](https://github.com/nvbn/thefuck) _3.2_ - shell autocorrecter.
 
 
