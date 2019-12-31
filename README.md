@@ -1,4 +1,4 @@
-# `~analyticalnoa/.dotfiles`
+# [`~analyticalnoa/.dotfiles`](https://github.com/analyticalnoa/dotfiles)
 ![size](https://img.shields.io/github/repo-size/analyticalnoa/dotfiles?label=size)
 ![license](https://img.shields.io/github/license/analyticalnoa/dotfiles)
 ![updated](https://img.shields.io/github/last-commit/analyticalnoa/dotfiles/develop?label=rev)
@@ -14,19 +14,21 @@ this one works on my platform, but the ultimate goal is for this configuration
 to be portable to all the common Linux distros.
 
 The *stack* is the set of packages configured by this repository.
-The `packages` directory contains installation and configuration files for each
-package in the stack and the `share` directory contains common files.
+The `./packages` directory contains installation and configuration files for each
+package in the stack and the `./share` directory contains common files.
 
-Most operations on the stack are done with `make` from the base of this
-repository, with the following **usage**:
+**Usage**:
 
-    make [ -C package/<pkg>] <operation>[-undo] [ VAR=<value> ... ]
+    make <command>[-<spec>][-undo] [ VAR=<value> ... ]
 
-where `<pkg>`-specific operations use the `-C` flag and global ones don't.
+where `<spec>` is a package, group, or other (see below) name. The `-undo`
+suffix means preform the inverse command. Environment variables specified on the
+shell override the current environment overrides those in `./anenv` override
+defaults.
 
 **TL;DR**, to **install** the complete stack, run
 
-    make setup-anenv  # prompts to set various options.
+    make setup-anenv  # opens a list of variables to be set in $EDITOR.
     make all
 
 and to **uninstall** the complete stack, run
@@ -82,36 +84,33 @@ independent of install operations, so if you have trouble installing a
 particular package and need to do it manually, you can still use this repository
 to handle configuration.
 
-Your environment needs to be setup first. Run
-
-    make set-anenv
-
-to be prompted for the values of various `$ANENV_` variables. Defaults will be
-read from and entries will be written to `$ANENV_DOTFILES/anenv`.
-
-To install or setup a `<pkg>`, run
-
-    make -C package/<pkg> ( install | setup )
-
-and to install or setup a `<group>` of packages, run
-
-    make ( install-<group> | setup-<group> )
-
-_Peripheral operations_ are non-package or non-group operations and are listed
-below.
-
-
     make setup-anenv
 
-> Setup the `$ANENV_` environment variables by prompt or via `VAR=<value>`
-pairs. If it exists, `$ANENV_DOTFILES/anenv` is sourced and variables that are
-set are provided as defaults. You can change these or leave them be. The final
-environment is written to `$ANENV_DOTFILES/anenv`. If `$ANENV_DOTFILES` is
-empty, the current directory is taken as default.
+> Open `./anenv` in `$EDITOR`, which will contain a list of variables. You
+> should set these as desired and then save/quit. The variables will exported to
+> the environment. (Currently variables specified on the command line will be
+> ignored.)
 
-    make setup-wallpaper [ ANENV_WALLPAPER=share/<wallpaper> ]
-                         [ ANENV_WALLPAPER_LOCK=share/<wallpaperlock> ]
+    make install
 
-> Link `<wallpaper>` to `$ANENV_HOME/.wallpaper` and `<wallpaperlock>` to
-`$ANENV_HOME/.wallpaperlock`. If left empty, `share/wallpaper-home.png` is the
-default wallpaper and `share/wallpaper-lock.png` is the default lock screen.
+> Install all packages.
+
+    make setup
+
+> Setup all packages.
+
+    make install-<spec>
+
+> Install `<spec>`, which can be a package or group, on the machine.
+
+    make setup-<spec>
+
+> Setup the configuration of `<spec>`, which can be a package or group, with
+> symlinks from these dotfiles.
+
+    make setup-wallpaper [ ANENV_WALLPAPER=./share/<wallpaper> ]
+                         [ ANENV_WALLPAPER_LOCK=./share/<wallpaperlock> ]
+
+> Link `$ANENV_WALLPAPER` to `$HOME/.wallpaper` and `$ANENV_WALLPAPER_LOCK` to
+> `$HOME/.wallpaperlock`. (Defaults are `./share/wallpaper-home.png` and
+> `./share/wallpaper-lock.png` resp.)
