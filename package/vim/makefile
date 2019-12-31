@@ -1,4 +1,8 @@
 include ../../header.mk
+
+base_dir = ../..
+
+
                     # TODO: ensure directories exist.
 # setup
 # ------------------------------------------------------------------------------

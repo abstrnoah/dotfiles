@@ -58,7 +58,7 @@ if which thefuck &> /dev/null; then
 fi
 
 # mux
-. ~/.env.conf/shell/comp-mux.zsh
+. ~/.dotfiles/package/zsh/comp-mux.zsh
 
 # papis
 if which papis &> /dev/null; then

@@ -76,7 +76,8 @@ to the packages' homepages.
 - [_**firefox**_](https://www.mozilla.org/firefox/) _71.0_ - (manual) browser.
 - [_**xbacklight**_](https://github.com/tcatm/xbacklight) _1.2.1_ - (manual)
   screen brightness tool.
-- [_**thefuck**_](https://github.com/nvbn/thefuck) _3.2_ - shell autocorrecter.
+- [_**thefuck**_](https://github.com/nvbn/thefuck) _3.2_ - (manual) shell
+  autocorrecter.
 - [_**gnome-terminal**_]() _3.18.3_ - (manual) any terminal will do, but these
   dotfiles have a dark and light theme for GNOME's.
 

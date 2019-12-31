@@ -1,5 +1,7 @@
 SHELL = /bin/bash
 
+base_dir = .
+
 ANENV_NIXPKGS=$(HOME)/nixpkgs
 ANENV_WALLPAPER=./share/wallpaper-home.png
 ANENV_WALLPAPER_LOCK=./share/wallpaper-lock.png
@@ -29,8 +31,23 @@ missing_command:
 
 # all
 # ------------------------------------------------------------------------------
-all: install setup
-unall: uninstall unsetup
+all: setup-anenv install setup
+unall: unsetup-anenv uninstall unsetup
+# ------------------------------------------------------------------------------
+
+# setup-anenv
+# ------------------------------------------------------------------------------
+.PHONY: setup-anenv
+setup-anenv: $(HOME)/.dotfiles
+
+.PHONY: unsetup-anenv
+unsetup-anenv:
+	@echo "Manually rm ~/.dotfiles (not doing it automatically to avoid doing"\
+            "some real damage)."
+
+$(HOME)/.dotfiles: $(base_dir)
+	$(make_link)
+
 # ------------------------------------------------------------------------------
 
 # $(ANENV_NIXPKGS):

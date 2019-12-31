@@ -23,18 +23,22 @@ uninstall-required: uninstall-git
 
 .PHONY: install-core
 install-core: install-zsh \
-        install-i3wm \
         install-tmux \
         install-tmuxinator \
         install-vim
 
 .PHONY: uninstall-core
 uninstall-core: uninstall-zsh \
-        uninstall-i3wm \
         uninstall-tmux \
         uninstall-tmuxinator \
         uninstall-vim
-        
+
+.PHONY: install-optional
+install-optional: install-visidata
+
+.PHONY: uninstall-optional
+uninstall-optional: uninstall-visidata
+
 install-xclip install-nix install-ranger:
 	$(error "Not yet supported: $@.")
 # ------------------------------------------------------------------------------
@@ -67,6 +71,12 @@ unsetup-core: unsetup-zsh \
         unsetup-tmuxinator \
         unsetup-vim
         
+.PHONY: setup-optional
+setup-optional: setup-visidata
+
+.PHONY: unsetup-optional
+unsetup-optional: unsetup-visidata
+
 setup-xclip :
 	$(error "Not yet supported: $@.")
 # ------------------------------------------------------------------------------
