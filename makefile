@@ -62,14 +62,16 @@ setup-core: setup-zsh \
         setup-i3wm \
         setup-tmux \
         setup-tmuxinator \
-        setup-vim
+        setup-vim \
+        setup-nix
 
 .PHONY: unsetup-core
 unsetup-core: unsetup-zsh \
         unsetup-i3wm \
         unsetup-tmux \
         unsetup-tmuxinator \
-        unsetup-vim
+        unsetup-vim \
+        unsetup-nix
         
 .PHONY: setup-optional
 setup-optional: setup-visidata
@@ -249,4 +251,15 @@ setup-zsh:
 .PHONY: unsetup-zsh
 unsetup-zsh:
 	$(MAKE) -C package/zsh unsetup
+# ------------------------------------------------------------------------------
+
+# instatiate nix
+# ------------------------------------------------------------------------------
+.PHONY: setup-nix
+setup-nix:
+	$(MAKE) -C package/nix setup
+
+.PHONY: unsetup-nix
+unsetup-nix:
+	$(MAKE) -C package/nix unsetup
 # ------------------------------------------------------------------------------
