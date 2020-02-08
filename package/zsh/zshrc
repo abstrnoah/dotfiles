@@ -64,3 +64,8 @@ fi
 if which papis &> /dev/null; then
   eval "$(_PAPIS_COMPLETE=source_zsh papis)"
 fi
+
+# nix
+source "$HOME/.zshplugins/nix-zsh-completions/nix-zsh-completions.plugin.zsh"
+fpath=("$HOME/.zshplugins/nix-zsh-completions" $fpath)
+autoload -U compinit && compinit
