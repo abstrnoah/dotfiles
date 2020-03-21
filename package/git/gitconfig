@@ -1,6 +1,6 @@
 [user]
 	name = Noah D. Ortiz
-	email = analyticalnoa@gmail.com
+	email = abstractednoah@gmail.com
 [merge]
 	conflict = diff3
 [push]
@@ -8,3 +8,5 @@
 
 [url "client01:master01/repository/"]
     insteadOf = master01:
+[url "/media/analyticalnoa/portable02/repository/"]
+    insteadOf = portable02:
