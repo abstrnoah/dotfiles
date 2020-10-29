@@ -8,5 +8,5 @@
 
 [url "client01:master01/repository/"]
     insteadOf = master01:
-[url "/media/analyticalnoa/portable02/repository/"]
+[url "client01:/media/analyticalnoa/portable02/repository/"]
     insteadOf = portable02:

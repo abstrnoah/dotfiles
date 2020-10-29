@@ -1,10 +1,7 @@
 # ~/.tmuxinator/main.yml
 
 name: main
-root: ~/
-startup_window: <%= @args[0] %>
+root: ~/<%= @args[0] %>
 
 windows:
-  - explore: ranger <%= ENV["ANE_REPOROOT"] %>
-  - monitor: htop
-  - log: journalctl --follow
+  - main:

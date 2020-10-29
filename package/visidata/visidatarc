@@ -1,8 +1,13 @@
 from datetime import timedelta as _timedelta
+import numpy as np
 
 options.confirm_overwrite = False
 options.quitguard = True
 options.disp_date_fmt = "%Y-%m-%d %H:%M"
+options.use_default_colors = True
+options.color_key_col = "93" #93,94
+options.safety_first = True
+options.color_keystrokes = "81 cyan"
 
 vdtype(currency, '$', '{:,.02f} $')
 
@@ -14,6 +19,5 @@ def parse_timedelta(s):
     v = [ int(f) for f in s.split(':') ]
     return _timedelta( hours=v[0], minutes=v[1], seconds=v[2] )
 
-dat = {
-  'unit_transport_cost': 0.10
-}
+daychar = [ 'U', 'M', 'T', 'W', 'R', 'F', 'S' ]
+daysofweek = "SUMTWRF"

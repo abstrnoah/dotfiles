@@ -1,4 +1,8 @@
 set nocompatible
+set exrc
+
+" ecoding
+set encoding=utf-8
 
 " number, scroll
 set number
@@ -9,12 +13,15 @@ set laststatus=2
 set statusline=%<%F\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
 
 " vertical bar
-set colorcolumn=81
+set colorcolumn=+1
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 " highlighting
 set incsearch hlsearch
-nnoremap <silent> <esc> :noh<return><esc>
+nnoremap <silent> <ESC> :noh<CR><ESC>
+
+" folding
+set foldmethod=syntax
 
 " autosave
 let g:auto_save = 1
@@ -26,12 +33,18 @@ set wrap linebreak nolist textwidth=80
 set autoindent
 set shiftwidth=4
 
-" fix arrow keys
-nnoremap <silent> <ESC>OA <Nop>
-nnoremap <silent> <ESC>OB <Nop>
-nnoremap <silent> <ESC>OC <Nop>
-nnoremap <silent> <ESC>OD <Nop>
-inoremap <silent> <ESC>OA <Nop>
-inoremap <silent> <ESC>OB <Nop>
-inoremap <silent> <ESC>OC <Nop>
-inoremap <silent> <ESC>OD <Nop>
+" disable various dumb keys
+nnoremap <silent> <ESC>OA <NOP>
+nnoremap <silent> <ESC>OB <NOP>
+nnoremap <silent> <ESC>OC <NOP>
+nnoremap <silent> <ESC>OD <NOP>
+inoremap <silent> <ESC>OA <NOP>
+inoremap <silent> <ESC>OB <NOP>
+inoremap <silent> <ESC>OC <NOP>
+inoremap <silent> <ESC>OD <NOP>
+inoremap <silent> <ESC>OD <NOP>
+inoremap <silent> <DEL> <NOP>
+autocmd VimEnter * inoremap <silent> <BS> <NOP>
+
+" timeout
+set timeoutlen=200

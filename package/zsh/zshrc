@@ -23,7 +23,7 @@ autoload -Uz compinit
 compinit
 
 # prompt
-ANE_PROMPTCHAR=◈
+ANE_PROMPTCHAR=λ
 PROMPT="%B%n $ANE_PROMPTCHAR%b "
 RPROMPT='%s%B %70<..<%~ %M%b %? %#'
 
@@ -69,3 +69,6 @@ fi
 source "$HOME/.zshplugins/nix-zsh-completions/nix-zsh-completions.plugin.zsh"
 fpath=("$HOME/.zshplugins/nix-zsh-completions" $fpath)
 autoload -U compinit && compinit
+
+# main
+[ -z "$TMUX" ] && mux main
