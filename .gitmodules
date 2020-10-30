@@ -7,3 +7,6 @@
 [submodule "package/vim/pack/plugins/start/vim-surround"]
 	path = package/vim/pack/remote/start/vim-surround
 	url = https://github.com/tpope/vim-surround
+[submodule "package/vim/pack/remote/start/vim-latex"]
+	path = package/vim/pack/remote/start/vim-latex
+	url = https://github.com/vim-latex/vim-latex

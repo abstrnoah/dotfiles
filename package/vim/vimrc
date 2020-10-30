@@ -1,5 +1,6 @@
 set nocompatible
 set exrc
+filetype plugin on
 
 " ecoding
 set encoding=utf-8
