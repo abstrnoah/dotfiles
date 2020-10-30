@@ -18,7 +18,6 @@ highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 " highlighting
 set incsearch hlsearch
-nnoremap <silent> <ESC> :noh<CR><ESC>
 
 " folding
 set foldmethod=syntax
@@ -32,19 +31,6 @@ set tabstop=4 expandtab softtabstop=4
 set wrap linebreak nolist textwidth=80
 set autoindent
 set shiftwidth=4
-
-" disable various dumb keys
-nnoremap <silent> <ESC>OA <NOP>
-nnoremap <silent> <ESC>OB <NOP>
-nnoremap <silent> <ESC>OC <NOP>
-nnoremap <silent> <ESC>OD <NOP>
-inoremap <silent> <ESC>OA <NOP>
-inoremap <silent> <ESC>OB <NOP>
-inoremap <silent> <ESC>OC <NOP>
-inoremap <silent> <ESC>OD <NOP>
-inoremap <silent> <ESC>OD <NOP>
-inoremap <silent> <DEL> <NOP>
-autocmd VimEnter * inoremap <silent> <BS> <NOP>
 
 " timeout
 set timeoutlen=200
