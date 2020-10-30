@@ -1,6 +1,6 @@
 set nocompatible
 set exrc
-filetype plugin on
+filetype plugin indent on
 
 " ecoding
 set encoding=utf-8
@@ -35,3 +35,13 @@ set shiftwidth=4
 
 " timeout
 set timeoutlen=200
+
+" vim-latex
+let g:Tex_EnvEndWithCR = 1
+let g:Tex_Env_{'thm'} = "\\begin{thm}<++>\<CR><++>\<CR>\\end{thm}\<CR><++>"
+let g:Tex_Env_{'prop'} = "\\begin{prop}<++>\<CR><++>\<CR>\\end{prop}\<CR><++>"
+let g:Tex_Env_{'lemma'} = "\\begin{lemma}<++>\<CR><++>\<CR>\\end{lemma}\<CR><++>"
+let g:Tex_Env_{'easylist'} =
+    \ "\\begin{easylist}<++>\<CR><++>\<CR>\\end{easylist}\<CR><++>"
+let g:Tex_Env_{'align'} =
+    \ "\\begin{align}<++>\<CR><++>\<CR>\\end{align}\<CR><++>"
