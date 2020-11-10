@@ -38,11 +38,11 @@ set timeoutlen=200
 
 " vim-latex
 let g:Tex_EnvEndWithCR = 1
-let g:Tex_Env_{'thm'} = "\\begin{thm}<++>\<CR><++>\<CR>\\end{thm}\<CR><++>"
-let g:Tex_Env_{'prop'} = "\\begin{prop}<++>\<CR><++>\<CR>\\end{prop}\<CR><++>"
-let g:Tex_Env_{'lemma'} = "\\begin{lemma}<++>\<CR><++>\<CR>\\end{lemma}\<CR><++>"
+let g:Tex_Env_{'thm'} = "\\begin{thm}<++>\<CR><++>\<CR>\\end{thm}"
+let g:Tex_Env_{'prop'} = "\\begin{prop}<++>\<CR><++>\<CR>\\end{prop}"
+let g:Tex_Env_{'lemma'} = "\\begin{lemma}<++>\<CR><++>\<CR>\\end{lemma}"
 let g:Tex_Env_{'easylist'} =
-    \ "\\begin{easylist}<++>\<CR><++>\<CR>\\end{easylist}\<CR><++>"
+    \ "\\begin{easylist}<++>\<CR><++>\<CR>\\end{easylist}"
 let g:Tex_Env_{'align'} =
-    \ "\\begin{align}<++>\<CR><++>\<CR>\\end{align}\<CR><++>"
+    \ "\\begin{align}<++>\<CR><++>\<CR>\\end{align}"
 let g:Tex_Env_{'soln'} = "\\begin{soln}\<CR><++>\<CR>\\end{soln}"
