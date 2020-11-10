@@ -17,3 +17,4 @@ inoremap <silent> <BS> <NOP>
 
 " newline
 nnoremap <C-o> o<ESC>
+nnoremap <S-o> <S-o><ESC>
