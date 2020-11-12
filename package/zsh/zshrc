@@ -24,8 +24,11 @@ compinit
 
 # prompt
 ANE_PROMPTCHAR=λ
-PROMPT="%B%n $ANE_PROMPTCHAR%b "
-RPROMPT='%s%B %70<..<%~ %M%b %? %#'
+PROMPT_0="%B$ANE_PROMPTCHAR%b "
+PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
+NL=$'\n'
+PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
+
 
 # alias
 alias rezsh='. ~/.zshrc'
