@@ -14,7 +14,3 @@ inoremap <silent> <ESC>OD <NOP>
 inoremap <silent> <DEL> <NOP>
 " for some reason this isn't f*****g working
 inoremap <silent> <BS> <NOP>
-
-" newline
-nnoremap <C-o> o<ESC>
-nnoremap <S-o> <S-o><ESC>
