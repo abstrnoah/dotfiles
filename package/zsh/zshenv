@@ -2,3 +2,4 @@ export MOZ_USE_XINPUT2=1        # enable firefox touch screen scrolling
 export EDITOR=vim
 export VISUAL=vim
 export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
+export GTK_THEME=Adwaita:dark
