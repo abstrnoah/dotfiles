@@ -1,5 +1,18 @@
-export MOZ_USE_XINPUT2=1        # enable firefox touch screen scrolling
+#
+# Global environment
+#
+
 export EDITOR=vim
 export VISUAL=vim
 export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
-export GTK_THEME=Adwaita:dark
+
+
+#
+# App-specific environments
+#
+ 
+# firefox: Enable touch screen scrolling.
+alias firefox='MOZ_USE_XINPUT2=1 firefox'
+
+# xournalpp: Dark theme.
+alias xournalpp='GTK_THEME=Adwaita:dark xournalpp'
