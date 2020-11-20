@@ -10,3 +10,6 @@
 [submodule "package/vim/pack/remote/start/vim-latex"]
 	path = package/vim/pack/remote/start/vim-latex
 	url = https://github.com/vim-latex/vim-latex
+[submodule "share/wandernauta-sp"]
+	path = share/wandernauta-sp
+	url = https://gist.github.com/6800547.git
