@@ -5,7 +5,7 @@ root: <%= ENV["ANE_REPOROOT"] %>/know/inst/curr/ugrad/<%= @args[0] %>
 
 windows:
   - main:
-      layout: main-horizontal
+      layout: even-vertical
       panes:
         - ranger
         - tmux select-pane -t 1 && git branch -vva && git status -s
