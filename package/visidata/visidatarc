@@ -11,7 +11,15 @@ options.color_keystrokes = "81 cyan"
 
 vdtype(currency, '$', '{:,.02f} $')
 
-bindkey('i', 'edit-cell')
+vd.bindkey('i', 'edit-cell')
+
+vd.bindkey("e", "addcol-incr")
+vd.bindkey("ge", "setcol-incr")
+vd.bindkey("ze", "addcol-incr-step")
+vd.bindkey("gze", "setcol-incr-step")
+
+
+# Legacy.
 
 def parse_timedelta(s):
     if not s:
