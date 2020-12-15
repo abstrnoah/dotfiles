@@ -1,31 +1,69 @@
-from datetime import timedelta as _timedelta
-import numpy as np
+"""
+Personal runtime configuration for VisiData.
+"""
 
+import datetime as dt
+import numpy as np
+import subprocess
+
+__author__ = "Noah D. Ortiz <abstractednoah@gmail.com>"
+
+
+now = dt.datetime.now
+today = dt.date.today
+delta_day = dt.timedelta(days=1)
+
+#
+# Options
+#
+
+# Safety.
 options.confirm_overwrite = False
-options.quitguard = True
-options.disp_date_fmt = "%Y-%m-%d %H:%M"
-options.use_default_colors = True
-options.color_key_col = "93" #93,94
 options.safety_first = True
+options.quitguard = True
+
+# Column formatting.
+options.disp_date_fmt = "%Y-%m-%d %H:%M"  # TODO
+options.disp_pending = "⧗"
+
+# Theme.
+options.use_default_colors = True
+options.color_key_col = "93"  # 93,94
 options.color_keystrokes = "81 cyan"
 
-vdtype(currency, '$', '{:,.02f} $')
 
-vd.bindkey('i', 'edit-cell')
-
+# Keybindings.
+LEADER = "KEY_F(4)"
+vd.allPrefixes.append(LEADER)
+# Swap "i" and "e" so that _i_nserting is vim-like.
+vd.bindkey("i", "edit-cell")
+# Think _e_numerate.
 vd.bindkey("e", "addcol-incr")
 vd.bindkey("ge", "setcol-incr")
 vd.bindkey("ze", "addcol-incr-step")
 vd.bindkey("gze", "setcol-incr-step")
+vd.bindkey(f"{LEADER}o", "sysopen-cellpath")
+vd.bindkey(f"{LEADER}T", "setcell-now")
 
 
-# Legacy.
+#
+# Legacy, deprecated, TODO
+#
 
-def parse_timedelta(s):
-    if not s:
-        return _timedelta(0)
-    v = [ int(f) for f in s.split(':') ]
-    return _timedelta( hours=v[0], minutes=v[1], seconds=v[2] )
+# vdtype(currency, '$', '{:,.02f} $')
 
-daychar = [ 'U', 'M', 'T', 'W', 'R', 'F', 'S' ]
-daysofweek = "SUMTWRF"
+
+#
+# Commands
+#
+
+BaseSheet.addCommand(
+    None,
+    "sysopen-cellpath",
+    "launchExternalEditorPath(sheet.cursorDisplay)",
+    "Edit path found in current cell.",
+)
+
+BaseSheet.addCommand(
+    None, "setcell-now", "cursorCol.setValues([cursorRow], dt.datetime.now())"
+)
