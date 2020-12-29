@@ -42,8 +42,10 @@ vd.bindkey("e", "addcol-incr")
 vd.bindkey("ge", "setcol-incr")
 vd.bindkey("ze", "addcol-incr-step")
 vd.bindkey("gze", "setcol-incr-step")
+# Personal commands
 vd.bindkey(f"{LEADER}o", "sysopen-cellpath")
 vd.bindkey(f"{LEADER}T", "setcell-now")
+vd.bindkey(f"{LEADER}{ENTER}", "open-cellpath")
 
 
 #
@@ -57,13 +59,28 @@ vd.bindkey(f"{LEADER}T", "setcell-now")
 # Commands
 #
 
+
+def open_cellpath(path):
+    path = Path(path)
+
+
 BaseSheet.addCommand(
     None,
     "sysopen-cellpath",
     "launchExternalEditorPath(sheet.cursorDisplay)",
-    "Edit path found in current cell.",
+    "Open path under cursor in editor.",
 )
 
 BaseSheet.addCommand(
-    None, "setcell-now", "cursorCol.setValues([cursorRow], dt.datetime.now())"
+    None,
+    "setcell-now",
+    "cursorCol.setValues([cursorRow], dt.datetime.now())",
+    "Set current cell to now().",
+)
+
+BaseSheet.addCommand(
+    None,
+    "open-cellpath",
+    "vd.push(openPath(Path(sheet.cursorDisplay)))",
+    "Open path under cursor as sheet.",
 )
