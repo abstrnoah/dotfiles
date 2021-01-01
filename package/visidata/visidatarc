@@ -43,9 +43,9 @@ vd.bindkey("ge", "setcol-incr")
 vd.bindkey("ze", "addcol-incr-step")
 vd.bindkey("gze", "setcol-incr-step")
 # Personal commands
-vd.bindkey(f"{LEADER}o", "sysopen-cellpath")
-vd.bindkey(f"{LEADER}T", "setcell-now")
-vd.bindkey(f"{LEADER}{ENTER}", "open-cellpath")
+vd.bindkey(LEADER + "o", "sysopen-cellpath")
+vd.bindkey(LEADER + "T", "setcell-now")
+vd.bindkey(LEADER + ENTER, "open-cellpath")
 
 
 #
