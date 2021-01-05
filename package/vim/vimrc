@@ -2,6 +2,10 @@ set nocompatible
 set exrc
 filetype plugin indent on
 
+" leader
+let mapleader = ","
+set showcmd
+
 " ecoding
 set encoding=utf-8
 
