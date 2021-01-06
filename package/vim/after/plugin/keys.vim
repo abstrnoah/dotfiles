@@ -15,5 +15,9 @@ inoremap <silent> <DEL> <NOP>
 " for some reason this isn't f*****g working
 inoremap <silent> <BS> <NOP>
 
-" tags
+" navigation: tags, ctrlp
 nmap <leader>m :TagbarOpenAutoClose<CR>
+nnoremap <c-p> :CtrlPMixed<cr>
+" Maybe remove this, if <c-p> as CtrlPMixed suffices.
+nnoremap <leader>b :CtrlPBuffer<cr>
+nnoremap <leader>. :CtrlPTag<cr>

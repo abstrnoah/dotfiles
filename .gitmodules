@@ -19,3 +19,6 @@
 [submodule "package/vim/pack/remote/start/vim-gutentags"]
 	path = package/vim/pack/remote/start/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags.git
+[submodule "package/vim/pack/remote/start/ctrlp.vim"]
+	path = package/vim/pack/remote/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim
