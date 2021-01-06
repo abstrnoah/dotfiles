@@ -18,3 +18,6 @@ alias firefox='MOZ_USE_XINPUT2=1 firefox'
 
 # xournalpp: Dark theme.
 alias xournalpp='GTK_THEME=Adwaita:dark xournalpp'
+
+# maven: Fix Java version.
+alias mvn='JAVA_HOME=/nix/store/s1n0y12md0b1mvsg4ly57d43xxwbjdzq-openjdk-11.0.9+11/lib/openjdk mvn'
