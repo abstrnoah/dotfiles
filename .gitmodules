@@ -16,3 +16,6 @@
 [submodule "package/vim/pack/remote/start/tagbar"]
 	path = package/vim/pack/remote/start/tagbar
 	url = https://github.com/preservim/tagbar
+[submodule "package/vim/pack/remote/start/vim-gutentags"]
+	path = package/vim/pack/remote/start/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags.git
