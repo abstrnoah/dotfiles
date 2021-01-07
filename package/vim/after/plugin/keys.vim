@@ -16,6 +16,7 @@ inoremap <silent> <DEL> <NOP>
 inoremap <silent> <BS> <NOP>
 
 " navigation: tags, ctrlp
+nmap <leader>n :NERDTreeVCS<cr>
 nmap <leader>m :TagbarOpenAutoClose<CR>
 nnoremap <c-p> :CtrlPMixed<cr>
 " Maybe remove this, if <c-p> as CtrlPMixed suffices.

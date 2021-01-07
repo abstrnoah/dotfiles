@@ -22,3 +22,6 @@
 [submodule "package/vim/pack/remote/start/ctrlp.vim"]
 	path = package/vim/pack/remote/start/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim
+[submodule "package/vim/pack/remote/start/nerdtree"]
+	path = package/vim/pack/remote/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git

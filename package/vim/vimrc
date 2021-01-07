@@ -50,3 +50,6 @@ let g:Tex_Env_{'easylist'} =
 let g:Tex_Env_{'align'} =
     \ "\\begin{align}<++>\<CR><++>\<CR>\\end{align}"
 let g:Tex_Env_{'soln'} = "\\begin{soln}\<CR><++>\<CR>\\end{soln}"
+
+" NERDTree
+let NERDTreeQuitOnOpen = 1
