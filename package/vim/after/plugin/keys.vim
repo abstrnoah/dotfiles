@@ -22,3 +22,6 @@ nnoremap <c-p> :CtrlPMixed<cr>
 " Maybe remove this, if <c-p> as CtrlPMixed suffices.
 nnoremap <leader>b :CtrlPBuffer<cr>
 nnoremap <leader>. :CtrlPTag<cr>
+
+" spell
+nmap <leader>s :set spell!<cr>
