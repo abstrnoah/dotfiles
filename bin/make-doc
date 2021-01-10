@@ -30,7 +30,7 @@ Options:
     --help|-h
         Print this usage and exit.
     --preview
-        Open the resulting pdf document if it is has not already been opened.
+        Open the resulting pdf document if it has not already been opened.
     --localtex <path>
         Path to a collection of local tex packages.
 EOF
