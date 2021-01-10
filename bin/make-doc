@@ -60,7 +60,7 @@ function mdk_to_tex()
     in_path=${1}
     target_path=${2}
 
-    madoko --odir="${target_path}" --tex "${in_path}"
+    madoko --odir="${target_path}" --tex "${in_path}" &>/dev/stderr
 
     bn=$(basename --suffix=".mdk" "${in_path}")
     echo "${target_path}/${bn}.tex"
