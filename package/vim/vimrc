@@ -15,7 +15,7 @@ set scrolloff=3
 
 " statusline
 set laststatus=2
-set statusline=%<%F\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
 
 " vertical bar
 set colorcolumn=+1
