@@ -1,0 +1,51 @@
+#!/bin/bash
+
+[ -z ${LOCALTEX} ] && LOCALTEX="${HOME}/.localtex"
+
+function print_usage() {
+    cat <<EOF
+usage: ${0} <path> ...
+EOF
+    cat <<'EOF'
+Populate `$LOCALTEX` with symlinks to <path>s.
+Paths are converted to absolute paths.
+`$LOCALTEX` defaults to `$HOME/.localtex` and must be a directory or not exist.
+EOF
+}
+
+function add_link() {
+    path=${1}
+
+    ln -s $(readlink -f "${path}") "${LOCALTEX}"
+}
+
+
+#
+# Main
+#
+
+if [ ${#} -eq 0 ]
+then
+    print_usage
+    exit
+fi
+
+if [ -e ${LOCALTEX} ]
+then
+    if [ ! -d ${LOCALTEX} ]
+    then
+        print_usage
+        exit 1
+    fi
+else
+    mkdir -p ${LOCALTEX}
+fi
+
+echo "\$LOCALTEX: ${LOCALTEX}"
+while [ ${#} -gt 0 ]
+do
+    echo "Adding ${1}..."
+    add_link ${1}
+    shift
+done
+echo "Done."
