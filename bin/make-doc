@@ -15,6 +15,14 @@
 _BUILD_PATH=./build
 _TARGET_PATH=./bin
 
+
+function fail()
+{
+    echo "Fatal error: ${1}" >&2
+    print_usage >&2
+    exit 1
+}
+
 function print_usage()
 {
     cat <<EOF
@@ -32,68 +40,127 @@ Options:
     --preview
         Open the resulting pdf document if it has not already been opened.
     --localtex <path>
-        Path to a collection of local tex packages.
+        Build the tex document in the presence of files found in <path>. This
+        means that no file in <path> should have the same name as <input>.
+        NOTE: This is kind of a hack to get tectonic to work with external
+        packages. At the moment, the only ways to use external packages with
+        tectonic is either to create a tectonic bundle or to place the files in
+        the same directory as the input.
 EOF
 }
 
 function count_open()
 {
-    path=${1}
+    [ ${#} -eq 1 ] || fail "Wrong number of arguments."
+    local path=${1}
 
     echo $(pgrep -cf "${path}")
 }
 
 function preview()
 {
-    path=${1}
+    [ ${#} -eq 1 ] || fail "Wrong number of arguments."
+    local path=${1}
 
-    q="xdg-open[ ]${path}"
+    local q="xdg-open[ ]${path}"
     if [ $(count_open "${q}") -eq 0 ]
     then
-        xdg-open "${path}" &
+        xdg-open "${path}" 1>&2 &
     fi
+}
+
+# Create (absolute) symlink to $1 in directory $2.
+# Return 1 if not a directory.
+# Echo path to resulting link.
+function add_link()
+{
+    [ ${#} -eq 3 ] || fail "Wrong number of arguments."
+    local source_path="${1}"
+    local target_dir="${2}"
+    local ln_flag="${3}"
+
+    if !([[ "${ln_flag}" == "-f" ]] || [[ "${ln_flag}" == "-i" ]])
+    then
+        ln_flag=""
+    fi
+
+    [ -d "${target_dir}" ] || return 1
+
+    ln -s -t "${target_dir}" $(readlink -f "${source_path}") "${ln_flag}" 1>&2
+
+    local bn=$(basename "${source_path}")
+    echo "${target_dir}/${bn}"
 }
 
 # Echo (relative) path to resulting tex.
 function mdk_to_tex()
 {
-    in_path=${1}
-    target_path=${2}
+    [ ${#} -eq 2 ] || fail "Wrong number of arguments."
+    local input_path=${1}
+    local target_path=${2}
 
-    madoko --odir="${target_path}" --tex "${in_path}" &>/dev/stderr
+    madoko --odir="${target_path}" --tex "${input_path}" 1>&2
 
-    bn=$(basename --suffix=".mdk" "${in_path}")
+    local bn=$(basename --suffix=".mdk" "${input_path}")
     echo "${target_path}/${bn}.tex"
 }
 
 # Echo path to resulting pdf.
 function tex_to_pdf()
 {
-    in_path=${1}
-    target_path=${2}
-    localtex_path=${3}
+    [ ${#} -ge 3 ] || fail "Wrong number of arguments."
+    local input_path="${1}"
+    local build_path="${2}"
+    local target_path="${3}"
+    # Optional.
+    local localtex_path="${4}"
 
-    build_dir=$(dirname "${in_path}")
-    r=$(build_localtex "${localtex_path}" "${build_dir}")
-    tectonic --outdir "${target_path}" "${in_path}" &>/dev/stderr
+    local tex_build_path="${build_path}/tex"
+    mkdir -p "${tex_build_path}"
+    local tex_path=$(\
+        build_tex_env "${input_path}" "${tex_build_path}" "${localtex_path}"\
+    )
+    tectonic --outdir "${target_path}" "${tex_path}" 1>&2
 
-    bn=$(basename --suffix=".tex" "${in_path}")
+    local bn=$(basename --suffix=".tex" "${input_path}")
     echo "${target_path}/${bn}.pdf"
 }
 
+# Echo (relative) path to tex file in the build path.
+function build_tex_env()
+{
+    [ ${#} -ge 2 ] || fail "Wrong number of arguments."
+    local input_path="${1}"
+    local build_path="${2}"
+    # Optional.
+    local localtex_path="${3}"
+
+    if [ ! -z "${localtex_path}" ]
+    then
+        for f in ${localtex_path}/*
+        do
+            [ -e "${f}" ] || continue
+            add_link "${f}" "${build_path}" -f  1>&2 || return 1
+        done
+    fi
+
+    echo $(add_link "${input_path}" "${build_path}" -f)
+}
+
+# DEPRECATED
 function build_localtex()
 {
-    localtex_path=${1}
-    build_path=${2}
+    local localtex_path=${1}
+    local build_path=${2}
 
     # Do nothing if no localtex to process.
     [ -z ${localtex_path} ] && return
     
-    target_path="${build_path}/.localtex"
+    local target_path="${build_path}/.localtex"
 
     # Don't symlink if localtex already exists.
     if [ ! -e "${target_path}" ]; then
-        ln -s $(readlink -f "${localtex_path}") "${target_path}" &>/dev/stderr
+        ln -s $(readlink -f "${localtex_path}") "${target_path}" 1>&2
     fi
 }
 
@@ -143,15 +210,18 @@ mkdir -p "${_TARGET_PATH}"
 # Dispatch based on type.
 case ${ftype} in
     tex)
-        pdf_path=$(tex_to_pdf ${input} ${_TARGET_PATH} ${localtex})
+        pdf_path=$(\
+            tex_to_pdf ${input} ${_BUILD_PATH} ${_TARGET_PATH} ${localtex}\
+        )
         ;;
     mdk)
         tex_path=$(mdk_to_tex ${input} ${_BUILD_PATH})
-        pdf_path=$(tex_to_pdf ${tex_path} ${_TARGET_PATH} ${localtex})
+        pdf_path=$(\
+            tex_to_pdf ${tex_path} ${_BUILD_PATH} ${_TARGET_PATH} ${localtex}\
+        )
         ;;
     *)
-        print_usage
-        exit 1
+        fail
         ;;
 esac
 
