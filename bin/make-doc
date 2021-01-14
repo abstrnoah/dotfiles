@@ -3,6 +3,12 @@
 #set -x
 
 #
+# TODO: Port this to Python, because bash is bad and dangerous and it turns out
+# that my error handling in bash is garbage.
+#
+
+
+#
 # make-doc - Simple builder for madoko or latex documents.
 #
 # A wrapper around madoko + tectonic in order to compile madoko files into pdf
@@ -144,6 +150,16 @@ function build_tex_env()
         done
     fi
 
+    local input_dir=$(dirname "${input_path}")
+    if [ ! -z "${input_dir}" ]
+    then
+        for f in ${input_dir}/*
+        do
+            [ -e "${f}" ] || continue
+            add_link "${f}" "${build_path}" -f  1>&2 || return 1
+        done
+    fi
+
     echo $(add_link "${input_path}" "${build_path}" -f)
 }
 
@@ -221,7 +237,7 @@ case ${ftype} in
         )
         ;;
     *)
-        fail
+        fail "Unrecognized type."
         ;;
 esac
 
