@@ -1,7 +1,7 @@
-" unhighlight on <ESC>
+" Unhighlight on <ESC>.
 nnoremap <silent> <ESC> :noh<CR><ESC>
 
-" disable various dumb keys
+" Disable various dumb keys.
 nnoremap <silent> <ESC>OA <NOP>
 nnoremap <silent> <ESC>OB <NOP>
 nnoremap <silent> <ESC>OC <NOP>
@@ -15,7 +15,7 @@ inoremap <silent> <DEL> <NOP>
 " for some reason this isn't f*****g working
 inoremap <silent> <BS> <NOP>
 
-" navigation: tags, ctrlp
+" Navigation: tags, ctrlp.
 nmap <leader>n :NERDTreeVCS<cr>
 nmap <leader>m :TagbarOpenAutoClose<CR>
 nnoremap <c-p> :CtrlPMixed<cr>
@@ -23,5 +23,5 @@ nnoremap <c-p> :CtrlPMixed<cr>
 nnoremap <leader>b :CtrlPBuffer<cr>
 nnoremap <leader>. :CtrlPTag<cr>
 
-" spell
+" Spell.
 nmap <leader>s :set spell!<cr>

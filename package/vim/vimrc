@@ -2,43 +2,53 @@ set nocompatible
 set exrc
 filetype plugin indent on
 
-" leader
+"
+" Mapping.
+" For most bindings, see 'keys.vim'.
+"
 let mapleader = ","
 set showcmd
+set timeoutlen=200
 
-" ecoding
+"
+" Commands.
+"
+command Revim source $MYVIMRC
+
+"
+" Ecoding.
+"
 set encoding=utf-8
 
-" number, scroll
-set number
+"
+" Ui features.
+"
+set relativenumber number
 set scrolloff=3
-
-" statusline
 set laststatus=2
 set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
-
-" vertical bar
-set colorcolumn=+1
-highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
-
-" highlighting
+set foldmethod=syntax
+set foldenable
 set incsearch hlsearch
 
-" folding
-set foldmethod=syntax
-
-" autosave
-let g:auto_save = 1
-let g:auto_save_in_insert_mode = 0
-
-" indentation
+"
+" Margins: indent, wrap.
+"
+set colorcolumn=+1
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 set tabstop=4 expandtab softtabstop=4
 set wrap linebreak nolist textwidth=80
 set autoindent
 set shiftwidth=4
 
-" timeout
-set timeoutlen=200
+"
+" Plugin configuration.
+"
+
+" autosave
+let g:auto_save = 1
+let g:auto_save_in_insert_mode = 0
+
 
 " vim-latex
 let g:Tex_EnvEndWithCR = 1
