@@ -37,9 +37,9 @@ alias ll='ls -alF'
 alias Y='xclip -selection clipboard'
 alias P='xclip -selection clipboard -o'
 alias T='mux main'
-alias V='vim'
 alias R='ranger'
 alias v='vim'
+alias g='git'
 
 # thefuck
 if which thefuck &> /dev/null; then
