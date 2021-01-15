@@ -1,27 +1,3 @@
-[submodule "package/vim/pack/plugins/start/vim-autoclose"]
-	path = package/vim/pack/remote/start/vim-autoclose
-	url = https://github.com/Townk/vim-autoclose
-[submodule "package/vim/pack/plugins/start/vim-auto-save"]
-	path = package/vim/pack/remote/start/vim-auto-save
-	url = https://github.com/907th/vim-auto-save
-[submodule "package/vim/pack/plugins/start/vim-surround"]
-	path = package/vim/pack/remote/start/vim-surround
-	url = https://github.com/tpope/vim-surround
-[submodule "package/vim/pack/remote/start/vim-latex"]
-	path = package/vim/pack/remote/start/vim-latex
-	url = https://github.com/vim-latex/vim-latex
 [submodule "share/wandernauta-sp"]
 	path = share/wandernauta-sp
 	url = https://gist.github.com/6800547.git
-[submodule "package/vim/pack/remote/start/tagbar"]
-	path = package/vim/pack/remote/start/tagbar
-	url = https://github.com/preservim/tagbar
-[submodule "package/vim/pack/remote/start/vim-gutentags"]
-	path = package/vim/pack/remote/start/vim-gutentags
-	url = https://github.com/ludovicchabant/vim-gutentags.git
-[submodule "package/vim/pack/remote/start/ctrlp.vim"]
-	path = package/vim/pack/remote/start/ctrlp.vim
-	url = https://github.com/ctrlpvim/ctrlp.vim
-[submodule "package/vim/pack/remote/start/nerdtree"]
-	path = package/vim/pack/remote/start/nerdtree
-	url = https://github.com/preservim/nerdtree.git
