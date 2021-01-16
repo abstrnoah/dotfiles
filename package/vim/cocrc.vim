@@ -14,6 +14,7 @@ let g:coc_global_extensions = [
     \ 'coc-dictionary',
     \ 'coc-tag',
     \ 'coc-word',
+    \ 'coc-snippets',
 \]
 
 "
@@ -161,7 +162,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -180,3 +181,14 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+
+"
+" coc-snippets
+" See [https://github.com/neoclide/coc-snippets/Readme.md].
+"
+"" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)

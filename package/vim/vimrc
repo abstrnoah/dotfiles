@@ -22,6 +22,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-latex/vim-latex'
     Plug 'tpope/vim-surround'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'honza/vim-snippets'
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -88,8 +89,6 @@ set shiftwidth=4
 " autosave
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
-
-
 
 " NERDTree
 let NERDTreeQuitOnOpen = 1
