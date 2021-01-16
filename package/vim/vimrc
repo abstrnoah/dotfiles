@@ -12,14 +12,14 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vimplug')
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'preservim/nerdtree'
     Plug 'preservim/tagbar'
     Plug '907th/vim-auto-save'
     Plug 'Townk/vim-autoclose'
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'vim-latex/vim-latex'
+    Plug 'vim-latex/vim-latex', {'for': 'tex'}
     Plug 'tpope/vim-surround'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
@@ -95,7 +95,7 @@ let g:auto_save_in_insert_mode = 0
 let NERDTreeQuitOnOpen = 1
 
 " Coc
-source ~/.dotfiles/package/vim/cocrc.vim
+source ~/.vim/cocrc.vim
 
 " Vimspector
 let g:vimspector_install_gadgets = [

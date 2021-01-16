@@ -1,0 +1,4 @@
+# To ignore from ~/.vim.
+# plug.vim is handled declaratively in vimrc.
+autoload/plug.vim
+sessions/
