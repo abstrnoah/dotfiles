@@ -15,6 +15,7 @@ let g:coc_global_extensions = [
     \ 'coc-tag',
     \ 'coc-word',
     \ 'coc-snippets',
+    \ 'coc-java-debug'
 \]
 
 "

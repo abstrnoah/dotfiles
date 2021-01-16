@@ -10,6 +10,9 @@ export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
 # Make locales work with Nix.
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 
+# Fix Java version.
+JAVA_HOME=/nix/store/s1n0y12md0b1mvsg4ly57d43xxwbjdzq-openjdk-11.0.9+11/lib/openjdk
+
 #
 # App-specific environments
 #
@@ -21,4 +24,5 @@ alias firefox='MOZ_USE_XINPUT2=1 firefox'
 alias xournalpp='GTK_THEME=Adwaita:dark xournalpp'
 
 # maven: Fix Java version.
-alias mvn='JAVA_HOME=/nix/store/s1n0y12md0b1mvsg4ly57d43xxwbjdzq-openjdk-11.0.9+11/lib/openjdk mvn'
+alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
+alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'

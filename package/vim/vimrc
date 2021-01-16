@@ -23,6 +23,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
+    Plug 'puremourning/vimspector'
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -95,3 +96,20 @@ let NERDTreeQuitOnOpen = 1
 
 " Coc
 source ~/.dotfiles/package/vim/cocrc.vim
+
+" Vimspector
+let g:vimspector_install_gadgets = [
+    \ 'debugpy',
+    \ 'vscode-cpptools',
+    \ 'vscode-java-debug'
+\]
+" See [https://github.com/puremourning/vimspector#mappings].
+nmap <leader>2      <Plug>VimspectorContinue
+nmap <leader><c-2>  <Plug>VimspectorStop
+nmap <leader>3      <Plug>VimspectorPause
+nmap <leader>4      <Plug>VimspectorToggleBreakpoint
+nmap <leader><c-4>  <Plug>VimspectorAddFunctionBreakpoint
+nmap <leader>5      <Plug>VimspectorStepOver
+nmap <leader>6      <Plug>VimspectorStepInto
+nmap <leader><c-6>  <Plug>VimspectorStepOut
+nmap <leader>0      <Plug>VimspectorRunToCursor
