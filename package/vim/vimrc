@@ -29,8 +29,21 @@ call plug#end()
 
 
 "
+" Functions.
+" TODO: Should probably be moved to its own plugin directory at some point.
+"
+function AN_NERDTree()
+    " Call `:NERDTreeFind` if path nonempty, otherwise `:NERDTreeVCS`.
+    if &modifiable && strlen(expand("%")) > 0 && !&diff
+        NERDTreeFind
+    else
+        NERDTreeVCS
+    endif
+endfunction
+
+"
 " Mapping.
-" For most bindings, see 'keys.vim'.
+" For most bindings, see 'after/plugin/keys.vim'.
 "
 let mapleader = ","
 set showcmd
