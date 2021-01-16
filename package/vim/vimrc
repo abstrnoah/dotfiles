@@ -24,6 +24,7 @@ call plug#begin('~/.vimplug')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'puremourning/vimspector'
+    Plug 'wellle/targets.vim'
 call plug#end()
 
 " Called automatically by `plug#end`.
