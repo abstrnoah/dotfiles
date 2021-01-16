@@ -5,13 +5,17 @@ schema-version=uint32 3
 default-show-menubar=false
 shortcuts-enabled=false
 
+[legacy/keybindings]
+toggle-menubar='F10'
+help='disabled'
+
 [legacy/profiles:/:f0561c92-169b-4b8e-a3bf-74d44f6a42cf]
 foreground-color='rgb(131,148,150)'
 visible-name='analyticalnoa-dark'
 scrollbar-policy='never'
-palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(101,123,131)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(147,161,161)', 'rgb(253,246,227)']
+palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(101,123,131)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(25,121,121)', 'rgb(253,246,227)']
 default-size-rows=25
-default-size-columns=79
+default-size-columns=87
 cursor-shape='block'
 use-system-font=false
 use-theme-colors=false
@@ -20,15 +24,15 @@ font='Ubuntu Mono 10'
 use-theme-transparency=false
 bold-color-same-as-fg=true
 scroll-on-keystroke=false
-background-color='rgb(0,43,54)'
-background-transparency-percent=0
-audible-bell=true
+background-color='rgb(10,29,31)'
+background-transparency-percent=21
+audible-bell=false
 
 [legacy/profiles:/:17ebe780-3a5c-454c-9cee-44f364b6ba2e]
 foreground-color='rgb(101,123,131)'
 visible-name='analyticalnoa-purple'
 scrollbar-policy='never'
-palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(101,123,131)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(147,161,161)', 'rgb(253,246,227)']
+palette=['rgb(0,0,0)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
 default-size-rows=25
 default-size-columns=79
 cursor-shape='block'
@@ -46,22 +50,25 @@ audible-bell=true
 
 [legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
 foreground-color='rgb(101,123,131)'
-visible-name='analyticalnoa-light'
+rewrap-on-resize=true
 scrollbar-policy='never'
-palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(33,227,180)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(147,161,161)', 'rgb(253,246,227)']
+palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(183,193,198)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(147,161,161)', 'rgb(253,246,227)']
+visible-name='analyticalnoa-light'
 default-size-rows=25
 default-size-columns=79
 cursor-shape='block'
+scroll-on-output=false
 use-custom-command=false
-use-theme-colors=false
 use-system-font=false
-use-transparent-background=true
+use-transparent-background=false
+use-theme-colors=false
 font='Ubuntu Mono 10'
 use-theme-transparency=false
+allow-bold=true
 bold-color-same-as-fg=true
 scroll-on-keystroke=false
 background-color='rgb(253,246,227)'
-background-transparency-percent=0
+background-transparency-percent=100
 audible-bell=true
 
 [legacy/profiles:]
