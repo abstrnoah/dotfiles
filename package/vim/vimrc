@@ -21,6 +21,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'vim-latex/vim-latex'
     Plug 'tpope/vim-surround'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -92,3 +93,6 @@ let g:auto_save_in_insert_mode = 0
 
 " NERDTree
 let NERDTreeQuitOnOpen = 1
+
+" Coc
+source ~/.dotfiles/package/vim/cocrc.vim
