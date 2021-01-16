@@ -1,44 +1,23 @@
-# [`~analyticalnoa/.dotfiles`](https://github.com/analyticalnoa/dotfiles)
-![size](https://img.shields.io/github/repo-size/analyticalnoa/dotfiles?label=size)
-![license](https://img.shields.io/github/license/analyticalnoa/dotfiles)
-![updated](https://img.shields.io/github/last-commit/analyticalnoa/dotfiles/develop?label=rev)
+# [`~abstractednoah/.dotfiles`](https://github.com/abstractednoah/dotfiles)
+![size](https://img.shields.io/github/repo-size/abstractednoah/dotfiles?label=size)
+![license](https://img.shields.io/github/license/abstractednoah/dotfiles)
+![updated](https://img.shields.io/github/last-commit/abstractednoah/dotfiles/develop?label=rev)
 
-A configuration stack used by analyticalnoa on Ubuntu.
+A configuration stack used by abstractednoah on Ubuntu.
 
 - __Status__: Unstable, in development.
-- __Platform__: Ubuntu 16.04 LTS, Linux 4.4.0-170-generic, x86_64-linux.
+- __Platform__: Ubuntu 16.04 LTS, Linux 4.4.0-170-generic, x86\_64-linux.
 
-There are lots of [dotfiles](https://dotfiles.github.io) out there for
-various platforms and preferences. At this early stage, I can only claim that
-this one works on my platform, but the ultimate goal is for this configuration
-to be portable to all the common Linux distros.
+__Note__ that at this time this README is only guaranteed to be up to date with
+some commit inclusively between the `master` and `develop` branches, and as a
+result is probably not super accurate.
 
-The *stack* is the set of packages configured by this repository.
-The `./packages` directory contains installation and configuration files for each
-package in the stack and the `./share` directory contains common files.
+## Installation
 
-You can put this repository anywhere, but should leave it there, as symlinks
-will be made to its contents.
+Symlink this directory to `~/.dotfiles`. Then symlink `package/<package>` or
+their contents to the relevant place.
 
-**Usage**:
-
-    make [un]<command>[-<spec>] [ VAR=<value> ... ]
-
-where `<spec>` is a package, group, or other (see below) name. The `un`
-prefix means preform the inverse command. Environment variables specified on the
-shell override the current environment overrides those in `./anenv` override
-defaults.
-
-**TL;DR**, to **install** the complete stack, run
-
-    make all
-
-and to **uninstall** the complete stack, run
-
-    make unall
-
-
-## the stack
+## The package stack
 
 Packages and their versions are put under their `<group>` name. All packages are
 managed by nix unless otherwise mentioned (_preinstall_ means this repository
@@ -80,48 +59,3 @@ to the packages' homepages.
   autocorrecter.
 - [_**gnome-terminal**_]() _3.18.3_ - (manual) any terminal will do, but these
   dotfiles have a dark and light theme for GNOME's.
-
-
-## controlling the stack
-
-There are _install operations_ and _setup operations_, and their inverses. The
-former installs packages on the machine (most via `nix-env`), while the latter
-installs their configuration via symlinks. Setup operations can be preformed
-independent of install operations, so if you have trouble installing a
-particular package and need to do it manually, you can still use this repository
-to handle configuration.
-
-    make all
-
-> Equivelant to running `make setup-anenv install setup`.
-
-    make setup-anenv
-
-> Open `./anenv` in `$EDITOR`, which will contain a list of variables. You
-> should set these as desired and then save/quit. The variables will exported to
-> the environment. Then `./anenv` will be linked from `$HOME/.anenv`. (Currently
-> variables specified on the command line will be ignored for this operation.)
-
-    make install
-
-> Install all packages.
-
-    make setup
-
-> Setup all packages.
-
-    make install-<spec>
-
-> Install `<spec>`, which can be a package or group, on the machine.
-
-    make setup-<spec>
-
-> Setup the configuration of `<spec>`, which can be a package or group, with
-> symlinks from these dotfiles.
-
-    make setup-wallpaper [ ANENV_WALLPAPER=./share/<wallpaper> ]
-                         [ ANENV_WALLPAPER_LOCK=./share/<wallpaperlock> ]
-
-> Link `$ANENV_WALLPAPER` to `$HOME/.wallpaper` and `$ANENV_WALLPAPER_LOCK` to
-> `$HOME/.wallpaperlock`. (Defaults are `./share/wallpaper-home.png` and
-> `./share/wallpaper-lock.png` resp.)
