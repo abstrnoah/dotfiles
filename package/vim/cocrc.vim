@@ -1,6 +1,7 @@
 "
 " Declare extensions.
 "
+" FIXME: 'coc-sh' not working.
 let g:coc_global_extensions = [
     \ 'coc-json',
     \ 'coc-python',
@@ -15,7 +16,9 @@ let g:coc_global_extensions = [
     \ 'coc-tag',
     \ 'coc-word',
     \ 'coc-snippets',
-    \ 'coc-java-debug'
+    \ 'coc-java-debug',
+    \ 'coc-sh',
+    \ 'coc-yaml',
 \]
 
 "
