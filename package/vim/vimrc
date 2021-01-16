@@ -89,16 +89,6 @@ let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
 
-" vim-latex
-let g:Tex_EnvEndWithCR = 1
-let g:Tex_Env_{'thm'} = "\\begin{thm}<++>\<CR><++>\<CR>\\end{thm}"
-let g:Tex_Env_{'prop'} = "\\begin{prop}<++>\<CR><++>\<CR>\\end{prop}"
-let g:Tex_Env_{'lemma'} = "\\begin{lemma}<++>\<CR><++>\<CR>\\end{lemma}"
-let g:Tex_Env_{'easylist'} =
-    \ "\\begin{easylist}<++>\<CR><++>\<CR>\\end{easylist}"
-let g:Tex_Env_{'align'} =
-    \ "\\begin{align}<++>\<CR><++>\<CR>\\end{align}"
-let g:Tex_Env_{'soln'} = "\\begin{soln}\<CR><++>\<CR>\\end{soln}"
 
 " NERDTree
 let NERDTreeQuitOnOpen = 1

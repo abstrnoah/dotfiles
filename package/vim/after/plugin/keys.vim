@@ -25,3 +25,11 @@ nnoremap <leader>. :CtrlPTag<cr>
 
 " Spell.
 nmap <leader>s :set spell!<cr>
+
+
+"
+" Compiler workflow.
+"
+" Make and displace quickfix window.
+nnoremap <leader>8 :silent make %<cr><c-l>:cwindow<cr>
+" <leader>9 reserved for 'run' or 'compile+run'; see ftplugin files.
