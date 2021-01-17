@@ -3,6 +3,7 @@ Personal runtime configuration for VisiData.
 """
 
 import datetime as dt
+from dateutil.tz import tzlocal
 import numpy as np
 import subprocess
 
@@ -74,7 +75,7 @@ BaseSheet.addCommand(
 BaseSheet.addCommand(
     None,
     "setcell-now",
-    "cursorCol.setValues([cursorRow], dt.datetime.now())",
+    "cursorCol.setValues([cursorRow], dt.datetime.now(tzlocal()))",
     "Set current cell to now().",
 )
 
