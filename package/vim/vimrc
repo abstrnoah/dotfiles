@@ -57,6 +57,7 @@ set timeoutlen=200
 " Commands.
 "
 command ReVim source $MYVIMRC
+command RmTrailingWhitespace %s/\s\+$//g
 
 "
 " Ecoding.
