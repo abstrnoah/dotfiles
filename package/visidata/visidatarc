@@ -12,7 +12,9 @@ __author__ = "Noah D. Ortiz <abstractednoah@gmail.com>"
 
 now = dt.datetime.now
 today = dt.date.today
-delta_day = dt.timedelta(days=1)
+td_hour = dt.timedelta(hours=1)
+td_day = dt.timedelta(days=1)
+td_week = dt.timedelta(days=7)
 
 #
 # Options
