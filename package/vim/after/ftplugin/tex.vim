@@ -4,7 +4,7 @@
 compiler an_makedoc_tex
 " Compile and preview.
 nnoremap <buffer> <leader>9
-    \ :silent !<c-r>=&makeprg<cr> --preview %<cr><c-l>:cwindow<cr>
+    \ :silent !<c-r>=&makeprg<cr> --preview %<cr><c-l>
 
 
 "
