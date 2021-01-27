@@ -25,6 +25,7 @@ call plug#begin('~/.vimplug')
     Plug 'honza/vim-snippets'
     Plug 'puremourning/vimspector'
     Plug 'wellle/targets.vim'
+    Plug 'lvht/tagbar-markdown', {'for': 'markdown'}
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -128,3 +129,6 @@ let g:ctrlp_user_command = {
 
 " Gutentags
 let g:gutentags_cache_dir = "~/.cache/gutentags"
+
+" Tagbar
+let g:tagbar_sort = 0
