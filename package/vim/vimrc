@@ -28,6 +28,7 @@ call plug#begin('~/.vimplug')
     Plug 'lvht/tagbar-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat'
     Plug 'dkarter/bullets.vim'
+    Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 call plug#end()
 
 " Called automatically by `plug#end`.
