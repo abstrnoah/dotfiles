@@ -7,9 +7,5 @@ nnoremap <buffer> <leader>9
     \ :silent !<c-r>=&makeprg<cr> --preview %<cr><c-l>:cwindow<cr>
 
 
-"
-" Plugins
-"
-
-" Tagbar
-let g:tagbar_sort = 0
+" Override tagbar by vim-markdown's `:Toc`.
+nmap <leader>m :Toc<CR>
