@@ -78,6 +78,7 @@ set laststatus=2
 set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
 set foldmethod=syntax
 set foldenable
+set foldlevelstart=3
 set incsearch hlsearch
 
 "
