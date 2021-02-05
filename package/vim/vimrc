@@ -25,6 +25,7 @@ call plug#begin('~/.vimplug')
     Plug 'honza/vim-snippets'
     Plug 'puremourning/vimspector'
     Plug 'wellle/targets.vim'
+    " tagbar-markdown maybe should be replaced by vim-markdown's `:Toc`.
     Plug 'lvht/tagbar-markdown', {'for': 'markdown'}
     Plug 'tpope/vim-repeat'
     Plug 'dkarter/bullets.vim'
@@ -138,3 +139,7 @@ let g:tagbar_sort = 1
 
 " Bullet
 let g:bullets_checkbox_markers = ' ○◐●✓'
+
+" vim-markdown
+let g:vim_markdown_override_foldtext = 0
+let g:vim_markdown_toc_autofit = 1
