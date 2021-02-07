@@ -26,6 +26,10 @@ nnoremap <leader>. :CtrlPTag<cr>
 " Spell.
 nmap <leader>s :set spell!<cr>
 
+" Search.
+nnoremap <leader>/ :S<space>
+nnoremap <leader>? :SB<space>
+
 
 "
 " Compiler workflow.
