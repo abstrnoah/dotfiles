@@ -87,7 +87,7 @@ command! -bang -nargs=* -complete=tag SB
 set encoding=utf-8
 
 "
-" Ui features.
+" Graphical interface.
 "
 set relativenumber number
 set scrolloff=3
@@ -97,6 +97,17 @@ set foldmethod=syntax
 set foldenable
 set foldlevelstart=3
 set incsearch hlsearch
+highlight Search ctermbg=black
+highlight Visual ctermbg=black
+highlight TrailingWhitespace ctermbg=red
+match TrailingWhitespace /\s\+$/
+autocmd BufWinEnter * match TrailingWhitespace /\s\+$/
+" TODO Figure out how this pattern works.
+autocmd InsertEnter * match TrailingWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match TrailingWhitespace /\s\+$/
+" Fixed preformance issue,
+" see [https://vim.fandom.com/wiki/Highlight_unwanted_spaces].
+autocmd BufWinLeave * call clearmatches()
 
 "
 " Margins: indent, wrap.
