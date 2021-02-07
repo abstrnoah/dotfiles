@@ -48,6 +48,18 @@ function AN_NERDTree()
     endif
 endfunction
 
+" See [https://vim.fandom.com/wiki/Search_across_multiple_lines].
+" TODO learn more about functions, esp. arguments.
+" TODO also search across underscores.
+" Search across lines and non-word characters. Case-sensitive if '!'.
+function! SearchMultiline(bang, ...)
+  if a:0 > 0
+    "let sep = (a:bang) ? '\_W\+' : '\_s\+'
+    let sep = '\_W\+'
+    let @/ = join(a:000, sep) . ((a:bang) ? "" : '\c')
+  endif
+endfunction
+
 "
 " Mapping.
 " For most bindings, see 'after/plugin/keys.vim'.
@@ -59,8 +71,15 @@ set timeoutlen=200
 "
 " Commands.
 "
+" TODO ReVim not really working.
 command ReVim source $MYVIMRC
 command RmTrailingWhitespace %s/\s\+$//g
+command! -bang -nargs=* -complete=tag S
+    \ call SearchMultiline(<bang>0, <f-args>)
+    \ | normal! /<C-R>/<CR>
+command! -bang -nargs=* -complete=tag SB
+    \ call SearchMultiline(<bang>0, <f-args>)
+    \ | normal! ?<C-R>/<CR>
 
 "
 " Ecoding.
