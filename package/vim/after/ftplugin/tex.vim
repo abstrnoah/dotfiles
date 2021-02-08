@@ -1,11 +1,12 @@
-"
-" Compiler workflow.
-"
+" Compiler.
 compiler an_makedoc_tex
 " Compile and preview.
 nnoremap <buffer> <leader>9
     \ :silent !<c-r>=&makeprg<cr> --preview %<cr><c-l>
 
+
+" Disable indent because default latex indenting is stupid.
+filetype indent off
 
 "
 " Configure vim-latex.
