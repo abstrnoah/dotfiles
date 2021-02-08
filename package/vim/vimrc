@@ -73,7 +73,7 @@ set timeoutlen=200
 "
 " TODO ReVim not really working.
 command ReVim source $MYVIMRC
-command RmTrailingWhitespace %s/\s\+$//g
+command TrimTrailingWhitespace %s/\s\+$//g
 command! -bang -nargs=* -complete=tag S
     \ call SearchMultiline(<bang>0, <f-args>)
     \ | normal! /<C-R>/<CR>
@@ -96,6 +96,13 @@ set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
 set foldmethod=syntax
 set foldenable
 set foldlevelstart=3
+
+"
+" Theme
+"
+" TODO This depends on my jenky gnome terminal colour scheme, need to overhaul
+" colour pallet.
+highlight StatusLine ctermbg=blue ctermfg=black
 set incsearch hlsearch
 highlight Search ctermbg=black
 highlight Visual ctermbg=black
@@ -172,3 +179,6 @@ let g:bullets_checkbox_markers = ' ○◐●✓'
 " vim-markdown
 let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_toc_autofit = 1
+" To avoid conflict with bullet plugin, still not ideal TODO.
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
