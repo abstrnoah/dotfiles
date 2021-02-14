@@ -57,6 +57,8 @@ Options:
         packages. At the moment, the only ways to use external packages with
         tectonic is either to create a tectonic bundle or to place the files in
         the same directory as the input.
+    -r <reruns>
+        Rerun tectonic <reruns> times. Default is 3.
 EOF
 }
 
@@ -119,19 +121,20 @@ function mdk_to_tex()
 # Echo path to resulting pdf.
 function tex_to_pdf()
 {
-    [ ${#} -ge 3 ] || fail "Wrong number of arguments."
+    [ ${#} -ge 4 ] || fail "Wrong number of arguments."
     local input_path="${1}"
     local build_path="${2}"
     local target_path="${3}"
+    local reruns="${4}"
     # Optional.
-    local localtex_path="${4}"
+    local localtex_path="${5}"
 
     local tex_build_path="${build_path}/tex"
     mkdir -p "${tex_build_path}"
     local tex_path=$(\
         build_tex_env "${input_path}" "${tex_build_path}" "${localtex_path}"\
     )
-    tectonic --outdir "${target_path}" "${tex_path}" 1>&2
+    tectonic --outdir "${target_path}" "${tex_path}" -r ${reruns} 1>&2
 
     local bn=$(basename --suffix=".tex" "${input_path}")
     echo "${target_path}/${bn}.pdf"
@@ -192,6 +195,7 @@ function build_localtex()
 
 # Default options.
 preview=false
+reruns=3
 
 # Parse args.
 while [ "${#}" -gt 0 ]; do
@@ -214,6 +218,11 @@ while [ "${#}" -gt 0 ]; do
             ftype=${1}
             shift
             ;;
+        -r)
+            shift
+            reruns=${1}
+            shift
+            ;;
         --)
             shift
             ;;
@@ -232,13 +241,17 @@ mkdir -p "${_TARGET_PATH}"
 case ${ftype} in
     tex)
         pdf_path=$(\
-            tex_to_pdf ${input} ${_BUILD_PATH} ${_TARGET_PATH} ${localtex}\
+            tex_to_pdf ${input} ${_BUILD_PATH} ${_TARGET_PATH}\
+                ${reruns}\
+                ${localtex}\
         )
         ;;
     mdk)
         tex_path=$(mdk_to_tex ${input} ${_BUILD_PATH})
         pdf_path=$(\
-            tex_to_pdf ${tex_path} ${_BUILD_PATH} ${_TARGET_PATH} ${localtex}\
+            tex_to_pdf ${tex_path} ${_BUILD_PATH} ${_TARGET_PATH}\
+                ${reruns}\
+                ${localtex}\
         )
         ;;
     *)
