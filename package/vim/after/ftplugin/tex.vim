@@ -11,6 +11,11 @@ filetype indent off
 "
 " Configure vim-latex.
 "
+
+" Disable folding.
+" (`nofoldenable` in vimrc is insufficient because vim-latex sets folding late.)
+set nofoldenable
+
 let g:Tex_EnvEndWithCR = 1
 
 " TODO: These are trash and incomplete.
