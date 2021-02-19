@@ -28,6 +28,7 @@ call plug#begin('~/.vimplug')
     Plug 'tpope/vim-repeat'
     Plug 'dkarter/bullets.vim'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+    Plug 'https://gitlab.com/dbeniamine/cheat.sh-vim.git'
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -183,3 +184,6 @@ let g:vim_markdown_toc_autofit = 1
 " To avoid conflict with bullet plugin, still not ideal TODO.
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
+
+" cheat.sh-vim
+let g:CheatDoNotReplaceKeywordPrg = 1
