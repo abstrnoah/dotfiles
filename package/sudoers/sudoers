@@ -1,3 +1,5 @@
 # Append to system suoders file via `sudo visudo`.
 
 %sudo ALL=(ALL:ALL) NOPASSWD: /usr/sbin/pm-hibernate
+# The systemctl interface is preferable because it locks before hibernating.
+%sudo ALL=(ALL:ALL) NOPASSWD: /bin/systemctl hibernate
