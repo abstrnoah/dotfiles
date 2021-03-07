@@ -19,6 +19,7 @@ let g:coc_global_extensions = [
     \ 'coc-java-debug',
     \ 'coc-sh',
     \ 'coc-yaml',
+    \ 'coc-git',
 \]
 
 "
