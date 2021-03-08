@@ -7,7 +7,7 @@
 set nowrap
 
 " Easy close with `q`.
-" (Hint: use `<C-w>_` to maximize horizontally).
+" (Hint: use `<c-w>|` to maximize horizontally).
 nnoremap <buffer><silent> q :q<cr>
 
 " Close quickfix or locationlist on jump.
