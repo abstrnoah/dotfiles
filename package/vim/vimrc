@@ -29,6 +29,8 @@ call plug#begin('~/.vimplug')
     Plug 'dkarter/bullets.vim'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     Plug 'https://gitlab.com/dbeniamine/cheat.sh-vim.git'
+    " Note that 'godlygeek/tabular' might also be a good table-formatting
+    " plugin; it might be more bare-bones, but perhaps more versatile?
     Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
@@ -178,6 +180,11 @@ let g:tagbar_sort = 1
 
 " Bullet
 let g:bullets_checkbox_markers = ' ○◐●✓'
+" Use numbers for all levels of enumerated lists.
+" This is partly for uniformity, but also because `vim-markdown` makes numbered
+" lists pretty, yet does not recognize alphabetic lists so does not make them
+" pretty.
+let g:bullets_outline_levels = ['num']
 
 " vim-markdown
 let g:vim_markdown_override_foldtext = 0
