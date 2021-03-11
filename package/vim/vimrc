@@ -29,6 +29,7 @@ call plug#begin('~/.vimplug')
     Plug 'dkarter/bullets.vim'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     Plug 'https://gitlab.com/dbeniamine/cheat.sh-vim.git'
+    Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
 " Called automatically by `plug#end`.
