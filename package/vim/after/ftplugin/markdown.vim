@@ -9,3 +9,9 @@ nnoremap <buffer> <leader>9
 
 " Override tagbar by vim-markdown's `:Toc`.
 nmap <leader>m :Toc<CR>
+
+
+" This is nearly the default, except it adds `\s*` before symbolic bullets. For
+" some reason the default only matches leading space for numerical bullets. This
+" fixes hanging indent for bullets at all levels.
+setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^\\s*[-*+]\\s\\+\\\|^\\s*\\[^\\ze[^\\]]\\+\\]:

@@ -122,7 +122,7 @@ autocmd InsertLeave * match TrailingWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 "
-" Margins: indent, wrap.
+" Indent, wrap, margins, format
 "
 set colorcolumn=+1
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
@@ -130,6 +130,7 @@ set tabstop=4 expandtab softtabstop=4
 set wrap linebreak nolist textwidth=80
 set autoindent
 set shiftwidth=4
+set formatoptions+=j
 
 "
 " Plugin configuration.
