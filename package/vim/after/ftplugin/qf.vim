@@ -4,7 +4,7 @@
 "
 
 " Disable wrap for more readable TOC.
-set nowrap
+setlocal nowrap
 
 " Easy close with `q`.
 " (Hint: use `<c-w>|` to maximize horizontally).
