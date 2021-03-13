@@ -59,7 +59,7 @@ endfunction
 function! SearchMultiline(bang, ...)
   if a:0 > 0
     "let sep = (a:bang) ? '\_W\+' : '\_s\+'
-    let sep = '\_W\+'
+    let sep = '\(\_W\|_\)\+'
     let @/ = join(a:000, sep) . ((a:bang) ? "" : '\c')
   endif
 endfunction
