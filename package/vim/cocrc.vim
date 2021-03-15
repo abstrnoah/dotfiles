@@ -1,5 +1,7 @@
 "
 " Declare extensions.
+" On Ubuntu, these are installed to <~/.config/coc/extensions>.
+" Remove <~/.config/coc> for a full refresh.
 "
 " FIXME: 'coc-sh' not working.
 let g:coc_global_extensions = [
@@ -7,7 +9,6 @@ let g:coc_global_extensions = [
     \ 'coc-python',
     \ 'coc-java',
     \ 'coc-html',
-    \ 'coc-prettier',
     \ 'coc-sql',
     \ 'coc-toml',
     \ 'coc-xml',
