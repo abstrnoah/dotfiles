@@ -57,12 +57,21 @@ endfunction
 " TODO also search across underscores.
 " Search across lines and non-word characters. Case-sensitive if '!'.
 function! SearchMultiline(bang, ...)
-  if a:0 > 0
-    "let sep = (a:bang) ? '\_W\+' : '\_s\+'
-    let sep = '\(\_W\|_\)\+'
-    let @/ = join(a:000, sep) . ((a:bang) ? "" : '\c')
-  endif
+    if a:0 > 0
+        "let sep = (a:bang) ? '\_W\+' : '\_s\+'
+        let sep = '\(\_W\|_\)\+'
+        let @/ = join(a:000, sep) . ((a:bang) ? "" : '\c')
+    endif
 endfunction
+
+function ToggleColorColumn()
+    if &colorcolumn == ""
+        set colorcolumn=+1
+    else
+        set colorcolumn=
+    endif
+endfunction
+
 
 "
 " Mapping.
@@ -124,7 +133,10 @@ autocmd BufWinLeave * call clearmatches()
 "
 " Indent, wrap, margins, format
 "
-set colorcolumn=+1
+
+set colorcolumn=
+call ToggleColorColumn()
+
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 set tabstop=4 expandtab softtabstop=4
 set wrap linebreak nolist textwidth=80
