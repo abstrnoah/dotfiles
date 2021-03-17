@@ -1,6 +1,6 @@
 [user]
 	name = Noah D. Ortiz
-	email = noah@brumal.org
+	email = abstractednoah@brumal.org
 [merge]
 	conflict = diff3
 [push]
