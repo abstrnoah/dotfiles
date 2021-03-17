@@ -42,4 +42,4 @@ nnoremap <leader>8 :silent make! %<cr><c-l>:cwindow<cr>
 
 
 " Toggle colorcolumn with table mode.
-nnoremap <leader>tm :call ToggleColorColumn()<cr>:TableModeToggle<cr>
+nnoremap <leader>tm :call ToggleTableMode()<cr>

@@ -64,11 +64,25 @@ function! SearchMultiline(bang, ...)
     endif
 endfunction
 
+function EnableColorColumn()
+    set colorcolumn=+1
+endfunction
+
 function ToggleColorColumn()
     if &colorcolumn == ""
-        set colorcolumn=+1
+        call EnableColorColumn()
     else
-        set colorcolumn=
+        setlocal colorcolumn=
+    endif
+endfunction
+
+function ToggleTableMode()
+    if tablemode#IsActive()
+        call EnableColorColumn()
+        call tablemode#Disable()
+    else
+        setlocal colorcolumn=
+        call tablemode#Enable()
     endif
 endfunction
 
@@ -133,10 +147,7 @@ autocmd BufWinLeave * call clearmatches()
 "
 " Indent, wrap, margins, format
 "
-
-set colorcolumn=
-call ToggleColorColumn()
-
+call EnableColorColumn()
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 set tabstop=4 expandtab softtabstop=4
 set wrap linebreak nolist textwidth=80
