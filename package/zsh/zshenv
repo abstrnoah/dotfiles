@@ -11,7 +11,7 @@ export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 
 # Fix Java version.
-JAVA_HOME=/nix/store/s1n0y12md0b1mvsg4ly57d43xxwbjdzq-openjdk-11.0.9+11/lib/openjdk
+JAVA_HOME="$(nix-env -q --out-path openjdk | awk '{print $2}')/lib/openjdk"
 
 # Pin nixpkgs at personal master fork.
 AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/an-master.tar.gz"
@@ -20,7 +20,7 @@ NIX_PATH="an_nixpkgs=${AN_NIXPKGS}"
 #
 # App-specific environments
 #
- 
+
 # firefox: Enable touch screen scrolling.
 alias firefox='MOZ_USE_XINPUT2=1 firefox'
 
