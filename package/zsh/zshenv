@@ -15,7 +15,7 @@ JAVA_HOME="$(nix-env -q --out-path openjdk | awk '{print $2}')/lib/openjdk"
 
 # Pin nixpkgs at personal master fork.
 AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/an-master.tar.gz"
-NIX_PATH="an_nixpkgs=${AN_NIXPKGS}"
+export NIX_PATH="an_nixpkgs=${AN_NIXPKGS}"
 
 #
 # App-specific environments
