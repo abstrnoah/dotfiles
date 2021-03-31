@@ -143,6 +143,10 @@ autocmd InsertLeave * match TrailingWhitespace /\s\+$/
 " Fixed preformance issue,
 " see [https://vim.fandom.com/wiki/Highlight_unwanted_spaces].
 autocmd BufWinLeave * call clearmatches()
+" Accent current line number.
+set cursorline
+hi clear CursorLine
+hi CursorLineNr ctermbg=brown ctermfg=black
 
 "
 " Indent, wrap, margins, format
