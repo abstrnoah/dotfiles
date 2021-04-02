@@ -32,6 +32,7 @@ call plug#begin('~/.vimplug')
     " Note that 'godlygeek/tabular' might also be a good table-formatting
     " plugin; it might be more bare-bones, but perhaps more versatile?
     Plug 'dhruvasagar/vim-table-mode'
+    Plug 'tpope/vim-commentary'
 call plug#end()
 
 " Called automatically by `plug#end`.
