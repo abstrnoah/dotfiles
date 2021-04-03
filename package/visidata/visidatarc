@@ -7,7 +7,7 @@ from dateutil.tz import tzlocal
 import numpy as np
 import subprocess
 
-__author__ = "Noah D. Ortiz <abstractednoah@gmail.com>"
+__author__ = "Noah D. Ortiz <abstractednoah@brumal.org>"
 
 
 now = dt.datetime.now
