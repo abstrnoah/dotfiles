@@ -203,6 +203,7 @@ let g:ctrlp_user_command = {
 
 " Gutentags
 let g:gutentags_cache_dir = "~/.cache/gutentags"
+set statusline^=%{gutentags#statusline()}\|
 
 " Tagbar
 let g:tagbar_sort = 1
