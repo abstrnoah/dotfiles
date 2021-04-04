@@ -10,13 +10,13 @@ import subprocess
 __author__ = "Noah D. Ortiz <abstractednoah@brumal.org>"
 
 
+td_hour = dt.timedelta(hours=1)
+td_day = dt.timedelta(days=1)
+td_week = dt.timedelta(days=7)
 now = dt.datetime.now
 morrow = lambda: now() + td_day
 today = dt.date.today
 tomorrow = lambda: today() + td_day
-td_hour = dt.timedelta(hours=1)
-td_day = dt.timedelta(days=1)
-td_week = dt.timedelta(days=7)
 
 #
 # Options
