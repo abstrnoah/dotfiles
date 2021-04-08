@@ -7,7 +7,7 @@
                 maven
                 ctags
                 git
-                glibc
+                glibcLocales
                 htop
                 jabref
                 jq
@@ -29,7 +29,8 @@
                 xrandr-invert-colors
                 zsh
             ];
-            pathsToLink = [ "/share/man" "/share/doc" "/bin" ];
+            pathsToLink = [ "/share/man" "/share/doc" "/bin" "/lib" ];
+            # TODO: fix PATH and MANPATH so that these are available to `man`.
             extraOutputsToInstall = [ "man" "doc" ];
         };
     };

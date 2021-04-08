@@ -11,7 +11,7 @@ export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 
 # Fix Java version.
-JAVA_HOME="$(nix-env -q --out-path openjdk | awk '{print $2}')/lib/openjdk"
+JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs at personal master fork.
 AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/an-master.tar.gz"
@@ -34,3 +34,9 @@ alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
 # Nix
 alias nix-env-defexpr=$(which nix-env)
 alias nix-env='nix-env -f ${AN_NIXPKGS}'
+
+
+# FIXME TODO This is actually killing me.
+# This should NOT go here, but it doesn't work anywhere else. Something very
+# late in the login process is overwritting this setting.
+/usr/bin/setxkbmap -option caps:ctrl_modifier
