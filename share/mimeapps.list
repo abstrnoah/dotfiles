@@ -1,0 +1,4 @@
+
+[Default Applications]
+x-scheme-handler/tg=telegramdesktop.desktop
+application/pdf=org.pwmt.zathura.desktop
