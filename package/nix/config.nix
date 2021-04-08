@@ -34,7 +34,6 @@
         zsh
         nix-zsh-completions
         zathura
-        zoom-us
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
