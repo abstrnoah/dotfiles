@@ -28,8 +28,9 @@
                 visidata
                 xrandr-invert-colors
                 zsh
+                nix-zsh-completions
             ];
-            pathsToLink = [ "/share/man" "/share/doc" "/bin" "/lib" ];
+            pathsToLink = [ "/share" "/bin" "/lib" ];
             # TODO: fix PATH and MANPATH so that these are available to `man`.
             extraOutputsToInstall = [ "man" "doc" ];
         };
