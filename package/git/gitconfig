@@ -5,8 +5,7 @@
 	conflict = diff3
 [push]
 	default = simple
-
-[url "machine02:master01/repository/"]
+[url "~/master01/repository/"]
     insteadOf = master01:
 [url "machine02:/media/analyticalnoa/portable02/repository/"]
     insteadOf = portable02:
