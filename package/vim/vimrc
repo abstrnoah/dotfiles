@@ -21,7 +21,7 @@ call plug#begin('~/.vimplug')
     Plug 'ludovicchabant/vim-gutentags'
     Plug 'vim-latex/vim-latex', {'for': 'tex'}
     Plug 'tpope/vim-surround'
-    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'puremourning/vimspector'
     Plug 'wellle/targets.vim'
@@ -172,7 +172,7 @@ let g:auto_save_in_insert_mode = 0
 let NERDTreeQuitOnOpen = 1
 
 " Coc
-" source ~/.vim/cocrc.vim
+source ~/.vim/cocrc.vim
 
 " Vimspector
 let g:vimspector_install_gadgets = [
