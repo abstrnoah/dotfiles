@@ -53,9 +53,9 @@ fi
 . ~/.dotfiles/package/zsh/comp-mux.zsh
 
 # nix
-source "$HOME/.zshplugins/nix-zsh-completions/nix-zsh-completions.plugin.zsh"
-fpath=("$HOME/.zshplugins/nix-zsh-completions" $fpath)
-autoload -U compinit && compinit
+# source "$HOME/.zshplugins/nix-zsh-completions/nix-zsh-completions.plugin.zsh"
+# fpath=("$HOME/.zshplugins/nix-zsh-completions" $fpath)
+# autoload -U compinit && compinit
 
 # main
 [ -z "$TMUX" ] && mux main
