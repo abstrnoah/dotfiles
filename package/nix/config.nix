@@ -34,6 +34,7 @@
         zsh
         nix-zsh-completions
         zathura
+        dmidecode
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
