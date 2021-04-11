@@ -13,7 +13,7 @@ help='disabled'
 foreground-color='rgb(131,148,150)'
 visible-name='analyticalnoa-dark'
 scrollbar-policy='never'
-palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(101,123,131)', 'rgb(47,198,116)', 'rgb(108,113,196)', 'rgb(25,121,121)', 'rgb(253,246,227)']
+palette=['rgb(7,54,66)', 'rgb(220,50,47)', 'rgb(133,153,0)', 'rgb(181,137,0)', 'rgb(38,139,210)', 'rgb(211,54,130)', 'rgb(42,161,152)', 'rgb(238,232,213)', 'rgb(0,43,54)', 'rgb(203,75,22)', 'rgb(88,110,117)', 'rgb(101,123,131)', 'rgb(131,148,150)', 'rgb(108,113,196)', 'rgb(147,161,161)', 'rgb(253,246,227)']
 default-size-rows=25
 default-size-columns=87
 cursor-shape='block'
@@ -24,8 +24,8 @@ font='Ubuntu Mono 10'
 use-theme-transparency=false
 bold-color-same-as-fg=true
 scroll-on-keystroke=false
-background-color='rgb(10,29,31)'
-background-transparency-percent=20
+background-color='rgb(0,43,54)'
+background-transparency-percent=4
 audible-bell=false
 
 [legacy/profiles:/:17ebe780-3a5c-454c-9cee-44f364b6ba2e]
