@@ -35,6 +35,7 @@
         nix-zsh-completions
         zathura
         dmidecode
+        xournalpp
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
