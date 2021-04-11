@@ -54,7 +54,45 @@ __TODO__: Document various post-Nix-install tasks that would be required on a
 fresh install, in particular symlinking various `package/<package>` directories
 to home.
 
+## Optionals
 
-Finally, some optional packages that we've not gotten working with Nix and that
-will need to be installed another way:
-- zoom
+Some optional packages can't be installed via Nix at this time (either they're
+buggy on Ubuntu, or they haven't been added to nixpkgs yet).
+
+### i3-gaps
+Note that if you use i3 with these dotfiles, you need the
+[i3-gaps fork](https://github.com/Airblader/i3)
+because our `i3/config` has options only supported by i3-gaps.
+
+Until we migrate to NixOS, desktop environments need to be installed with a
+native package manager, because Nix's encapsulation just leads to too many
+problems on non-NixOS systems. i3-gaps can be installed via `apt-get` after
+adding a PPA. See Airblader's
+[install wiki](https://github.com/Airblader/i3/wiki/installation)
+for a list of current PPAs. After `apt-get update`ing, install i3-gaps by
+running something like `apt-get install i3-wm` (note that the name is *not*
+`i3-gaps` or similar); view the package list of the PPA to get the exact name.
+Log in and out again, and you should have i3-gaps.
+
+
+### zoom
+Zoom via Nix doesn't seem to work (cause unknown, haven't had time to look into
+it). But it should be available via your native package manager.
+
+### Wacom tablets
+Wacom libraries are shipped with Ubuntu 16.04 by default, but for some tablets
+you need to build `input-wacom` from source. No-hassle instructions are provided
+here:
+<https://github.com/linuxwacom/input-wacom/wiki/Installing-input-wacom-from-source>.
+If for some reason your tablet stops working again (this has happened a few
+times for me, and I still don't know why), run
+
+    sudo rmmod wacom
+    sudo modprobe wacom
+
+or
+
+    sudo rmmod wacom_w8001
+    sudo modprobe wacom_w8001
+
+(`rmmod` will tell you if `wacom` or `wacom_w8001` is not found).
