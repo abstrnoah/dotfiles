@@ -3,6 +3,8 @@
   allowUnfreePredicate = pkg: with (import <an_nixpkgs>) {};
   builtins.elem (lib.getName pkg) [
     "zoom"
+    "spotify"
+    "spotify-unwrapped"
   ];
   packageOverrides = pkgs: with pkgs; {
     desktopPackages = pkgs.buildEnv {
@@ -36,6 +38,12 @@
         zathura
         dmidecode
         xournalpp
+        # Fails to start, missing GLIBC.
+        #zoom
+        # Unable to communicate with browser, also missing GLIBC.
+        #spotify
+        # Dependency for 'timer', which I've not added to nixpkgs yet (TODO).
+        sox
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
