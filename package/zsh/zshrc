@@ -41,7 +41,6 @@ alias T='tmux a >&2 2>/dev/null || mux main'
 alias R='ranger'
 alias v='vim'
 alias g='git'
-alias d='cambrinary -w'
 
 # thefuck
 if which thefuck &> /dev/null; then
