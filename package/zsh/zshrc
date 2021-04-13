@@ -41,6 +41,7 @@ alias T='tmux a >&2 2>/dev/null || mux main'
 alias R='ranger'
 alias v='vim'
 alias g='git'
+alias wttr='curl "wttr.in/?mF&format=4"'
 
 # thefuck
 if which thefuck &> /dev/null; then
@@ -57,5 +58,5 @@ source ~/.nix-profile/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
 fpath=("$HOME/.nix-profile/share/zsh/site-functions/" $fpath)
 autoload -U compinit && compinit
 
-# main
+## Main
 [ -z "$TMUX" ] && mux main
