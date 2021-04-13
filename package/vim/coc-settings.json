@@ -1,3 +1,4 @@
 {
-    "suggest.autoTrigger": "none"
+    "suggest.autoTrigger": "none",
+    "clangd.path": "/usr/bin/clangd-12"
 }
