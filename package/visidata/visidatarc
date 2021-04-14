@@ -18,6 +18,7 @@ now = dt.datetime.now
 morrow = lambda: now() + td_day
 today = dt.date.today
 tomorrow = lambda: today() + td_day
+datestr = lambda s: str(date(s))
 
 # Common symbols
 CHECKMARK = "✓"

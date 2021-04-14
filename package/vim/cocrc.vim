@@ -21,6 +21,8 @@ let g:coc_global_extensions = [
     \ 'coc-sh',
     \ 'coc-yaml',
     \ 'coc-git',
+    \ 'coc-clang-format-style-options',
+    \ 'coc-clangd',
 \]
 
 "
