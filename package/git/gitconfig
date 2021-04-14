@@ -7,5 +7,5 @@
 	default = simple
 [url "~/master01/repository/"]
     insteadOf = master01:
-[url "machine02:/media/analyticalnoa/portable02/repository/"]
+[url "/media/analyticalnoa/portable02/repository/"]
     insteadOf = portable02:
