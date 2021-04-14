@@ -4,7 +4,7 @@ HISTSIZE=1000
 SAVEHIST=2000
 
 # config
-setopt appendhistory 
+setopt appendhistory
 setopt autocd extendedglob nomatch notify no_beep
 setopt prompt_cr prompt_sp
 
@@ -32,8 +32,8 @@ PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
 
 
 # alias
-alias rezsh='. ~/.zshrc'
-alias retmux='tmux source-file ~/.tmux.conf'
+alias reload-zsh='. ~/.zshrc'
+alias reload-tmux='tmux source-file ~/.tmux.conf'
 alias ll='ls -alF'
 alias Y='xclip -selection clipboard'
 alias P='xclip -selection clipboard -o'
@@ -42,12 +42,7 @@ alias R='ranger'
 alias v='vim'
 alias g='git'
 alias wttr='curl "wttr.in/?mF&format=4"'
-
-# thefuck
-if which thefuck &> /dev/null; then
-  eval $(thefuck --alias)
-  eval $(thefuck --alias F)
-fi
+alias update-nix='nix-env -v -f ${AN_NIXPKGS} -riA desktopPackages'
 
 # mux
 . ~/.dotfiles/package/zsh/comp-mux.zsh
