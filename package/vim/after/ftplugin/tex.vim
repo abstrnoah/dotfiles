@@ -38,4 +38,4 @@ let g:Tex_Env_{'easylist'} =
     \ "\\begin{easylist}<++>\<CR><++>\<CR>\\end{easylist}"
 let g:Tex_Env_{'align'} =
     \ "\\begin{align}<++>\<CR><++>\<CR>\\end{align}"
-let g:Tex_Env_{'soln'} = "\\begin{soln}\<CR><++>\<CR>\\end{soln}"
+let g:Tex_Env_{'solution'} = "\\begin{solution}\<CR><++>\<CR>\\end{solution}"
