@@ -44,6 +44,7 @@
         #spotify
         # Dependency for 'timer', which I've not added to nixpkgs yet (TODO).
         sox
+        pdfgrep
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
