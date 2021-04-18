@@ -39,4 +39,4 @@ alias nix-env='nix-env -f ${AN_NIXPKGS}'
 # FIXME TODO This is actually killing me.
 # This should NOT go here, but it doesn't work anywhere else. Something very
 # late in the login process is overwritting this setting.
-/usr/bin/setxkbmap -option caps:ctrl_modifier
+# /usr/bin/setxkbmap -option caps:ctrl_modifier
