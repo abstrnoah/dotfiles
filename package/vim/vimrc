@@ -33,6 +33,7 @@ call plug#begin('~/.vimplug')
     " plugin; it might be more bare-bones, but perhaps more versatile?
     Plug 'dhruvasagar/vim-table-mode'
     Plug 'tpope/vim-commentary'
+    Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -225,3 +226,7 @@ let g:vim_markdown_new_list_item_indent = 0
 
 " cheat.sh-vim
 let g:CheatDoNotReplaceKeywordPrg = 1
+
+" indentLine
+let g:indentLine_color_term = "black"
+let g:indentLine_char = "┊"
