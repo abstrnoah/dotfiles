@@ -42,7 +42,7 @@ alias R='ranger'
 alias v='vim'
 alias g='git'
 alias wttr='curl "wttr.in/?mF&format=4"'
-alias update-nix='nix-env -v -f ${AN_NIXPKGS} -riA desktopPackages'
+alias update-nix='nix-env -v -f ${AN_NIXPKGS} -iA clientPackages'
 
 # mux
 . ~/.dotfiles/package/zsh/comp-mux.zsh

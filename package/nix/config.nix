@@ -5,10 +5,11 @@
     "zoom"
     "spotify"
     "spotify-unwrapped"
+    "ngrok"
   ];
   packageOverrides = pkgs: with pkgs; {
-    desktopPackages = pkgs.buildEnv {
-      name = "desktopPackages";
+    clientPackages = pkgs.buildEnv {
+      name = "clientPackages";
       paths = [
         maven
         ctags
@@ -45,6 +46,16 @@
         # Dependency for 'timer', which I've not added to nixpkgs yet (TODO).
         sox
         pdfgrep
+        # Audio not working for tor.
+        torbrowser
+      ];
+      pathsToLink = [ "/share" "/bin" "/lib" ];
+      extraOutputsToInstall = [ "man" "doc" ];
+    };
+    serverPackages = pkgs.buildEnv {
+      name = "serverPackages";
+      paths = [
+        ngrok
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
