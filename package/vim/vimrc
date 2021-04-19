@@ -230,3 +230,6 @@ let g:CheatDoNotReplaceKeywordPrg = 1
 " indentLine
 let g:indentLine_color_term = "black"
 let g:indentLine_char = "┊"
+" Note that as it stands, indentLine seems to have control over conceal. So
+" conceal should be configured here, rather than via `set concealcursor`, etc.
+let g:indentLine_concealcursor = ""
