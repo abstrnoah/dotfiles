@@ -43,6 +43,8 @@ alias v='vim'
 alias g='git'
 alias wttr='curl "wttr.in/?mF&format=4"'
 alias update-nix='nix-env -v -f ${AN_NIXPKGS} -iA clientPackages'
+# Don't ssh from tmux, that's dangerous!
+alias ssh='[ -z ${TMUX} ] && ssh'
 
 # mux
 . ~/.dotfiles/package/zsh/comp-mux.zsh
