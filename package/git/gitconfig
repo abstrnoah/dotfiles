@@ -5,9 +5,10 @@
 	conflict = diff3
 [push]
 	default = simple
-[url "~/master01/repository/"]
-    insteadOf = master01:
-[url "/media/analyticalnoa/portable02/repository/"]
-    insteadOf = portable02:
 [init]
     defaultBranch = "master"
+[include]
+    ; This is where site-specific directives should go, such as aliasing urls.
+    path = ~/.site.gitconfig
+[url "/media/analyticalnoa/portable02/repository/"]
+    insteadOf = portable02:
