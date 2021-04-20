@@ -36,7 +36,7 @@ config to `~/.config` like so
 
     ln -s ~/.dotfiles/package/nix/config.nix ~/.config/nixpkgs/config.nix
 
-Finally we can have Nix install the `desktopPackages` override that is declared
+Finally we can have Nix install the `clientPackages` override that is declared
 in `config.nix`. You can either set `nix-env` up to use the latest nixpkgs
 channel, or install using
 [abstractednoah/nixpkgs](https://github.com/abstractednoah/nixpkgs)
@@ -45,7 +45,7 @@ by running
     nix-env \
         --file \
             https://github.com/abstractednoah/nixpkgs/archive/an-master.tar.gz \
-        --install --remove-all --attr desktopPackages
+        --install --remove-all --attr clientPackages
 
 with an optional `--verbose` flag if you want to see what's happening (the
 initial run will take quite a long while).
