@@ -42,7 +42,9 @@ alias R='ranger'
 alias v='vim'
 alias g='git'
 alias wttr='curl "wttr.in/?mF&format=4"'
-alias update-nix='nix-env -v -f ${AN_NIXPKGS} -iA clientPackages'
+# Note that 'nix-env' is aliased in 'zshenv' with pinned nixpkgs.
+alias update-nix-client='nix-env -v -riA clientPackages'
+alias update-nix-server='nix-env -v -riA clientPackages serverPackages'
 # Don't ssh from tmux, that's dangerous!
 alias ssh='[ -z ${TMUX} ] && ssh'
 

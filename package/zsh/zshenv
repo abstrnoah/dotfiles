@@ -14,8 +14,11 @@ export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs at personal master fork.
-AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/an-master.tar.gz"
-export NIX_PATH="an_nixpkgs=${AN_NIXPKGS}"
+export AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/an-master.tar.gz"
+# NIX_PATH gets overridden by Nix's site-wide profile, which is sourced from
+# '/etc/profile', which is sourced from 'zprofile'. For mitigation, see the
+# 'nix-env' alias below.
+# export NIX_PATH="an_nixpkgs=${AN_NIXPKGS}"
 
 #
 # App-specific environments
@@ -33,7 +36,8 @@ alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
 
 # Nix
 alias nix-env-defexpr=$(which nix-env)
-alias nix-env='nix-env -f ${AN_NIXPKGS}'
+# Yes, it is probably redundant to have both -I and -f.
+alias nix-env='nix-env -I an_nixpkgs=${AN_NIXPKGS} -f ${AN_NIXPKGS}'
 
 
 # FIXME TODO This is actually killing me.
