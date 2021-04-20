@@ -55,7 +55,8 @@
     serverPackages = pkgs.buildEnv {
       name = "serverPackages";
       paths = [
-        ngrok
+        # Nothing here for now! Currently all server applications seem to need
+        # to be installed via the native package manager.
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
