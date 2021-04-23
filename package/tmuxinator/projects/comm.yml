@@ -1,0 +1,7 @@
+name: comm
+root: ~/
+
+windows:
+  - weechat:
+      panes:
+        - weechat
