@@ -48,6 +48,7 @@
         pdfgrep
         # Audio not working for tor.
         torbrowser
+        weechat
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
