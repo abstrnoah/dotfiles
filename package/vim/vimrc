@@ -107,8 +107,6 @@ set timeoutlen=200
 "
 " Commands.
 "
-" TODO ReVim not really working.
-command ReVim source $MYVIMRC
 command TrimTrailingWhitespace %s/\s\+$//g
 command! -bang -nargs=* -complete=tag S
     \ call SearchMultiline(<bang>0, <f-args>)
