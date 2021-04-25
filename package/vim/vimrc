@@ -13,30 +13,35 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vimplug')
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'preservim/nerdtree'
-    Plug 'preservim/tagbar'
+    " Must have.
     Plug '907th/vim-auto-save'
     Plug 'Townk/vim-autoclose'
-    Plug 'ludovicchabant/vim-gutentags'
     Plug 'tpope/vim-surround'
-    Plug 'honza/vim-snippets'
-    Plug 'puremourning/vimspector'
     Plug 'wellle/targets.vim'
+    Plug 'ludovicchabant/vim-gutentags'
+    Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tpope/vim-repeat'
-    Plug 'dkarter/bullets.vim'
-    Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-    Plug 'https://gitlab.com/dbeniamine/cheat.sh-vim.git'
-    Plug 'dhruvasagar/vim-table-mode'
-    Plug 'tpope/vim-commentary'
-    Plug 'Yggdroot/indentLine'
-    Plug 'tpope/vim-abolish'
-    Plug 'tpope/vim-eunuch'
-    Plug 'tommcdo/vim-lion'
+    " Should have.
     Plug 'justinmk/vim-sneak'
+    Plug 'tpope/vim-eunuch'
+    Plug 'dkarter/bullets.vim'
+    Plug 'dhruvasagar/vim-table-mode'
+    Plug 'tommcdo/vim-lion'
+    Plug 'tpope/vim-commentary'
+    " Fancy and useful extras.
+    Plug 'preservim/nerdtree'
+    Plug 'preservim/tagbar'
+    Plug 'tpope/vim-abolish'
+    " Frills.
+    Plug 'Yggdroot/indentLine'
+    " Why do we have these?
+    Plug 'https://gitlab.com/dbeniamine/cheat.sh-vim.git'
     " These ones are on thin ice.
     Plug 'vim-latex/vim-latex', {'for': 'tex'}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'honza/vim-snippets'
+    Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+    Plug 'puremourning/vimspector'
 call plug#end()
 
 " Called automatically by `plug#end`.
