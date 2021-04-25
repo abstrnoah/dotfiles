@@ -19,9 +19,7 @@ call plug#begin('~/.vimplug')
     Plug '907th/vim-auto-save'
     Plug 'Townk/vim-autoclose'
     Plug 'ludovicchabant/vim-gutentags'
-    Plug 'vim-latex/vim-latex', {'for': 'tex'}
     Plug 'tpope/vim-surround'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'puremourning/vimspector'
     Plug 'wellle/targets.vim'
@@ -29,11 +27,16 @@ call plug#begin('~/.vimplug')
     Plug 'dkarter/bullets.vim'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     Plug 'https://gitlab.com/dbeniamine/cheat.sh-vim.git'
-    " Note that 'godlygeek/tabular' might also be a good table-formatting
-    " plugin; it might be more bare-bones, but perhaps more versatile?
     Plug 'dhruvasagar/vim-table-mode'
     Plug 'tpope/vim-commentary'
     Plug 'Yggdroot/indentLine'
+    Plug 'tpope/vim-abolish'
+    Plug 'tpope/vim-eunuch'
+    Plug 'tommcdo/vim-lion'
+    Plug 'justinmk/vim-sneak'
+    " These ones are on thin ice.
+    Plug 'vim-latex/vim-latex', {'for': 'tex'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -91,9 +94,13 @@ endfunction
 
 "
 " Mapping.
-" For most bindings, see 'after/plugin/keys.vim'.
+" For most mapping, see 'after/plugin/keys.vim'. We put them there to ensure our
+" mappings override both vim and plugin defaults. The convention is that all
+" mappings go there unless they need to go elsewhere for some reason. Coc's
+" bindings are in 'cocrc.vim' bc coc is so much. When plugins have an option
+" like 'g:plugin_featureX_map', those are set here.
 "
-let mapleader = ","
+let mapleader = " "
 set showcmd
 set timeoutlen=200
 
@@ -160,6 +167,7 @@ set wrap linebreak nolist textwidth=80
 set autoindent
 set shiftwidth=4
 set formatoptions+=j
+set nojoinspaces
 
 "
 " Plugin configuration.
@@ -181,16 +189,6 @@ let g:vimspector_install_gadgets = [
     \ 'vscode-cpptools',
     \ 'vscode-java-debug'
 \]
-" See [https://github.com/puremourning/vimspector#mappings].
-nmap <leader>2      <Plug>VimspectorContinue
-nmap <leader><c-2>  <Plug>VimspectorStop
-nmap <leader>3      <Plug>VimspectorPause
-nmap <leader>4      <Plug>VimspectorToggleBreakpoint
-nmap <leader><c-4>  <Plug>VimspectorAddFunctionBreakpoint
-nmap <leader>5      <Plug>VimspectorStepOver
-nmap <leader>6      <Plug>VimspectorStepInto
-nmap <leader><c-6>  <Plug>VimspectorStepOut
-nmap <leader>0      <Plug>VimspectorRunToCursor
 
 " CtrlP
 let g:ctrlp_working_path_mode = "ra"
@@ -234,3 +232,9 @@ let g:CheatDoNotReplaceKeywordPrg = 1
 let g:indentLine_color_term = "darkgray"
 let g:indentLine_char = "┊"
 let g:indentLine_concealcursor = ""
+
+" vim-lion
+let g:lion_squeeze_spaces = 1
+
+" vim-sneak
+let g:sneak#label = 1

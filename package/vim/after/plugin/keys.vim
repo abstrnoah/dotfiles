@@ -43,3 +43,21 @@ nnoremap <leader>8 :silent make! %<cr><c-l>:cwindow<cr>
 
 " Toggle colorcolumn with table mode.
 nnoremap <leader>tm :call ToggleTableMode()<cr>
+
+" vim-sneak
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
+" vimspector
+" See [https://github.com/puremourning/vimspector#mappings].
+nmap <leader>2      <Plug>VimspectorContinue
+nmap <leader><c-2>  <Plug>VimspectorStop
+nmap <leader>3      <Plug>VimspectorPause
+nmap <leader>4      <Plug>VimspectorToggleBreakpoint
+nmap <leader><c-4>  <Plug>VimspectorAddFunctionBreakpoint
+nmap <leader>5      <Plug>VimspectorStepOver
+nmap <leader>6      <Plug>VimspectorStepInto
+nmap <leader><c-6>  <Plug>VimspectorStepOut
+nmap <leader>0      <Plug>VimspectorRunToCursor
