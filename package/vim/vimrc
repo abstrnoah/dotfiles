@@ -34,8 +34,6 @@ call plug#begin('~/.vimplug')
     Plug 'tpope/vim-abolish'
     " Frills.
     Plug 'Yggdroot/indentLine'
-    " Why do we have these?
-    Plug 'https://gitlab.com/dbeniamine/cheat.sh-vim.git'
     " These ones are on thin ice.
     Plug 'vim-latex/vim-latex', {'for': 'tex'}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
