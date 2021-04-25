@@ -94,7 +94,7 @@ endfunction
 
 "
 " Mapping.
-" For most mapping, see 'after/plugin/keys.vim'. We put them there to ensure our
+" For most mapping, see 'after/plugin/map.vim'. We put them there to ensure our
 " mappings override both vim and plugin defaults. The convention is that all
 " mappings go there unless they need to go elsewhere for some reason. Coc's
 " bindings are in 'cocrc.vim' bc coc is so much. When plugins have an option
