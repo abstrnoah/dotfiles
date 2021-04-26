@@ -34,6 +34,11 @@ nmap <leader>s :set spell!<cr>
 nnoremap <leader>/ :S<space>
 nnoremap <leader>? :SB<space>
 
+" clipboard
+map <leader>y "+y
+map <leader>p "+p
+map <leader>P "+P
+
 
 " Compiler workflow.
 " Make and display quickfix window.
