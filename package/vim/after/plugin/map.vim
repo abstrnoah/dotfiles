@@ -38,7 +38,7 @@ nnoremap <leader>? :SB<space>
 map <leader>y "+y
 map <leader>p "+p
 map <leader>P "+P
-
+vnoremap <leader>Y "+y:let @+ = substitute(@+, "\n\@<!\n\n\@!", " ")<cr>
 
 " Compiler workflow.
 " Make and display quickfix window.
