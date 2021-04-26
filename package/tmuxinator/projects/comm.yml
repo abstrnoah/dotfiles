@@ -5,3 +5,6 @@ windows:
   - weechat:
       panes:
         - weechat
+  - vmail:
+      panes:
+        - vmail
