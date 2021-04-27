@@ -1,9 +1,0 @@
-name: dotfiles
-root: ~/.dotfiles
-
-windows:
-  - main:
-      layout: even-vertical
-      panes:
-        - ranger
-        - tmux select-pane -t 1 && git branch -vva && git status -s

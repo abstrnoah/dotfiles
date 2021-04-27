@@ -1,7 +1,0 @@
-# ~/.tmuxinator/main.yml
-
-name: main
-root: ~/<%= @args[0] %>
-
-windows:
-  - main:

@@ -1,9 +1,0 @@
-# ~/.tmuxinator/monitor.yml
-
-name: monitor
-
-windows:
-  - main:
-      panes:
-        - htop
-        - journalctl -f
