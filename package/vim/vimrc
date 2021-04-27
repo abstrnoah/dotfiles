@@ -171,6 +171,11 @@ set formatoptions+=j
 set nojoinspaces
 
 "
+" Abbreviations
+"
+inoreabbrev -[] - [ ]
+
+"
 " Plugin configuration.
 "
 
