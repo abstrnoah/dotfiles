@@ -72,6 +72,7 @@ function! SearchMultiline(bang, ...)
     endif
 endfunction
 
+" TODO: Remove this function, replace with global setting.
 function EnableColorColumn()
     set colorcolumn=+1
 endfunction
@@ -197,8 +198,13 @@ let g:vimspector_install_gadgets = [
 \]
 
 " CtrlP
+" (See map.vim for primary maps; '<c-p>' is preserved for basic ':CtrlP' while
+" the map '<leader>np' is intended for most usage.)
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = "ra"
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_mruf_relative = 1
 let g:ctrlp_user_command = {
     \ 'types': {
         \ 1: ['.git', 'cd %s && git ls-files -co --exclude-standard'],

@@ -21,11 +21,11 @@ map Q <nop>
 "map gQ <nop>
 
 " Navigation: tags, ctrlp.
-nmap <leader>n :call AN_NERDTree()<cr>
-nmap <leader>m :TagbarOpenAutoClose<CR>
-nnoremap <c-p> :CtrlPMixed<cr>
-nnoremap <leader>b :CtrlPBuffer<cr>
-nnoremap <leader>. :CtrlPTag<cr>
+nnoremap <leader>nm :TagbarOpenAutoClose<CR>
+nnoremap <leader>nn :call AN_NERDTree()<cr>
+nnoremap <leader>np :CtrlPMixed<cr>
+nnoremap <leader>nb :CtrlPBuffer<cr>
+nnoremap <leader>nl :CtrlPLine<cr>
 
 " Spell.
 nmap <leader>s :set spell!<cr>
