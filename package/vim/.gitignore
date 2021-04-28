@@ -2,3 +2,4 @@
 # plug.vim is handled declaratively in vimrc.
 autoload/plug.vim
 sessions/
+.netrwhist
