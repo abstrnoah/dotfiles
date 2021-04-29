@@ -20,13 +20,13 @@ map Q <nop>
 " Doesn't seem to work TODO.
 "map gQ <nop>
 
-" Navigation: tags, ctrlp.
-nnoremap <leader>nm :TagbarOpenAutoClose<CR>
-nnoremap <leader>nn :call AN_NERDTree()<cr>
-nnoremap <leader>np :CtrlPMixed<cr>
-nnoremap <leader>nb :CtrlPBuffer<cr>
-nnoremap <leader>nl :CtrlPLine<cr>
-nnoremap <leader>nt :CtrlPTag<cr>
+" Navigation.
+nnoremap <leader>fm :TagbarOpenAutoClose<CR>
+nnoremap <leader>fn :call AN_NERDTree()<cr>
+nnoremap <leader>fp :CtrlPMixed<cr>
+nnoremap <leader>fb :CtrlPBuffer<cr>
+nnoremap <leader>fl :CtrlPLine<cr>
+nnoremap <leader>ft :CtrlPTag<cr>
 
 " Spell.
 nmap <leader>s :set spell!<cr>
