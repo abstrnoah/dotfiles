@@ -26,6 +26,7 @@ nnoremap <leader>nn :call AN_NERDTree()<cr>
 nnoremap <leader>np :CtrlPMixed<cr>
 nnoremap <leader>nb :CtrlPBuffer<cr>
 nnoremap <leader>nl :CtrlPLine<cr>
+nnoremap <leader>nt :CtrlPTag<cr>
 
 " Spell.
 nmap <leader>s :set spell!<cr>
