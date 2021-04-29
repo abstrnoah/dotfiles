@@ -158,6 +158,7 @@ autocmd BufWinLeave * call clearmatches()
 set cursorline
 hi clear CursorLine
 hi CursorLineNr ctermbg=brown ctermfg=black
+hi Folded ctermbg=black ctermfg=grey
 
 "
 " Indent, wrap, margins, format
