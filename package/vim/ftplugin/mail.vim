@@ -28,3 +28,9 @@ setlocal formatoptions+=tcql
 " Comments (aka block quotation in mails).
 setlocal comments+=n:>
 setlocal commentstring=>\ %s
+
+" Avoid incoming (unmodifiable) mails lighting up light a red christmas tree bc
+" someone else doesn't know how to remove trailing whitespace.
+if !&modifiable
+    match none /\s\+$/
+endif

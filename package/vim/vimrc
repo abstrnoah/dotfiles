@@ -145,6 +145,7 @@ highlight StatusLine ctermbg=magenta ctermfg=black
 set incsearch hlsearch
 highlight Search ctermbg=black
 highlight Visual ctermbg=black
+" TODO: Factor some of these regexes as variables.
 highlight TrailingWhitespace ctermbg=red
 match TrailingWhitespace /\s\+$/
 autocmd BufWinEnter * match TrailingWhitespace /\s\+$/
