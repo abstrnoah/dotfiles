@@ -169,7 +169,7 @@ autocmd InsertLeave * match TrailingWhitespace /\s\+$/
 
 " Accent current line number.
 set cursorline
-hi clear CursorLine
+hi CursorLine cterm=none
 hi CursorLineNr cterm=bold
 
 "
