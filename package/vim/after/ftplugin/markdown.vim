@@ -8,7 +8,7 @@ nnoremap <buffer> <leader>9
 
 
 " Override tagbar by vim-markdown's `:Toc`.
-nmap <leader>m :Toc<CR>
+nmap <leader>fm :Toc<CR>
 
 
 " This is nearly the default, except it adds `\s*` before symbolic bullets. For
