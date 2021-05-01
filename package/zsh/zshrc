@@ -10,7 +10,7 @@ setopt prompt_cr prompt_sp
 
 # env vars
 export KEYTIMEOUT=1
-export ANE_REPOROOT="$HOME/repository"
+export BR_REPOROOT="${HOME}/repository"
 
 # zle
 bindkey -v
@@ -24,8 +24,8 @@ autoload -Uz compinit
 compinit
 
 # prompt
-ANE_PROMPTCHAR=λ
-PROMPT_0="%B$ANE_PROMPTCHAR%b "
+BR_PROMPTCHAR=🢒
+PROMPT_0="%B${BR_PROMPTCHAR}%b "
 PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
 NL=$'\n'
 PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
@@ -55,8 +55,8 @@ alias ssh='[ -z ${TMUX} ] && ssh'
 # nix
 source ~/.nix-profile/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
 # TODO This might not be the best way to do this...
-fpath=("$HOME/.nix-profile/share/zsh/site-functions/" $fpath)
+fpath=("${HOME}/.nix-profile/share/zsh/site-functions/" ${fpath})
 autoload -U compinit && compinit
 
 ## Main
-[ -z "$TMUX" ] && mux main
+[ -z "${TMUX}" ] && mux main
