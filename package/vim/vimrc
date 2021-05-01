@@ -40,6 +40,8 @@ call plug#begin('~/.vimplug')
     Plug 'honza/vim-snippets'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     Plug 'puremourning/vimspector'
+    " Theme.
+    Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
 " Called automatically by `plug#end`.
@@ -118,6 +120,9 @@ command! -bang -nargs=* -complete=tag S
 command! -bang -nargs=* -complete=tag SB
     \ call SearchMultiline(<bang>0, <f-args>)
     \ | normal! ?<C-R>/<CR>
+" FIXME: This doesn't work because it clears custom theme below. Theme below
+" needs to be moved to a fork of solarized.
+" command ToggleBG let &background = ( &background == "dark"? "light" : "dark" )
 
 "
 " Ecoding.
@@ -138,27 +143,33 @@ set foldlevelstart=99
 
 "
 " Theme
+" TODO: Move to a fork of solarized.
 "
-" TODO This depends on my jenky gnome terminal colour scheme, need to overhaul
-" colour pallet.
-highlight StatusLine ctermbg=magenta ctermfg=black
+set background=dark
+colorscheme solarized
 set incsearch hlsearch
-highlight Search ctermbg=black
-highlight Visual ctermbg=black
+
+" Fixed preformance issue,
+" see [https://vim.fandom.com/wiki/Highlight_unwanted_spaces].
+autocmd BufWinLeave * call clearmatches()
+
+" (Still not sure about these.)
+" highlight Search ctermbg=black
+" highlight Visual ctermbg=black
+" hi Folded ctermbg=black ctermfg=grey
+
+" TrailingWhitespace.
 highlight TrailingWhitespace ctermbg=red
 match TrailingWhitespace /\s\+$/
 autocmd BufWinEnter * match TrailingWhitespace /\s\+$/
 " TODO Figure out how this pattern works.
 autocmd InsertEnter * match TrailingWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match TrailingWhitespace /\s\+$/
-" Fixed preformance issue,
-" see [https://vim.fandom.com/wiki/Highlight_unwanted_spaces].
-autocmd BufWinLeave * call clearmatches()
+
 " Accent current line number.
 set cursorline
 hi clear CursorLine
-hi CursorLineNr ctermbg=brown ctermfg=black
-hi Folded ctermbg=black ctermfg=grey
+hi CursorLineNr cterm=bold
 
 "
 " Indent, wrap, margins, format
