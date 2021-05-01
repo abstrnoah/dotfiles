@@ -49,6 +49,8 @@
         # Audio not working for tor.
         torbrowser
         weechat
+        silver-searcher
+        fd
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
