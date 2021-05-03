@@ -263,4 +263,4 @@ let g:indentLine_concealcursor = ""
 let g:lion_squeeze_spaces = 1
 
 " vim-sneak
-let g:sneak#label = 1
+let g:sneak#label = 0
