@@ -114,6 +114,7 @@ set timeoutlen=200
 " Commands.
 "
 command TrimTrailingWhitespace %s/\s\+$//g
+" TODO: Make these work from visual mode by using direct '<c-r>='.
 command! -bang -nargs=* -complete=tag S
     \ call SearchMultiline(<bang>0, <f-args>)
     \ | normal! /<C-R>/<CR>
