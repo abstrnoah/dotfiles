@@ -108,7 +108,7 @@ endfunction
 "
 let mapleader = " "
 set showcmd
-set timeoutlen=200
+set timeoutlen=500
 
 "
 " Commands.

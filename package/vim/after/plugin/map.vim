@@ -1,3 +1,6 @@
+" Clear previous leader mappings.
+nnoremap <leader> <nop>
+
 " Unhighlight on <ESC>.
 nnoremap <silent> <ESC> :noh<CR><ESC>
 
