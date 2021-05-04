@@ -28,6 +28,7 @@ call plug#begin('~/.vimplug')
     Plug 'dhruvasagar/vim-table-mode'
     Plug 'tommcdo/vim-lion'
     Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
     " Fancy and useful extras.
     Plug 'preservim/nerdtree'
     Plug 'preservim/tagbar'
