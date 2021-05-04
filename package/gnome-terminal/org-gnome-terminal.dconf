@@ -3,10 +3,11 @@ mnemonics-enabled=false
 menu-accelerator-enabled=false
 schema-version=uint32 3
 default-show-menubar=false
-shortcuts-enabled=false
+shortcuts-enabled=true
 
 [legacy/keybindings]
-toggle-menubar='F10'
+full-screen='disabled'
+toggle-menubar='disabled'
 help='disabled'
 
 [legacy/profiles:/:f0561c92-169b-4b8e-a3bf-74d44f6a42cf]
@@ -19,7 +20,7 @@ default-size-columns=87
 cursor-shape='block'
 use-system-font=false
 use-theme-colors=false
-use-transparent-background=true
+use-transparent-background=false
 font='Ubuntu Mono 10'
 use-theme-transparency=false
 bold-color-same-as-fg=true
