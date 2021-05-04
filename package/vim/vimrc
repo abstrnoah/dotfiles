@@ -12,7 +12,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('~/.vimplug')
+call plug#begin('~/.cache/vimplug')
     " Must have.
     Plug '907th/vim-auto-save'
     Plug 'Townk/vim-autoclose'
