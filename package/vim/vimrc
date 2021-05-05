@@ -36,7 +36,6 @@ call plug#begin('~/.cache/vimplug')
     " Frills.
     Plug 'Yggdroot/indentLine'
     " These ones are on thin ice.
-    " Plug 'vim-latex/vim-latex', {'for': 'tex'}
     Plug 'lervag/vimtex', {'for': 'tex'}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
