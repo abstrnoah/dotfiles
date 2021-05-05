@@ -36,7 +36,7 @@ call plug#begin('~/.cache/vimplug')
     " Frills.
     Plug 'Yggdroot/indentLine'
     " These ones are on thin ice.
-    Plug 'vim-latex/vim-latex', {'for': 'tex'}
+    Plug 'lervag/vimtex', {'for': 'tex'}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
@@ -265,3 +265,6 @@ let g:lion_squeeze_spaces = 1
 
 " vim-sneak
 let g:sneak#label = 0
+
+" vimtex
+let g:vimtex_compiler_enabled = 0
