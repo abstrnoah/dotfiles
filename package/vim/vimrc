@@ -22,6 +22,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tpope/vim-repeat'
     " Should have.
+    Plug 'lervag/vimtex', {'for': 'tex'}
     Plug 'justinmk/vim-sneak'
     Plug 'tpope/vim-eunuch'
     Plug 'dkarter/bullets.vim'
@@ -36,7 +37,6 @@ call plug#begin('~/.cache/vimplug')
     " Frills.
     Plug 'Yggdroot/indentLine'
     " These ones are on thin ice.
-    Plug 'lervag/vimtex', {'for': 'tex'}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
