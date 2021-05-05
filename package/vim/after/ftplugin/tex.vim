@@ -14,3 +14,6 @@ setlocal formatoptions+=n
 " Easylist.
 setlocal formatlistpat-=\\\|^\\s*&\\+\\s*
 setlocal formatlistpat+=\\\|^\\s*&\\+\\s*
+
+" Enable spell check by default in tex documents.
+set spell
