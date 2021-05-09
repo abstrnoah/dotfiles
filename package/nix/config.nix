@@ -6,6 +6,7 @@
     "spotify"
     "spotify-unwrapped"
     "ngrok"
+    "xflux"
   ];
   packageOverrides = pkgs: with pkgs; {
     clientPackages = pkgs.buildEnv {
@@ -51,6 +52,7 @@
         weechat
         silver-searcher
         fd
+        xflux
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
