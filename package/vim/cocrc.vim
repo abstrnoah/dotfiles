@@ -22,8 +22,10 @@ let g:coc_global_extensions = [
     \ 'coc-yaml',
     \ 'coc-git',
     \ 'coc-clang-format-style-options',
-    \ 'coc-clangd',
 \]
+" TODO: clangd disabled until I figure out how to get it to work with complex
+" projects.
+    " \ 'coc-clangd',
 
 "
 " Config for coc.nvim.
