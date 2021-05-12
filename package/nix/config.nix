@@ -44,8 +44,6 @@
         #zoom
         # Unable to communicate with browser, also missing GLIBC.
         #spotify
-        # Dependency for 'timer', which I've not added to nixpkgs yet (TODO).
-        sox
         pdfgrep
         # Audio not working for tor.
         torbrowser
