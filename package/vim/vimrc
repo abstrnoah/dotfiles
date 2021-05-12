@@ -201,6 +201,9 @@ let g:auto_save_in_insert_mode = 0
 
 " NERDTree
 let NERDTreeQuitOnOpen = 1
+" FIXME: Conceal is causing "^G" to show up in netrw mode (not side mode), need
+" to change conceal settings upon opening NERDTree.
+let NERDTreeHijackNetrw = 1
 
 " Coc
 source ~/.vim/cocrc.vim
