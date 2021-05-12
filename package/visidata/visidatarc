@@ -71,11 +71,6 @@ vd.bindkey(LEADER + ENTER, "open-cellpath")
 # Commands
 #
 
-
-def open_cellpath(path):
-    path = Path(path)
-
-
 BaseSheet.addCommand(
     None,
     "sysopen-cellpath",
@@ -96,3 +91,5 @@ BaseSheet.addCommand(
     "vd.push(openPath(Path(sheet.cursorDisplay)))",
     "Open path under cursor as sheet.",
 )
+
+# vim:ft=python:
