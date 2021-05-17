@@ -227,6 +227,28 @@ bindsym XF86AudioPrev exec sp prev
 bindsym XF86AudioPlay exec sp play
 bindsym XF86AudioNext exec sp next
 
+set $mode_audio "audio: [h]prev [l]next [k]up [j]down [m]ute [space]play"
+bindsym $mod+a mode $mode_audio
+mode $mode_audio {
+    bindsym XF86AudioRaiseVolume exec $keybinds audio_vol_up
+    bindsym XF86AudioLowerVolume exec $keybinds audio_vol_down
+    bindsym XF86AudioMute exec $keybinds audio_vol_mute
+    bindsym XF86AudioPrev exec sp prev
+    bindsym XF86AudioPlay exec sp play
+    bindsym XF86AudioNext exec sp next
+
+    bindsym k exec $keybinds audio_vol_up
+    bindsym j exec $keybinds audio_vol_down
+    bindsym m exec $keybinds audio_vol_mute
+    bindsym h exec sp prev
+    bindsym space exec sp play
+    bindsym l exec sp next
+
+    bindsym $esc mode "default"
+    bindsym Escape mode "default"
+}
+
+
 # lock
 bindsym $mod+Mod1+l exec i3lock -dI 10 -ti $home/.wallpaperlock
 
