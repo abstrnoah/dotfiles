@@ -1,10 +1,3 @@
-" Compiler.
-compiler an_makedoc_tex
-" Compile and preview.
-nnoremap <buffer> <leader>9
-    \ :silent !<c-r>=&makeprg<cr> --preview -r 1 %<cr><c-l>
-
-
 " Format lists.
 " We `-=` and `+=` each formatlistpat to avoid duplication because for some
 " reason this file is sourced around three times. It must have something to do
@@ -17,3 +10,6 @@ setlocal formatlistpat+=\\\|^\\s*&\\+\\s*
 
 " Enable spell check by default in tex documents.
 set spell
+
+" Use vimtex's doc.
+map <buffer> K <Plug>(vimtex-doc-package)
