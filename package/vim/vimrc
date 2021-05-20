@@ -1,5 +1,6 @@
 set nocompatible
 set exrc
+set secure
 
 "
 " Setup vim-plug.
@@ -239,7 +240,7 @@ set statusline^=%{gutentags#statusline()}\|
 let g:tagbar_sort = 1
 
 " Bullet
-let g:bullets_checkbox_markers = ' ○◐●✓'
+let g:bullets_checkbox_markers = ' x'
 " Use numbers for all levels of enumerated lists.
 " This is partly for uniformity, but also because `vim-markdown` makes numbered
 " lists pretty, yet does not recognize alphabetic lists so does not make them
