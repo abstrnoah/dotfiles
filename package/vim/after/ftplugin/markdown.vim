@@ -14,3 +14,6 @@ setlocal formatlistpat-=\\\|^[-*+]\\s\\+
 setlocal formatlistpat+=\\\|^\\s*\\d\\+\\.\\s\\+
 setlocal formatlistpat+=\\\|^\\s*[-*+]\\(\\s\\[.\\]\\)\\?\\s\\+
 setlocal formatlistpat+=\\\|^\\s*\\[^\\ze[^\\]]\\+\\]:
+
+" MAPPINGS
+nnoremap <buffer> <localleader><leader>m :Toc<cr>
