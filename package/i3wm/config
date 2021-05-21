@@ -9,10 +9,12 @@
 
 set $mod Mod4
 set $esc ctrl+bracketleft
+set $promptchar "❯"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+set $font_family ubuntu
+font pango:$font_family 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -25,6 +27,31 @@ font pango:monospace 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+# THEME
+
+# Solarized.
+set $base03  #002b36
+set $base02  #073642
+set $base01  #586e75
+set $base00  #657b83
+set $base0   #839496
+set $base1   #93a1a1
+set $base2   #eee8d5
+set $base3   #fdf6e3
+set $yellow  #b58900
+set $orange  #cb4b16
+set $red     #dc322f
+set $magenta #d33682
+set $violet  #6c71c4
+set $blue    #268bd2
+set $cyan    #2aa198
+set $green   #859900
+
+#class                  border  bg      text    indicator child_border
+client.focused          $base03 $base02 $base1  $base01   $magenta
+client.focused_inactive $base03 $base03 $base1  $base01   $cyan
+client.unfocused        $base03 $base03 $base01 $cyan     $base03
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -35,7 +62,9 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec \
+    dmenu_run -i -b -l 5 -p $promptchar -fn "$font_family-8" \
+        -nb "$base02" -nf "$base2" -sb "$base01" -sf "$base2"
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -168,34 +197,11 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# THEME
-
-# Solarized.
-set $base03  #002b36
-set $base02  #073642
-set $base01  #586e75
-set $base00  #657b83
-set $base0   #839496
-set $base1   #93a1a1
-set $base2   #eee8d5
-set $base3   #fdf6e3
-set $yellow  #b58900
-set $orange  #cb4b16
-set $red     #dc322f
-set $magenta #d33682
-set $violet  #6c71c4
-set $blue    #268bd2
-set $cyan    #2aa198
-set $green   #859900
-
-#class                  border  bg      text    indicator child_border
-client.focused          $base03 $base02 $base1  $base01   $magenta
-client.focused_inactive $base03 $base03 $base1  $base01   $cyan
-client.unfocused        $base03 $base03 $base01 $cyan     $base03
-
 # BAR
 bar {
     status_command i3status
+    mode dock
+    position top
     tray_output primary
     tray_padding 0
     colors {
@@ -279,9 +285,10 @@ exec --no-startup-id compton -b -CG
 
 # border
 set $default_border 1
+set $base_gap 3
 for_window [class=".*"] border pixel $default_border
-gaps inner 5
-gaps outer 5
+gaps inner $base_gap
+gaps outer $base_gap
 bindsym $mod+Shift+b border normal; mode "border"
 mode "border" {
     bindsym $esc border pixel $default_border; mode "default"
