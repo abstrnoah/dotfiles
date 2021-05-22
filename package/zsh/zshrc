@@ -30,8 +30,27 @@ PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
 NL=$'\n'
 PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
 
+# HOOK FUNCTIONS
+#
+preexec() {
+    # local entry=${1}
+    local cmd=${2}
+    # local cmd_full=${3}
 
-# alias
+    # Update tmux window name.
+    tmux rename-window "${cmd%% *}"
+}
+
+precmd() {
+    # Update tmux window name.
+    tmux rename-window "zsh"
+}
+
+# ALIAS
+# Yes, I know that aliases are supposed to be bad. But aliases for simple
+# abbreviations allow the tmux window-renaming hooks above to get the actual
+# name of the command; with functions, the preexec() hook can't get the actual
+# command name (without excessive effort).
 alias reload-zsh='. ~/.zshrc'
 alias reload-tmux='tmux source-file ~/.tmux.conf'
 alias ll='ls -alF'
