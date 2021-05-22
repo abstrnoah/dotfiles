@@ -38,12 +38,17 @@ preexec() {
     # local cmd_full=${3}
 
     # Update tmux window name.
-    tmux rename-window "${cmd%% *}"
+    test -z ${TMUX} || tmux rename-window "${cmd%% *}"
 }
 
 precmd() {
     # Update tmux window name.
-    tmux rename-window "zsh"
+    test -z ${TMUX} || tmux rename-window "zsh"
+}
+
+zshexit() {
+    # Revert tmux window name to what it was before we started.
+    test -z ${TMUX} || tmux rename-window "${BR_TMUX_LAST_WINDOW_NAME}"
 }
 
 # ALIAS
@@ -77,5 +82,12 @@ source ~/.nix-profile/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
 fpath=("${HOME}/.nix-profile/share/zsh/site-functions/" ${fpath})
 autoload -U compinit && compinit
 
-## Main
-[ -z "${TMUX}" ] && mux main
+# MAIN
+# That is, what follows is our "enter hook".
+if [ -z ${TMUX} ]; then # We are not in tmux.
+    # So start tmux.
+    mux main
+else # We are in tmux.
+    # Save the current tmux window name.
+    BR_TMUX_LAST_WINDOW_NAME=$(tmux display-message -p '#W')
+fi
