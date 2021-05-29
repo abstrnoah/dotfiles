@@ -51,6 +51,7 @@
         silver-searcher
         fd
         xflux
+        qutebrowser
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
