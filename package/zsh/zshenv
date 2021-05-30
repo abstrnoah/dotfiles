@@ -49,4 +49,4 @@ alias nix-env='nix-env -I an_nixpkgs=${AN_NIXPKGS} -f ${AN_NIXPKGS}'
 # qutebrowser
 # Temporary fix until bug with xcb_gl integration gets fixed (not sure whether
 # problem with Nix or qutebrowser.
-qutebrowser='QT_XCB_GL_INTEGRATION=none qutebrowser'
+alias qutebrowser='QT_XCB_GL_INTEGRATION=none qutebrowser'
