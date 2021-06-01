@@ -13,7 +13,7 @@ set $promptchar "❯"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-set $font_family ubuntu
+set $font_family ubuntu mono
 font pango:$font_family 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
