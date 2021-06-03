@@ -23,13 +23,13 @@ map Q <nop>
 " Doesn't seem to work TODO.
 "map gQ <nop>
 
-" Navigation.
-nnoremap <leader><leader>m :TagbarOpenAutoClose<CR>
-nnoremap <leader><leader>n :call AN_NERDTree()<cr>
-nnoremap <leader><leader>p :CtrlPMixed<cr>
-nnoremap <leader><leader>b :CtrlPBuffer<cr>
-nnoremap <leader><leader>l :CtrlPLine<cr>
-nnoremap <leader><leader>t :CtrlPTag<cr>
+" Exploration.
+exe "nnoremap <leader>" .. g:br_leader_explore .. "m :TagbarOpenAutoClose<CR>"
+exe "nnoremap <leader>" .. g:br_leader_explore .. "n :call AN_NERDTree()<cr>"
+exe "nnoremap <leader>" .. g:br_leader_explore .. "p :CtrlPMixed<cr>"
+exe "nnoremap <leader>" .. g:br_leader_explore .. "b :CtrlPBuffer<cr>"
+exe "nnoremap <leader>" .. g:br_leader_explore .. "l :CtrlPLine<cr>"
+exe "nnoremap <leader>" .. g:br_leader_explore .. "t :CtrlPTag<cr>"
 
 " Spell.
 nmap <leader>s :set spell!<cr>

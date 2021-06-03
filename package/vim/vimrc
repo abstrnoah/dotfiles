@@ -110,6 +110,8 @@ endfunction
 "
 let mapleader = " "
 let maplocalleader = " "
+" Leader key for exploration-type operations such as fuzzy find files, etc.
+let g:br_leader_explore = "e"
 set showcmd
 set timeoutlen=500
 
@@ -218,8 +220,6 @@ let g:vimspector_install_gadgets = [
 \]
 
 " CtrlP
-" (See map.vim for primary maps; '<c-p>' is preserved for basic ':CtrlP' while
-" the map '<leader>np' is intended for most usage.)
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = ''
 let g:ctrlp_working_path_mode = "ra"

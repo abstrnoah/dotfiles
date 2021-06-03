@@ -16,4 +16,4 @@ setlocal formatlistpat+=\\\|^\\s*[-*+]\\(\\s\\[.\\]\\)\\?\\s\\+
 setlocal formatlistpat+=\\\|^\\s*\\[^\\ze[^\\]]\\+\\]:
 
 " MAPPINGS
-nnoremap <buffer> <localleader><leader>m :Toc<cr>
+exe "nnoremap <buffer> <localleader>" .. g:br_leader_explore .. "m :Toc<cr>"
