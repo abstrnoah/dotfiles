@@ -110,8 +110,8 @@ endfunction
 "
 let mapleader = " "
 let maplocalleader = " "
-" Leader key for exploration-type operations such as fuzzy find files, etc.
-let g:br_leader_explore = "e"
+" Leader key for navigation-type operations such as fuzzy find files, etc.
+let g:br_leader_nav = "<leader>e"
 set showcmd
 set timeoutlen=500
 

@@ -24,12 +24,12 @@ map Q <nop>
 "map gQ <nop>
 
 " Exploration.
-exe "nnoremap <leader>" .. g:br_leader_explore .. "m :TagbarOpenAutoClose<CR>"
-exe "nnoremap <leader>" .. g:br_leader_explore .. "n :call AN_NERDTree()<cr>"
-exe "nnoremap <leader>" .. g:br_leader_explore .. "p :CtrlPMixed<cr>"
-exe "nnoremap <leader>" .. g:br_leader_explore .. "b :CtrlPBuffer<cr>"
-exe "nnoremap <leader>" .. g:br_leader_explore .. "l :CtrlPLine<cr>"
-exe "nnoremap <leader>" .. g:br_leader_explore .. "t :CtrlPTag<cr>"
+exe "nnoremap" g:br_leader_nav.."m" ":TagbarOpenAutoClose<CR>"
+exe "nnoremap" g:br_leader_nav.."n" ":call AN_NERDTree()<cr>"
+exe "nnoremap" g:br_leader_nav.."p" ":CtrlPMixed<cr>"
+exe "nnoremap" g:br_leader_nav.."b" ":CtrlPBuffer<cr>"
+exe "nnoremap" g:br_leader_nav.."l" ":CtrlPLine<cr>"
+exe "nnoremap" g:br_leader_nav.."t" ":CtrlPTag<cr>"
 
 " Spell.
 nmap <leader>s :set spell!<cr>
