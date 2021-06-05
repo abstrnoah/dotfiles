@@ -2,6 +2,14 @@ set nocompatible
 set exrc
 set secure
 
+" GUI, for those rare occasions.
+for c in ["a", "c", "d"]
+    exe "set guioptions+="..c
+endfor
+for c in ["m", "r", "R", "l", "L", "b", "T"]
+    exe "set guioptions-="..c
+endfor
+
 "
 " Setup vim-plug.
 "
