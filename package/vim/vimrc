@@ -262,9 +262,6 @@ let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 
-" cheat.sh-vim
-let g:CheatDoNotReplaceKeywordPrg = 1
-
 " indentLine
 " Note that as it stands, indentLine seems to have control over conceal. So
 " conceal color and behavior should be configured here, rather than via `set
