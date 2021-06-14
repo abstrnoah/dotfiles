@@ -43,6 +43,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'preservim/nerdtree'
     Plug 'preservim/tagbar'
     Plug 'tpope/vim-abolish'
+    Plug 'chaoren/vim-wordmotion'
     " Frills.
     Plug 'Yggdroot/indentLine'
     " These ones are on thin ice.
