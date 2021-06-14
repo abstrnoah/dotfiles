@@ -52,6 +52,7 @@
         fd
         xflux
         qutebrowser
+        mpv
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
