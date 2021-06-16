@@ -204,6 +204,10 @@ set nojoinspaces
 "
 inoreabbrev -[] - [ ]
 
+" SPELL
+set spelloptions=camel
+set spellcapcheck=
+
 "
 " Plugin configuration.
 "
