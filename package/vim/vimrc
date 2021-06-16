@@ -46,6 +46,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'chaoren/vim-wordmotion'
     " Frills.
     Plug 'Yggdroot/indentLine'
+    Plug 'abstractednoah/vim-markdownfootnotes'
     " These ones are on thin ice.
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
@@ -121,6 +122,8 @@ let mapleader = " "
 let maplocalleader = " "
 " Leader key for navigation-type operations such as fuzzy find files, etc.
 let g:br_leader_nav = "<leader>e"
+" For footnote operations.
+let g:br_leader_note = "<leader>n"
 set showcmd
 set timeoutlen=500
 
