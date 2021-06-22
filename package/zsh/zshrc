@@ -76,9 +76,11 @@ alias ssh='[ -z ${TMUX} ] && ssh'
 . ~/.dotfiles/package/zsh/comp-mux.zsh
 
 # nix
-source ~/.nix-profile/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
-# TODO This might not be the best way to do this...
-fpath=("${HOME}/.nix-profile/share/zsh/site-functions/" ${fpath})
+if [ -d "~/.nix-profile/" ]; then # We do have nix.
+    source ~/.nix-profile/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
+    # TODO This might not be the best way to do this...
+    fpath=("${HOME}/.nix-profile/share/zsh/site-functions/" ${fpath})
+fi
 autoload -U compinit && compinit
 
 # MAIN
