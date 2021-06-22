@@ -31,7 +31,6 @@ NL=$'\n'
 PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
 
 # HOOK FUNCTIONS
-#
 preexec() {
     # local entry=${1}
     local cmd=${2}
