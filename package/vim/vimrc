@@ -28,16 +28,17 @@ endif
 
 runtime macros/matchit.vim
 
-" Automatic installation.
-" [https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation]
 " VIM-PLUG PLUGINS {{{1
 " Plugins are declared here, configured below under "PLUGIN CONFIG"
+
+" Automatic installation of vim-plug[^1].
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Declare the plugins.
 call plug#begin('~/.cache/vimplug')
     " Must have.
     Plug '907th/vim-auto-save'
@@ -73,7 +74,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
-" Called automatically by `plug#end`.
+" The following lines are called automatically by `plug#end`:
 "filetype plugin indent on
 "syntax enable
 
@@ -170,13 +171,11 @@ set foldlevelstart=99
 "
 " Theme
 " TODO: Move to a fork of solarized.
-"
 set background=dark
 colorscheme solarized
 set incsearch hlsearch
 
-" Fixed preformance issue,
-" see [https://vim.fandom.com/wiki/Highlight_unwanted_spaces].
+" Fixed preformance issue[^2]
 autocmd BufWinLeave * call clearmatches()
 
 " (Still not sure about these.)
@@ -299,3 +298,8 @@ let g:vimtex_compiler_tectonic = {
     \ ],
 \}
 let g:vimtex_quickfix_autoclose_after_keystrokes = 1
+
+
+" NOTES {{{1
+" [^1]: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+" [^2]: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
