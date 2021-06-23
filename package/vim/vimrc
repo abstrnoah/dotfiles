@@ -6,15 +6,27 @@
 
 " SETUP {{{1
 
+if !exists('$BR_VIMDIR')
+    let $BR_VIMDIR = expand('~/.vim')
+endif
+if !isdirectory($BR_VIMDIR)
+    echoerr "$BR_VIMDIR does not exist:" $BR_VIMDIR
+endif
+let $BR_VIM_PLUGRC = $BR_VIMDIR .. '/plugrc.vim'
+let $BR_VIM_MAPS = $BR_VIMDIR .. '/after/plugin/maps.vim'
+
 set encoding=utf-8
 " set nocompatible (This is supposed to be set by default when vimrc present.)
 filetype plugin indent on
-syntax enable
+if has('syntax')
+    syntax enable
+endif
 set secure  " Probably unnecessary, but just in case.
 
 " GLOBALS {{{1
 " All custom globals are prefixed with 'br_'.
-" All custom globals are set in this section.
+" All custom globals are set in this section. Plugin globals are defined in
+" 'plugrc.vim'.
 
 let g:br_colorcolumn = '+1'  " Default color column offset.
 " Leader key for navigation-type operations such as fuzzy find files, etc.
@@ -59,7 +71,7 @@ endif
 
 if has('statusline')
     set laststatus=2 " Always display statusline.
-    set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
+    set statusline=%{gutentags#statusline()}\|%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
 endif
 
 if has('syntax')
@@ -96,57 +108,6 @@ let maplocalleader = " "
 inoreabbrev -[] - [ ]
 
 
-
-" BUILTIN PLUGINS {{{1
-
-runtime macros/matchit.vim
-
-" VIM-PLUG PLUGINS {{{1
-" Plugins are declared here, configured below under "PLUGIN CONFIG".
-
-" Automatic installation of vim-plug[^1].
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" Declare the plugins.
-call plug#begin('~/.cache/vimplug')
-    " Must have.
-    Plug '907th/vim-auto-save'
-    Plug 'Townk/vim-autoclose'
-    Plug 'tpope/vim-surround'
-    Plug 'wellle/targets.vim'
-    Plug 'ludovicchabant/vim-gutentags'
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'tpope/vim-repeat'
-    " Should have.
-    Plug 'lervag/vimtex', {'for': 'tex'}
-    Plug 'justinmk/vim-sneak'
-    Plug 'tpope/vim-eunuch'
-    Plug 'dkarter/bullets.vim'
-    Plug 'dhruvasagar/vim-table-mode'
-    Plug 'tommcdo/vim-lion'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-fugitive'
-    " Fancy and useful extras.
-    Plug 'preservim/nerdtree'
-    Plug 'preservim/tagbar'
-    Plug 'tpope/vim-abolish'
-    Plug 'chaoren/vim-wordmotion'
-    " Frills.
-    Plug 'Yggdroot/indentLine'
-    Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
-    " These ones are on thin ice.
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'honza/vim-snippets'
-    Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-    Plug 'puremourning/vimspector'
-    " Theme.
-    Plug 'altercation/vim-colors-solarized'
-call plug#end()
-
 " COMMANDS {{{1
 
 command TrimTrailingWhitespace %s/\s\+$//g
@@ -161,12 +122,33 @@ command! -bang -nargs=* -complete=tag SB
 " needs to be moved to a fork of solarized.
 " command ToggleBG let &background = ( &background == "dark"? "light" : "dark" )
 
-" LOOK {{{1
+" PLUGINS {{{1
+
+if &loadplugins
+    if filereadable($BR_VIM_PLUGRC)
+        source $BR_VIM_PLUGRC
+    else
+        echoerr "$BR_VIM_PLUGRC not readable:" $BR_VIM_PLUGRC
+    endif
+else
+    " Maps are put in '$BR_VIMDIR/after/plugin/maps.vim' so that they override
+    " plugins, but we still want them if no plugins, so manually source them in
+    " this case.
+    if filereadable($BR_VIM_MAPS)
+        source $BR_VIM_MAPS
+    else
+        echoerr "$BR_VIM_MAPS not readable:" $BR_VIM_MAPS
+    endif
+endif
+
+" LOOK [DEPRECATED] {{{1
 " Section is deprecated, needs to be moved to colorscheme fork or elsewhere.
 
 " TODO: Move to a fork of solarized.
-set background=dark
-colorscheme solarized
+if &loadplugins
+    set background=dark
+    colorscheme solarized
+endif
 
 " Fixed preformance issue[^2]
 autocmd BufWinLeave * call clearmatches()
@@ -194,91 +176,7 @@ hi CursorLineNr cterm=bold
 "
 highlight ColorColumn ctermbg=black
 
-" PLUGIN CONFIG {{{1
-
-" AUTOSAVE {{{2
-let g:auto_save = 1
-let g:auto_save_in_insert_mode = 0
-
-" NERDTREE {{{2
-let NERDTreeQuitOnOpen = 1
-" FIXME: Conceal is causing "^G" to show up in netrw mode (not side mode), need
-" to change conceal settings upon opening NERDTree.
-let NERDTreeHijackNetrw = 1
-
-" COC {{{2
-source ~/.vim/cocrc.vim
-
-" VIMSPECTOR {{{2
-let g:vimspector_install_gadgets = [
-    \ 'debugpy',
-    \ 'vscode-cpptools',
-    \ 'vscode-java-debug'
-\]
-
-" CTRLP {{{2
-let g:ctrlp_map = ''
-let g:ctrlp_cmd = ''
-let g:ctrlp_working_path_mode = "ra"
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_mruf_relative = 1
-let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files -co --exclude-standard'],
-    \ },
-    \ 'fallback': 'find %s -type f'
-\ }
-
-" GUTENTAGS {{{2
-let g:gutentags_cache_dir = "~/.cache/gutentags"
-set statusline^=%{gutentags#statusline()}\|
-
-" TAGBAR {{{2
-let g:tagbar_sort = 1
-
-" BULLET {{{2
-let g:bullets_checkbox_markers = '    x'
-" Use numbers for all levels of enumerated lists.
-" This is partly for uniformity, but also because `vim-markdown` makes numbered
-" lists pretty, yet does not recognize alphabetic lists so does not make them
-" pretty.
-let g:bullets_outline_levels = ['num']
-
-" VIM-MARKDOWN {{{2
-let g:vim_markdown_override_foldtext = 0
-let g:vim_markdown_toc_autofit = 1
-" To avoid conflict with bullet plugin, still not ideal TODO.
-let g:vim_markdown_auto_insert_bullets = 0
-let g:vim_markdown_new_list_item_indent = 0
-
-" INDENTLINE {{{2
-" Note that as it stands, indentLine seems to have control over conceal. So
-" conceal color and behavior should be configured here, rather than via `set
-" concealcursor`, etc.
-let g:indentLine_color_term = "darkgray"
-let g:indentLine_char = "┊"
-let g:indentLine_concealcursor = ""
-
-" LION {{{2
-let g:lion_squeeze_spaces = 1
-
-" SNEAK {{{2
-let g:sneak#label = 0
-
-" VIMTEX {{{2
-let g:vimtex_compiler_enabled = 1
-let g:vimtex_compiler_method = "tectonic"
-let g:vimtex_compiler_tectonic = {
-    \ 'build_dir' : 'build',
-    \ 'options' : [
-    \   '--keep-logs',
-    \ ],
-\}
-let g:vimtex_quickfix_autoclose_after_keystrokes = 1
-
-
 " NOTES {{{1
-" [^1]: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
 " [^2]: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
 
 " vim:ft=vim:fdm=marker:fmr={{{,}}}:fen:tw=80:et:ts=4:sts=4:sw=0:

@@ -1,9 +1,12 @@
-" Clear previous leader mappings.
-nnoremap <leader> <nop>
-inoremap <leader> <nop>
+" Author: Noah <abstractednoah@brumal.org>
 
-" Unhighlight on <ESC>.
-nnoremap <silent> <ESC> :noh<CR><ESC>
+" Note: We attempt to sort maps by mnemonic, not necessarily by plugin unless a
+" plugin occupies its own niche.
+
+" SETUP {{{1
+
+" Clear previous leader mappings.
+nmap <leader> <nop>
 
 " Disable various dumb keys.
 nnoremap <silent> <ESC>OA <NOP>
@@ -16,7 +19,7 @@ inoremap <silent> <ESC>OC <NOP>
 inoremap <silent> <ESC>OD <NOP>
 inoremap <silent> <ESC>OD <NOP>
 inoremap <silent> <DEL> <NOP>
-" for some reason this isn't f*****g working
+" This doesn't actually disable backspace, idk why.
 inoremap <silent> <BS> <NOP>
 
 " Disable ex-mode keys.
@@ -24,47 +27,60 @@ map Q <nop>
 " Doesn't seem to work TODO.
 "map gQ <nop>
 
-" Exploration.
-exe "nnoremap" g:br_leader_nav.."m" ":TagbarOpenAutoClose<CR>"
-exe "nnoremap" g:br_leader_nav.."n" ":call funs#nerdtree()<cr>"
-exe "nnoremap" g:br_leader_nav.."p" ":CtrlPMixed<cr>"
-exe "nnoremap" g:br_leader_nav.."b" ":CtrlPBuffer<cr>"
-exe "nnoremap" g:br_leader_nav.."l" ":CtrlPLine<cr>"
-exe "nnoremap" g:br_leader_nav.."t" ":CtrlPTag<cr>"
+" EXPLORE {{{1
+execute "nnoremap" g:br_leader_nav.."m" ":TagbarOpenAutoClose<CR>"
+execute "nnoremap" g:br_leader_nav.."n" ":call funs#nerdtree()<cr>"
+execute "nnoremap" g:br_leader_nav.."p" ":CtrlPMixed<cr>"
+execute "nnoremap" g:br_leader_nav.."b" ":CtrlPBuffer<cr>"
+execute "nnoremap" g:br_leader_nav.."l" ":CtrlPLine<cr>"
+execute "nnoremap" g:br_leader_nav.."t" ":CtrlPTag<cr>"
 
-" Spell.
-nmap <leader>s :set spell!<cr>
+" SPELL {{{1
+if has('syntax')
+    nmap <leader>s :set spell!<cr>
+endif
 
-" Search.
+" SEARCH {{{1
+
+" Unhighlight on <ESC>.
+nnoremap <silent> <ESC> :nohlsearch<CR><ESC>
+
 nnoremap <leader>/ :S<space>
 nnoremap <leader>? :SB<space>
 
-" clipboard
-map <leader>y "+y
-map <leader>p "+p
-map <leader>P "+P
-" Yank text into clipboard "+ register, and join paragraphs into single lines,
-" in place in the register. That is, the original text is unchanged, but the
-" register text will be removed of its hardwraps. Paragraphs
-" (double-newline-separated) are preserved as separate double-newline-separated
-" lines.
-vnoremap <leader>Y
-    \ "+y:let @+ = substitute(@+, '[^\n]\zs\n\ze[^\n]', " ", "g")<cr>
+if exists('g:loaded_sneak_plugin')
+    map f <Plug>Sneak_f
+    map F <Plug>Sneak_F
+    map t <Plug>Sneak_t
+    map T <Plug>Sneak_T
+endif
 
+" CLIPBOARD {{{1
+if has('clipboard')
+    map <leader>y "+y
+    map <leader>p "+p
+    map <leader>P "+P
+    " Yank text into clipboard "+ register, and join paragraphs into single
+    " lines, in place in the register. That is, the original text is unchanged,
+    " but the register text will be removed of its hardwraps. Paragraphs
+    " (double-newline-separated) are preserved as separate
+    " double-newline-separated lines.
+    vnoremap <leader>Y
+        \ "+y:let @+ = substitute(@+, '[^\n]\zs\n\ze[^\n]', " ", "g")<cr>
+endif
+
+" TABLE-MODE {{{1
+
+nnoremap <leader>tm :call funs#toggleTableMode()<cr>
+
+
+" DEPRECATED {{{1
 " Compiler workflow.
 " Make and display quickfix window.
 nnoremap <leader>8 :silent make! %<cr><c-l>:cwindow<cr>
 " <leader>9 reserved for 'run' or 'compile+run'; see ftplugin files.
 
 
-" Toggle colorcolumn with table mode.
-nnoremap <leader>tm :call funs#toggleTableMode()<cr>
-
-" vim-sneak
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
 
 " vimspector
 " See [https://github.com/puremourning/vimspector#mappings].
