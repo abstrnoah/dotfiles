@@ -11,19 +11,6 @@ set nocompatible
 set exrc
 set secure
 
-" GUI {{{1
-" For those rare occasions.
-
-if has("gui_running")
-    for c in ["a", "c", "d"]
-        exe "set guioptions+="..c
-    endfor
-    for c in ["m", "r", "R", "l", "L", "b", "T"]
-        exe "set guioptions-="..c
-    endfor
-endif
-
-
 " BUILTIN PLUGINS {{{1
 
 runtime macros/matchit.vim
