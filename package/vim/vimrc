@@ -61,12 +61,23 @@ set autoindent
 set formatoptions+=j
 set nojoinspaces
 
+set hidden
+
 set number
+
+set updatetime=300
 
 set scrolloff=3
 
 if has('extra_search')
     set incsearch hlsearch
+endif
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+if has('signs')
+    set signcolumn=yes
 endif
 
 if has('statusline')
