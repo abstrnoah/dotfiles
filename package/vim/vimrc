@@ -50,7 +50,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'chaoren/vim-wordmotion'
     " Frills.
     Plug 'Yggdroot/indentLine'
-    Plug 'abstractednoah/vim-markdownfootnotes'
+    Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
     " These ones are on thin ice.
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
