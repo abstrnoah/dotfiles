@@ -84,7 +84,7 @@ endif
 
 if has('statusline')
     set laststatus=2 " Always display statusline.
-    set statusline=%{gutentags#statusline()}\|%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
+    set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
 endif
 
 if has('syntax')
