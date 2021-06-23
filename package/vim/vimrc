@@ -303,3 +303,5 @@ let g:vimtex_quickfix_autoclose_after_keystrokes = 1
 " NOTES {{{1
 " [^1]: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
 " [^2]: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+
+" vim:ft=vim:fdm=marker:fmr={{{,}}}:fen:tw=80:et:ts=4:sts=4:sw=0:
