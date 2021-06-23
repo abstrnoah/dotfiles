@@ -1,24 +1,29 @@
+" Note: Re file structure: This file uses vim's 'fold-marker' feature. Levels
+" 1 and 2 are enumerated and reserved for sections; deeper levels are not
+" enumerated. We try to avoid going deeper than three levels.
+
+" SETUP {{{1
 set nocompatible
 set exrc
 set secure
 
-" GUI, for those rare occasions.
 for c in ["a", "c", "d"]
     exe "set guioptions+="..c
 endfor
 for c in ["m", "r", "R", "l", "L", "b", "T"]
     exe "set guioptions-="..c
 endfor
+" GUI {{{1
+" For those rare occasions.
 
+" BUILTIN PLUGINS {{{1
 
-" BUILT-IN PLUGINS
 runtime macros/matchit.vim
 
-"
-" Setup vim-plug.
-"
 " Automatic installation.
 " [https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation]
+" VIM-PLUG PLUGINS {{{1
+" Plugins are declared here, configured below under "PLUGIN CONFIG"
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -65,10 +70,9 @@ call plug#end()
 "syntax enable
 
 
-"
-" Functions.
+" FUNCTIONS {{{1
+
 " TODO: Should probably be moved to its own plugin directory at some point.
-"
 function AN_NERDTree()
     " Call `:NERDTreeFind` if path nonempty, otherwise `:NERDTreeVCS`.
     if &modifiable && strlen(expand("%")) > 0 && !&diff
@@ -114,14 +118,13 @@ function ToggleTableMode()
 endfunction
 
 
-"
-" Mapping.
+" MAPS {{{1
 " For most mapping, see 'after/plugin/map.vim'. We put them there to ensure our
 " mappings override both vim and plugin defaults. The convention is that all
 " mappings go there unless they need to go elsewhere for some reason. Coc's
 " bindings are in 'cocrc.vim' bc coc is so much. When plugins have an option
 " like 'g:plugin_featureX_map', those are set here.
-"
+
 let mapleader = " "
 let maplocalleader = " "
 " Leader key for navigation-type operations such as fuzzy find files, etc.
@@ -131,9 +134,8 @@ let g:br_leader_note = "<leader>n"
 set showcmd
 set timeoutlen=500
 
-"
-" Commands.
-"
+" COMMANDS {{{1
+
 command TrimTrailingWhitespace %s/\s\+$//g
 " TODO: Make these work from visual mode by using direct '<c-r>='.
 command! -bang -nargs=* -complete=tag S
@@ -150,10 +152,8 @@ command! -bang -nargs=* -complete=tag SB
 " Ecoding.
 "
 set encoding=utf-8
+" LOOK {{{1
 
-"
-" Graphical interface.
-"
 set number
 set scrolloff=3
 set laststatus=2
@@ -206,40 +206,37 @@ set shiftwidth=4
 set formatoptions+=j
 set nojoinspaces
 
-"
-" Abbreviations
-"
+" ABBREVIATIONS {{{1
 inoreabbrev -[] - [ ]
 
-" SPELL
+" SPELL {{{1
 set spelloptions=camel
 set spellcapcheck=
 
-"
-" Plugin configuration.
-"
 
-" autosave
+" PLUGIN CONFIG {{{1
+
+" AUTOSAVE {{{2
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
-" NERDTree
+" NERDTREE {{{2
 let NERDTreeQuitOnOpen = 1
 " FIXME: Conceal is causing "^G" to show up in netrw mode (not side mode), need
 " to change conceal settings upon opening NERDTree.
 let NERDTreeHijackNetrw = 1
 
-" Coc
+" COC {{{2
 source ~/.vim/cocrc.vim
 
-" Vimspector
+" VIMSPECTOR {{{2
 let g:vimspector_install_gadgets = [
     \ 'debugpy',
     \ 'vscode-cpptools',
     \ 'vscode-java-debug'
 \]
 
-" CtrlP
+" CTRLP {{{2
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = ''
 let g:ctrlp_working_path_mode = "ra"
@@ -252,14 +249,14 @@ let g:ctrlp_user_command = {
     \ 'fallback': 'find %s -type f'
 \ }
 
-" Gutentags
+" GUTENTAGS {{{2
 let g:gutentags_cache_dir = "~/.cache/gutentags"
 set statusline^=%{gutentags#statusline()}\|
 
-" Tagbar
+" TAGBAR {{{2
 let g:tagbar_sort = 1
 
-" Bullet
+" BULLET {{{2
 let g:bullets_checkbox_markers = '    x'
 " Use numbers for all levels of enumerated lists.
 " This is partly for uniformity, but also because `vim-markdown` makes numbered
@@ -267,14 +264,14 @@ let g:bullets_checkbox_markers = '    x'
 " pretty.
 let g:bullets_outline_levels = ['num']
 
-" vim-markdown
+" VIM-MARKDOWN {{{2
 let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_toc_autofit = 1
 " To avoid conflict with bullet plugin, still not ideal TODO.
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 
-" indentLine
+" INDENTLINE {{{2
 " Note that as it stands, indentLine seems to have control over conceal. So
 " conceal color and behavior should be configured here, rather than via `set
 " concealcursor`, etc.
@@ -282,13 +279,13 @@ let g:indentLine_color_term = "darkgray"
 let g:indentLine_char = "┊"
 let g:indentLine_concealcursor = ""
 
-" vim-lion
+" LION {{{2
 let g:lion_squeeze_spaces = 1
 
-" vim-sneak
+" SNEAK {{{2
 let g:sneak#label = 0
 
-" vimtex
+" VIMTEX {{{2
 let g:vimtex_compiler_enabled = 1
 let g:vimtex_compiler_method = "tectonic"
 let g:vimtex_compiler_tectonic = {
