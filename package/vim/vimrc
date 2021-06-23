@@ -12,8 +12,8 @@ endif
 if !isdirectory($BR_VIMDIR)
     echoerr "$BR_VIMDIR does not exist:" $BR_VIMDIR
 endif
-let $BR_VIM_PLUGRC = $BR_VIMDIR .. '/plugrc.vim'
-let $BR_VIM_MAPS = $BR_VIMDIR .. '/after/plugin/maps.vim'
+let $BR_VIM_PLUGRC = $BR_VIMDIR . '/plugrc.vim'
+let $BR_VIM_MAPS = $BR_VIMDIR . '/after/plugin/maps.vim'
 
 set encoding=utf-8
 " set nocompatible (This is supposed to be set by default when vimrc present.)

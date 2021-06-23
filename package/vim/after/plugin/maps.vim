@@ -28,12 +28,12 @@ map Q <nop>
 "map gQ <nop>
 
 " EXPLORE {{{1
-execute "nnoremap" g:br_leader_nav.."m" ":TagbarOpenAutoClose<CR>"
-execute "nnoremap" g:br_leader_nav.."n" ":call funs#nerdtree()<cr>"
-execute "nnoremap" g:br_leader_nav.."p" ":CtrlPMixed<cr>"
-execute "nnoremap" g:br_leader_nav.."b" ":CtrlPBuffer<cr>"
-execute "nnoremap" g:br_leader_nav.."l" ":CtrlPLine<cr>"
-execute "nnoremap" g:br_leader_nav.."t" ":CtrlPTag<cr>"
+execute "nnoremap" g:br_leader_nav."m" ":TagbarOpenAutoClose<CR>"
+execute "nnoremap" g:br_leader_nav."n" ":call funs#nerdtree()<cr>"
+execute "nnoremap" g:br_leader_nav."p" ":CtrlPMixed<cr>"
+execute "nnoremap" g:br_leader_nav."b" ":CtrlPBuffer<cr>"
+execute "nnoremap" g:br_leader_nav."l" ":CtrlPLine<cr>"
+execute "nnoremap" g:br_leader_nav."t" ":CtrlPTag<cr>"
 
 " SPELL {{{1
 if has('syntax')
