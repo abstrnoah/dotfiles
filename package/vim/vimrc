@@ -10,6 +10,10 @@ for c in ["m", "r", "R", "l", "L", "b", "T"]
     exe "set guioptions-="..c
 endfor
 
+
+" BUILT-IN PLUGINS
+runtime macros/matchit.vim
+
 "
 " Setup vim-plug.
 "
