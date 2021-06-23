@@ -138,7 +138,9 @@ call plug#begin('~/.cache/vimplug')
     Plug 'preservim/nerdtree'
     Plug 'preservim/tagbar'
     Plug 'tpope/vim-abolish'
-    Plug 'chaoren/vim-wordmotion'
+    if v:version >= 802
+        Plug 'chaoren/vim-wordmotion'
+    endif
     " Frills.
     Plug 'Yggdroot/indentLine'
     Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
