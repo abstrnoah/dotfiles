@@ -1,3 +1,5 @@
+" Author: Noah <abstractednoah@brumal.org>
+
 " Note: Re file structure: This file uses vim's 'fold-marker' feature. Levels
 " 1 and 2 are enumerated and reserved for sections; deeper levels are not
 " enumerated. We try to avoid going deeper than three levels.
