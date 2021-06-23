@@ -163,13 +163,25 @@ set number
 set scrolloff=3
 set laststatus=2
 set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
-" Folding really just gets in my way, so disable for now.
-set nofoldenable
-set foldmethod=syntax
-set foldlevelstart=99
 
-"
-" Theme
+" Folding
+if has("folding")
+    set foldmethod=marker
+    set foldtext=FoldText()
+    set foldcolumn=4
+    function FoldText()
+        let l:line = getline(v:foldstart)
+        " Pattern of what to remove from line to produce fold summary text.
+        let l:rm_pattern = '\s{{{\d\=$\|^\s*\("\|#\|//\)\s' "}}}
+        let l:text = substitute(l:line, l:rm_pattern, "", "g")
+        let l:line_count = v:foldend - v:foldstart
+        return printf(
+            \ '%-4s %-55.55s  > %3d lines <%s',
+            \ v:folddashes, l:text, l:line_count, repeat(" ", 5)
+        \ )
+    endfunction
+endif
+
 " TODO: Move to a fork of solarized.
 set background=dark
 colorscheme solarized
@@ -181,7 +193,7 @@ autocmd BufWinLeave * call clearmatches()
 " (Still not sure about these.)
 " highlight Search ctermbg=black
 " highlight Visual ctermbg=black
-" hi Folded ctermbg=black ctermfg=grey
+hi Folded cterm=none
 
 " TrailingWhitespace.
 " TODO: Factor some of these regexes as variables.
