@@ -78,7 +78,7 @@ set tabstop=4 softtabstop=4 shiftwidth=0
 set timeoutlen=500
 
 " MAPS {{{1
-" For most mapping, see 'after/plugin/map.vim'.
+" For most mapping, see 'after/plugin/maps.vim'.
 " We put them there to ensure our mappings override both vim and plugin
 " defaults.
 " All mappings go there unless they need to go elsewhere for some reason.
