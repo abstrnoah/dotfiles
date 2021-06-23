@@ -136,9 +136,10 @@ call plug#begin('~/.cache/vimplug')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'honza/vim-snippets'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-    Plug 'puremourning/vimspector'
     " Theme.
     Plug 'altercation/vim-colors-solarized'
+    " Deprecated.
+    " Plug 'puremourning/vimspector'
 call plug#end()
 
 
