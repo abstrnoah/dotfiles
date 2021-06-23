@@ -112,7 +112,11 @@ call plug#begin('~/.cache/vimplug')
     Plug 'Townk/vim-autoclose'
     Plug 'tpope/vim-surround'
     Plug 'wellle/targets.vim'
-    Plug 'ludovicchabant/vim-gutentags'
+    if v:version >= 700 && v:version < 800
+        Plug 'ludovicchabant/vim-gutentags', {'branch': 'vim7'}
+    elseif v:version >= 800
+        Plug 'ludovicchabant/vim-gutentags'
+    endif
     Plug 'ctrlpvim/ctrlp.vim'
     Plug 'tpope/vim-repeat'
     " Should have.
