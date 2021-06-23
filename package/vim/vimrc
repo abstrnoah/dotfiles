@@ -34,7 +34,7 @@ endif
 
 if has("folding")
     set foldmethod=marker
-    set foldtext=FoldText()
+    set foldtext=funs#foldtext()
     set foldcolumn=4
 endif
 
@@ -147,71 +147,15 @@ call plug#begin('~/.cache/vimplug')
     Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
-" FUNCTIONS {{{1
-" TODO: Should probably be moved to autoload.
-
-function AN_NERDTree()
-    " Call `:NERDTreeFind` if path nonempty, otherwise `:NERDTreeVCS`.
-    if &modifiable && strlen(expand("%")) > 0 && !&diff
-        NERDTreeFind
-    else
-        NERDTreeVCS
-    endif
-endfunction
-
-" See [https://vim.fandom.com/wiki/Search_across_multiple_lines].
-" TODO learn more about functions, esp. arguments.
-" TODO also search across underscores.
-" Search across lines and non-word characters. Case-sensitive if '!'.
-function! SearchMultiline(bang, ...)
-    if a:0 > 0
-        "let sep = (a:bang) ? '\_W\+' : '\_s\+'
-        let sep = '\(\_W\|_\)\+'
-        let @/ = join(a:000, sep) . ((a:bang) ? "" : '\c')
-    endif
-endfunction
-
-function ToggleColorColumn()
-    if &colorcolumn == ""
-        setlocal colorcolumn=g:br_colorcolumn
-    else
-        setlocal colorcolumn=
-    endif
-endfunction
-
-function ToggleTableMode()
-    if tablemode#IsActive()
-        setlocal colorcolumn=g:br_colorcolumn
-        call tablemode#Disable()
-    else
-        setlocal colorcolumn=
-        call tablemode#Enable()
-    endif
-endfunction
-
-if has("folding")
-    function FoldText()
-        let l:line = getline(v:foldstart)
-        " Pattern of what to remove from line to produce fold summary text.
-        let l:rm_pattern = '\s{{{\d\=$\|^\s*\("\|#\|//\)\s' "}}}
-        let l:text = substitute(l:line, l:rm_pattern, "", "g")
-        let l:line_count = v:foldend - v:foldstart
-        return printf(
-            \ '%-4s %-55.55s  > %3d lines <%s',
-            \ v:folddashes, l:text, l:line_count, repeat(" ", 5)
-        \ )
-    endfunction
-endif
-
 " COMMANDS {{{1
 
 command TrimTrailingWhitespace %s/\s\+$//g
 " TODO: Make these work from visual mode by using direct '<c-r>='.
 command! -bang -nargs=* -complete=tag S
-    \ call SearchMultiline(<bang>0, <f-args>)
+    \ call funs#multiSearch(<bang>0, <f-args>)
     \ | normal! /<C-R>/<CR>
 command! -bang -nargs=* -complete=tag SB
-    \ call SearchMultiline(<bang>0, <f-args>)
+    \ call funs#multiSearch(<bang>0, <f-args>)
     \ | normal! ?<C-R>/<CR>
 " FIXME: This doesn't work because it clears custom theme below. Theme below
 " needs to be moved to a fork of solarized.

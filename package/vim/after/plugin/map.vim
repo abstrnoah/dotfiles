@@ -26,7 +26,7 @@ map Q <nop>
 
 " Exploration.
 exe "nnoremap" g:br_leader_nav.."m" ":TagbarOpenAutoClose<CR>"
-exe "nnoremap" g:br_leader_nav.."n" ":call AN_NERDTree()<cr>"
+exe "nnoremap" g:br_leader_nav.."n" ":call funs#nerdtree()<cr>"
 exe "nnoremap" g:br_leader_nav.."p" ":CtrlPMixed<cr>"
 exe "nnoremap" g:br_leader_nav.."b" ":CtrlPBuffer<cr>"
 exe "nnoremap" g:br_leader_nav.."l" ":CtrlPLine<cr>"
@@ -58,7 +58,7 @@ nnoremap <leader>8 :silent make! %<cr><c-l>:cwindow<cr>
 
 
 " Toggle colorcolumn with table mode.
-nnoremap <leader>tm :call ToggleTableMode()<cr>
+nnoremap <leader>tm :call funs#toggleTableMode()<cr>
 
 " vim-sneak
 map f <Plug>Sneak_f
