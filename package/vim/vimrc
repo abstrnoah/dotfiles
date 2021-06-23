@@ -205,7 +205,7 @@ highlight ColorColumn ctermbg=black
 set tabstop=4 expandtab softtabstop=4
 set wrap linebreak nolist textwidth=80
 set autoindent
-set shiftwidth=4
+set shiftwidth=0 " zero means use 'ts'.
 set formatoptions+=j
 set nojoinspaces
 
