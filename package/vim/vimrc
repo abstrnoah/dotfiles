@@ -7,16 +7,102 @@
 " SETUP {{{1
 
 set encoding=utf-8
-set nocompatible
-set exrc
-set secure
+" set nocompatible (This is supposed to be set by default when vimrc present.)
+filetype plugin indent on
+syntax enable
+set secure  " Probably unnecessary, but just in case.
+
+" GLOBALS {{{1
+" All custom globals are prefixed with 'br_'.
+" All custom globals are set in this section.
+
+let g:br_colorcolumn = '+1'  " Default color column offset.
+" Leader key for navigation-type operations such as fuzzy find files, etc.
+let g:br_leader_nav = "<leader>e"
+" For footnote operations.
+let g:br_leader_note = "<leader>n"
+
+
+" OPTIONS {{{1
+" Roughly alphabetical.
+" We try to set all options in this section, but some are set in SETUP, MAPS,
+" and elsewhere.
+
+if has('cmdline_info')
+    set showcmd
+endif
+
+if has("folding")
+    set foldmethod=marker
+    set foldtext=FoldText()
+    set foldcolumn=4
+endif
+
+" Format.
+" One line = 80 characters.
+set wrap
+set textwidth=80
+if has('linebreak')
+    set linebreak " TODO: ?
+endif
+set autoindent
+set formatoptions+=j
+set nojoinspaces
+
+set number
+
+set scrolloff=3
+
+if has('extra_search')
+    set incsearch hlsearch
+endif
+
+if has('statusline')
+    set laststatus=2 " Always display statusline.
+    set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
+endif
+
+if has('syntax')
+    set cursorline
+    let &colorcolumn = g:br_colorcolumn
+    set spelloptions=camel
+    set spellcapcheck=
+endif
+
+" Tabs.
+" One tab = four spaces.
+" 'shiftwidth=0' means fallback to 'tabstop'.
+set expandtab
+set tabstop=4 softtabstop=4 shiftwidth=0
+
+set timeoutlen=500
+
+" MAPS {{{1
+" For most mapping, see 'after/plugin/map.vim'.
+" We put them there to ensure our mappings override both vim and plugin
+" defaults.
+" All mappings go there unless they need to go elsewhere for some reason.
+" Coc's bindings are in 'cocrc.vim' bc coc is so much. When plugins have an
+" option like 'g:plugin_featureX_map', those are set either in this section or
+" below in the plugin's respective subsection.
+
+let mapleader = " "
+let maplocalleader = " "
+" See GLOBALS for 'g:br_leader_*'.
+
+
+" ABBREVIATIONS {{{1
+"
+inoreabbrev -[] - [ ]
+
+
 
 " BUILTIN PLUGINS {{{1
 
 runtime macros/matchit.vim
 
 " VIM-PLUG PLUGINS {{{1
-" Plugins are declared here, configured below under "PLUGIN CONFIG"
+" Plugins are declared here, configured below under "PLUGIN CONFIG".
 
 " Automatic installation of vim-plug[^1].
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -61,14 +147,9 @@ call plug#begin('~/.cache/vimplug')
     Plug 'altercation/vim-colors-solarized'
 call plug#end()
 
-" The following lines are called automatically by `plug#end`:
-"filetype plugin indent on
-"syntax enable
-
-
 " FUNCTIONS {{{1
+" TODO: Should probably be moved to autoload.
 
-" TODO: Should probably be moved to its own plugin directory at some point.
 function AN_NERDTree()
     " Call `:NERDTreeFind` if path nonempty, otherwise `:NERDTreeVCS`.
     if &modifiable && strlen(expand("%")) > 0 && !&diff
@@ -90,14 +171,9 @@ function! SearchMultiline(bang, ...)
     endif
 endfunction
 
-" TODO: Remove this function, replace with global setting.
-function EnableColorColumn()
-    set colorcolumn=+1
-endfunction
-
 function ToggleColorColumn()
     if &colorcolumn == ""
-        call EnableColorColumn()
+        setlocal colorcolumn=g:br_colorcolumn
     else
         setlocal colorcolumn=
     endif
@@ -105,7 +181,7 @@ endfunction
 
 function ToggleTableMode()
     if tablemode#IsActive()
-        call EnableColorColumn()
+        setlocal colorcolumn=g:br_colorcolumn
         call tablemode#Disable()
     else
         setlocal colorcolumn=
@@ -113,22 +189,19 @@ function ToggleTableMode()
     endif
 endfunction
 
-
-" MAPS {{{1
-" For most mapping, see 'after/plugin/map.vim'. We put them there to ensure our
-" mappings override both vim and plugin defaults. The convention is that all
-" mappings go there unless they need to go elsewhere for some reason. Coc's
-" bindings are in 'cocrc.vim' bc coc is so much. When plugins have an option
-" like 'g:plugin_featureX_map', those are set here.
-
-let mapleader = " "
-let maplocalleader = " "
-" Leader key for navigation-type operations such as fuzzy find files, etc.
-let g:br_leader_nav = "<leader>e"
-" For footnote operations.
-let g:br_leader_note = "<leader>n"
-set showcmd
-set timeoutlen=500
+if has("folding")
+    function FoldText()
+        let l:line = getline(v:foldstart)
+        " Pattern of what to remove from line to produce fold summary text.
+        let l:rm_pattern = '\s{{{\d\=$\|^\s*\("\|#\|//\)\s' "}}}
+        let l:text = substitute(l:line, l:rm_pattern, "", "g")
+        let l:line_count = v:foldend - v:foldstart
+        return printf(
+            \ '%-4s %-55.55s  > %3d lines <%s',
+            \ v:folddashes, l:text, l:line_count, repeat(" ", 5)
+        \ )
+    endfunction
+endif
 
 " COMMANDS {{{1
 
@@ -145,34 +218,11 @@ command! -bang -nargs=* -complete=tag SB
 " command ToggleBG let &background = ( &background == "dark"? "light" : "dark" )
 
 " LOOK {{{1
-
-set number
-set scrolloff=3
-set laststatus=2
-set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
-
-" Folding
-if has("folding")
-    set foldmethod=marker
-    set foldtext=FoldText()
-    set foldcolumn=4
-    function FoldText()
-        let l:line = getline(v:foldstart)
-        " Pattern of what to remove from line to produce fold summary text.
-        let l:rm_pattern = '\s{{{\d\=$\|^\s*\("\|#\|//\)\s' "}}}
-        let l:text = substitute(l:line, l:rm_pattern, "", "g")
-        let l:line_count = v:foldend - v:foldstart
-        return printf(
-            \ '%-4s %-55.55s  > %3d lines <%s',
-            \ v:folddashes, l:text, l:line_count, repeat(" ", 5)
-        \ )
-    endfunction
-endif
+" Section is deprecated, needs to be moved to colorscheme fork or elsewhere.
 
 " TODO: Move to a fork of solarized.
 set background=dark
 colorscheme solarized
-set incsearch hlsearch
 
 " Fixed preformance issue[^2]
 autocmd BufWinLeave * call clearmatches()
@@ -192,29 +242,13 @@ autocmd InsertEnter * match TrailingWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match TrailingWhitespace /\s\+$/
 
 " Accent current line number.
-set cursorline
 hi CursorLine cterm=none
 hi CursorLineNr cterm=bold
 
 "
 " Indent, wrap, margins, format
 "
-call EnableColorColumn()
 highlight ColorColumn ctermbg=black
-set tabstop=4 expandtab softtabstop=4
-set wrap linebreak nolist textwidth=80
-set autoindent
-set shiftwidth=0 " zero means use 'ts'.
-set formatoptions+=j
-set nojoinspaces
-
-" ABBREVIATIONS {{{1
-inoreabbrev -[] - [ ]
-
-" SPELL {{{1
-set spelloptions=camel
-set spellcapcheck=
-
 
 " PLUGIN CONFIG {{{1
 
