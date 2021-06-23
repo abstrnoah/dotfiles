@@ -20,7 +20,10 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeHijackNetrw = 1
 
 " COC {{{2
-source ~/.vim/cocrc.vim
+if v:version >= 800
+    source ~/.vim/cocrc.vim
+    let g:br_configured_coc = 1
+endif
 
 " VIMSPECTOR {{{2
 let g:vimspector_install_gadgets = [
@@ -137,7 +140,9 @@ call plug#begin('~/.cache/vimplug')
     Plug 'Yggdroot/indentLine'
     Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
     " These ones are on thin ice.
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    if exists('g:br_configured_coc')
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    endif
     Plug 'honza/vim-snippets'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     " Theme.

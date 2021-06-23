@@ -43,6 +43,8 @@ let g:br_leader_note = "<leader>n"
 if has('cmdline_info')
     set showcmd
 endif
+" Give more space for displaying messages.
+set cmdheight=2
 
 if has("folding")
     set foldmethod=marker
@@ -76,7 +78,7 @@ endif
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-if has('signs')
+if has('signs') && has('patch-7.4.2201')
     set signcolumn=yes
 endif
 
