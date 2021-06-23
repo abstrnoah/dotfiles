@@ -5,6 +5,8 @@
 " enumerated. We try to avoid going deeper than three levels.
 
 " SETUP {{{1
+
+set encoding=utf-8
 set nocompatible
 set exrc
 set secure
@@ -150,10 +152,6 @@ command! -bang -nargs=* -complete=tag SB
 " needs to be moved to a fork of solarized.
 " command ToggleBG let &background = ( &background == "dark"? "light" : "dark" )
 
-"
-" Ecoding.
-"
-set encoding=utf-8
 " LOOK {{{1
 
 set number
