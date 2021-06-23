@@ -113,7 +113,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'tpope/vim-surround'
     Plug 'wellle/targets.vim'
     if v:version >= 700 && v:version < 800
-        Plug 'ludovicchabant/vim-gutentags', {'branch': 'vim7'}
+        Plug 'ludovicchabant/vim-gutentags', {'commit': '3314afd'}
     elseif v:version >= 800
         Plug 'ludovicchabant/vim-gutentags'
     endif
