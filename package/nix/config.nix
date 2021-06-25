@@ -17,10 +17,8 @@
         git
         glibcLocales
         htop
-        jabref
         jq
         nodejs
-        okular
         jdk
         pfetch
         php
@@ -34,22 +32,27 @@
         toilet
         vimHugeX
         visidata
-        xrandr-invert-colors
         zsh
         nix-zsh-completions
-        zathura
         dmidecode
-        xournalpp
-        # Fails to start, missing GLIBC.
-        #zoom
-        # Unable to communicate with browser, also missing GLIBC.
-        #spotify
         pdfgrep
-        # Audio not working for tor.
-        torbrowser
         weechat
         silver-searcher
         fd
+      ];
+      pathsToLink = [ "/share" "/bin" "/lib" ];
+      extraOutputsToInstall = [ "man" "doc" ];
+    };
+    clientPackagesGui = pkgs.buildEnv {
+      name = "clientPackagesGui";
+      paths = [
+        jabref
+        okular
+        xrandr-invert-colors
+        zathura
+        xournalpp
+        # Audio not working for tor.
+        torbrowser
         xflux
         qutebrowser
         mpv
@@ -68,4 +71,3 @@
     };
   };
 }
-# TODO: fix PATH and MANPATH so that docs are available to `man`.

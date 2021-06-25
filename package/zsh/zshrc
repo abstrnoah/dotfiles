@@ -81,9 +81,7 @@ if command -v curl &> /dev/null; then
 fi
 if command -v nix-env &> /dev/null; then
     # Note that 'nix-env' is aliased in 'zshenv' with pinned nixpkgs.
-    alias update-nix='nix-env -v -riA'
-    alias update-nix-client='update-nix clientPackages'
-    alias update-nix-machine02='update-nix clientPackages serverPackages'
+    alias reload-nix-packages='nix-env -v -riA'
 fi
 # Don't ssh from tmux, that's dangerous!
 alias ssh='[ -z ${TMUX} ] && ssh'
