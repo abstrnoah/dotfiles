@@ -25,19 +25,27 @@ export AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/an-master.t
 #
 
 # firefox: Enable touch screen scrolling.
-alias firefox='MOZ_USE_XINPUT2=1 firefox'
+if command -v firefox &> /dev/null; then
+    alias firefox='MOZ_USE_XINPUT2=1 firefox'
+fi
 
 # xournalpp: Dark theme.
-alias xournalpp='GTK_THEME=Adwaita:dark xournalpp'
+if command -v xournalpp &> /dev/null; then
+    alias xournalpp='GTK_THEME=Adwaita:dark xournalpp'
+fi
 
 # maven: Fix Java version.
-alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
-alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
+if command -v mvn &> /dev/null; then
+    alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
+    alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
+fi
 
 # Nix
-alias nix-env-defexpr=$(which nix-env)
-# Yes, it is probably redundant to have both -I and -f.
-alias nix-env='nix-env -I an_nixpkgs=${AN_NIXPKGS} -f ${AN_NIXPKGS}'
+if command -v nix-env &> /dev/null; then
+    alias nix-env-defexpr=$(which nix-env)
+    # Yes, it is probably redundant to have both -I and -f.
+    alias nix-env='nix-env -I an_nixpkgs=${AN_NIXPKGS} -f ${AN_NIXPKGS}'
+fi
 
 
 # FIXME TODO This is actually killing me.
@@ -49,4 +57,6 @@ alias nix-env='nix-env -I an_nixpkgs=${AN_NIXPKGS} -f ${AN_NIXPKGS}'
 # qutebrowser
 # Temporary fix until bug with xcb_gl integration gets fixed (not sure whether
 # problem with Nix or qutebrowser.
-alias qutebrowser='QT_XCB_GL_INTEGRATION=none qutebrowser'
+if command -v qutebrowser &> /dev/null; then
+    alias qutebrowser='QT_XCB_GL_INTEGRATION=none qutebrowser'
+fi

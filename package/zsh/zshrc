@@ -56,19 +56,35 @@ zshexit() {
 # name of the command; with functions, the preexec() hook can't get the actual
 # command name (without excessive effort).
 alias reload-zsh='. ~/.zshrc'
-alias reload-tmux='tmux source-file ~/.tmux.conf'
+if command -v tmux &> /dev/null; then
+    alias reload-tmux='tmux source-file ~/.tmux.conf'
+fi
 alias ll='ls -alF'
-alias Y='xclip -selection clipboard'
-alias P='xclip -selection clipboard -o'
-alias T='tmux a >&2 2>/dev/null || mux main'
-alias R='ranger'
-alias v='vim'
-alias g='git'
-alias wttr='curl "wttr.in/?mF&format=4"'
-# Note that 'nix-env' is aliased in 'zshenv' with pinned nixpkgs.
-alias update-nix='nix-env -v -riA'
-alias update-nix-client='update-nix clientPackages'
-alias update-nix-machine02='update-nix clientPackages serverPackages'
+if command -v xclip &> /dev/null; then
+    alias Y='xclip -selection clipboard'
+    alias P='xclip -selection clipboard -o'
+fi
+if command -v tmux &> /dev/null && command -v tmuxinator &> /dev/null; then
+    alias T='tmux a >&2 2>/dev/null || tmuxinator main'
+fi
+if command -v ranger &> /dev/null; then
+    alias R='ranger'
+fi
+if command -v vim &> /dev/null; then
+    alias v='vim'
+fi
+if command -v git &> /dev/null; then
+    alias g='git'
+fi
+if command -v curl &> /dev/null; then
+    alias wttr='curl "wttr.in/?mF&format=4"'
+fi
+if command -v nix-env &> /dev/null; then
+    # Note that 'nix-env' is aliased in 'zshenv' with pinned nixpkgs.
+    alias update-nix='nix-env -v -riA'
+    alias update-nix-client='update-nix clientPackages'
+    alias update-nix-machine02='update-nix clientPackages serverPackages'
+fi
 # Don't ssh from tmux, that's dangerous!
 alias ssh='[ -z ${TMUX} ] && ssh'
 
@@ -76,7 +92,7 @@ alias ssh='[ -z ${TMUX} ] && ssh'
 . ~/.dotfiles/package/zsh/comp-mux.zsh
 
 # nix
-if [ -d "~/.nix-profile/" ]; then # We do have nix.
+if [ -d "~/.nix-profile/" ]; then # We do have nix-profile.
     source ~/.nix-profile/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
     # TODO This might not be the best way to do this...
     fpath=("${HOME}/.nix-profile/share/zsh/site-functions/" ${fpath})
@@ -85,9 +101,9 @@ autoload -U compinit && compinit
 
 # MAIN
 # That is, what follows is our "enter hook".
-if [ -z ${TMUX} ]; then # We are not in tmux.
+if [ -z ${TMUX} ] && command -v tmuxinator &> /dev/null; then # Not in tmux.
     # So start tmux.
-    mux main
+    tmuxinator main
 else # We are in tmux.
     # Save the current tmux window name.
     BR_TMUX_LAST_WINDOW_NAME=$(tmux display-message -p '#W')
