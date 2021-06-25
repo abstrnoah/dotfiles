@@ -20,7 +20,7 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeHijackNetrw = 1
 
 " COC {{{2
-if v:version >= 800
+if has('patch-8.1.1719')
     source ~/.vim/cocrc.vim
     let g:br_configured_coc = 1
 endif
