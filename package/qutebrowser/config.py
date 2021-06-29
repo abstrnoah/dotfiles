@@ -52,6 +52,9 @@ with config.pattern("https://calendar.google.com?cid=%25s") as p:
 
 # BINDS {{{1
 
+# Don't forward any keys to page unless in an insert mode.
+c.input.forward_unbound_keys = "none"
+
 # Default tab movement is to the end (right-most).
 config.bind("gm", "tab-move -1")
 
