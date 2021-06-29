@@ -39,6 +39,7 @@
         weechat
         silver-searcher
         fd
+        black
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
