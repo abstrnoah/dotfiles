@@ -2,6 +2,7 @@
 ![size](https://img.shields.io/github/repo-size/abstractednoah/dotfiles?label=size)
 ![license](https://img.shields.io/github/license/abstractednoah/dotfiles)
 ![updated](https://img.shields.io/github/last-commit/abstractednoah/dotfiles/develop?label=rev)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 A configuration stack used by abstractednoah on Ubuntu.
 
