@@ -78,3 +78,8 @@ config.bind(
     "spawn --userscript toggle-esc passthru",
     mode="passthrough",
 )
+
+# Passthrough common clipboard chords.
+config.bind(",y", "fake-key <Ctrl-c>")
+config.bind(",p", "fake-key <Ctrl-v>")
+config.bind(",d", "fake-key <Ctrl-x>")
