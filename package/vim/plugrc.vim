@@ -68,6 +68,9 @@ let g:vim_markdown_toc_autofit = 1
 " To avoid conflict with bullet plugin, still not ideal TODO.
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
+" Folding.
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_override_foldtext = 0
 
 " INDENTLINE {{{2
 " Note that as it stands, indentLine seems to have control over conceal. So
