@@ -83,3 +83,13 @@ config.bind(
 config.bind(",y", "fake-key <Ctrl-c>")
 config.bind(",p", "fake-key <Ctrl-v>")
 config.bind(",d", "fake-key <Ctrl-x>")
+
+# Passthrough escape in normal.
+config.bind(",e", "fake-key <Escape>")
+
+# Passthrough common undo chords.
+config.bind(",u", "fake-key <Ctrl-z>")
+config.bind(",r", "fake-key <Ctrl-y>")
+
+# Passthrough search.
+config.bind(",/", "fake-key <Ctrl-f>")
