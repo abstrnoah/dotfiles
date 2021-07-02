@@ -147,6 +147,7 @@ call plug#begin('~/.cache/vimplug')
     " Frills.
     Plug 'Yggdroot/indentLine'
     Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
+    Plug 'mboughaba/i3config.vim'
     " These ones are on thin ice.
     if exists('g:br_configured_coc')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
