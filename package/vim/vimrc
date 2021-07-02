@@ -39,6 +39,8 @@ let g:br_leader_note = "<leader>n"
 " Roughly alphabetical.
 " We try to set all options in this section, but some are set in SETUP, MAPS,
 " and elsewhere.
+" We refuse to end lines with whitespace, which means that option values ending
+" in an escaped space like '\ ' are set using the :let-& feature.
 
 if has('cmdline_info')
     set showcmd
@@ -47,6 +49,8 @@ endif
 set cmdheight=2
 
 if has("folding")
+    " Unset 'fillchars' items fallback to default.
+    let &fillchars = "fold: "
     set foldmethod=marker
     set foldtext=funs#foldtext()
     set foldcolumn=4

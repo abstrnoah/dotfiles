@@ -29,8 +29,8 @@ if has("folding")
         let l:text = substitute(l:line, l:rm_pattern, "", "g")
         let l:line_count = v:foldend - v:foldstart
         return printf(
-            \ '%-4s %-55.55s  > %3d lines <%s',
-            \ v:folddashes, l:text, l:line_count, repeat(" ", 5)
+            \ '%-4s %-55.55s  > %3d lines <',
+            \ v:folddashes, l:text, l:line_count
         \ )
     endfunction
 endif
