@@ -25,7 +25,7 @@ if has("folding")
     function funs#foldtext() abort
         let l:line = getline(v:foldstart)
         " Pattern of what to remove from line to produce fold summary text.
-        let l:rm_pattern = '\s{{{\d\=$\|^\s*\("\|#\|//\)\s' "}}}
+        let l:rm_pattern = '\s{{{\d\=$\|^\s*\("\|#\+\|//\|%\+\)\s' "}}}
         let l:text = substitute(l:line, l:rm_pattern, "", "g")
         let l:line_count = v:foldend - v:foldstart
         return printf(
