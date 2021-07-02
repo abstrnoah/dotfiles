@@ -85,6 +85,17 @@ client.focused          $base03 $base02 $base1  $base01   $magenta
 client.focused_inactive $base03 $base03 $base1  $base01   $cyan
 client.unfocused        $base03 $base03 $base01 $cyan     $base03
 
+# Gaps, *snazzy*.
+for_window [class=".*"] border pixel $default_border
+gaps inner $base_gap
+gaps outer $base_gap
+bindsym $mod+Shift+b border normal; mode "border"
+mode "border" {
+    bindsym $esc border pixel $default_border; mode "default"
+}
+
+
+
 
 # BAR {{{1
 bar {
@@ -106,17 +117,6 @@ bar {
         binding_mode       $base02 $base03 $green
     }
 }
-
-# Gaps, *snazzy*.
-for_window [class=".*"] border pixel $default_border
-gaps inner $base_gap
-gaps outer $base_gap
-bindsym $mod+Shift+b border normal; mode "border"
-mode "border" {
-    bindsym $esc border pixel $default_border; mode "default"
-}
-
-
 
 # BINDS {{{1
 
