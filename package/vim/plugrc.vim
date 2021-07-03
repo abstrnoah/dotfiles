@@ -96,6 +96,20 @@ let g:vimtex_compiler_tectonic = {
     \ ],
 \}
 let g:vimtex_quickfix_autoclose_after_keystrokes = 1
+let g:vimtex_fold_enabled = 1
+" Vimtex's formatexpr works almost perfectly, except:
+" ISSUE: When an environment is given a trailing optional argument. Then 'gqie'
+" moves the text inside the environment to start on the same line as the closing
+" ']' of the optional argument.
+let g:vimtex_format_enabled = 1
+" Just, imaps, no.
+let g:vimtex_imaps_enabled = 0
+" Prohibitively slow.
+let g:vimtex_include_search_enabled = 0
+" Everything should be indented, even 'document'.
+let g:vimtex_indent_ignored_envs = ['seems an empty list breaks vimtex indent']
+" EXPERIMENTAL:
+let g:vimtex_indent_delims = {'open': ['{', '['], 'close': ['}', ']']}
 
 
 
