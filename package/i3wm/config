@@ -130,6 +130,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # Lock.
 bindsym $mod+Mod1+l exec i3lock -dI 10 -ti $home/.wallpaperlock
+# Hibernate.
+# Note that the sudoers file must be configured so that pm-hibernate can be run
+# non-interactively by the user.
+bindsym $mod+Mod1+h exec i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate
 
 # APPS {{{2
 # Dmenu.
