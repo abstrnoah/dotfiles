@@ -13,3 +13,5 @@ set spell
 
 " Use vimtex's doc.
 map <buffer> K <Plug>(vimtex-doc-package)
+" Use vimtex's ToC
+exe "nmap <buffer>" g:br_leader_nav.."m" "<plug>(vimtex-toc-open)"
