@@ -48,12 +48,15 @@ nnoremap <silent> <ESC> :nohlsearch<CR><ESC>
 nnoremap <leader>/ :S<space>
 nnoremap <leader>? :SB<space>
 
+" MOTIONS {{{1
 if exists('g:loaded_sneak_plugin')
     map f <Plug>Sneak_f
     map F <Plug>Sneak_F
     map t <Plug>Sneak_t
     map T <Plug>Sneak_T
 endif
+
+" See plugrc.vim for wordmotion config.
 
 " CLIPBOARD {{{1
 if has('clipboard')

@@ -118,6 +118,9 @@ let g:vimtex_syntax_conceal = {
 \ }
 
 
+" WORDMOTION {{{2
+let g:wordmotion_prefix = '<leader>'
+let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 
 " BUILTIN PLUGINS {{{1
 
