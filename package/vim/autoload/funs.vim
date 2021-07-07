@@ -35,6 +35,70 @@ if has("folding")
     endfunction
 endif
 
+function funs#unformat(text) abort
+    return substitute(a:text, '[^\n]\zs\n\ze[^\n]', " ", "g")
+endfunction
+
+function funs#removeLeadingWhitespace(text) abort
+    return substitute(a:text, '\(\_^\|\n\)\zs\s\+', "", "g")
+endfunction
+
+" OPERATORS {{{1
+" funs#opfunc(func, type) {{{2
+"   Wrap a function so as to be used as an operatorfunc in the form of a
+"   Partial. The intended pattern is something like
+"
+"       :let g:MyOpFunc = funcref(funs#opfunc, [MyFunc])
+"       :nnoremap <leader>x :set operatorfunc=g:MyOpFunc<cr>g@
+"
+"   It also supports visual selection "operators"; just pass the "visual" type:
+"
+"       :xnoremap <leader>x :<c-u>call g:MyOpFunc("visual")<cr>
+"
+"   We need to store the Funcref in a variable rather than pass it directly to
+"   operatorfunc because operatorfunc only accepts a string name to the
+"   function.
+"   The 'func' should be a function that takes exactly one string argument, the
+"   text of the motion passed to the operator.
+"   Return the result of 'func(motionText)'.
+function funs#opfunc(func, type) abort
+    let l:old_selection = &selection
+    let l:old_register = getreginfo('"')
+    let l:old_clipboard = &clipboard
+    let l:old_visual_marks = [getpos("'<"), getpos("'>")]
+    try
+        set clipboard= selection=inclusive
+        let l:commands = #{
+            \ line: "'[V']y", char:"`[v`]y", block: "`[\<c-v>`]y",
+            \ visual: "gvy"
+        \ }
+        silent execute 'noautocmd keepjumps normal!' get(l:commands, a:type, '')
+        return a:func(getreg('"'))
+    finally
+        call setreg('"', l:old_register)
+        call setpos("'<", l:old_visual_marks[0])
+        call setpos("'>", l:old_visual_marks[1])
+        let &clipboard = l:old_clipboard
+        let &selection = l:old_selection
+    endtry
+endfunction
+
+" funs#yankUnformattedOperator(type) {{{2
+"   An operatorfunc that sets the '+' register to the "unformatted" version of
+"   the motion's text. By "unformatted", we mean roughly the inverse operation
+"   to the format operator 'gq'. It is difficult to exactly invert 'gq', so this
+"   is only an approximate inverse, but it is useful when, for instance,
+"   drafting a note in vim with nice vim formatting such as with hard wrapping
+"   but then want to paste the draft into a form that is not suited for
+"   80-character hard-wrapped text.
+function funs#yankUnformattedOperator(type) abort
+    let @+ = funs#opfunc(
+        \ {text -> funs#unformat(funs#removeLeadingWhitespace(text))},
+        \ a:type
+    \ )
+    echom "Unformattedly yanked into \"+."
+endfunction
+
 " PLUGIN {{{1
 " Functions that wrap plugin functionality.
 

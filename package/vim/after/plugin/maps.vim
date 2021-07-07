@@ -60,13 +60,9 @@ if has('clipboard')
     map <leader>y "+y
     map <leader>p "+p
     map <leader>P "+P
-    " Yank text into clipboard "+ register, and join paragraphs into single
-    " lines, in place in the register. That is, the original text is unchanged,
-    " but the register text will be removed of its hardwraps. Paragraphs
-    " (double-newline-separated) are preserved as separate
-    " double-newline-separated lines.
-    vnoremap <leader>Y
-        \ "+y:let @+ = substitute(@+, '[^\n]\zs\n\ze[^\n]', " ", "g")<cr>
+    " Unformattedly yank operators.
+    nnoremap <leader>Y :set operatorfunc=funs#yankUnformattedOperator<cr>g@
+    xnoremap <leader>Y :<c-u>call funs#yankUnformattedOperator("visual")<cr>
 endif
 
 " TABLE-MODE {{{1
