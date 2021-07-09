@@ -9,6 +9,11 @@ __email__ = "abstractednoah@brumal.org"
 
 # SETUP {{{1
 
+# Home page.
+# Note that 'start_pages' is different from 'default_page'; ':home' goes to the
+# former while generic opens go to the latter.
+c.url.start_pages = ["https://www.nytimes.com/"]
+
 # Don't load autoconfig.yml.
 config.load_autoconfig(False)
 
