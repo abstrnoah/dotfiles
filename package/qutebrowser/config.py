@@ -93,3 +93,9 @@ config.bind(",r", "fake-key <Ctrl-y>")
 
 # Passthrough search.
 config.bind(",/", "fake-key <Ctrl-f>")
+
+# Advanced history navigation.
+# NOTE: These use the 'g' leader, so might end up conflicting with future
+# versions of QB.
+config.bind("gH", "set-cmd-text -s :back")
+config.bind("gL", "set-cmd-text -s :forward")
