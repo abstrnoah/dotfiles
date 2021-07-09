@@ -97,7 +97,7 @@ config.bind(",u", "fake-key <Ctrl-z>")
 config.bind(",r", "fake-key <Ctrl-y>")
 
 # Passthrough search.
-config.bind(",/", "fake-key <Ctrl-f>")
+config.bind(",/", "fake-key <Ctrl-f> ;; mode-enter insert")
 
 # Advanced history navigation.
 # NOTE: These use the 'g' leader, so might end up conflicting with future
