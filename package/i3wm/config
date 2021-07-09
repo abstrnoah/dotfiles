@@ -66,7 +66,9 @@ exec_always --no-startup-id /usr/bin/setxkbmap -option caps:ctrl_modifier
 # Disable obnoxious zoom mouse gesture.
 # NOTE that this has only been tested on my Dell ('machine02') and might not be
 # portable / could screw something up on other machines.
-exec --no-startup-id xinput set-prop 12 "Synaptics Click Action" 0
+# 'exec_always' because sometime this gets reset for an unknown reason and the
+# easiest way to fix it is to just restart i3wm.
+exec_always --no-startup-id xinput set-prop 12 "Synaptics Click Action" 0
 
 # Start xflux.
 # 'exec_always' so we can restart xflux easily.
