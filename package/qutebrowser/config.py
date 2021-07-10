@@ -60,6 +60,9 @@ with config.pattern("https://calendar.google.com?cid=%25s") as p:
 # Don't forward any keys to page unless in an insert mode.
 c.input.forward_unbound_keys = "none"
 
+# Resource config.
+config.bind(",C", "config-source")
+
 # Default tab movement is to the end (right-most).
 config.bind("gm", "tab-move -1")
 
@@ -69,6 +72,9 @@ config.bind("`", "quickmark-save")
 
 # Open current page in mpv.
 config.bind(",v", "spawn mpv {url}")
+
+# Open current page in firefox (I'm sorry).
+config.bind(",F", "spawn firefox {url}")
 
 # Passthrough mode.
 # <Escape> always escapes to normal.
