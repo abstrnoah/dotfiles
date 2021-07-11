@@ -19,7 +19,7 @@ bindkey -v "^ " push-line-or-edit
 bindkey -a "^ " push-line-or-edit
 
 # zstyle
-zstyle :compinstall filename '/home/analyticalnoa/.zshrc'
+zstyle :compinstall filename '/home/abstractednoah/.zshrc'
 autoload -Uz compinit
 compinit
 
