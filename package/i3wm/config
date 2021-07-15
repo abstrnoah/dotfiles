@@ -23,6 +23,7 @@ set $font_family ubuntu mono
 set $mode_audio "audio: [h]prev [l]next [k]up [j]down [m]ute [space]play"
 set $mode_focus "parent/child focus: [h][j][k][l]parent [p]arent [c]hild"
 set $mode_notify "notify: [e]nable [d]isable"
+set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
 # TODO: Some modes are still hardcoded, factor them out.
 
 # Default resize increments.
@@ -197,6 +198,21 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym Shift+XF86MonBrightnessUp exec xbacklight -set 100
 bindsym Shift+XF86MonBrightnessDown exec xbacklight -set 0
+bindsym $mod+b mode $mode_brightness
+mode $mode_brightness {
+    bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+    bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+    bindsym Shift+XF86MonBrightnessUp exec xbacklight -set 100
+    bindsym Shift+XF86MonBrightnessDown exec xbacklight -set 0
+
+    bindsym k exec xbacklight -inc 10
+    bindsym j exec xbacklight -dec 10
+    bindsym Shift+k exec xbacklight -set 100
+    bindsym Shift+j exec xbacklight -set 0
+
+    bindsym $esc mode "default"
+    bindsym Escape mode "default"
+}
 
 # Invert.
 bindsym $mod+i exec xrandr-invert-colors
