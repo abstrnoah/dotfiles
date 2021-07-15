@@ -179,7 +179,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'honza/vim-snippets'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     " Theme.
-    Plug 'altercation/vim-colors-solarized'
+    Plug 'abstractednoah/vim-colors-solarized', {'branch': 'develop'}
     " Deprecated.
     " Plug 'puremourning/vimspector'
 call plug#end()
