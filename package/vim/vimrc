@@ -100,6 +100,8 @@ if has('syntax')
     set spellcapcheck=
 endif
 
+set splitbelow splitright " Put new window below or right, feels more intuitive.
+
 " Tabs.
 " One tab = four spaces.
 " 'shiftwidth=0' means fallback to 'tabstop'.
