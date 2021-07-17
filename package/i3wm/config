@@ -257,13 +257,12 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # Split with vim-like mneumonics.
-bindsym $mod+Shift+v split h
-bindsym $mod+Shift+s split v
+bindsym $mod+v split h
+bindsym $mod+s split v
 
 # Change container layout (stacked, tabbed, toggle split).
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+Shift+t layout stacking
+bindsym $mod+t layout tabbed
 
 # kill focused window
 bindsym $mod+Shift+q kill
