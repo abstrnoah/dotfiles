@@ -43,6 +43,9 @@ function funs#removeLeadingWhitespace(text) abort
     return substitute(a:text, '\(\_^\|\n\)\zs\s\+', "", "g")
 endfunction
 
+function funs#removeFinalNewline(text) abort
+    return substitute(a:text, '\n\_$', "", "g")
+endfunction
 " OPERATORS {{{1
 " funs#opfunc(func, type) {{{2
 "   Wrap a function so as to be used as an operatorfunc in the form of a
@@ -93,7 +96,15 @@ endfunction
 "   80-character hard-wrapped text.
 function funs#yankUnformattedOperator(type) abort
     let @+ = funs#opfunc(
-        \ {text -> funs#unformat(funs#removeLeadingWhitespace(text))},
+        \ {text
+            \ -> funs#removeFinalNewline(
+                \ funs#unformat(
+                    \ funs#removeLeadingWhitespace(
+                        \ text
+                    \)
+                \ )
+            \ )
+        \ },
         \ a:type
     \ )
     echom "Unformattedly yanked into \"+."
