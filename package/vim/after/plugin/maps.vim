@@ -65,6 +65,7 @@ if has('clipboard')
     map <leader>P "+P
     " Unformattedly yank operators.
     nnoremap <leader>Y :set operatorfunc=funs#yankUnformattedOperator<cr>g@
+    nnoremap <leader>YY :set operatorfunc=funs#yankUnformattedOperator<cr>g@_
     xnoremap <leader>Y :<c-u>call funs#yankUnformattedOperator("visual")<cr>
 endif
 
