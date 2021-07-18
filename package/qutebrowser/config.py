@@ -7,6 +7,13 @@
 __author__ = "abstractednoah"
 __email__ = "abstractednoah@brumal.org"
 
+# GLOBALS {{{1
+
+# Leader keys by functionality.
+_leader = ","
+_leader_tab = "<Ctrl-t>"
+_leader_list = [_leader, _leader_tab]
+
 # SETUP {{{1
 
 # Home page.
@@ -22,6 +29,9 @@ c.editor.command = ["gvim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
 
 # Position of the tab bar.
 c.tabs.position = "top"
+
+# Close tab even if it's the last tab.
+c.tabs.last_close = "close"
 
 # DARKMODE {{{1
 
@@ -61,7 +71,7 @@ with config.pattern("https://calendar.google.com?cid=%25s") as p:
 c.input.forward_unbound_keys = "none"
 
 # Resource config.
-config.bind(",C", "config-source")
+config.bind(_leader + "C", "config-source")
 
 # Default tab movement is to the end (right-most).
 config.bind("gm", "tab-move -1")
@@ -71,10 +81,10 @@ config.bind("m", "mode-enter set_mark")
 config.bind("`", "quickmark-save")
 
 # Open current page in mpv.
-config.bind(",v", "spawn mpv {url}")
+config.bind(_leader + "v", "spawn mpv {url}")
 
 # Open current page in firefox (I'm sorry).
-config.bind(",F", "spawn firefox {url}")
+config.bind(_leader + "F", "spawn firefox {url}")
 
 # Passthrough mode.
 # <Escape> always escapes to normal.
@@ -91,22 +101,35 @@ config.bind(
 )
 
 # Passthrough common clipboard chords.
-config.bind(",y", "fake-key <Ctrl-c>")
-config.bind(",p", "fake-key <Ctrl-v>")
-config.bind(",d", "fake-key <Ctrl-x>")
+config.bind(_leader + "y", "fake-key <Ctrl-c>")
+config.bind(_leader + "p", "fake-key <Ctrl-v>")
+config.bind(_leader + "d", "fake-key <Ctrl-x>")
 
 # Passthrough escape in normal.
-config.bind(",e", "fake-key <Escape>")
+config.bind(_leader + "e", "fake-key <Escape>")
 
 # Passthrough common undo chords.
-config.bind(",u", "fake-key <Ctrl-z>")
-config.bind(",r", "fake-key <Ctrl-y>")
+config.bind(_leader + "u", "fake-key <Ctrl-z>")
+config.bind(_leader + "r", "fake-key <Ctrl-y>")
 
 # Passthrough search.
-config.bind(",/", "fake-key <Ctrl-f> ;; mode-enter insert")
+config.bind(_leader + "/", "fake-key <Ctrl-f> ;; mode-enter insert")
 
-# Advanced history navigation.
-# NOTE: These use the 'g' leader, so might end up conflicting with future
-# versions of QB.
+# History navigation.
+config.unbind("H")
+config.unbind("L")
+config.bind("gh", "back")
+config.bind("gl", "forward")
 config.bind("gH", "set-cmd-text -s :back")
 config.bind("gL", "set-cmd-text -s :forward")
+
+# Tab navigation.
+config.unbind("d")
+config.unbind("<Ctrl-w>")
+config.unbind(_leader_tab)
+config.unbind("r")
+config.unbind("R")
+config.bind(_leader_tab + "n", "open -t")
+config.bind(_leader_tab + "q", "tab-close")
+config.bind(_leader_tab + "r", "reload")
+config.bind(_leader_tab + "R", "reload -f")
