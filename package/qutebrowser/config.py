@@ -67,6 +67,9 @@ with config.pattern("https://calendar.google.com?cid=%25s") as p:
 
 # BINDS {{{1
 
+# Unbind some annoying keys.
+config.unbind("<Ctrl-a>")
+
 # Don't forward any keys to page unless in an insert mode.
 c.input.forward_unbound_keys = "none"
 
