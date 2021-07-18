@@ -136,3 +136,6 @@ config.bind(_leader_tab + "n", "open -t")
 config.bind(_leader_tab + "q", "tab-close")
 config.bind(_leader_tab + "r", "reload")
 config.bind(_leader_tab + "R", "reload -f")
+
+# Clear messages on the fly.
+config.bind("cm", "clear-messages")
