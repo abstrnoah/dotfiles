@@ -57,6 +57,7 @@
         xflux
         qutebrowser
         mpv
+        signal-desktop
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
