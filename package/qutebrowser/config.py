@@ -33,6 +33,9 @@ c.tabs.position = "top"
 # Close tab even if it's the last tab.
 c.tabs.last_close = "close"
 
+# Autoplay sucks.
+c.content.autoplay = False
+
 # DARKMODE {{{1
 
 # Value to use for `prefers-color-scheme:` for websites.
