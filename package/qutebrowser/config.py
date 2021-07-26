@@ -131,6 +131,7 @@ config.bind("gL", "set-cmd-text -s :forward")
 
 # Tab navigation.
 config.unbind("d")
+config.unbind("D")
 config.unbind("<Ctrl-w>")
 config.unbind(_leader_tab)
 config.unbind("r")
