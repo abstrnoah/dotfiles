@@ -59,12 +59,12 @@ c.colors.webpage.darkmode.grayscale.images = 1.0
 
 # PER-DOMAIN SETTINGS {{{1
 with config.pattern("https://mail.google.com/") as p:
-    p.content.notifications = True
+    p.content.notifications.enabled = True
 with config.pattern("https://mail.google.com?extsrc=mailto&url=%25s") as p:
     p.content.register_protocol_handler = True
 
 with config.pattern("https://calendar.google.com/") as p:
-    p.content.notifications = True
+    p.content.notifications.enabled = True
 with config.pattern("https://calendar.google.com?cid=%25s") as p:
     p.content.register_protocol_handler = True
 
