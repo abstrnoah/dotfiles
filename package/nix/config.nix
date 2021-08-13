@@ -58,6 +58,7 @@
         qutebrowser
         mpv
         signal-desktop
+        spotify
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
