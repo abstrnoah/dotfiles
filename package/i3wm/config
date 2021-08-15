@@ -238,17 +238,9 @@ bindsym $mod+l focus right
 # Change focus between tiling / floating windows.
 bindsym $mod+space focus mode_toggle
 
-# Change parent focus.
-bindsym $mod+g mode $mode_focus
-mode $mode_focus {
-    bindsym $mod+h focus parent; focus left; focus child; mode "default"
-    bindsym $mod+j focus parent; focus down; focus child; mode "default"
-    bindsym $mod+k focus parent; focus up; focus child; mode "default"
-    bindsym $mod+l focus parent; focus right; focus child; mode "default"
-    bindsym $mod+p focus parent; mode "default"
-    bindsym $mod+c focus child; mode "default"
-    bindsym $esc mode "default"
-}
+# Navigate up/down the tree.
+bindsym $mod+u focus parent
+bindsym $mod+Shift+u focus child
 
 # Move focused window.
 bindsym $mod+Shift+h move left
@@ -260,9 +252,10 @@ bindsym $mod+Shift+l move right
 bindsym $mod+v split h
 bindsym $mod+s split v
 
-# Change container layout (stacked, tabbed, toggle split).
+# Change container layout.
 bindsym $mod+Shift+t layout stacking
 bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle splitv splith
 
 # kill focused window
 bindsym $mod+Shift+q kill
