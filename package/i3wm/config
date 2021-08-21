@@ -297,7 +297,7 @@ bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8:comm
-bindsym $mod+9 workspace 9:monitor
+bindsym $mod+9 workspace 9
 
 # Move focused container to workspace.
 bindsym $mod+Shift+0 move container to workspace 0:main
@@ -309,7 +309,7 @@ bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8:comm
-bindsym $mod+Shift+9 move container to workspace 9:monitor
+bindsym $mod+Shift+9 move container to workspace 9
 
 # Move workspace to different output.
 bindsym $mod+o focus output right
