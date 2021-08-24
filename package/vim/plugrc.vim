@@ -118,6 +118,8 @@ let g:vimtex_syntax_conceal = {
     \ 'fancy': 0,
     \ 'styles': 0,
 \ }
+" Configure the toc.
+let g:vimtex_toc_config = #{layers: ['content'], show_help: 0}
 
 
 " WORDMOTION {{{2
