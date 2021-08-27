@@ -47,6 +47,8 @@ nnoremap <silent> <ESC> :nohlsearch<CR><ESC>
 
 nnoremap <leader>/ :S<space>
 nnoremap <leader>? :SB<space>
+execute "nnoremap" g:br_leader_bang."/" ":S!<space>"
+execute "nnoremap" g:br_leader_bang."?" ":SB!<space>"
 
 " MOTIONS {{{1
 if exists('g:loaded_sneak_plugin')

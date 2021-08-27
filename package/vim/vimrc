@@ -33,6 +33,8 @@ let g:br_colorcolumn = '+1'  " Default color column offset.
 let g:br_leader_nav = "<leader>e"
 " For footnote operations.
 let g:br_leader_note = "<leader>n"
+" For bang variants of maps.
+let g:br_leader_bang = "<leader>!"
 
 
 " OPTIONS {{{1
@@ -132,13 +134,14 @@ inoreabbrev -[] - [ ]
 " COMMANDS {{{1
 
 command TrimTrailingWhitespace %s/\s\+$//g
-" TODO: Make these work from visual mode by using direct '<c-r>='.
-command! -bang -nargs=* -complete=tag S
-    \ call funs#multiSearch(<bang>0, <f-args>)
+
+command -bang -nargs=* -complete=tag S
+    \ let @/ = funs#multiSearch(0, <bang>0, <f-args>)
     \ | normal! /<C-R>/<CR>
-command! -bang -nargs=* -complete=tag SB
-    \ call funs#multiSearch(<bang>0, <f-args>)
+command -bang -nargs=* -complete=tag SB
+    \ let @/ = funs#multiSearch(0, <bang>0, <f-args>)
     \ | normal! ?<C-R>/<CR>
+
 " FIXME: This doesn't work because it clears custom theme below. Theme below
 " needs to be moved to a fork of solarized.
 " command ToggleBG let &background = ( &background == "dark"? "light" : "dark" )

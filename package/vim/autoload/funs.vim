@@ -1,18 +1,32 @@
 " Author: Noah <abstractednoah@brumal.org>
 
-" Note: Functions that need if-guards (such as plugin wrappers) go elsewhere,
-" usually in PLUGIN CONFIG section of vimrc.
-
 " GENERAL {{{1
-" Search across lines and non-word characters. Case-sensitive if '!'. [^1]
-function funs#multiSearch(bang, ...) abort
+" funs#multiSearch(case_sensitive, word_boundaries, tokens...) {{{2
+"   Produce a pattern for searching for tokens across lines and non-word
+"   characters, with the option of case sensitivity and of adding '\<','\>' word
+"   boundaries around the tokens. When not word_boundaries, also search across
+"   underscores. Inspired by [^1]. Note that this isn't super robust, as the
+"   behavior of the returned pattern might depend on your settings. We assume
+"   'noignorecase', 'nosmartcase', and 'magic'.
+function funs#multiSearch(case_sensitive, word_boundaries, ...) abort
     if a:0 > 0
-        "let sep = (a:bang) ? '\_W\+' : '\_s\+'
-        let sep = '\(\_W\|_\)\+'
-        let @/ = join(a:000, sep) . ((a:bang) ? "" : '\c')
+        " Search for tokens delimited by the following separators:
+        " \_W non-word including end-of-line.
+        " _ underscores.
+        let l:sep = '\(\_W\|_\)\+'
+        " Note that word_boundaries overrides the '_' separator.
+        if a:word_boundaries
+            let l:words = map(deepcopy(a:000), '"\\<" . v:val . "\\>"')
+        else
+            let l:words = a:000
+        endif
+        return join(l:words, l:sep) . ((a:case_sensitive) ? "" : '\c')
+    else
+        return ''
     endif
 endfunction
 
+" {{{2
 function funs#toggleColorColumn() abort
     if &colorcolumn == ""
         setlocal colorcolumn=g:br_colorcolumn
@@ -21,6 +35,7 @@ function funs#toggleColorColumn() abort
     endif
 endfunction
 
+" {{{2
 if has("folding")
     function funs#foldtext() abort
         let l:line = getline(v:foldstart)
@@ -35,17 +50,21 @@ if has("folding")
     endfunction
 endif
 
+" {{{2
 function funs#unformat(text) abort
     return substitute(a:text, '[^\n]\zs\n\ze[^\n]', " ", "g")
 endfunction
 
+" {{{2
 function funs#removeLeadingWhitespace(text) abort
     return substitute(a:text, '\(\_^\|\n\)\zs\s\+', "", "g")
 endfunction
 
+" {{{2
 function funs#removeFinalNewline(text) abort
     return substitute(a:text, '\n\_$', "", "g")
 endfunction
+
 " OPERATORS {{{1
 " funs#opfunc(func, type) {{{2
 "   Wrap a function so as to be used as an operatorfunc in the form of a
