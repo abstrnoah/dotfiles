@@ -52,6 +52,11 @@ set $blue    #268bd2
 set $cyan    #2aa198
 set $green   #859900
 
+# Workspaces.
+set $ws_main  0:main
+set $ws_www   1:www
+set $ws_audio 2:audio
+set $ws_comm  8:comm
 
 # SETUP {{{1
 
@@ -120,6 +125,14 @@ bar {
         binding_mode       $base02 $base03 $green
     }
 }
+
+# CRITERIA {{{1
+for_window [class="(?i)^spotify$"]         move window to workspace $ws_audio
+for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
+for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
+for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
+for_window [class="(?i)^discord$"]         move window to workspace $ws_comm
+for_window [class="(?i)^signal$"]          move window to workspace $ws_comm
 
 # BINDS {{{1
 
@@ -288,27 +301,27 @@ workspace_auto_back_and_forth yes
 bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
 bindsym $mod+comma workspace back_and_forth
-bindsym $mod+0 workspace 0:main
-bindsym $mod+1 workspace 1:www
-bindsym $mod+2 workspace 2:audio
+bindsym $mod+0 workspace $ws_main
+bindsym $mod+1 workspace $ws_www
+bindsym $mod+2 workspace $ws_audio
 bindsym $mod+3 workspace 3
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8:comm
+bindsym $mod+8 workspace $ws_comm
 bindsym $mod+9 workspace 9
 
 # Move focused container to workspace.
-bindsym $mod+Shift+0 move container to workspace 0:main
-bindsym $mod+Shift+1 move container to workspace 1:www
-bindsym $mod+Shift+2 move container to workspace 2:audio
+bindsym $mod+Shift+0 move container to workspace $ws_main
+bindsym $mod+Shift+1 move container to workspace $ws_www
+bindsym $mod+Shift+2 move container to workspace $ws_audio
 bindsym $mod+Shift+3 move container to workspace 3
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8:comm
+bindsym $mod+Shift+8 move container to workspace $ws_comm
 bindsym $mod+Shift+9 move container to workspace 9
 
 # Move workspace to different output.
