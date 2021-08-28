@@ -86,6 +86,11 @@ fi
 # Don't ssh from tmux, that's dangerous!
 alias ssh='[ -z ${TMUX} ] && ssh'
 
+# Fuzzy.
+if command -v fzf &> /dev/null && command -v br-fd-git &> /dev/null; then
+    fzf-repo() { br-fd-git -r ~/repository | fzf }
+fi
+
 # mux
 . ~/.dotfiles/package/zsh/comp-mux.zsh
 
