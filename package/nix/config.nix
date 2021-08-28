@@ -40,6 +40,7 @@
         silver-searcher
         fd
         black
+        fzf
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
