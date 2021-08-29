@@ -73,6 +73,8 @@ let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_override_foldtext = 0
 " Because there's a bug where the first H3 folds all the following H3s under it.
 let g:vim_markdown_folding_level = 2
+" Disable concealing code block delims.
+let g:vim_markdown_conceal_code_blocks = 0
 
 " INDENTLINE {{{2
 " Note that as it stands, indentLine seems to have control over conceal. So
