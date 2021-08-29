@@ -81,6 +81,8 @@ config.bind(_leader + "C", "config-source")
 
 # Default tab movement is to the end (right-most).
 config.bind("gm", "tab-move -1")
+# Move (give) to window.
+config.bind(_leader_tab + "M", "set-cmd-text -s :tab-give")
 
 # Swap quickmark and mark for more vim-like experience.
 config.bind("m", "mode-enter set_mark")
