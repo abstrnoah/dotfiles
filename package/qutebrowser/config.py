@@ -12,7 +12,7 @@ __email__ = "abstractednoah@brumal.org"
 # Leader keys by functionality.
 _leader = ","
 _leader_tab = "<Ctrl-t>"
-_leader_list = [_leader, _leader_tab]
+_leader_hint = _leader + ";"
 
 # SETUP {{{1
 
@@ -88,6 +88,8 @@ config.bind("`", "quickmark-save")
 
 # Open current page in mpv.
 config.bind(_leader + "v", "spawn mpv {url}")
+# Open link in mpv.
+config.bind(_leader_hint + "v", "hint all spawn mpv {hint-url}")
 
 # Open current page in firefox (I'm sorry).
 config.bind(_leader + "F", "spawn firefox {url}")
