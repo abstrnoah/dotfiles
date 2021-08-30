@@ -174,7 +174,6 @@ call plug#begin('~/.cache/vimplug')
     endif
     " Frills.
     Plug 'Yggdroot/indentLine'
-    Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
     Plug 'mboughaba/i3config.vim'
     " These ones are on thin ice.
     if exists('g:br_configured_coc')
@@ -186,6 +185,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'abstractednoah/vim-colors-solarized', {'branch': 'develop'}
     " Deprecated.
     " Plug 'puremourning/vimspector'
+    " Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
 call plug#end()
 
 
