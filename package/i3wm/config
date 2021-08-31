@@ -333,7 +333,7 @@ bindsym $mod+Mod1+o mode "output"
 bindsym $mod+Shift+Mod1+o exec "xrandr --output LVDS-1 --auto"
 mode "output" {
     bindsym h focus output left
-    bindsym h focus output right
+    bindsym l focus output right
     bindsym Shift+h move workspace to output left; mode "default"
     bindsym Shift+l move workspace to output right; mode "default"
     # FIXME These are not portable.
