@@ -17,4 +17,3 @@ emulate sh -c 'source /etc/profile'
 # Prepend our path since /etc/profile seems to overwrite instead of prepending
 # as one might expect.
 PATH="${_old_path}:${PATH}"
-export PATH
