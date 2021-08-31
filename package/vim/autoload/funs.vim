@@ -90,9 +90,9 @@ function funs#opfunc(func, type) abort
     let l:old_visual_marks = [getpos("'<"), getpos("'>")]
     try
         set clipboard= selection=inclusive
-        let l:commands = #{
-            \ line: "'[V']y", char:"`[v`]y", block: "`[\<c-v>`]y",
-            \ visual: "gvy"
+        let l:commands = {
+            \ "line": "'[V']y", char:"`[v`]y", block: "`[\<c-v>`]y",
+            \ "visual": "gvy"
         \ }
         silent execute 'noautocmd keepjumps normal!' get(l:commands, a:type, '')
         return a:func(getreg('"'))
