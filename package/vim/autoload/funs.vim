@@ -91,7 +91,9 @@ function funs#opfunc(func, type) abort
     try
         set clipboard= selection=inclusive
         let l:commands = {
-            \ "line": "'[V']y", char:"`[v`]y", block: "`[\<c-v>`]y",
+            \ "line": "'[V']y",
+            \ "char": "`[v`]y",
+            \ "block": "`[\<c-v>`]y",
             \ "visual": "gvy"
         \ }
         silent execute 'noautocmd keepjumps normal!' get(l:commands, a:type, '')
