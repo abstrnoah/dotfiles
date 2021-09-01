@@ -182,6 +182,7 @@ call plug#begin('~/.cache/vimplug')
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
     " Filetype.
     Plug 'mboughaba/i3config.vim'
+    Plug 'arnoudbuzing/wolfram-vim'
     " Theme.
     Plug 'abstractednoah/vim-colors-solarized', {'branch': 'develop'}
     " Deprecated.
