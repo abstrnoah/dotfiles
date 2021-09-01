@@ -174,13 +174,14 @@ call plug#begin('~/.cache/vimplug')
     endif
     " Frills.
     Plug 'Yggdroot/indentLine'
-    Plug 'mboughaba/i3config.vim'
     " These ones are on thin ice.
     if exists('g:br_configured_coc')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
     endif
     Plug 'honza/vim-snippets'
     Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+    " Filetype.
+    Plug 'mboughaba/i3config.vim'
     " Theme.
     Plug 'abstractednoah/vim-colors-solarized', {'branch': 'develop'}
     " Deprecated.
