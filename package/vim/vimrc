@@ -31,7 +31,7 @@ set secure  " Probably unnecessary, but just in case.
 let g:br_colorcolumn = '+1'  " Default color column offset.
 " Leader key for navigation-type operations such as fuzzy find files, etc.
 let g:br_leader_nav = "<leader>e"
-" For footnote operations.
+" For wiki aka note operations.
 let g:br_leader_note = "<leader>n"
 " For bang variants of maps.
 let g:br_leader_bang = "<leader>!"

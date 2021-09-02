@@ -9,5 +9,3 @@ setlocal formatlistpat+=\\\|^\\s*\\[^\\ze[^\\]]\\+\\]:
 
 " MAPPINGS
 exe "nnoremap <buffer>" g:br_leader_nav.."m" ":Toc<cr>"
-exe "nmap <buffer>" g:br_leader_note.."i" "<plug>AddVimFootnote"
-exe "nmap <buffer>" g:br_leader_note.."e" "<plug>EditVimFootnote"

@@ -128,6 +128,12 @@ let g:vimtex_toc_config = {"layers": ['content'], "show_help": 0}
 let g:wordmotion_prefix = '<leader>'
 let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 
+" VIMWIKI {{{2
+if v:version >= 730
+    source ~/.vim/vimwiki_rc.vim
+    let g:br_configured_vimwiki = 1
+endif
+
 " BUILTIN PLUGINS {{{1
 
 runtime macros/matchit.vim
@@ -184,6 +190,10 @@ call plug#begin('~/.cache/vimplug')
     Plug 'mboughaba/i3config.vim'
     " Theme.
     Plug 'abstractednoah/vim-colors-solarized', {'branch': 'develop'}
+    " Overpowered, these should probably be their own tool but here we are.
+    if exists('g:br_configured_vimwiki')
+        Plug 'vimwiki/vimwiki'
+    endif
     " Deprecated.
     " Plug 'puremourning/vimspector'
     " Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
