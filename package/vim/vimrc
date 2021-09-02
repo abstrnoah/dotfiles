@@ -59,6 +59,8 @@ if has("folding")
     set foldmethod=marker
     set foldtext=funs#foldtext()
     set foldcolumn=4
+    " Start with top-level tolds open.
+    set foldlevelstart=1
 endif
 
 " Format.
