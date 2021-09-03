@@ -13,6 +13,7 @@ let g:vimwiki_list = [
         \ "diary_rel_path": "dates/",
         \ "diary_index": "root",
         \ "diary_header": "DATES",
+        \ "diary_sort": "asc",
         \ "auto_tags": 1,
         \ "auto_diary_index": 1,
         \ "auto_generate_links": 1,
