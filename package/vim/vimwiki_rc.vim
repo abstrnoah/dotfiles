@@ -8,10 +8,10 @@ let g:vimwiki_list = [
         \ "path": "~/repository/notes/vimwiki/",
         \ "name": "notes",
         \ "auto_toc": 1,
-        \ "index": "main",
+        \ "index": "root",
         \ "links_space_char": "_",
-        \ "diary_rel_path": "date/",
-        \ "diary_index": "dates",
+        \ "diary_rel_path": "dates/",
+        \ "diary_index": "root",
         \ "diary_header": "DATES",
         \ "auto_tags": 1,
         \ "auto_diary_index": 1,
@@ -34,6 +34,7 @@ let g:vimwiki_links_header_level = 2
 let g:vimwiki_tags_header = "INDEX OF TAGS"
 let g:vimwiki_tags_header_level = 2
 let g:vimwiki_auto_header = 1
+let g:vimwiki_dir_link = "root"
 
 
 " COMMANDS {{{1
