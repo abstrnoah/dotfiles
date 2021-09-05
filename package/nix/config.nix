@@ -2,29 +2,37 @@
   pulseaudio = true;
   allowUnfreePredicate = pkg: with (import <an_nixpkgs>) {};
   builtins.elem (lib.getName pkg) [
-    "zoom"
+    "ngrok"
     "spotify"
     "spotify-unwrapped"
-    "ngrok"
     "xflux"
+    "zoom"
   ];
   packageOverrides = pkgs: with pkgs; {
     clientPackages = pkgs.buildEnv {
       name = "clientPackages";
       paths = [
-        maven
+        black
+        clojure
         ctags
+        dmidecode
+        fd
+        fzf
         git
         glibcLocales
         htop
-        jq
-        nodejs
         jdk
+        jq
+        maven
+        nix-zsh-completions
+        nodejs
+        pdfgrep
         pfetch
         php
         python3
         ranger
         rlwrap
+        silver-searcher
         tectonic
         textql
         tmux
@@ -32,16 +40,8 @@
         toilet
         vimHugeX
         visidata
-        zsh
-        nix-zsh-completions
-        dmidecode
-        pdfgrep
         weechat
-        silver-searcher
-        fd
-        black
-        fzf
-        clojure
+        zsh
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
@@ -50,17 +50,17 @@
       name = "clientPackagesGui";
       paths = [
         jabref
+        mpv
         okular
-        xrandr-invert-colors
-        zathura
-        xournalpp
+        qutebrowser
+        signal-desktop
+        spotify
         # Audio not working for tor.
         torbrowser
         xflux
-        qutebrowser
-        mpv
-        signal-desktop
-        spotify
+        xournalpp
+        xrandr-invert-colors
+        zathura
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
