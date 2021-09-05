@@ -149,6 +149,12 @@ function funs#declare_plugs(specs, active_plugs) abort
     endfor
 endfunction
 
+" plug_supported(name, specs) {{{3
+" Return whether plugin is supported.
+function funs#plug_supported(name, specs)
+    return funs#get_plug_spec(a:name, a:specs) isnot 0
+endfunction
+
 " declare_plug(name, spec) {{{3
 " Given a plugin name (as recognised by vimplug) and a list of version specs
 " 'ver_specs' (see 'g:br_plugs'), run the approporiate vimplug 'Plug ...'

@@ -116,9 +116,8 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeHijackNetrw = 1
 
 " COC {{{2
-if has('patch-8.1.1719')
+if funs#plug_supported("neoclide/coc.nvim", g:br_plugs)
     source ~/.vim/cocrc.vim
-    let g:br_configured_coc = 1
 endif
 
 " VIMSPECTOR {{{2
@@ -225,9 +224,8 @@ let g:wordmotion_prefix = '<leader>'
 let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 
 " VIMWIKI {{{2
-if v:version >= 730
+if funs#plug_supported("vimwiki/vimwiki", g:br_plugs)
     source ~/.vim/vimwiki_rc.vim
-    let g:br_configured_vimwiki = 1
 endif
 
 " BUILTIN PLUGINS {{{1
