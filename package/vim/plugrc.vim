@@ -100,7 +100,6 @@ let g:br_plugs_active = [
     \ "abstractednoah/vim-colors-solarized",
     \ "vimwiki/vimwiki",
     \ "junegunn/vim-plug",
-    \ "fmoralesc/vim-pad",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -227,6 +226,20 @@ let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 if funs#plug_supported("vimwiki/vimwiki", g:br_plugs)
     source ~/.vim/vimwiki_rc.vim
 endif
+
+" VIM-PAD {{{2
+let g:pad#dir = "~/repository/notes/vim-pad"
+let g:pad#local_dir = "notes"
+let g:pad#default_format = "markdown"
+let g:pad#search_backend = "ag"
+let g:pad#rename_files = 0
+let g:pad#open_in_split = 0
+
+let g:pad#maps#list = g:br_leader_note . "l"
+let g:pad#maps#new = g:br_leader_note . "c"
+let g:pad#maps#search = g:br_leader_note . "f"
+let g:pad#maps#incsearch = "F"
+let g:pad#maps#newsilent = ""
 
 " BUILTIN PLUGINS {{{1
 
