@@ -41,6 +41,7 @@
         fd
         black
         fzf
+        clojure
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
