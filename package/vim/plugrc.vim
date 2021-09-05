@@ -7,6 +7,102 @@
 " go into 'after/maps.vim', unless a plugin has some custom map interface, in
 " which case its maps go here.
 
+" SETUP {{{1
+
+" A dicionary declaring plugins. The schema is:
+"   {string that vimplug recognises as a plugin name:
+"       [list of dictionaries for each version of plugin, to be tried first to
+"        last until a supported version is found or end reached
+"           {"spec": dictionary that can be passed to a 'Plug' command,
+"            "supported": a function that takes no arguments, returns 1 if the
+"                         version is supported, and 0 otherwise}]}
+" An empty list implies that vimplug should do its default thing always.
+" An omitted "spec" implies no spec, vimplug should do its default thing.
+" An omitted "supported" implies the version is always supported.
+let g:br_plugs = {
+    \ "907th/vim-auto-save": [],
+    \ "Townk/vim-autoclose": [],
+    \ "tpope/vim-surround": [],
+    \ "wellle/targets.vim": [],
+    \ "ludovicchabant/vim-gutentags": [
+        \ {
+            \ "spec": {"commit": "3314afd"},
+            \ "supported": {-> v:version >= 700 && v:version < 800}
+        \ },
+        \ {
+            \ "supported": {-> v:version >= 800}
+        \ }
+    \ ],
+    \ "ctrlpvim/ctrlp.vim": [],
+    \ "tpope/vim-repeat": [],
+    \ "lervag/vimtex": [{"spec": {"for": "tex"}}],
+    \ "justinmk/vim-sneak": [],
+    \ "tpope/vim-eunuch": [],
+    \ "dkarter/bullets.vim": [],
+    \ "dhruvasagar/vim-table-mode": [],
+    \ "tommcdo/vim-lion": [],
+    \ "tpope/vim-commentary": [],
+    \ "tpope/vim-fugitive": [],
+    \ "preservim/nerdtree": [],
+    \ "preservim/tagbar": [],
+    \ "tpope/vim-abolish": [],
+    \ "chaoren/vim-wordmotion": [{"supported": {-> v:version >= 802}}],
+    \ "Yggdroot/indentLine": [],
+    \ "neoclide/coc.nvim": [
+        \ {
+            \ "spec": {"branch": "release"},
+            \ "supported": {-> has("patch-8.1.1719")}
+        \ }
+    \ ],
+    \ "honza/vim-snippets": [],
+    \ "plasticboy/vim-markdown": [{"spec": {'for': 'markdown'}}],
+    \ "mboughaba/i3config.vim": [],
+    \ "abstractednoah/vim-colors-solarized": [{"spec": {"branch": "develop"}}],
+    \ "vimwiki/vimwiki": [{"supported": {-> v:version >= 730}}],
+    \ "junegunn/vim-plug": [],
+    \ "fmoralesc/vim-pad": [
+        \ {
+            \ "spec": {"branch": "devel"},
+            \ "supported": {->
+                \ v:version >= 740
+                \ && (has("python") || has("python3"))
+                \ && has("conceal")
+            \ }
+        \ }
+    \ ]
+\ }
+" A list of keys to 'g:br_plugs'.
+let g:br_plugs_active = [
+    \ "907th/vim-auto-save",
+    \ "Townk/vim-autoclose",
+    \ "tpope/vim-surround",
+    \ "wellle/targets.vim",
+    \ "ludovicchabant/vim-gutentags",
+    \ "ctrlpvim/ctrlp.vim",
+    \ "tpope/vim-repeat",
+    \ "lervag/vimtex",
+    \ "justinmk/vim-sneak",
+    \ "tpope/vim-eunuch",
+    \ "dkarter/bullets.vim",
+    \ "dhruvasagar/vim-table-mode",
+    \ "tommcdo/vim-lion",
+    \ "tpope/vim-commentary",
+    \ "tpope/vim-fugitive",
+    \ "preservim/nerdtree",
+    \ "preservim/tagbar",
+    \ "tpope/vim-abolish",
+    \ "chaoren/vim-wordmotion",
+    \ "Yggdroot/indentLine",
+    \ "neoclide/coc.nvim",
+    \ "honza/vim-snippets",
+    \ "plasticboy/vim-markdown",
+    \ "mboughaba/i3config.vim",
+    \ "abstractednoah/vim-colors-solarized",
+    \ "vimwiki/vimwiki",
+    \ "junegunn/vim-plug",
+    \ "fmoralesc/vim-pad",
+\ ]
+
 " PLUGIN CONFIG {{{1
 
 " AUTOSAVE {{{2
@@ -150,55 +246,7 @@ endif
 
 " Declare the plugins.
 call plug#begin('~/.cache/vimplug')
-    " Must have.
-    Plug '907th/vim-auto-save'
-    Plug 'Townk/vim-autoclose'
-    Plug 'tpope/vim-surround'
-    Plug 'wellle/targets.vim'
-    if v:version >= 700 && v:version < 800
-        Plug 'ludovicchabant/vim-gutentags', {'commit': '3314afd'}
-    elseif v:version >= 800
-        Plug 'ludovicchabant/vim-gutentags'
-    endif
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'tpope/vim-repeat'
-    " Should have.
-    Plug 'lervag/vimtex', {'for': 'tex'}
-    Plug 'justinmk/vim-sneak'
-    Plug 'tpope/vim-eunuch'
-    Plug 'dkarter/bullets.vim'
-    Plug 'dhruvasagar/vim-table-mode'
-    Plug 'tommcdo/vim-lion'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-fugitive'
-    " Fancy and useful extras.
-    Plug 'preservim/nerdtree'
-    Plug 'preservim/tagbar'
-    Plug 'tpope/vim-abolish'
-    if v:version >= 802
-        Plug 'chaoren/vim-wordmotion'
-    endif
-    " Frills.
-    Plug 'Yggdroot/indentLine'
-    " These ones are on thin ice.
-    if exists('g:br_configured_coc')
-        Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    endif
-    Plug 'honza/vim-snippets'
-    Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-    " Filetype.
-    Plug 'mboughaba/i3config.vim'
-    " Theme.
-    Plug 'abstractednoah/vim-colors-solarized', {'branch': 'develop'}
-    " Overpowered, these should probably be their own tool but here we are.
-    if exists('g:br_configured_vimwiki')
-        Plug 'vimwiki/vimwiki'
-    endif
-    " Deprecated.
-    " Plug 'puremourning/vimspector'
-    " Plug 'abstractednoah/vim-markdownfootnotes', {'branch': 'develop'}
-    " Apparently the "mma" filetype is a builtin; this might be more up to date?
-    " Plug 'arnoudbuzing/wolfram-vim'
+call funs#declare_plugs(g:br_plugs, g:br_plugs_active)
 call plug#end()
 
 

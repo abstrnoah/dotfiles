@@ -132,7 +132,73 @@ function funs#yankUnformattedOperator(type) abort
 endfunction
 
 " PLUGIN {{{1
-" Functions that wrap plugin functionality.
+
+" MANAGEMENT {{{2
+
+" declare_plugs(specs, active_plugs) {{{3
+" Given a dictionary 'specs' like 'g:br_plugs' (see the comment for that global
+" for its schema), run vimplug 'Plug ...' commands for the plugins specified in
+" list 'active_plugs'.
+function funs#declare_plugs(specs, active_plugs) abort
+    for plug_name in a:active_plugs
+        if has_key(a:specs, plug_name)
+            if !funs#declare_plug(plug_name, a:specs)
+                echomsg "No compatible version of plugin '".plug_name."' found."
+            endif
+        endif
+    endfor
+endfunction
+
+" declare_plug(name, spec) {{{3
+" Given a plugin name (as recognised by vimplug) and a list of version specs
+" 'ver_specs' (see 'g:br_plugs'), run the approporiate vimplug 'Plug ...'
+" command. If a compatible version is found and declared, return 1. Otherwise
+" return 0.
+function funs#declare_plug(name, specs) abort
+    let l:spec = funs#get_plug_spec(a:name, a:specs)
+    if  l:spec is 0
+        return 0
+    endif
+    let l:args = [string(a:name)]
+    " If no or empty spec given, pass through empty string.
+    if !empty(l:spec)
+        let args = add(l:args, string(l:spec))
+    endif
+    " Run the actual Plug command.
+    exe "Plug" join(l:args, ", ")
+    return 1
+endfunction
+
+" get_plug_spec(name, specs) {{{3
+" Return the "best" plug spec dictionary for vim-plug for plugin 'name' given
+" 'specs' which has schema like 'g:br_plugs'. By "best" we mean that we traverse
+" the version spec list in the 'name' item of 'specs' dict until we find a
+" supported() plug. If the best plug spec dict is missing keys or non-existent
+" then return empty dict. If no supported plugin is found, then return 0.
+function funs#get_plug_spec(name, specs) abort
+    if empty(a:name)
+        echoerr "Plugin name is empty."
+        return 0
+    endif
+    if !has_key(a:specs, a:name)
+        echoerr "Plugin name not in specs."
+        return 0
+    endif
+    let l:ver_specs = a:specs[a:name]
+    " If version list is empty, assume is supported and default version.
+    if empty(l:ver_specs)
+        let l:ver_specs = [{"spec": {}, "supported": {-> 1}}]
+    endif
+    " Loop until a supported version is found.
+    for l:ver_spec in l:ver_specs
+        " Check if supported; lack of supported() function implies is supported.
+        if get(l:ver_spec, "supported", {-> 1})()
+            return get(l:ver_spec, "spec", {})
+        endif
+    endfor
+    return 0
+endfunction
+
 
 " NERDTREE {{{2
 function funs#nerdtree() abort
