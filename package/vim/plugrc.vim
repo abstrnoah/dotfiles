@@ -74,7 +74,6 @@ let g:br_plugs = {
 " A list of keys to 'g:br_plugs'.
 let g:br_plugs_active = [
     \ "907th/vim-auto-save",
-    \ "Townk/vim-autoclose",
     \ "tpope/vim-surround",
     \ "wellle/targets.vim",
     \ "ludovicchabant/vim-gutentags",
@@ -94,7 +93,6 @@ let g:br_plugs_active = [
     \ "chaoren/vim-wordmotion",
     \ "Yggdroot/indentLine",
     \ "neoclide/coc.nvim",
-    \ "honza/vim-snippets",
     \ "plasticboy/vim-markdown",
     \ "mboughaba/i3config.vim",
     \ "abstractednoah/vim-colors-solarized",
