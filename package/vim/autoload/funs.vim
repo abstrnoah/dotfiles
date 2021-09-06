@@ -1,7 +1,7 @@
 " Author: Noah <abstractednoah@brumal.org>
 
 " GENERAL {{{1
-" funs#multiSearch(case_sensitive, word_boundaries, tokens...) {{{2
+" funs#multiSearch(case_sensitive, word_boundaries, tokens...) {{{
 "   Produce a pattern for searching for tokens across lines and non-word
 "   characters, with the option of case sensitivity and of adding '\<','\>' word
 "   boundaries around the tokens. When not word_boundaries, also search across
@@ -24,19 +24,17 @@ function funs#multiSearch(case_sensitive, word_boundaries, ...) abort
     else
         return ''
     endif
-endfunction
+endfunction " }}}
 
-" {{{2
-function funs#toggleColorColumn() abort
+function funs#toggleColorColumn() abort " {{{
     if &colorcolumn == ""
         setlocal colorcolumn=g:br_colorcolumn
     else
         setlocal colorcolumn=
     endif
-endfunction
+endfunction " }}}
 
-" {{{2
-if has("folding")
+if has("folding") " {{{
     function funs#foldtext() abort
         let l:line = getline(v:foldstart)
         " Pattern of what to remove from line to produce fold summary text.
@@ -48,25 +46,23 @@ if has("folding")
             \ v:folddashes, l:text, l:line_count
         \ )
     endfunction
-endif
+endif " }}}
 
-" {{{2
-function funs#unformat(text) abort
+function funs#unformat(text) abort " {{{
     return substitute(a:text, '[^\n]\zs\n\ze[^\n]', " ", "g")
-endfunction
+endfunction " }}}
 
-" {{{2
-function funs#removeLeadingWhitespace(text) abort
+function funs#removeLeadingWhitespace(text) abort " {{{
     return substitute(a:text, '\(\_^\|\n\)\zs\s\+', "", "g")
-endfunction
+endfunction " }}}
 
-" {{{2
-function funs#removeFinalNewline(text) abort
+function funs#removeFinalNewline(text) abort " {{{
     return substitute(a:text, '\n\_$', "", "g")
-endfunction
+endfunction " }}}
 
 " OPERATORS {{{1
-" funs#opfunc(func, type) {{{2
+
+" funs#opfunc(func, type) {{{
 "   Wrap a function so as to be used as an operatorfunc in the form of a
 "   Partial. The intended pattern is something like
 "
@@ -105,9 +101,9 @@ function funs#opfunc(func, type) abort
         let &clipboard = l:old_clipboard
         let &selection = l:old_selection
     endtry
-endfunction
+endfunction " }}}
 
-" funs#yankUnformattedOperator(type) {{{2
+" funs#yankUnformattedOperator(type) {{{
 "   An operatorfunc that sets the '+' register to the "unformatted" version of
 "   the motion's text. By "unformatted", we mean roughly the inverse operation
 "   to the format operator 'gq'. It is difficult to exactly invert 'gq', so this
@@ -129,13 +125,13 @@ function funs#yankUnformattedOperator(type) abort
         \ a:type
     \ )
     echom "Unformattedly yanked into \"+."
-endfunction
+endfunction " }}}
 
 " PLUGIN {{{1
 
 " MANAGEMENT {{{2
 
-" declare_plugs(specs, active_plugs) {{{3
+" declare_plugs(specs, active_plugs) {{{
 " Given a dictionary 'specs' like 'g:br_plugs' (see the comment for that global
 " for its schema), run vimplug 'Plug ...' commands for the plugins specified in
 " list 'active_plugs'.
@@ -147,15 +143,15 @@ function funs#declare_plugs(specs, active_plugs) abort
             endif
         endif
     endfor
-endfunction
+endfunction " }}}
 
-" plug_supported(name, specs) {{{3
+" plug_supported(name, specs) {{{
 " Return whether plugin is supported.
 function funs#plug_supported(name, specs)
     return funs#get_plug_spec(a:name, a:specs) isnot 0
-endfunction
+endfunction " }}}
 
-" declare_plug(name, spec) {{{3
+" declare_plug(name, spec) {{{
 " Given a plugin name (as recognised by vimplug) and a list of version specs
 " 'ver_specs' (see 'g:br_plugs'), run the approporiate vimplug 'Plug ...'
 " command. If a compatible version is found and declared, return 1. Otherwise
@@ -173,9 +169,9 @@ function funs#declare_plug(name, specs) abort
     " Run the actual Plug command.
     exe "Plug" join(l:args, ", ")
     return 1
-endfunction
+endfunction " }}}
 
-" get_plug_spec(name, specs) {{{3
+" get_plug_spec(name, specs) {{{
 " Return the "best" plug spec dictionary for vim-plug for plugin 'name' given
 " 'specs' which has schema like 'g:br_plugs'. By "best" we mean that we traverse
 " the version spec list in the 'name' item of 'specs' dict until we find a
@@ -203,21 +199,21 @@ function funs#get_plug_spec(name, specs) abort
         endif
     endfor
     return 0
-endfunction
+endfunction " }}}
 
 
 " NERDTREE {{{2
-function funs#nerdtree() abort
+function funs#nerdtree() abort " {{{
     " Call `:NERDTreeFind` if path nonempty, otherwise `:NERDTreeVCS`.
     if &modifiable && strlen(expand("%")) > 0 && !&diff
         NERDTreeFind
     else
         NERDTreeVCS
     endif
-endfunction
+endfunction " }}}
 
 " TABLE MODE {{{2
-function funs#toggleTableMode() abort
+function funs#toggleTableMode() abort " {{{
     if tablemode#IsActive()
         let &l:colorcolumn = g:br_colorcolumn
         call tablemode#Disable()
@@ -225,7 +221,7 @@ function funs#toggleTableMode() abort
         setlocal colorcolumn=
         call tablemode#Enable()
     endif
-endfunction
+endfunction " }}}
 
 " NOTES {{{1
 " [^1]: https://vim.fandom.com/wiki/Search_across_multiple_lines
