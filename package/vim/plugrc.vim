@@ -69,7 +69,8 @@ let g:br_plugs = {
                 \ && has("conceal")
             \ }
         \ }
-    \ ]
+    \ ],
+    \ "tpope/vim-fireplace": [],
 \ }
 " A list of keys to 'g:br_plugs'.
 let g:br_plugs_active = [
@@ -98,6 +99,7 @@ let g:br_plugs_active = [
     \ "abstractednoah/vim-colors-solarized",
     \ "vimwiki/vimwiki",
     \ "junegunn/vim-plug",
+    \ "tpope/vim-fireplace",
 \ ]
 
 " PLUGIN CONFIG {{{1
