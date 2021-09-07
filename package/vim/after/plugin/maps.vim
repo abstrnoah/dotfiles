@@ -70,9 +70,11 @@ if has('clipboard')
     nnoremap <leader>YY :set operatorfunc=brumal#main#yankUnformattedOperator<cr>g@_
     xnoremap <leader>Y :<c-u>call brumal#main#yankUnformattedOperator("visual")<cr>
 endif
-nnoremap <leader>gQ :set operatorfunc=brumal#main#unformatOperator<cr>g@
-nnoremap <leader>gQQ :set operatorfunc=brumal#main#unformatOperator<cr>g@_
-xnoremap <leader>gQ :<c-u>call brumal#main#unformatOperator("visual")<cr>
+
+" FORMAT {{{1
+nnoremap Q :set operatorfunc=brumal#main#unformatOperator<cr>g@
+nnoremap QQ :set operatorfunc=brumal#main#unformatOperator<cr>g@_
+xnoremap Q :<c-u>call brumal#main#unformatOperator("visual")<cr>
 
 " TABLE-MODE {{{1
 
