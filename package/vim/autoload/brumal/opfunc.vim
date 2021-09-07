@@ -33,11 +33,17 @@ endfunction " }}}
 " Return the original motion text.
 " Notice: Should be preformed in a sandbox, alters registers a and quote.
 function s:setMotionText(text, type) abort
-    call setreg('a', a:text)
-    " Replace visually selected text with contents of quote-register.
-    silent execute 'noautocmd keepjumps normal!'
-        \ get(s:motion_type_to_visual, a:type, '') . "c\<c-r>a"
-    return getreg('"')
+    let l:old_paste = &paste
+    try
+        set paste
+        call setreg('a', a:text)
+        " Replace visually selected text with contents of quote-register.
+        silent execute 'noautocmd keepjumps normal!'
+            \ get(s:motion_type_to_visual, a:type, '') . "c\<c-r>a"
+        return getreg('"')
+    finally
+        let &paste = l:old_paste
+    endtry
 endfunction " }}}
 
 " PUBLIC LIBRARY {{{1
