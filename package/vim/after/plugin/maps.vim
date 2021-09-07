@@ -27,6 +27,13 @@ map Q <nop>
 " Doesn't seem to work TODO.
 "map gQ <nop>
 
+" GENERAL {{{1
+" TODO Flatten the organization of this file.
+
+" Briefly visually highlight "block" where the cursor is, return to original
+" location. See 'help vib'.
+nnoremap <space>. m[vib:<c-u>sleep 350m<cr>`[
+
 " EXPLORE {{{1
 execute "nnoremap" g:br_leader_nav."m" ":TagbarOpenAutoClose<CR>"
 execute "nnoremap" g:br_leader_nav."n" ":call brumal#main#nerdtree()<cr>"
@@ -86,8 +93,6 @@ nnoremap <leader>tm :call brumal#main#toggleTableMode()<cr>
 " Make and display quickfix window.
 nnoremap <leader>8 :silent make! %<cr><c-l>:cwindow<cr>
 " <leader>9 reserved for 'run' or 'compile+run'; see ftplugin files.
-
-
 
 " vimspector
 " See [https://github.com/puremourning/vimspector#mappings].
