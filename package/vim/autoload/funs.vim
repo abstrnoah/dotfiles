@@ -1,5 +1,15 @@
 " Author: Noah <abstractednoah@brumal.org>
 
+" CONSTANTS {{{1
+
+" Visual modes equivalent to the motion types (see ':help g@').
+let s:motion_type_to_visual = {
+    \ "line": "'[V']",
+    \ "char": "`[v`]",
+    \ "block": "`[\<c-v>`]",
+    \ "visual": "gv"
+\ }
+
 " GENERAL {{{1
 " funs#multiSearch(case_sensitive, word_boundaries, tokens...) {{{
 "   Produce a pattern for searching for tokens across lines and non-word
@@ -60,6 +70,36 @@ function funs#removeFinalNewline(text) abort " {{{
     return substitute(a:text, '\n\_$', "", "g")
 endfunction " }}}
 
+" callInSandbox(regs, marks, func) {{{
+" Call func (must take no args) with sandboxed registers and marks. Also set
+" clipboard to nothing and selection to inclusive. Rever all these after call
+" regardless of errors (via try/finally).
+function funs#callInSandbox(regs, marks, func) abort
+    let l:old_selection = &selection
+    let l:old_clipboard = &clipboard
+    let l:old_regs_info = {}
+    for regname in a:regs
+        let l:old_regs_info[regname] = getreginfo(regname)
+    endfor
+    let l:old_marks = {}
+    for markname in a:marks
+        let l:old_marks[markname] = getpos(markname)
+    endfor
+    try
+        set clipboard= selection=inclusive
+        return a:func()
+    finally
+        for [name, value] in items(l:old_regs_info)
+            call setreg(name, value)
+        endfor
+        for [name, value] in items(l:old_marks)
+            call setpos(name, value)
+        endfor
+        let &clipboard = l:old_clipboard
+        let &selection = l:old_selection
+    endtry
+endfunction " }}}
+
 " OPERATORS {{{1
 
 " funs#opfunc(func, type) {{{
@@ -80,28 +120,35 @@ endfunction " }}}
 "   text of the motion passed to the operator.
 "   Return the result of 'func(motionText)'.
 function funs#opfunc(func, type) abort
-    let l:old_selection = &selection
-    let l:old_register = getreginfo('"')
-    let l:old_clipboard = &clipboard
-    let l:old_visual_marks = [getpos("'<"), getpos("'>")]
-    try
-        set clipboard= selection=inclusive
-        let l:commands = {
-            \ "line": "'[V']y",
-            \ "char": "`[v`]y",
-            \ "block": "`[\<c-v>`]y",
-            \ "visual": "gvy"
-        \ }
-        silent execute 'noautocmd keepjumps normal!' get(l:commands, a:type, '')
-        return a:func(getreg('"'))
-    finally
-        call setreg('"', l:old_register)
-        call setpos("'<", l:old_visual_marks[0])
-        call setpos("'>", l:old_visual_marks[1])
-        let &clipboard = l:old_clipboard
-        let &selection = l:old_selection
-    endtry
+    let l:_ = {}
+    function l:_.trowel(_func, _type) abort
+        let l:keystroke = get(s:motion_type_to_visual, a:_type, '') . "y"
+        silent execute 'noautocmd keepjumps normal!' l:keystroke
+        return a:_func(getreg('"'))
+    endfunction
+    return funs#callInSandbox(
+        \ ['"'], ["'<", "'>"],
+        \ {-> l:_.trowel(a:func, a:type)}
+    \ )
 endfunction " }}}
+
+" function funs#alteropfunc(func, type) abort
+"     let l:_ = {}
+"     function l:_.alter_quote_reg(_func, _type) abort
+"         " This MUST be called within the context context of funs@opfunc where
+"         " motion text is stored in quote register.
+"         let l:ret = setreg('"', a:_func(getreg('"')))
+"         " Replace visually selected text with contents of quote-register.
+"         silent execute 'noautocmd keepjumps normal!'
+"             \ get(s:motion_type_to_visual, a:_type, '') . "c\<c-r>=\""
+"         return l:ret
+"     endfunction
+"     return funs#opfunc({t -> l:_.alter_quote_reg(func, type)}, type)
+" endfunction
+
+" " unformatOperator(type) {{{
+" function funs#unformatOperator(type) abort
+" endfunction " }}}
 
 " funs#yankUnformattedOperator(type) {{{
 "   An operatorfunc that sets the '+' register to the "unformatted" version of
@@ -147,7 +194,7 @@ endfunction " }}}
 
 " plug_supported(name, specs) {{{
 " Return whether plugin is supported.
-function funs#plug_supported(name, specs)
+function funs#plug_supported(name, specs) abort
     return funs#get_plug_spec(a:name, a:specs) isnot 0
 endfunction " }}}
 
