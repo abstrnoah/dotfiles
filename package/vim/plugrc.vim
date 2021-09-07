@@ -115,7 +115,7 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeHijackNetrw = 1
 
 " COC {{{2
-if funs#plug_supported("neoclide/coc.nvim", g:br_plugs)
+if brumal#main#plug_supported("neoclide/coc.nvim", g:br_plugs)
     source ~/.vim/cocrc.vim
 endif
 
@@ -223,7 +223,7 @@ let g:wordmotion_prefix = '<leader>'
 let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 
 " VIMWIKI {{{2
-if funs#plug_supported("vimwiki/vimwiki", g:br_plugs)
+if brumal#main#plug_supported("vimwiki/vimwiki", g:br_plugs)
     source ~/.vim/vimwiki_rc.vim
 endif
 
@@ -257,7 +257,7 @@ endif
 
 " Declare the plugins.
 call plug#begin('~/.cache/vimplug')
-call funs#declare_plugs(g:br_plugs, g:br_plugs_active)
+call brumal#main#declare_plugs(g:br_plugs, g:br_plugs_active)
 call plug#end()
 
 

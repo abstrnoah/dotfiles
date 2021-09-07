@@ -57,7 +57,7 @@ if has("folding")
     " Unset 'fillchars' items fallback to default.
     let &fillchars = "fold: "
     set foldmethod=marker
-    set foldtext=funs#foldtext()
+    set foldtext=brumal#main#foldtext()
     set foldcolumn=4
     " Start with top-level tolds open.
     set foldlevelstart=1
@@ -141,10 +141,10 @@ inoreabbrev -[] - [ ]
 command TrimTrailingWhitespace %s/\s\+$//g
 
 command -bang -nargs=* -complete=tag S
-    \ let @/ = funs#multiSearch(0, <bang>0, <f-args>)
+    \ let @/ = brumal#main#multiSearch(0, <bang>0, <f-args>)
     \ | normal! /<C-R>/<CR>
 command -bang -nargs=* -complete=tag SB
-    \ let @/ = funs#multiSearch(0, <bang>0, <f-args>)
+    \ let @/ = brumal#main#multiSearch(0, <bang>0, <f-args>)
     \ | normal! ?<C-R>/<CR>
 
 " FIXME: This doesn't work because it clears custom theme below. Theme below

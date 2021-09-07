@@ -1,24 +1,17 @@
-" Author: Noah <abstractednoah@brumal.org>
+" Noah's personal vim autoload.
+" Author: abstractednoah at brumal dot org
 
 " CONSTANTS {{{1
 
-" Visual modes equivalent to the motion types (see ':help g@').
-let s:motion_type_to_visual = {
-    \ "line": "'[V']",
-    \ "char": "`[v`]",
-    \ "block": "`[\<c-v>`]",
-    \ "visual": "gv"
-\ }
-
 " GENERAL {{{1
-" funs#multiSearch(case_sensitive, word_boundaries, tokens...) {{{
+" brumal#main#multiSearch(case_sensitive, word_boundaries, tokens...) {{{
 "   Produce a pattern for searching for tokens across lines and non-word
 "   characters, with the option of case sensitivity and of adding '\<','\>' word
 "   boundaries around the tokens. When not word_boundaries, also search across
 "   underscores. Inspired by [^1]. Note that this isn't super robust, as the
 "   behavior of the returned pattern might depend on your settings. We assume
 "   'noignorecase', 'nosmartcase', and 'magic'.
-function funs#multiSearch(case_sensitive, word_boundaries, ...) abort
+function brumal#main#multiSearch(case_sensitive, word_boundaries, ...) abort
     if a:0 > 0
         " Search for tokens delimited by the following separators:
         " \_W non-word including end-of-line.
@@ -36,7 +29,7 @@ function funs#multiSearch(case_sensitive, word_boundaries, ...) abort
     endif
 endfunction " }}}
 
-function funs#toggleColorColumn() abort " {{{
+function brumal#main#toggleColorColumn() abort " {{{
     if &colorcolumn == ""
         setlocal colorcolumn=g:br_colorcolumn
     else
@@ -45,7 +38,7 @@ function funs#toggleColorColumn() abort " {{{
 endfunction " }}}
 
 if has("folding") " {{{
-    function funs#foldtext() abort
+    function brumal#main#foldtext() abort
         let l:line = getline(v:foldstart)
         " Pattern of what to remove from line to produce fold summary text.
         let l:rm_pattern = '\s{{{\d\=$\|^\s*\("\|#\+\|//\|%\+\)\s' "}}}
@@ -58,15 +51,15 @@ if has("folding") " {{{
     endfunction
 endif " }}}
 
-function funs#unformat(text) abort " {{{
+function brumal#main#unformat(text) abort " {{{
     return substitute(a:text, '[^\n]\zs\n\ze[^\n]', " ", "g")
 endfunction " }}}
 
-function funs#removeLeadingWhitespace(text) abort " {{{
+function brumal#main#removeLeadingWhitespace(text) abort " {{{
     return substitute(a:text, '\(\_^\|\n\)\zs\s\+', "", "g")
 endfunction " }}}
 
-function funs#removeFinalNewline(text) abort " {{{
+function brumal#main#removeFinalNewline(text) abort " {{{
     return substitute(a:text, '\n\_$', "", "g")
 endfunction " }}}
 
@@ -76,7 +69,7 @@ endfunction " }}}
 " the call. Same goes for 'selection' and 'clipboard' settings. Whilst the
 " function is called, we `set clipboard= selection=inclusive` but you can change
 " that within the function if you desire.
-function funs#sandbox(regs, marks, func) abort
+function brumal#main#sandbox(regs, marks, func) abort
     let l:_ = {}
     function l:_.func(_regs, _marks, _func, ...) abort
         let l:old_selection = &selection
@@ -106,67 +99,20 @@ function funs#sandbox(regs, marks, func) abort
     return function(l:_.func, [a:regs, a:marks, a:func])
 endfunction " }}}
 
-" s:opSandbox(func) {{{
-" Sandbox decorator (a Partial) to use for operator functions.
-let s:opSandbox = function("funs#sandbox", [['"'], ["'<", "'>"]])
-" }}}
-
 " OPERATORS {{{1
 
-" s:getMotionText(type) {{{
-" Return the text of the last motion (the object of a operator, see g@).
-" Notice: Should be preformed in a sandbox, alters quote-register.
-function s:getMotionText(type) abort
-    let l:keystroke = get(s:motion_type_to_visual, a:type, '') . "y"
-    silent execute 'noautocmd keepjumps normal!' l:keystroke
-    return getreg('"')
-endfunction " }}}
-
-" s:setMotionText(text, type) {{{
-" Set motion text to 'text'. Counterpart to s:getMotionText.
-" Return the original motion text.
-" Notice: Should be preformed in a sandbox, alters registers a and quote.
-function s:setMotionText(text, type) abort
-    call setreg('a', a:text)
-    " Replace visually selected text with contents of quote-register.
-    silent execute 'noautocmd keepjumps normal!'
-        \ get(s:motion_type_to_visual, a:type, '') . "c\<c-r>a"
-    return getreg('"')
-endfunction " }}}
-
-" funs#opfunc(func) {{{
-"   Decorator that turns 'func' into a function suitable for 'operatorfunc'.
-"   That is, the function returned by this wrapper takes one String argument,
-"   the type of the motion (see :help 'operatorfunc' and g@).
-"   'func' should be a function that takes exactly one String argument, the
-"   text of the motion given to the operator.
-"   Does not need sandbox, leaves things as it finds them.
-function funs#opfunc(func) abort
-    return s:opSandbox({type -> a:func(s:getMotionText(type))})
-endfunction " }}}
-
-" altererOpfunc(func) {{{
-" Like opfunc but the motion text is replaced with the result of 'func' and the
-" original motion text is returned. Registers are untouched; it is up to you to
-" set the result to the unnammed register if you desire.
-function funs#altererOpfunc(func) abort
-    return s:opSandbox({
-        \ type ->  s:setMotionText(a:func(s:getMotionText(type)), type)
-    \ })
-endfunction " }}}
-
 " unformatOperator(type) {{{
-function funs#unformatOperator(type) abort
-    let @@ = funs#altererOpfunc({
+function brumal#main#unformatOperator(type) abort
+    let @@ = brumal#opfunc#altererOpfunc({
         \ text ->
-        \ funs#removeFinalNewline(
-            \ funs#unformat(
-                \ funs#removeLeadingWhitespace(text)))
+        \ brumal#main#removeFinalNewline(
+            \ brumal#main#unformat(
+                \ brumal#main#removeLeadingWhitespace(text)))
     \ })(a:type)
     echom "Unformatted motion."
 endfunction " }}}
 
-" funs#yankUnformattedOperator(type) {{{
+" brumal#main#yankUnformattedOperator(type) {{{
 "   An operatorfunc that sets the '+' register to the "unformatted" version of
 "   the motion's text. By "unformatted", we mean roughly the inverse operation
 "   to the format operator 'gq'. It is difficult to exactly invert 'gq', so this
@@ -174,12 +120,12 @@ endfunction " }}}
 "   drafting a note in vim with nice vim formatting such as with hard wrapping
 "   but then want to paste the draft into a form that is not suited for
 "   80-character hard-wrapped text.
-function funs#yankUnformattedOperator(type) abort
-    let @+ = funs#opfunc({
+function brumal#main#yankUnformattedOperator(type) abort
+    let @+ = brumal#opfunc#opfunc({
         \ text ->
-        \ funs#removeFinalNewline(
-            \ funs#unformat(
-                \ funs#removeLeadingWhitespace(text)))
+        \ brumal#main#removeFinalNewline(
+            \ brumal#main#unformat(
+                \ brumal#main#removeLeadingWhitespace(text)))
     \ })(a:type)
     echom "Unformattedly yanked into \"+."
 endfunction " }}}
@@ -187,15 +133,16 @@ endfunction " }}}
 " PLUGIN {{{1
 
 " MANAGEMENT {{{2
+" TODO Factor out.
 
 " declare_plugs(specs, active_plugs) {{{
 " Given a dictionary 'specs' like 'g:br_plugs' (see the comment for that global
 " for its schema), run vimplug 'Plug ...' commands for the plugins specified in
 " list 'active_plugs'.
-function funs#declare_plugs(specs, active_plugs) abort
+function brumal#main#declare_plugs(specs, active_plugs) abort
     for plug_name in a:active_plugs
         if has_key(a:specs, plug_name)
-            if !funs#declare_plug(plug_name, a:specs)
+            if !brumal#main#declare_plug(plug_name, a:specs)
                 echomsg "No compatible version of plugin '".plug_name."' found."
             endif
         endif
@@ -204,8 +151,8 @@ endfunction " }}}
 
 " plug_supported(name, specs) {{{
 " Return whether plugin is supported.
-function funs#plug_supported(name, specs) abort
-    return funs#get_plug_spec(a:name, a:specs) isnot 0
+function brumal#main#plug_supported(name, specs) abort
+    return brumal#main#get_plug_spec(a:name, a:specs) isnot 0
 endfunction " }}}
 
 " declare_plug(name, spec) {{{
@@ -213,8 +160,8 @@ endfunction " }}}
 " 'ver_specs' (see 'g:br_plugs'), run the approporiate vimplug 'Plug ...'
 " command. If a compatible version is found and declared, return 1. Otherwise
 " return 0.
-function funs#declare_plug(name, specs) abort
-    let l:spec = funs#get_plug_spec(a:name, a:specs)
+function brumal#main#declare_plug(name, specs) abort
+    let l:spec = brumal#main#get_plug_spec(a:name, a:specs)
     if  l:spec is 0
         return 0
     endif
@@ -234,7 +181,7 @@ endfunction " }}}
 " the version spec list in the 'name' item of 'specs' dict until we find a
 " supported() plug. If the best plug spec dict is missing keys or non-existent
 " then return empty dict. If no supported plugin is found, then return 0.
-function funs#get_plug_spec(name, specs) abort
+function brumal#main#get_plug_spec(name, specs) abort
     if empty(a:name)
         echoerr "Plugin name is empty."
         return 0
@@ -260,7 +207,7 @@ endfunction " }}}
 
 
 " NERDTREE {{{2
-function funs#nerdtree() abort " {{{
+function brumal#main#nerdtree() abort " {{{
     " Call `:NERDTreeFind` if path nonempty, otherwise `:NERDTreeVCS`.
     if &modifiable && strlen(expand("%")) > 0 && !&diff
         NERDTreeFind
@@ -270,7 +217,7 @@ function funs#nerdtree() abort " {{{
 endfunction " }}}
 
 " TABLE MODE {{{2
-function funs#toggleTableMode() abort " {{{
+function brumal#main#toggleTableMode() abort " {{{
     if tablemode#IsActive()
         let &l:colorcolumn = g:br_colorcolumn
         call tablemode#Disable()
@@ -283,4 +230,4 @@ endfunction " }}}
 " NOTES {{{1
 " [^1]: https://vim.fandom.com/wiki/Search_across_multiple_lines
 
-" vim:ft=vim:fdm=marker:fmr={{{,}}}:fen:tw=80:et:ts=4:sts=4:sw=0:
+" vim: set ft=vim fdm=marker fmr={{{,}}} fen tw=80 et ts=4 sts=4 sw=0: {{{1

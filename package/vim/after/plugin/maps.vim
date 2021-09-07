@@ -29,7 +29,7 @@ map Q <nop>
 
 " EXPLORE {{{1
 execute "nnoremap" g:br_leader_nav."m" ":TagbarOpenAutoClose<CR>"
-execute "nnoremap" g:br_leader_nav."n" ":call funs#nerdtree()<cr>"
+execute "nnoremap" g:br_leader_nav."n" ":call brumal#main#nerdtree()<cr>"
 execute "nnoremap" g:br_leader_nav."p" ":CtrlPMixed<cr>"
 execute "nnoremap" g:br_leader_nav."b" ":CtrlPBuffer<cr>"
 execute "nnoremap" g:br_leader_nav."l" ":CtrlPLine<cr>"
@@ -66,17 +66,17 @@ if has('clipboard')
     map <leader>p "+p
     map <leader>P "+P
     " Unformattedly yank operators.
-    nnoremap <leader>Y :set operatorfunc=funs#yankUnformattedOperator<cr>g@
-    nnoremap <leader>YY :set operatorfunc=funs#yankUnformattedOperator<cr>g@_
-    xnoremap <leader>Y :<c-u>call funs#yankUnformattedOperator("visual")<cr>
+    nnoremap <leader>Y :set operatorfunc=brumal#main#yankUnformattedOperator<cr>g@
+    nnoremap <leader>YY :set operatorfunc=brumal#main#yankUnformattedOperator<cr>g@_
+    xnoremap <leader>Y :<c-u>call brumal#main#yankUnformattedOperator("visual")<cr>
 endif
-nnoremap <leader>gQ :set operatorfunc=funs#unformatOperator<cr>g@
-nnoremap <leader>gQQ :set operatorfunc=funs#unformatOperator<cr>g@_
-xnoremap <leader>gQ :<c-u>call funs#unformatOperator("visual")<cr>
+nnoremap <leader>gQ :set operatorfunc=brumal#main#unformatOperator<cr>g@
+nnoremap <leader>gQQ :set operatorfunc=brumal#main#unformatOperator<cr>g@_
+xnoremap <leader>gQ :<c-u>call brumal#main#unformatOperator("visual")<cr>
 
 " TABLE-MODE {{{1
 
-nnoremap <leader>tm :call funs#toggleTableMode()<cr>
+nnoremap <leader>tm :call brumal#main#toggleTableMode()<cr>
 
 
 " DEPRECATED {{{1
