@@ -70,6 +70,9 @@ if has('clipboard')
     nnoremap <leader>YY :set operatorfunc=funs#yankUnformattedOperator<cr>g@_
     xnoremap <leader>Y :<c-u>call funs#yankUnformattedOperator("visual")<cr>
 endif
+nnoremap <leader>gQ :set operatorfunc=funs#unformatOperator<cr>g@
+nnoremap <leader>gQQ :set operatorfunc=funs#unformatOperator<cr>g@_
+xnoremap <leader>gQ :<c-u>call funs#unformatOperator("visual")<cr>
 
 " TABLE-MODE {{{1
 

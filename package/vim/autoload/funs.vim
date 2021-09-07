@@ -70,85 +70,101 @@ function funs#removeFinalNewline(text) abort " {{{
     return substitute(a:text, '\n\_$', "", "g")
 endfunction " }}}
 
-" callInSandbox(regs, marks, func) {{{
-" Call func (must take no args) with sandboxed registers and marks. Also set
-" clipboard to nothing and selection to inclusive. Rever all these after call
-" regardless of errors (via try/finally).
-function funs#callInSandbox(regs, marks, func) abort
-    let l:old_selection = &selection
-    let l:old_clipboard = &clipboard
-    let l:old_regs_info = {}
-    for regname in a:regs
-        let l:old_regs_info[regname] = getreginfo(regname)
-    endfor
-    let l:old_marks = {}
-    for markname in a:marks
-        let l:old_marks[markname] = getpos(markname)
-    endfor
-    try
-        set clipboard= selection=inclusive
-        return a:func()
-    finally
-        for [name, value] in items(l:old_regs_info)
-            call setreg(name, value)
+" sandbox(regs, marks, func) {{{
+" Decorate func. Return a function that calls func within a sandbox where, after
+" the call, registers 'regs' and marks 'marks' are reset to their values before
+" the call. Same goes for 'selection' and 'clipboard' settings. Whilst the
+" function is called, we `set clipboard= selection=inclusive` but you can change
+" that within the function if you desire.
+function funs#sandbox(regs, marks, func) abort
+    let l:_ = {}
+    function l:_.func(_regs, _marks, _func, ...) abort
+        let l:old_selection = &selection
+        let l:old_clipboard = &clipboard
+        let l:old_regs_info = {}
+        for regname in a:_regs
+            let l:old_regs_info[regname] = getreginfo(regname)
         endfor
-        for [name, value] in items(l:old_marks)
-            call setpos(name, value)
+        let l:old_marks = {}
+        for markname in a:_marks
+            let l:old_marks[markname] = getpos(markname)
         endfor
-        let &clipboard = l:old_clipboard
-        let &selection = l:old_selection
-    endtry
+        try
+            set clipboard= selection=inclusive
+            return call(a:_func, a:000)
+        finally
+            for [name, value] in items(l:old_regs_info)
+                call setreg(name, value)
+            endfor
+            for [name, value] in items(l:old_marks)
+                call setpos(name, value)
+            endfor
+            let &clipboard = l:old_clipboard
+            let &selection = l:old_selection
+        endtry
+    endfunction
+    return function(l:_.func, [a:regs, a:marks, a:func])
 endfunction " }}}
+
+" s:opSandbox(func) {{{
+" Sandbox decorator (a Partial) to use for operator functions.
+let s:opSandbox = function("funs#sandbox", [['"'], ["'<", "'>"]])
+" }}}
 
 " OPERATORS {{{1
 
-" funs#opfunc(func, type) {{{
-"   Wrap a function so as to be used as an operatorfunc in the form of a
-"   Partial. The intended pattern is something like
-"
-"       :let g:MyOpFunc = funcref(funs#opfunc, [MyFunc])
-"       :nnoremap <leader>x :set operatorfunc=g:MyOpFunc<cr>g@
-"
-"   It also supports visual selection "operators"; just pass the "visual" type:
-"
-"       :xnoremap <leader>x :<c-u>call g:MyOpFunc("visual")<cr>
-"
-"   We need to store the Funcref in a variable rather than pass it directly to
-"   operatorfunc because operatorfunc only accepts a string name to the
-"   function.
-"   The 'func' should be a function that takes exactly one string argument, the
-"   text of the motion passed to the operator.
-"   Return the result of 'func(motionText)'.
-function funs#opfunc(func, type) abort
-    let l:_ = {}
-    function l:_.trowel(_func, _type) abort
-        let l:keystroke = get(s:motion_type_to_visual, a:_type, '') . "y"
-        silent execute 'noautocmd keepjumps normal!' l:keystroke
-        return a:_func(getreg('"'))
-    endfunction
-    return funs#callInSandbox(
-        \ ['"'], ["'<", "'>"],
-        \ {-> l:_.trowel(a:func, a:type)}
-    \ )
+" s:getMotionText(type) {{{
+" Return the text of the last motion (the object of a operator, see g@).
+" Notice: Should be preformed in a sandbox, alters quote-register.
+function s:getMotionText(type) abort
+    let l:keystroke = get(s:motion_type_to_visual, a:type, '') . "y"
+    silent execute 'noautocmd keepjumps normal!' l:keystroke
+    return getreg('"')
 endfunction " }}}
 
-" function funs#alteropfunc(func, type) abort
-"     let l:_ = {}
-"     function l:_.alter_quote_reg(_func, _type) abort
-"         " This MUST be called within the context context of funs@opfunc where
-"         " motion text is stored in quote register.
-"         let l:ret = setreg('"', a:_func(getreg('"')))
-"         " Replace visually selected text with contents of quote-register.
-"         silent execute 'noautocmd keepjumps normal!'
-"             \ get(s:motion_type_to_visual, a:_type, '') . "c\<c-r>=\""
-"         return l:ret
-"     endfunction
-"     return funs#opfunc({t -> l:_.alter_quote_reg(func, type)}, type)
-" endfunction
+" s:setMotionText(text, type) {{{
+" Set motion text to 'text'. Counterpart to s:getMotionText.
+" Return the original motion text.
+" Notice: Should be preformed in a sandbox, alters registers a and quote.
+function s:setMotionText(text, type) abort
+    call setreg('a', a:text)
+    " Replace visually selected text with contents of quote-register.
+    silent execute 'noautocmd keepjumps normal!'
+        \ get(s:motion_type_to_visual, a:type, '') . "c\<c-r>a"
+    return getreg('"')
+endfunction " }}}
 
-" " unformatOperator(type) {{{
-" function funs#unformatOperator(type) abort
-" endfunction " }}}
+" funs#opfunc(func) {{{
+"   Decorator that turns 'func' into a function suitable for 'operatorfunc'.
+"   That is, the function returned by this wrapper takes one String argument,
+"   the type of the motion (see :help 'operatorfunc' and g@).
+"   'func' should be a function that takes exactly one String argument, the
+"   text of the motion given to the operator.
+"   Does not need sandbox, leaves things as it finds them.
+function funs#opfunc(func) abort
+    return s:opSandbox({type -> a:func(s:getMotionText(type))})
+endfunction " }}}
+
+" altererOpfunc(func) {{{
+" Like opfunc but the motion text is replaced with the result of 'func' and the
+" original motion text is returned. Registers are untouched; it is up to you to
+" set the result to the unnammed register if you desire.
+function funs#altererOpfunc(func) abort
+    return s:opSandbox({
+        \ type ->  s:setMotionText(a:func(s:getMotionText(type)), type)
+    \ })
+endfunction " }}}
+
+" unformatOperator(type) {{{
+function funs#unformatOperator(type) abort
+    let @@ = funs#altererOpfunc({
+        \ text ->
+        \ funs#removeFinalNewline(
+            \ funs#unformat(
+                \ funs#removeLeadingWhitespace(text)))
+    \ })(a:type)
+    echom "Unformatted motion."
+endfunction " }}}
 
 " funs#yankUnformattedOperator(type) {{{
 "   An operatorfunc that sets the '+' register to the "unformatted" version of
@@ -159,18 +175,12 @@ endfunction " }}}
 "   but then want to paste the draft into a form that is not suited for
 "   80-character hard-wrapped text.
 function funs#yankUnformattedOperator(type) abort
-    let @+ = funs#opfunc(
-        \ {text
-            \ -> funs#removeFinalNewline(
-                \ funs#unformat(
-                    \ funs#removeLeadingWhitespace(
-                        \ text
-                    \)
-                \ )
-            \ )
-        \ },
-        \ a:type
-    \ )
+    let @+ = funs#opfunc({
+        \ text ->
+        \ funs#removeFinalNewline(
+            \ funs#unformat(
+                \ funs#removeLeadingWhitespace(text)))
+    \ })(a:type)
     echom "Unformattedly yanked into \"+."
 endfunction " }}}
 
