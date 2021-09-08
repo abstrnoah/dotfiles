@@ -38,6 +38,7 @@
         tmux
         tmuxinator
         toilet
+        tree
         vimHugeX
         visidata
         weechat
@@ -53,10 +54,10 @@
         mpv
         okular
         qutebrowser
+        rofi
         signal-desktop
         spotify
-        # Audio not working for tor.
-        torbrowser
+        torbrowser # Audio not working for tor.
         xflux
         xournalpp
         xrandr-invert-colors
