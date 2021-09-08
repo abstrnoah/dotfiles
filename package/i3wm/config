@@ -54,9 +54,9 @@ set $green   #859900
 
 # Workspaces.
 set $ws_main  0:main
-set $ws_www   1:www
+set $ws_www   6:www
 set $ws_audio 2:audio
-set $ws_comm  8:comm
+set $ws_comm  3:comm
 
 # SETUP {{{1
 
@@ -304,26 +304,26 @@ bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
 bindsym $mod+comma workspace back_and_forth
 bindsym $mod+0 workspace $ws_main
-bindsym $mod+1 workspace $ws_www
+bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace $ws_audio
-bindsym $mod+3 workspace 3
+bindsym $mod+3 workspace $ws_comm
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
+bindsym $mod+6 workspace $ws_www
 bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace $ws_comm
+bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 
 # Move focused container to workspace.
 bindsym $mod+Shift+0 move container to workspace $ws_main
-bindsym $mod+Shift+1 move container to workspace $ws_www
+bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace $ws_audio
-bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+3 move container to workspace $ws_comm
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+6 move container to workspace $ws_www
 bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace $ws_comm
+bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 
 # Move workspace to different output.
