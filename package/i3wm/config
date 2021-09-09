@@ -162,10 +162,7 @@ bindsym $mod+Mod1+h exec i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbi
 # APPS {{{2
 
 # Rofi runner.
-bindsym $mod+$colon \
-    exec $dotfiles_scripts/rofi.sh -show run
-bindsym $mod+d \
-    exec $dotfiles_scripts/rofi.sh -show run
+bindsym $mod+$colon exec $dotfiles_scripts/rofi.sh -show run
 
 # Terminal.
 bindsym $mod+Return exec i3-sensible-terminal
@@ -307,8 +304,8 @@ mode "resize" {
 # NAVIGATION {{{2
 
 # Go to window.
-bindsym $mod+w exec $dotfiles_scripts/rofi.sh -show window
-bindsym $mod+$shift+w exec $dotfiles_scripts/move-window-to-other.sh
+bindsym $mod+d exec $dotfiles_scripts/rofi.sh -show window
+bindsym $mod+$shift+d exec $dotfiles_scripts/move-window-to-other.sh
 
 # Change workspace.
 workspace_auto_back_and_forth yes
