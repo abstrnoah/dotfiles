@@ -3,8 +3,6 @@
 # This is extremely hackily put together from the other forked rofi scripts
 # here, it is a TODO to clean these scripts up but for now they work :)
 
-# Requires: wmctrl
-
 _dotfiles_scripts="${HOME}/.dotfiles/share"
 _rofi="${_dotfiles_scripts}/rofi.sh"
 
