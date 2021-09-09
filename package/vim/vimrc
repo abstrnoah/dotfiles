@@ -86,6 +86,8 @@ if has('extra_search')
     set incsearch hlsearch
 endif
 
+set shellredir=>
+
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 

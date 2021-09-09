@@ -5,13 +5,20 @@
 
 # CONSTANTS {{{1
 # Keys.
-set $mod Mod4
+set $ctrl ctrl
+set $alt Mod1
+set $super Mod4
 set $esc ctrl+bracketleft
+set $shift shift
+set $enter Enter
+set $colon shift+semicolon
+set $mod Mod4
 
 # Paths.
 set $home /home/abstractednoah
 # TODO: Needs to be deprecated.
 set $keybinds /home/abstractednoah/.dotfiles/package/i3wm/keybinds
+set $dotfiles_scripts /home/abstractednoah/.dotfiles/share
 
 # Prompt character, for dmenu.
 set $promptchar "❯"
@@ -53,10 +60,8 @@ set $cyan    #2aa198
 set $green   #859900
 
 # Workspaces.
-set $ws_main  0:main
-set $ws_www   6:www
-set $ws_audio 2:audio
-set $ws_comm  3:comm
+set $ws_audio audio
+set $ws_comm  comm
 
 # SETUP {{{1
 
@@ -126,11 +131,12 @@ bar {
     }
 }
 
-# CRITERIA {{{1
+# DEDICATED WORKSPACES {{{1
 
-for_window [class="(?i)^spotify$"]         move window to workspace $ws_audio
-for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
-for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
+
+for_window [class="(?i)^spotify$"] move window to workspace $ws_audio
+# for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
+# for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
 for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
 for_window [class="(?i)^discord$"]         move window to workspace $ws_comm
 for_window [class="(?i)^signal$"]          move window to workspace $ws_comm
@@ -154,10 +160,12 @@ bindsym $mod+Mod1+l exec i3lock -dI 10 -ti $home/.wallpaperlock
 bindsym $mod+Mod1+h exec i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate
 
 # APPS {{{2
-# Dmenu.
-bindsym $mod+d exec \
-    dmenu_run -i -b -l 5 -p $promptchar -fn "$font_family-8" \
-        -nb "$base02" -nf "$base2" -sb "$base01" -sf "$base2"
+
+# Rofi runner.
+bindsym --release $mod+$colon \
+    exec $dotfiles_scripts/rofi.sh -show run
+bindsym --release $mod+d \
+    exec $dotfiles_scripts/rofi.sh -show run
 
 # Terminal.
 bindsym $mod+Return exec i3-sensible-terminal
@@ -296,35 +304,20 @@ mode "resize" {
 }
 
 
-# WORKSPACE {{{2
+# NAVIGATION {{{2
+
+# Go to window.
+bindsym --release $mod+w exec $dotfiles_scripts/rofi.sh -show window
+bindsym --release $mod+$shift+w exec $dotfiles_scripts/move-window-to-other.sh
 
 # Change workspace.
 workspace_auto_back_and_forth yes
 bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
 bindsym $mod+comma workspace back_and_forth
-bindsym $mod+0 workspace $ws_main
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace $ws_audio
-bindsym $mod+3 workspace $ws_comm
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace $ws_www
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-
-# Move focused container to workspace.
-bindsym $mod+Shift+0 move container to workspace $ws_main
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace $ws_audio
-bindsym $mod+Shift+3 move container to workspace $ws_comm
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace $ws_www
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+g exec $dotfiles_scripts/switch-workspace.sh
+bindsym $mod+$shift+g exec $dotfiles_scripts/move-window-to-current.sh
+bindsym $mod+$alt+r exec i3-input -F 'rename workspace to "%s"' -P 'rename ws: '
 
 # Move workspace to different output.
 bindsym $mod+o focus output right
