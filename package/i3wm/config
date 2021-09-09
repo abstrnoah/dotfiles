@@ -162,9 +162,9 @@ bindsym $mod+Mod1+h exec i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbi
 # APPS {{{2
 
 # Rofi runner.
-bindsym --release $mod+$colon \
+bindsym $mod+$colon \
     exec $dotfiles_scripts/rofi.sh -show run
-bindsym --release $mod+d \
+bindsym $mod+d \
     exec $dotfiles_scripts/rofi.sh -show run
 
 # Terminal.
