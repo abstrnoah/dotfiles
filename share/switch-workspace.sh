@@ -13,9 +13,9 @@ function gen_workspaces()
 }
 
 
-WORKSPACE=$( (echo empty; gen_workspaces)  | "${_rofi}" -dmenu -p "workspace")
+WORKSPACE=$( (echo "-"; gen_workspaces)  | "${_rofi}" -dmenu -p "workspace")
 
-if [ x"empty" = x"${WORKSPACE}" ]
+if [ x"-" = x"${WORKSPACE}" ]
 then
     "${_empty_workspace}"
 elif [ -n "${WORKSPACE}" ]
