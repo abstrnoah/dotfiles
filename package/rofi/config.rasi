@@ -1,0 +1,13 @@
+// Rofi runtime config, RASI format (see rofi-theme(5)).
+// Path: ~/.config/rofi/config.rasi.
+
+configuration {
+	modi: "window,run,combi";
+	matching: "fuzzy";
+    // Unbind silly binds.
+	kb-remove-to-eol: "";
+	kb-accept-entry: "Return,KP_Enter";
+    // Custom binds.
+	kb-row-up: "Control+k";
+	kb-row-down: "Control+j";
+}
