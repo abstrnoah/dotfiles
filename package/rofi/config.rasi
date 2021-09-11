@@ -2,16 +2,16 @@
 // Path: ~/.config/rofi/config.rasi.
 
 configuration {
-	modi: "window,run,combi";
-	matching: "fuzzy";
+    modi: "window,run,combi";
+    matching: "fuzzy";
     sorting-method: "fzf";
     // Unbind conflicts.
-	kb-remove-to-eol: "";
-	kb-accept-entry: "";
+    kb-remove-to-eol: "";
+    kb-accept-entry: "";
     kb-row-tab: "";
     // Custom binds.
-	kb-row-up: "Control+k";
-	kb-row-down: "Control+j";
+    kb-row-up: "Control+k";
+    kb-row-down: "Control+j";
     kb-row-select: "Tab";
     kb-accept-custom: "Return";
 }
