@@ -1,9 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 
-# This is a hacky quick fix. TODO: Somehow rofi needs to run in the presence of
-# zshenv, but sourcing it directly in here doesn't seem to work, plus that's
-# also hacky.
-export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
-export QT_XCB_GL_INTEGRATION=none
+# This is a hacky wrapper that runs rofi with zsh rather than bash so that my
+# zshenv gets sourced correctly. TODO A more legit solution would be to setup
+# bash to emulate my zsh config so that I don't keep running into this issue.
 
 ~/.nix-profile/bin/rofi "${@}"
