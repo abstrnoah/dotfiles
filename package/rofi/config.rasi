@@ -4,10 +4,14 @@
 configuration {
 	modi: "window,run,combi";
 	matching: "fuzzy";
-    // Unbind silly binds.
+    sorting-method: "fzf";
+    // Unbind conflicts.
 	kb-remove-to-eol: "";
-	kb-accept-entry: "Return,KP_Enter";
+	kb-accept-entry: "";
+    kb-row-tab: "";
     // Custom binds.
 	kb-row-up: "Control+k";
 	kb-row-down: "Control+j";
+    kb-row-select: "Tab";
+    kb-accept-custom: "Return";
 }
