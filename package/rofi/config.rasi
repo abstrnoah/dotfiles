@@ -7,11 +7,11 @@ configuration {
     sorting-method: "fzf";
     // Unbind conflicts.
     kb-remove-to-eol: "";
-    kb-accept-entry: "";
     kb-row-tab: "";
     // Custom binds.
     kb-row-up: "Control+k";
     kb-row-down: "Control+j";
     kb-row-select: "Tab";
-    kb-accept-custom: "Return";
+    kb-accept-entry: "Return";
+    kb-accept-custom: "Control+Return";
 }

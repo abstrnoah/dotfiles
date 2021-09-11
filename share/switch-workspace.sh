@@ -1,11 +1,12 @@
 #!/bin/bash
 
+# set -x
+
 # Forked from https://github.com/davatorium/rofi-scripts/blob/889056584d67d55c2a7a877d4e3b688bf2e40f7b/i3_switch_workspace.sh
 
 _dotfiles_scripts="${HOME}/.dotfiles/share"
 
 _rofi="${_dotfiles_scripts}/rofi.sh"
-_empty_workspace="${_dotfiles_scripts}/empty-workspace.sh"
 
 function gen_workspaces()
 {
@@ -17,8 +18,9 @@ WORKSPACE=$( (echo "-"; gen_workspaces)  | "${_rofi}" -dmenu -p "workspace")
 
 if [ x"-" = x"${WORKSPACE}" ]
 then
-    "${_empty_workspace}"
-elif [ -n "${WORKSPACE}" ]
+    WORKSPACE=$("$_dotfiles_scripts/empty-workspace.sh")
+fi
+if [ -n "${WORKSPACE}" ]
 then
     i3-msg workspace "${WORKSPACE}"
 fi

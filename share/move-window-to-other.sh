@@ -13,15 +13,9 @@ function gen_workspaces()
 
 WORKSPACE=$( (echo "-"; gen_workspaces)  | "${_rofi}" -dmenu -p "move to ws")
 
-MAX_DESKTOPS=20
-
-WORKSPACES=$(seq -s '\n' 1 1 "${MAX_DESKTOPS}")
-
 if [ x"-" = x"${WORKSPACE}" ]
 then
-    WORKSPACE=$( (i3-msg -t get_workspaces | tr ',' '\n' | grep num | awk -F: '{print int($2)}' ; \
-            echo -e "${WORKSPACES}" ) | sort -n | uniq -u | head -n 1)
-    echo ${WORKSPACE}
+    WORKSPACE=$("$_dotfiles_scripts/empty-workspace.sh")
 fi
 if [ -n "${WORKSPACE}" ]
 then
