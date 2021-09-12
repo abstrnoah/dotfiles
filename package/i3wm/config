@@ -164,6 +164,9 @@ bindsym $mod+Mod1+h exec i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbi
 # Rofi runner.
 bindsym $mod+$colon exec $dotfiles_scripts/rofi.sh -show run
 
+# Rofi file browser.
+bindsym $mod+slash exec $dotfiles_scripts/rofi.sh -show file-browser
+
 # Terminal.
 bindsym $mod+Return exec i3-sensible-terminal
 

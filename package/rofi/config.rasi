@@ -2,7 +2,7 @@
 // Path: ~/.config/rofi/config.rasi.
 
 configuration {
-    modi: "window,run,combi";
+    modi: "window,run,combi,file-browser";
     matching: "fuzzy";
     sorting-method: "fzf";
     // Unbind conflicts.
