@@ -10,9 +10,13 @@ set $alt Mod1
 set $super Mod4
 set $esc ctrl+bracketleft
 set $shift shift
-set $enter Enter
+set $enter Return
 set $colon shift+semicolon
+
+# Main prefix modifier.
 set $mod Mod4
+# We try to prefix dangerous or rarely-used commands with $mod+$shift, and
+# common overloads with $mod+$alt. This is mainly for ergonomic reasons.
 
 # Paths.
 set $home /home/abstractednoah
@@ -146,18 +150,18 @@ for_window [class="(?i)^zoom$"]            move window to workspace $ws_comm
 
 # SETUP {{{2
 # Reload the configuration file.
-bindsym $mod+Shift+c reload
+bindsym $mod+$shift+c reload
 # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3).
-bindsym $mod+Shift+r restart
+bindsym $mod+$shift+r restart
 # Exit i3 (logs you out of your X session).
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
+bindsym $mod+$shift+e exec "i3-nagbar -t warning -m 'Exit?' -b 'Yeah.' 'i3-msg exit'"
 # Lock.
-bindsym $mod+Mod1+l exec i3lock -dI 10 -ti $home/.wallpaperlock
+bindsym $mod+$shift+l exec i3lock -dI 10 -ti $home/.wallpaperlock
 # Hibernate.
 # Note that the sudoers file must be configured so that pm-hibernate can be run
 # non-interactively by the user.
-bindsym $mod+Mod1+h exec i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate
+bindsym $mod+$shift+h exec \
+    "i3-nagbar -t warning -m 'Hibernate?' -b 'Yeah.' 'i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate'"
 
 # APPS {{{2
 
@@ -168,14 +172,14 @@ bindsym $mod+$colon exec $dotfiles_scripts/rofi.sh -show run
 bindsym $mod+slash exec $dotfiles_scripts/rofi.sh -show file-browser
 
 # Terminal.
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+$enter exec i3-sensible-terminal
 
 # Screenshot.
 bindsym --release $mod+c \
     exec "import png:- | xclip -selection clipboard -t image/png"
 
 # Notifications.
-bindsym $mod+Shift+n mode $mode_notify
+bindsym $mod+$alt+n mode $mode_notify
 mode $mode_notify {
     # Enable dunst.
     bindsym e exec killall -SIGUSR2 dunst; mode "default"
@@ -239,7 +243,7 @@ mode $mode_brightness {
 
 # Invert.
 bindsym $mod+i exec xrandr-invert-colors
-bindsym $mod+Shift+i mode "invert"
+bindsym $mod+$alt+i mode "invert"
 mode "invert" {
     bindsym 0 exec xrandr-invert-colors -s 0
     bindsym 1 exec xrandr-invert-colors -s 1
@@ -247,7 +251,7 @@ mode "invert" {
 }
 
 # Mount.
-bindsym $mod+Shift+m exec \
+bindsym $mod+$alt+m exec \
     i3-input -F 'exec udisksctl mount -b /dev/disk/by-label/%s' \
         -P "mount label: "
 
@@ -263,13 +267,13 @@ bindsym $mod+space focus mode_toggle
 
 # Navigate up/down the tree.
 bindsym $mod+u focus parent
-bindsym $mod+Shift+u focus child
+bindsym $mod+$alt+u focus child
 
 # Move focused window.
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+$alt+h move left
+bindsym $mod+$alt+j move down
+bindsym $mod+$alt+k move up
+bindsym $mod+$alt+l move right
 
 # Split with vim-like mneumonics.
 bindsym $mod+v split h
@@ -280,13 +284,13 @@ bindsym $mod+t layout toggle tabbed stacking
 bindsym $mod+e layout toggle splitv splith
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+$shift+q kill
 
 # Enter fullscreen mode for the focused container.
 bindsym $mod+f fullscreen toggle
 
 # Toggle floating.
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+$shift+space floating toggle
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -308,7 +312,7 @@ mode "resize" {
 
 # Go to window.
 bindsym $mod+d exec $dotfiles_scripts/rofi.sh -show window
-bindsym $mod+$shift+d exec $dotfiles_scripts/move-window-to-other.sh
+bindsym $mod+$alt+d exec $dotfiles_scripts/move-window-to-other.sh
 
 # Change workspace.
 workspace_auto_back_and_forth yes
@@ -316,14 +320,14 @@ bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
 bindsym $mod+comma workspace back_and_forth
 bindsym $mod+g exec $dotfiles_scripts/switch-workspace.sh
-bindsym $mod+$shift+g exec $dotfiles_scripts/move-window-to-current.sh
+bindsym $mod+$alt+g exec $dotfiles_scripts/move-window-to-current.sh
 bindsym $mod+$alt+r exec i3-input -F 'rename workspace to "%s"' -P 'rename ws: '
 
 # Move workspace to different output.
 bindsym $mod+o focus output right
-bindsym $mod+Shift+o move workspace to output right
-bindsym $mod+Mod1+o mode "output"
-bindsym $mod+Shift+Mod1+o exec "xrandr --output LVDS-1 --auto"
+bindsym $mod+$alt+o move workspace to output right
+bindsym $mod+$shift+o mode "output"
+bindsym $mod+$shift+$alt+o exec "xrandr --output LVDS-1 --auto"
 mode "output" {
     bindsym h focus output left
     bindsym l focus output right
