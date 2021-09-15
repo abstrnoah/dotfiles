@@ -71,7 +71,9 @@ let g:br_plugs = {
         \ }
     \ ],
     \ "tpope/vim-fireplace": [],
+    \ "romainl/vim-qf": [],
 \ }
+"
 " A list of keys to 'g:br_plugs'.
 let g:br_plugs_active = [
     \ "907th/vim-auto-save",
@@ -100,6 +102,7 @@ let g:br_plugs_active = [
     \ "vimwiki/vimwiki",
     \ "junegunn/vim-plug",
     \ "tpope/vim-fireplace",
+    \ "romainl/vim-qf",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -193,7 +196,7 @@ let g:vimtex_compiler_tectonic = {
     \   '--keep-logs',
     \ ],
 \}
-let g:vimtex_quickfix_autoclose_after_keystrokes = 1
+let g:vimtex_quickfix_mode = 0
 let g:vimtex_fold_enabled = 1
 " Vimtex's formatexpr works almost perfectly, except:
 " ISSUE: When an environment is given a trailing optional argument. Then 'gqie'
