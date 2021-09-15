@@ -42,6 +42,7 @@
         vimHugeX
         visidata
         weechat
+        yq-go
         zsh
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
