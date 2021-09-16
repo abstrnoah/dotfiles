@@ -72,7 +72,7 @@ let g:br_plugs = {
     \ ],
     \ "tpope/vim-fireplace": [],
     \ "romainl/vim-qf": [],
-    \ "habamax/vim-exchange": [],
+    \ "tommcdo/vim-exchange": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -104,7 +104,7 @@ let g:br_plugs_active = [
     \ "junegunn/vim-plug",
     \ "tpope/vim-fireplace",
     \ "romainl/vim-qf",
-    \ "habamax/vim-exchange",
+    \ "tommcdo/vim-exchange",
 \ ]
 
 " PLUGIN CONFIG {{{1
