@@ -12,6 +12,12 @@ set $esc ctrl+bracketleft
 set $shift shift
 set $enter Return
 set $colon shift+semicolon
+set $percent shift+5
+set $pipe shift+backslash
+set $minus minus
+set $plus equal
+set $underscore shift+minus
+
 
 # Main prefix modifier.
 set $mod Mod4
@@ -40,6 +46,7 @@ set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
 # Default resize increments.
 set $resize_sm 2
 set $resize_lg 50
+set $gap_interval 2
 
 # Dimensions.
 set $default_border 1
@@ -106,7 +113,6 @@ client.unfocused        $base03 $base03 $base01 $cyan     $base03
 for_window [class=".*"] border pixel $default_border
 gaps inner $base_gap
 gaps outer $base_gap
-bindsym $mod+Shift+b border normal; mode "border"
 mode "border" {
     bindsym $esc border pixel $default_border; mode "default"
 }
@@ -306,6 +312,11 @@ mode "resize" {
         bindsym $esc mode "default"
         bindsym $mod+r resize set 650px 400px
 }
+
+bindsym $mod+$minus gaps inner current minus $gap_interval
+bindsym $mod+$plus gaps inner current plus $gap_interval
+bindsym $mod+$underscore gaps inner current set $base_gap
+bindsym $mod+Shift+b border normal; mode "border"
 
 
 # NAVIGATION {{{2
