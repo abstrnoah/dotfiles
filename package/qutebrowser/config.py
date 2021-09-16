@@ -19,7 +19,7 @@ _leader_hint = _leader + ";"
 # Home page.
 # Note that 'start_pages' is different from 'default_page'; ':home' goes to the
 # former while generic opens go to the latter.
-c.url.start_pages = ["https://www.nytimes.com/"]
+c.url.start_pages = ["https://start.duckduckgo.com/"]
 
 # Don't load autoconfig.yml.
 config.load_autoconfig(False)
