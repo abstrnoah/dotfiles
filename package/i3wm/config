@@ -147,10 +147,10 @@ bar {
 for_window [class="(?i)^spotify$"] move window to workspace $ws_audio
 # for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
 # for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
-for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
-for_window [class="(?i)^discord$"]         move window to workspace $ws_comm
-for_window [class="(?i)^signal$"]          move window to workspace $ws_comm
-for_window [class="(?i)^zoom$"]            move window to workspace $ws_comm
+# for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
+# for_window [class="(?i)^discord$"]         move window to workspace $ws_comm
+# for_window [class="(?i)^signal$"]          move window to workspace $ws_comm
+# for_window [class="(?i)^zoom$"]            move window to workspace $ws_comm
 
 # BINDS {{{1
 
