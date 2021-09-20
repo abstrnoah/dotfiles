@@ -167,8 +167,9 @@ bindsym $mod+$shift+l exec i3lock -dI 10 -ti $home/.wallpaperlock
 # Note that the sudoers file must be configured so that pm-hibernate can be run
 # non-interactively by the user.
 bindsym $mod+$shift+h exec \
-    "i3-nagbar -t warning -m 'Hibernate?' -b 'Yeah.' 'i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate'"
-
+    i3-input -F \
+        'exec "test %s = y && i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate"' \
+        -P "hibernate? [yN] "
 # APPS {{{2
 
 # Rofi runner.
