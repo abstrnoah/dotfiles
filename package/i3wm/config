@@ -17,6 +17,8 @@ set $pipe shift+backslash
 set $minus minus
 set $plus equal
 set $underscore shift+minus
+set $grave grave
+set $tilde shift+grave
 
 
 # Main prefix modifier.
@@ -41,6 +43,7 @@ set $mode_audio "audio: [h]prev [l]next [k]up [j]down [m]ute [space]play"
 set $mode_focus "parent/child focus: [h][j][k][l]parent [p]arent [c]hild"
 set $mode_notify "notify: [e]nable [d]isable"
 set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
+set $mode_admin "admin: [l]ock [e]xit [s]hutdown [S]reboot [h]ibernate [r]econfig [R]eload"
 # TODO: Some modes are still hardcoded, factor them out.
 
 # Default resize increments.
@@ -155,21 +158,37 @@ for_window [class="(?i)^spotify$"] move window to workspace $ws_audio
 # BINDS {{{1
 
 # SETUP {{{2
-# Reload the configuration file.
-bindsym $mod+$shift+c reload
-# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3).
-bindsym $mod+$shift+r restart
-# Exit i3 (logs you out of your X session).
-bindsym $mod+$shift+e exec "i3-nagbar -t warning -m 'Exit?' -b 'Yeah.' 'i3-msg exit'"
-# Lock.
-bindsym $mod+$shift+l exec i3lock -dI 10 -ti $home/.wallpaperlock
-# Hibernate.
-# Note that the sudoers file must be configured so that pm-hibernate can be run
-# non-interactively by the user.
-bindsym $mod+$shift+h exec \
-    i3-input -F \
-        'exec "test %s = y && i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate"' \
-        -P "hibernate? [yN] "
+
+bindsym $mod+$grave mode $mode_admin
+bindsym $mod+$tilde exec i3lock -dI 10 -ti $home/.wallpaperlock
+
+mode $mode_admin {
+    # Lock.
+    bindsym l exec i3lock -dI 10 -ti $home/.wallpaperlock; mode "default"
+    # Exit i3 (logs you out of your X session).
+    bindsym e mode "default"; \
+        exec "i3-nagbar -t warning -m 'Exit i3wm?' -b 'Yeah.' 'i3-msg exit'"
+    # Shutdown.
+    bindsym s mode "default"; \
+        exec "i3-nagbar -t warning -m 'Shutdown?' -b 'Yeah.' 'shutdown now'"
+    # Reboot.
+    bindsym $shift+s mode "default"; \
+        exec "i3-nagbar -t warning -m 'Reboot?' -b 'Yeah.' 'shutdown -r now'"
+    # Hibernate.
+    # Note that the sudoers file must be configured so that pm-hibernate can be
+    # run non-interactively by the user.
+    bindsym h mode "default"; \
+        exec i3-input -F \
+            'exec "test %s = y && i3lock -dI 10 -ti $home/.wallpaperlock && sudo /usr/sbin/pm-hibernate"' \
+            -P "hibernate? [yN] "
+    # Reload the configuration file.
+    bindsym r mode "default"; reload
+    # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3).
+    bindsym $shift+r mode "default"; restart
+
+    bindsym $esc mode "default"
+}
+
 # APPS {{{2
 
 # Rofi runner.
