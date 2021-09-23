@@ -44,6 +44,7 @@ set $mode_focus "parent/child focus: [h][j][k][l]parent [p]arent [c]hild"
 set $mode_notify "notify: [e]nable [d]isable"
 set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
 set $mode_admin "admin: [l]ock [e]xit [s]hutdown [S]reboot [h]ibernate [r]econfig [R]eload"
+set $mode_invert "invert screen[0][1] x[fF]lux"
 # TODO: Some modes are still hardcoded, factor them out.
 
 # Default resize increments.
@@ -268,11 +269,13 @@ mode $mode_brightness {
 }
 
 # Invert.
-bindsym $mod+i exec xrandr-invert-colors
-bindsym $mod+$alt+i mode "invert"
-mode "invert" {
+bindsym $mod+i exec "pkill xflux && while pgrep xflux; do sleep 0.0001; done; xrandr-invert-colors"
+bindsym $mod+$alt+i mode $mode_invert
+mode $mode_invert {
     bindsym 0 exec xrandr-invert-colors -s 0
     bindsym 1 exec xrandr-invert-colors -s 1
+    bindsym f exec $dotfiles_scripts/start-xflux.sh
+    bindsym $shift+f exec pkill xflux
     bindsym $esc mode "default"
 }
 
