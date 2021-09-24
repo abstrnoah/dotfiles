@@ -36,6 +36,7 @@ let g:vimwiki_tags_header = "INDEX OF TAGS"
 let g:vimwiki_tags_header_level = 2
 let g:vimwiki_auto_header = 1
 let g:vimwiki_dir_link = "root"
+let g:vimwiki_global_ext = 0
 
 
 " COMMANDS {{{1
