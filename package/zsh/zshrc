@@ -30,26 +30,6 @@ PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
 NL=$'\n'
 PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
 
-# HOOK FUNCTIONS
-preexec() {
-    # local entry=${1}
-    local cmd=${2}
-    # local cmd_full=${3}
-
-    # Update tmux window name.
-    test -z ${TMUX} || tmux rename-window "${cmd%% *}"
-}
-
-precmd() {
-    # Update tmux window name.
-    test -z ${TMUX} || tmux rename-window "zsh"
-}
-
-zshexit() {
-    # Revert tmux window name to what it was before we started.
-    test -z ${TMUX} || tmux rename-window "${BR_TMUX_LAST_WINDOW_NAME}"
-}
-
 # ALIAS
 # Yes, I know that aliases are supposed to be bad. But aliases for simple
 # abbreviations allow the tmux window-renaming hooks above to get the actual
@@ -107,7 +87,4 @@ autoload -U compinit && compinit
 if [ -z ${TMUX} ] && command -v tmuxinator &> /dev/null; then # Not in tmux.
     # So start tmux.
     tmuxinator main
-else # We are in tmux.
-    # Save the current tmux window name.
-    BR_TMUX_LAST_WINDOW_NAME=$(tmux display-message -p '#W')
 fi
