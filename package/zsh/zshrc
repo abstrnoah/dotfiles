@@ -63,6 +63,11 @@ if command -v nix-env &> /dev/null; then
     # Note that 'nix-env' is aliased in 'zshenv' with pinned nixpkgs.
     alias reload-nix-packages='nix-env -v -riA'
 fi
+function O() { # O <path to xdg-open-able file>
+    local _path="${1}"
+    # Suffix '&!' means 'disown' in zsh.
+    xdg-open "${_path}" &!
+}
 # Don't ssh from tmux, that's dangerous!
 alias ssh='[ -z ${TMUX} ] && ssh'
 
