@@ -60,6 +60,7 @@ let g:br_plugs = {
     \ "abstractednoah/vim-colors-solarized": [{"spec": {"branch": "develop"}}],
     \ "vimwiki/vimwiki": [{"supported": {-> v:version >= 730}}],
     \ "junegunn/vim-plug": [],
+    \ "Konfekt/FastFold": [],
     \ "fmoralesc/vim-pad": [
         \ {
             \ "spec": {"branch": "devel"},
@@ -105,6 +106,7 @@ let g:br_plugs_active = [
     \ "tpope/vim-fireplace",
     \ "romainl/vim-qf",
     \ "tommcdo/vim-exchange",
+    \ "Konfekt/FastFold",
 \ ]
 
 " PLUGIN CONFIG {{{1
