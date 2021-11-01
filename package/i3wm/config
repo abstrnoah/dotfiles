@@ -110,7 +110,7 @@ exec_always --no-startup-id feh --bg-fill $home/.wallpaper
 
 #class                  border  bg      text    indicator child_border
 client.focused          $base03 $base02 $base1  $base01   $magenta
-client.focused_inactive $base03 $base03 $base1  $base01   $cyan
+client.focused_inactive $base03 $base03 $base01 $cyan     $base03
 client.unfocused        $base03 $base03 $base01 $cyan     $base03
 
 # Gaps, *snazzy*.
