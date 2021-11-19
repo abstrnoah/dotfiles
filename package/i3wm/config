@@ -149,7 +149,8 @@ bar {
 # DEDICATED WORKSPACES {{{1
 
 
-for_window [class="(?i)^spotify$"] move window to workspace $ws_audio
+for_window [class="(?i)^spotify$"] \
+    move --no-auto-back-and-forth window to workspace $ws_audio
 # for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
 # for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
 # for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
@@ -352,9 +353,8 @@ bindsym $mod+d exec $dotfiles_scripts/rofi.sh -show window
 bindsym $mod+$alt+d exec $dotfiles_scripts/move-window-to-other.sh
 
 # Change workspace.
-workspace_auto_back_and_forth yes
-bindsym $mod+n workspace next
-bindsym $mod+p workspace prev
+bindsym $mod+n workspace next_on_output
+bindsym $mod+p workspace prev_on_output
 bindsym $mod+comma workspace back_and_forth
 bindsym $mod+g exec $dotfiles_scripts/switch-workspace.sh
 bindsym $mod+$alt+g exec $dotfiles_scripts/move-window-to-current.sh
