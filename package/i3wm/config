@@ -190,6 +190,8 @@ mode $mode_admin {
     bindsym $esc mode "default"
 }
 
+bindsym $mod+$alt+F exec $dotfiles_scripts/i3-toggle-bar-mode.sh
+
 # APPS {{{2
 
 # Rofi runner.
