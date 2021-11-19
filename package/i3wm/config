@@ -109,14 +109,15 @@ exec --no-startup-id compton -b -CG
 exec_always --no-startup-id feh --bg-fill $home/.wallpaper
 
 #class                  border  bg      text    indicator child_border
-client.focused          $base03 $base02 $base1  $base01   $magenta
-client.focused_inactive $base03 $base03 $base01 $cyan     $base03
-client.unfocused        $base03 $base03 $base01 $cyan     $base03
+client.focused          $base03 $base02 $base1  $green    $yellow
+client.focused_inactive $base03 $base03 $base01 $base01   $base03
+client.unfocused        $base03 $base03 $base01 $base01   $base03
 
 # Gaps, *snazzy*.
 for_window [class=".*"] border pixel $default_border
 gaps inner $base_gap
 gaps outer $base_gap
+smart_gaps on
 mode "border" {
     bindsym $esc border pixel $default_border; mode "default"
 }
