@@ -19,6 +19,7 @@ set $plus equal
 set $underscore shift+minus
 set $grave grave
 set $tilde shift+grave
+set $singlequote apostrophe
 
 
 # Main prefix modifier.
@@ -149,8 +150,7 @@ bar {
 # DEDICATED WORKSPACES {{{1
 
 
-for_window [class="(?i)^spotify$"] \
-    move --no-auto-back-and-forth window to workspace $ws_audio
+for_window [class="(?i)^spotify$"] move window to workspace $ws_audio
 # for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
 # for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
 # for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
@@ -273,7 +273,7 @@ mode $mode_brightness {
 }
 
 # Invert.
-bindsym $mod+i exec "pkill xflux && while pgrep xflux; do sleep 0.0001; done; xrandr-invert-colors"
+bindsym $mod+i exec xrandr-invert-colors
 bindsym $mod+$alt+i mode $mode_invert
 mode $mode_invert {
     bindsym 0 exec xrandr-invert-colors -s 0
@@ -283,10 +283,10 @@ mode $mode_invert {
     bindsym $esc mode "default"
 }
 
-# Mount.
-bindsym $mod+$alt+m exec \
-    i3-input -F 'exec udisksctl mount -b /dev/disk/by-label/%s' \
-        -P "mount label: "
+# # Mount.
+# bindsym $mod+$alt+m exec \
+#     i3-input -F 'exec udisksctl mount -b /dev/disk/by-label/%s' \
+#         -P "mount label: "
 
 # WINDOWS {{{2
 
@@ -347,6 +347,14 @@ bindsym $mod+Shift+b border normal; mode "border"
 
 
 # NAVIGATION {{{2
+
+# Marks.
+bindsym $mod+m exec i3-input -F 'mark --add %s' -l 1 -P 'mark: '
+bindsym $mod+$singlequote \
+    exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'goto: '
+bindsym $mod+$alt+m exec $dotfiles_scripts/i3-mark-for-alt.sh
+bindsym $mod+$alt+comma exec $dotfiles_scripts/i3-go-alt.sh
+bindsym $mod+$shift+m unmark
 
 # Go to window.
 bindsym $mod+d exec $dotfiles_scripts/rofi.sh -show window
