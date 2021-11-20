@@ -351,9 +351,9 @@ bindsym $mod+Shift+b border normal; mode "border"
 # Marks.
 bindsym $mod+m exec i3-input -F 'mark --add %s' -l 1 -P 'mark: '
 bindsym $mod+$singlequote \
-    exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'goto: '
+    exec i3-input -F '[con_mark="^%s$"] focus' -l 1 -P 'goto: '
 bindsym $mod+$alt+m exec $dotfiles_scripts/i3-mark-for-alt.sh
-bindsym $mod+$alt+comma exec $dotfiles_scripts/i3-go-alt.sh
+bindsym $mod+period exec $dotfiles_scripts/i3-go-alt.sh
 bindsym $mod+$shift+m unmark
 
 # Go to window.

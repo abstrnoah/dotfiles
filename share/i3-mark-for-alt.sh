@@ -2,8 +2,9 @@
 
 # set -x
 
-count_marks() {
-    i3-msg -t get_marks | jq 'map(match("^_alt[01]$"))|length' -r
+get_last_mark() {
+    i3-msg -t get_marks \
+        | jq 'map(match("^_alt[01]$"))|map(.string)|sort|last(.[])' -r
 }
 
 # mark(n) -> void
@@ -19,11 +20,15 @@ clear_marks() {
 }
 
 
-if [ $(count_marks) -eq 0 ]; then
-    mark 0
-elif [ $(count_marks) -eq 1 ]; then
-    mark 1
-else
-    clear_marks
-    mark 0
-fi
+case $(get_last_mark) in
+    _alt0)
+        mark 1
+        ;;
+    _alt1)
+        mark 0
+        ;;
+    *)
+        clear_marks
+        mark 0
+        ;;
+esac
