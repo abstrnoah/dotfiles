@@ -133,7 +133,7 @@ mode "border" {
 bar {
     status_command i3status
     mode dock
-    position top
+    position bottom
     tray_output primary
     tray_padding 0
     colors {
