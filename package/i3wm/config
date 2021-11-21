@@ -104,6 +104,9 @@ exec_always $home/.dotfiles/share/start-xflux.sh
 # Start the composition manager.
 exec --no-startup-id compton -b -CG
 
+# Focus follows mouse.
+focus_follows_mouse yes
+
 # THEME {{{1
 
 # Wallpaper.
