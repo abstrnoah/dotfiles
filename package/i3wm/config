@@ -55,7 +55,7 @@ set $gap_interval 2
 
 # Dimensions.
 set $default_border 1
-set $base_gap 3
+set $base_gap 7
 
 # Solarized colours.
 set $base03  #002b36
@@ -120,7 +120,6 @@ client.unfocused        $base03 $base03 $base01 $base01   $base03
 # Gaps, *snazzy*.
 for_window [class=".*"] border pixel $default_border
 gaps inner $base_gap
-gaps outer $base_gap
 smart_gaps on
 mode "border" {
     bindsym $esc border pixel $default_border; mode "default"
