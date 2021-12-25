@@ -25,6 +25,6 @@ _lock() {
         --nofork
 }
 
-_pre_lock \
-    && _lock
+_pre_lock
+_lock
 _post_lock

@@ -34,10 +34,14 @@ case ${_command} in
         i3-msg restart
         ;;
     notify_pause)
-        killall -SIGUSR1 dunst
+        if pgrep -xc dunst; then
+            killall -q -SIGUSR1 dunst
+        fi
         ;;
     notify_resume)
-        killall -SIGUSR2 dunst
+        if pgrep -xc dunst; then
+            killall -q -SIGUSR2 dunst
+        fi
         ;;
     *)
         exit -1
