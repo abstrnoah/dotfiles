@@ -6,7 +6,6 @@ export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}"
 export EDITOR=vim
 export VISUAL=vim
 export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
-export QT_XCB_GL_INTEGRATION=none
 
 # Make locales work with Nix.
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
@@ -15,7 +14,7 @@ export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs.
-export AN_NIXPKGS="https://github.com/NixOS/nixpkgs/archive/53bd44342d22b53677b245c15de6e8f8a37718d0.tar.gz"
+export AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/7dfb03161ac23b599b52e552b333132f31acc991.tar.gz"
 # NIX_PATH gets overridden by Nix's site-wide profile, which is sourced from
 # '/etc/profile', which is sourced from 'zprofile'. For mitigation, see the
 # 'nix-env' alias below.
