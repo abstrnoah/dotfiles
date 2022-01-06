@@ -34,6 +34,12 @@ map Q <nop>
 " location. See 'help vib'.
 nnoremap <space>. m[vib:<c-u>sleep 350m<cr>`[
 
+" Move by mark.
+" Move mark TO here.
+nnoremap <expr> <leader>m ":'".nr2char(getchar())." m .<cr>"
+" Move here TO mark.
+nnoremap <expr> <leader>M ":. m '".nr2char(getchar())."<cr>"
+
 " EXPLORE {{{1
 execute "nnoremap" g:br_leader_nav."m" ":TagbarOpenAutoClose<CR>"
 execute "nnoremap" g:br_leader_nav."n" ":call brumal#main#nerdtree()<cr>"
