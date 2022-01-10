@@ -1,0 +1,3 @@
+[ general ]
+
+editor = "/home/abstractednoah/.nix-profile/bin/vim %s"

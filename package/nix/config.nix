@@ -39,6 +39,7 @@
         tmuxinator
         toilet
         tree
+        tudu
         vimHugeX
         visidata
         weechat
