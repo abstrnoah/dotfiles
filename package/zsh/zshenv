@@ -15,6 +15,7 @@ export JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs.
 export AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/7dfb03161ac23b599b52e552b333132f31acc991.tar.gz"
+export AN_NIXPKGS_LOCAL="${HOME}/repository/know/expore/cs/nixpkgs"
 # NIX_PATH gets overridden by Nix's site-wide profile, which is sourced from
 # '/etc/profile', which is sourced from 'zprofile'. For mitigation, see the
 # 'nix-env' alias below.
