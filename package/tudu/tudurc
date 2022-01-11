@@ -4,11 +4,11 @@ sort_order = dlct
 
 [ theme ]
 columns = title,priority,category,deadline
-category_length = 12
+category_length = 10
 
 row = (help)
-row = 1(blank,vpipe,30|blank)
-row = 80%(tree,vpipe,30|schedule)
+row = 1(blank,vpipe,35|blank)
+row = 80%(tree,vpipe,35|schedule)
 row = (hpipe)
 row = (text)
 row = (info)
