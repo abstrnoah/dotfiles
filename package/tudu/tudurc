@@ -1,3 +1,5 @@
 [ general ]
 
 editor = "/home/abstractednoah/.nix-profile/bin/vim %s"
+
+sort_order = dlct
