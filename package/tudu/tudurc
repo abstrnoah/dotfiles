@@ -1,6 +1,12 @@
 [ general ]
 editor = "/home/abstractednoah/.nix-profile/bin/vim %s"
 sort_order = dlct
+days_warn = 7
+loop_move = yes
+bold_parent = no
+visual_tree = no
+hide_done = yes
+hide_percent = yes
 
 [ theme ]
 columns = title,priority,category,deadline
