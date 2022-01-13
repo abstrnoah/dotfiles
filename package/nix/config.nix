@@ -15,6 +15,7 @@
         black
         clojure
         ctags
+        djvu2pdf
         dmidecode
         fd
         fzf
