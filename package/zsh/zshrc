@@ -5,7 +5,7 @@ SAVEHIST=2000
 
 # config
 setopt appendhistory
-setopt autocd extendedglob nomatch notify no_beep
+setopt extendedglob nomatch notify no_beep
 setopt prompt_cr prompt_sp
 
 # env vars
