@@ -74,6 +74,7 @@ let g:br_plugs = {
     \ "tpope/vim-fireplace": [],
     \ "romainl/vim-qf": [],
     \ "tommcdo/vim-exchange": [],
+    \ "vim-scripts/utl.vim": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -107,6 +108,7 @@ let g:br_plugs_active = [
     \ "romainl/vim-qf",
     \ "tommcdo/vim-exchange",
     \ "Konfekt/FastFold",
+    \ "vim-scripts/utl.vim",
 \ ]
 
 " PLUGIN CONFIG {{{1

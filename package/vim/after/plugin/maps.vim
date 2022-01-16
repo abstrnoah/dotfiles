@@ -48,6 +48,10 @@ execute "nnoremap" g:br_leader_nav."b" ":CtrlPBuffer<cr>"
 execute "nnoremap" g:br_leader_nav."l" ":CtrlPLine<cr>"
 execute "nnoremap" g:br_leader_nav."t" ":CtrlPTag<cr>"
 
+" UTL <url:vimhelp:utl> {{{1
+nnoremap <leader><cr> :Utl<cr>
+xnoremap <leader><cr> :<c-u>Utl openLink visual<cr>
+
 " SPELL {{{1
 if has('syntax')
     nmap <leader>s :set spell!<cr>
