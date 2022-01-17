@@ -42,6 +42,7 @@ options.disp_pending = "⧗"
 options.color_default = ""
 options.color_key_col = "93"  # 93,94
 options.color_keystrokes = "81 cyan"
+options.color_hidden_col = "16"
 
 
 # Keybindings.
