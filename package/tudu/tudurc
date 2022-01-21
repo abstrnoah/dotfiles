@@ -10,8 +10,8 @@ hide_done = yes
 hide_percent = yes
 
 [ theme ]
-columns = title,priority,category,deadline
-category_length = 10
+columns = title,category,deadline
+category_length = 15
 
 row = (help)
 row = 1(blank,vpipe,35|blank)
