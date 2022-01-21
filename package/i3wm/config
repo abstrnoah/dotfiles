@@ -196,7 +196,7 @@ bindsym $mod+$alt+F bar mode toggle
 bindsym $mod+$colon exec $scripts/rofi.sh -show run
 
 # Rofi file browser.
-bindsym $mod+slash exec $scripts/rofi.sh -show file-browser
+bindsym $mod+slash exec $scripts/rofi.sh -show filebrowser
 
 # Terminal.
 bindsym $mod+$enter exec i3-sensible-terminal
