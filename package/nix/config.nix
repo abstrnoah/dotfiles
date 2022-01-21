@@ -65,6 +65,7 @@
         xournalpp
         xrandr-invert-colors
         zathura
+        # tdesktop # telegram-desktop, seems to be out of date atm.
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
