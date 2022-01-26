@@ -153,6 +153,10 @@ bar {
 
 
 for_window [class="(?i)^spotify$"] move window to workspace $ws_audio
+
+# Auto-float clojure incanter 'view' popups.
+for_window [title="^Incanter Table$"] floating enable
+
 # for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
 # for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
 # for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
