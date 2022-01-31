@@ -14,7 +14,7 @@
       paths = [
         black
         clojure
-        ctags
+        universal-ctags
         djvu2pdf
         dmidecode
         fd
