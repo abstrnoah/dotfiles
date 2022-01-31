@@ -189,6 +189,7 @@ let g:vim_markdown_conceal_code_blocks = 0
 let g:indentLine_color_term = "darkgray"
 let g:indentLine_char = "┊"
 let g:indentLine_concealcursor = ""
+let g:indentLine_fileTypeExclude = ["clojure"]
 
 " LION {{{2
 let g:lion_squeeze_spaces = 1
