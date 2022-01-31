@@ -77,6 +77,7 @@ let g:br_plugs = {
     \ "tommcdo/vim-exchange": [],
     \ "vim-scripts/utl.vim": [],
     \ "vim-scripts/paredit.vim": [],
+    \ "abstractednoah/paredit.vim": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -111,7 +112,7 @@ let g:br_plugs_active = [
     \ "tommcdo/vim-exchange",
     \ "Konfekt/FastFold",
     \ "vim-scripts/utl.vim",
-    \ "vim-scripts/paredit.vim",
+    \ "abstractednoah/paredit.vim",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -258,6 +259,7 @@ let g:pad#maps#newsilent = ""
 
 " PAREDIT {{{2
 let g:paredit_leader = g:br_leader_sexp
+let g:paredit_shortmaps = 0
 
 " FIREPLACE {{{2
 let g:fireplace_eval_opts = {
