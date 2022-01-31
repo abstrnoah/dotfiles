@@ -75,6 +75,7 @@ let g:br_plugs = {
     \ "romainl/vim-qf": [],
     \ "tommcdo/vim-exchange": [],
     \ "vim-scripts/utl.vim": [],
+    \ "vim-scripts/paredit.vim": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -109,6 +110,7 @@ let g:br_plugs_active = [
     \ "tommcdo/vim-exchange",
     \ "Konfekt/FastFold",
     \ "vim-scripts/utl.vim",
+    \ "vim-scripts/paredit.vim",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -251,6 +253,9 @@ let g:pad#maps#new = g:br_leader_note . "c"
 let g:pad#maps#search = g:br_leader_note . "f"
 let g:pad#maps#incsearch = "F"
 let g:pad#maps#newsilent = ""
+
+" PAREDIT {{{2
+let g:paredit_leader = g:br_leader_sexp
 
 " BUILTIN PLUGINS {{{1
 
