@@ -72,6 +72,7 @@ let g:br_plugs = {
         \ }
     \ ],
     \ "tpope/vim-fireplace": [],
+    \ "abstractednoah/vim-fireplace": [],
     \ "romainl/vim-qf": [],
     \ "tommcdo/vim-exchange": [],
     \ "vim-scripts/utl.vim": [],
@@ -105,7 +106,7 @@ let g:br_plugs_active = [
     \ "abstractednoah/vim-colors-solarized",
     \ "vimwiki/vimwiki",
     \ "junegunn/vim-plug",
-    \ "tpope/vim-fireplace",
+    \ "abstractednoah/vim-fireplace",
     \ "romainl/vim-qf",
     \ "tommcdo/vim-exchange",
     \ "Konfekt/FastFold",
@@ -256,6 +257,11 @@ let g:pad#maps#newsilent = ""
 
 " PAREDIT {{{2
 let g:paredit_leader = g:br_leader_sexp
+
+" FIREPLACE {{{2
+let g:fireplace_eval_opts = {
+    \ "nrepl.middleware.print/quota": 5000,
+\ }
 
 " BUILTIN PLUGINS {{{1
 
