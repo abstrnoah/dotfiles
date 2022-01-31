@@ -32,7 +32,7 @@ map Q <nop>
 
 " Briefly visually highlight "block" where the cursor is, return to original
 " location. See 'help vib'.
-nnoremap <space>. m[vib:<c-u>sleep 350m<cr>`[
+" nnoremap <leader>. m[vib:<c-u>sleep 350m<cr>`[
 
 " Move by mark.
 " Move mark TO here.
