@@ -78,6 +78,8 @@ let g:br_plugs = {
     \ "vim-scripts/utl.vim": [],
     \ "vim-scripts/paredit.vim": [],
     \ "abstractednoah/paredit.vim": [],
+    \ "junegunn/gv.vim": [],
+    \ "junegunn/vim-peekaboo": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -113,6 +115,8 @@ let g:br_plugs_active = [
     \ "Konfekt/FastFold",
     \ "vim-scripts/utl.vim",
     \ "abstractednoah/paredit.vim",
+    \ "junegunn/gv.vim",
+    \ "junegunn/vim-peekaboo",
 \ ]
 
 " PLUGIN CONFIG {{{1
