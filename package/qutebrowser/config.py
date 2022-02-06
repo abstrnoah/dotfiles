@@ -36,6 +36,10 @@ c.tabs.last_close = "close"
 # Autoplay sucks.
 c.content.autoplay = False
 
+# Status.
+c.statusbar.show = "in-mode"
+c.tabs.show = "multiple"
+
 # DARKMODE {{{1
 
 # Value to use for `prefers-color-scheme:` for websites.
@@ -147,3 +151,6 @@ config.bind("gD", "set-cmd-text -s :tab-give")
 
 # Clear messages on the fly.
 config.bind("cm", "clear-messages")
+
+# Toggle status.
+config.bind(_leader + "f", "config-cycle -t statusbar.show in-mode always")
