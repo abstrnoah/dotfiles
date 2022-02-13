@@ -8,7 +8,7 @@ let g:vimwiki_list = [
         \ "path": "~/repository/notes/vimwiki/",
         \ "name": "notes",
         \ "auto_toc": 1,
-        \ "index": "root",
+        \ "index": "scratch",
         \ "links_space_char": "_",
         \ "diary_rel_path": "dates/",
         \ "diary_index": "root",
