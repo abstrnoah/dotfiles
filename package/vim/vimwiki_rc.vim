@@ -38,10 +38,3 @@ let g:vimwiki_auto_header = 1
 let g:vimwiki_dir_link = "root"
 let g:vimwiki_ext2syntax = {}
 let g:vimwiki_global_ext = 1
-
-
-" COMMANDS {{{1
-
-command VimwikiBrReadTemporal read !date '+:temporal-\%Y-\%m-\%d-\%H-\%M-\%Z:'
-
-command VWT VimwikiBrReadTemporal
