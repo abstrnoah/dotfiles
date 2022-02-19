@@ -230,10 +230,11 @@ let g:vimtex_indent_on_ampersands = 0
 let g:vimtex_indent_tikz_commands = 0
 " Disable a few conceals: 'fancy' conceals \items in a silly looking way;
 " 'styles' is unsatisfactory when we have a multiline block of styled text.
-let g:vimtex_syntax_conceal = {
-    \ 'fancy': 0,
-    \ 'styles': 0,
-\ }
+let g:vimtex_syntax_conceal_disable = 1
+" let g:vimtex_syntax_conceal = {
+"     \ 'fancy': 0,
+"     \ 'styles': 0,
+" \ }
 " Configure the toc.
 let g:vimtex_toc_config = {"layers": ['content'], "show_help": 0}
 
