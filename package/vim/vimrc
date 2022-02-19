@@ -138,6 +138,7 @@ let maplocalleader = " "
 " ABBREVIATIONS {{{1
 "
 inoreabbrev -[] - [ ]
+inoreabbrev *[] * [ ]
 
 
 " COMMANDS {{{1
