@@ -14,7 +14,6 @@
       paths = [
         black
         clojure
-        universal-ctags
         djvu2pdf
         dmidecode
         fd
@@ -22,6 +21,7 @@
         git
         glibcLocales
         htop
+        img2pdf
         jdk
         jq
         maven
@@ -41,6 +41,7 @@
         toilet
         tree
         tudu
+        universal-ctags
         vimHugeX
         visidata
         weechat
