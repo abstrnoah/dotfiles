@@ -15,7 +15,7 @@ category_length = 15
 
 row = (help)
 row = 1(blank,vpipe,35|blank)
-row = 95%(tree,vpipe,35|schedule)
+row = 90%(tree,vpipe,35|schedule)
 row = (hpipe)
 row = (text)
 row = (info)
