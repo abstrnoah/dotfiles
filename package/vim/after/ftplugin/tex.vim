@@ -1,3 +1,5 @@
+let g:tex_conceal = "agm"
+
 " OPTIONS {{{1
 " Format lists.
 " We `-=` and `+=` each formatlistpat to avoid duplication because for some
