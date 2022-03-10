@@ -118,3 +118,9 @@ nmap <leader>5      <Plug>VimspectorStepOver
 nmap <leader>6      <Plug>VimspectorStepInto
 nmap <leader><c-6>  <Plug>VimspectorStepOut
 nmap <leader>0      <Plug>VimspectorRunToCursor
+
+" Window resizing.
+execute "nnoremap" "<c-w><c-h>" ":vertical resize -".g:br_resize_width."<cr>"
+execute "nnoremap" "<c-w><c-l>" ":vertical resize +".g:br_resize_width."<cr>"
+execute "nnoremap" "<c-w><c-j>" ":resize -".g:br_resize_height."<cr>"
+execute "nnoremap" "<c-w><c-k>" ":resize +".g:br_resize_height."<cr>"

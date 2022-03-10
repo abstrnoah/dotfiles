@@ -41,6 +41,10 @@ let g:br_leader_sexp = "<leader>."
 " Ftdetect *.m as mma rather than matlab.
 let g:filetype_m = "mma"
 
+" Resize increments.
+let g:br_resize_width = 10
+let g:br_resize_height = 5
+
 
 " OPTIONS {{{1
 " Roughly alphabetical.
