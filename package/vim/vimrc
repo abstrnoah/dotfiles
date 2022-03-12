@@ -29,6 +29,7 @@ set secure  " Probably unnecessary, but just in case.
 " 'plugrc.vim'.
 
 let g:br_colorcolumn = '+1'  " Default color column offset.
+
 " Leader key for navigation-type operations such as fuzzy find files, etc.
 let g:br_leader_nav = "<leader>e"
 " For wiki aka note operations.
@@ -37,6 +38,8 @@ let g:br_leader_note = "<leader>n"
 let g:br_leader_bang = "<leader>!"
 " For s-expr e.g. lisps.
 let g:br_leader_sexp = "<leader>."
+" For command-mode shortcut.
+let g:br_leader_command = "<leader>:"
 
 " Ftdetect *.m as mma rather than matlab.
 let g:filetype_m = "mma"
