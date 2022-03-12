@@ -91,5 +91,5 @@ autoload -U compinit && compinit
 # That is, what follows is our "enter hook".
 if [ -z ${TMUX} ] && command -v tmuxinator &> /dev/null; then # Not in tmux.
     # So start tmux.
-    tmuxinator main
+    T
 fi
