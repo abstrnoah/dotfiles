@@ -67,6 +67,10 @@ nnoremap <leader>? :SB<space>
 execute "nnoremap" g:br_leader_bang."/" ":S!<space>"
 execute "nnoremap" g:br_leader_bang."?" ":SB!<space>"
 
+" Original newlines.
+execute "nnoremap" g:br_leader_bang."o" "o"
+execute "nnoremap" g:br_leader_bang."O" "O"
+
 " MOTIONS {{{1
 if exists('g:loaded_sneak_plugin')
     map f <Plug>Sneak_f
