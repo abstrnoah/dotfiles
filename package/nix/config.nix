@@ -34,6 +34,7 @@
         ranger
         rlwrap
         silver-searcher
+        sl
         tectonic
         textql
         tmux
