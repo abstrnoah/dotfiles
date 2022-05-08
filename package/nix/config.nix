@@ -14,6 +14,7 @@
       paths = [
         black
         clojure
+        cowsay
         djvu2pdf
         dmidecode
         fd
