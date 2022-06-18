@@ -224,8 +224,7 @@ let g:vimtex_imaps_enabled = 0
 let g:vimtex_include_search_enabled = 0
 " Everything should be indented, even 'document'.
 let g:vimtex_indent_ignored_envs = ['seems an empty list breaks vimtex indent']
-" EXPERIMENTAL:
-let g:vimtex_indent_delims = {'open': ['{', '['], 'close': ['}', ']']}
+let g:vimtex_indent_delims = {'open': ['{',], 'close': ['}',]}
 let g:vimtex_indent_on_ampersands = 0
 let g:vimtex_indent_tikz_commands = 0
 " Disable a few conceals: 'fancy' conceals \items in a silly looking way;
