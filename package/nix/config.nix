@@ -56,14 +56,14 @@
     clientPackagesGui = pkgs.buildEnv {
       name = "clientPackagesGui";
       paths = [
-        jabref
+        # jabref # Broke nixos 21.11 -> 22.05.
         mpv
         okular
         qutebrowser
         rofi
         signal-desktop
         spotify
-        torbrowser # Audio not working for tor.
+        tor-browser-bundle-bin # Audio not working for tor.
         xflux
         xournalpp
         xrandr-invert-colors

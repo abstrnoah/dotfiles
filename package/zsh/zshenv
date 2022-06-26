@@ -2,7 +2,7 @@
 # Global environment
 #
 
-export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/opt/jabref/bin"
 export EDITOR=vim
 export VISUAL=vim
 export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
@@ -14,7 +14,7 @@ export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs.
-export AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/a2a07f0863657fc47aab856ac669ac43acc16a02.tar.gz"
+export AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/4678d3c35efc9830bed17c3693ea4d6a588e64ff.tar.gz"
 export AN_NIXPKGS_LOCAL="${HOME}/repository/know/explore/cs/nixpkgs"
 # NIX_PATH gets overridden by Nix's site-wide profile, which is sourced from
 # '/etc/profile', which is sourced from 'zprofile'. For mitigation, see the
