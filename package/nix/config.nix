@@ -12,9 +12,13 @@
     clientPackages = pkgs.buildEnv {
       name = "clientPackages";
       paths = [
+        bat
+        bat-extras.batdiff
+        bat-extras.batman
         black
         clojure
         cowsay
+        delta
         djvu2pdf
         dmidecode
         fd
@@ -28,6 +32,7 @@
         maven
         nix-zsh-completions
         nodejs
+        nodePackages.insect
         pdfgrep
         pfetch
         php
