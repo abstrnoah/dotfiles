@@ -84,8 +84,7 @@ if command -v bat &> /dev/null; then
         alias man='batman'
     fi
     if command -v batwatch &> /dev/null; then
-        gitwatch()
-        {
+        gitwatch() {
             local _num_commits=$(($(tput lines) - 5))
             batwatch \
                 --plain -lgitlog \
@@ -94,7 +93,7 @@ if command -v bat &> /dev/null; then
                 --oneline --decorate --graph --all \
                 -n ${_num_commits} \
                 "${@}"
-            }
+        }
     fi
 fi
 
