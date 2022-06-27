@@ -80,9 +80,17 @@ fi
 if command -v bat &> /dev/null; then
     alias cat='bat --paging=never'
     alias bathelp='bat --plain --language help'
-fi
-if command -v batman &> /dev/null; then
-    alias man='batman'
+    if command -v batman &> /dev/null; then
+        alias man='batman'
+    fi
+    if command -v batwatch &> /dev/null; then
+        gitwatch()
+        {
+            local _num_commits=$(($(tput lines) - 5))
+            batwatch -lgitlog \
+                -x git log --oneline --decorate --all -n ${_num_commits} "${@}"
+            }
+    fi
 fi
 
 # mux

@@ -15,6 +15,7 @@
         bat
         bat-extras.batdiff
         bat-extras.batman
+        bat-extras.batwatch
         black
         clojure
         cowsay
