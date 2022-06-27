@@ -71,9 +71,48 @@ function O() { # O <path to xdg-open-able file>
 # Don't ssh from tmux, that's dangerous!
 alias ssh='[ -z ${TMUX} ] && ssh'
 
-# Fuzzy.
-if command -v fzf &> /dev/null && command -v br-fd-git &> /dev/null; then
-    fzf-repo() { br-fd-git -r ~/repository | fzf }
+_br_fd_git_roots() { # Find git roots below $1.
+    fd -H -t d '^\.git$' . "${1:-.}" | sed 's:/\.git$::'
+}
+
+gomux() { # Init or attach tmux with start directory $1.
+    local start_directory="$(readlink -f "${1}")"
+    local session_name="$(basename "${start_directory:-.}")"
+    tmux has-session -t "${session_name}" 2> /dev/null || {
+        tmux new-session -d -s "${session_name}" -c "${start_directory}"
+    }
+    if [[ -z "${TMUX}" ]]; then
+        tmux attach -t "${session_name}"
+    else
+        tmux switch-client -t "${session_name}"
+    fi
+}
+
+# fzf
+source ~/.nix-profile/share/fzf/completion.zsh
+source ~/.nix-profile/share/fzf/key-bindings.zsh
+bindkey -M vicmd -r '\ec'
+bindkey -M viins -r '\ec'
+bindkey -M vicmd '^G' fzf-cd-widget
+bindkey -M viins '^G' fzf-cd-widget
+export BR_FZF_BAT='bat --style=numbers --color=always --line-range :500 {}'
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS='--multi --border --reverse'
+export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+export FZF_CTRL_T_OPTS="--preview '${BR_FZF_BAT}' --border"
+export FZF_CTRL_R_OPTS='--border --reverse'
+export FZF_ALT_C_OPTS='--border'
+export FZF_COMPLETION_OPTS='--border --height 60%'
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+if command -v fzf &> /dev/null; then
+    if command -v br-fd-git &> /dev/null; then
+        fzf-repo() { br-fd-git -r ~/repository | fzf }
+    fi
 fi
 
 # bat
