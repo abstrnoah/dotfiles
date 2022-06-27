@@ -87,8 +87,13 @@ if command -v bat &> /dev/null; then
         gitwatch()
         {
             local _num_commits=$(($(tput lines) - 5))
-            batwatch -lgitlog \
-                -x git log --oneline --decorate --all -n ${_num_commits} "${@}"
+            batwatch \
+                --plain -lgitlog \
+                -x \
+                git log \
+                --oneline --decorate --graph --all \
+                -n ${_num_commits} \
+                "${@}"
             }
     fi
 fi
