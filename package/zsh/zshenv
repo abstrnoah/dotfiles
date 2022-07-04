@@ -29,3 +29,5 @@ export MOZ_USE_XINPUT2=1
 #     alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
 #     alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
 # fi
+
+export GTK_THEME=Adwaita:dark
