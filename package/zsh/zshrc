@@ -1,8 +1,41 @@
 # zshrc
 
+# SETUP {{{1
+BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
+test -d "${BR_DOTFILES}" || echo "Dotfiles not found: ${BR_DOTFILES}" >&2
+source "${BR_DOTFILES}/share/utilities.zsh"
+
 # EXPORTED ENVIRONMENT {{{1
 export KEYTIMEOUT=1
+
 export BR_REPOROOT="${HOME}/repository"
+
+# FZF {{{2
+# The way we employ this variable, it should be applicable to all uses of fzf.
+export FZF_DEFAULT_OPTS='--multi --border --reverse'
+
+_br_command_exists bat && {
+    export BR_FZF_VIEWER='bat --style=numbers --color=always --line-range :500 {}'
+} || {
+    export BR_FZF_VIEWER='cat {}'
+}
+
+# If fd is missing, then fzf should use its own default (probably find).
+_br_command_exists fd && {
+    export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+}
+
+# In addition to controlling the fzf-provided CTRL_T widget, this should serve
+# as the default configuration for any file-related fzf.
+export FZF_CTRL_T_OPTS="${FZF_DEFAULT_OPTS} --preview '${BR_FZF_BAT}'"
+
+# Ditto, for directory-related fzf.
+export FZF_ALT_C_OPTS="${FZF_DEFAULT_OPTS}"
+
+export FZF_CTRL_R_OPTS="${FZF_DEFAULT_OPTS}"
+
+export FZF_COMPLETION_OPTS="${FZF_DEFAULT_OPTS} --height 60%"
 
 # GLOBALS {{{1
 BR_PROMPTCHAR=🢒
@@ -17,41 +50,25 @@ PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
 PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
 
 # OPTIONS {{{1
-setopt appendhistory
-setopt extendedglob nomatch notify no_beep
-setopt prompt_cr prompt_sp
+setopt append_history
+setopt extended_glob
+setopt no_beep
+setopt no_match
 setopt no_multios
-
-# KEY BINDINGS {{{1
-bindkey -v
-bindkey -v "^r" history-incremental-pattern-search-backward
-bindkey -v "^ " push-line-or-edit
-bindkey -a "^ " push-line-or-edit
+setopt notify
+setopt prompt_cr prompt_sp
 
 # COMPLETIONS {{{1
-# New completions, 'zshcompsys'.
+# Zsh's new completions, 'zshcompsys'.
 zstyle :compinstall filename '/home/abstractednoah/.zshrc'
 autoload -Uz compinit
 compinit
-source ~/.dotfiles/package/zsh/comp-mux.zsh
+source "${BR_DOTFILES}/package/zsh/comp-mux.zsh"
+
+# Fzf completions.
+source ~/.nix-profile/share/fzf/completion.zsh
 
 # FUNCTIONS {{{1
-_br_command_exists () { # commands-to-check...
-    while test "${#}" -gt 0; do
-        command -v "${1}" &>/dev/null || return 1
-        shift
-    done
-}
-
-_br_oops() { # message
-    echo "${1}" 1>&2
-    return 1
-}
-
-_br_require() { # required-command
-    _br_command_exists "${1}" || _br_oops "Required command not found: ${1}"
-}
-
 _br_command_exists tmux && {
     _br_reload_tmux () {
         _br_require tmux
@@ -153,48 +170,37 @@ _br_list_git_roots() {
 }
 
 _br_list_paths() {
-    # TODO
+    fd --hidden --follow --exclude ".git" . "${1}"
 }
 
 _br_list_files() {
-    # TODO
+    fd --hidden --follow --exclude ".git" --type f . "${1}"
 }
 
 _br_list_dirs() {
-    # TODO
+    fd --hidden --follow --exclude ".git" --type d . "$1"
 }
 
+alias _fzf_compgen_path='_br_list_paths'
+alias _fzf_compgen_dir='_br_list_dirs'
 
+# KEY BINDINGS {{{1
 
-# EXPERIMENTAL {{{1
-# TODO
-
-# fzf
-source ~/.nix-profile/share/fzf/completion.zsh
-source ~/.nix-profile/share/fzf/key-bindings.zsh
-bindkey -M vicmd -r '\ec'
-bindkey -M viins -r '\ec'
-bindkey -M vicmd '^G' fzf-cd-widget
-bindkey -M viins '^G' fzf-cd-widget
-export BR_FZF_BAT='bat --style=numbers --color=always --line-range :500 {}'
-export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS='--multi --border --reverse'
-export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
-export FZF_CTRL_T_OPTS="--preview '${BR_FZF_BAT}' --border"
-export FZF_CTRL_R_OPTS='--border --reverse'
-export FZF_ALT_C_OPTS='--border'
-export FZF_COMPLETION_OPTS='--border --height 60%'
-_fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
+_br_command_exists fzf && {
+    source ~/.nix-profile/share/fzf/key-bindings.zsh
+    bindkey -M viins -r '\ec'
+    bindkey -M vicmd -r '\ec'
+    bindkey -M viins '^G' fzf-cd-widget
+    bindkey -M vicmd '^G' fzf-cd-widget
+} || {
+    bindkey -M viins "^r" history-incremental-pattern-search-backward
 }
-_fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
-}
-if command -v fzf &> /dev/null; then
-    if command -v br-fd-git &> /dev/null; then
-        fzf-repo() { br-fd-git -r ~/repository | fzf }
-    fi
-fi
+
+# Select'viins' and link to 'main' as default (see zshzle(1)).
+bindkey -v
+
+bindkey -M viins "^ " push-line-or-edit
+bindkey -M vicmd "^ " push-line-or-edit
 
 # ENTER HOOK {{{1
 test -z "${TMUX}" && _br_command_exists _br_tmux_go_last && {

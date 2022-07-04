@@ -1,6 +1,7 @@
 # zshenv
 
 export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/opt/jabref/bin"
+export BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
 export EDITOR=vim
 export VISUAL=vim
 export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
