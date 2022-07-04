@@ -178,3 +178,6 @@ fi
 test -z "${TMUX}" && _br_command_exists _br_tmux_go_last && {
     _br_tmux_go_last
 }
+
+# MODELINE {{{1
+# vim:ft=zsh:fdm=marker:fmr={{{,}}}:fen:tw=80:et:ts=4:sts=4:sw=0:
