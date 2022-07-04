@@ -18,10 +18,11 @@ bindkey -v "^r" history-incremental-pattern-search-backward
 bindkey -v "^ " push-line-or-edit
 bindkey -a "^ " push-line-or-edit
 
-# zstyle
+# completions (new completions, 'zshcompsys')
 zstyle :compinstall filename '/home/abstractednoah/.zshrc'
 autoload -Uz compinit
 compinit
+source ~/.dotfiles/package/zsh/comp-mux.zsh
 
 # prompt
 BR_PROMPTCHAR=🢒
@@ -137,15 +138,6 @@ if command -v bat &> /dev/null; then
 fi
 
 # mux
-. ~/.dotfiles/package/zsh/comp-mux.zsh
-
-# nix
-if [ -d "~/.nix-profile/" ]; then # We do have nix-profile.
-    source ~/.nix-profile/share/zsh/plugins/nix/nix-zsh-completions.plugin.zsh
-    # TODO This might not be the best way to do this...
-    fpath=("${HOME}/.nix-profile/share/zsh/site-functions/" ${fpath})
-fi
-autoload -U compinit && compinit
 
 # MAIN
 # That is, what follows is our "enter hook".
