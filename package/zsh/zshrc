@@ -107,6 +107,7 @@ br_open () { # <path to xdg-open-able file>
     # Suffix '&!' means 'disown' in zsh.
     xdg-open "${1}" &!
 }
+alias O='br_open'
 
 ssh() {
     test -z "${TMUX}" || _br_oops "Don't ssh from tmux, fool!" || return
@@ -142,10 +143,31 @@ _br_command_exists bat && {
     }
 }
 
-# DEPRECATED TODO {{{1
-_br_fd_git_roots() { # Find git roots below $1.
-    fd -H -t d '^\.git$' . "${1:-.}" | sed 's:/\.git$::'
+br_fd() {
+    fd --hidden --follow --exclude ".git" "${@}"
 }
+
+_br_list_git_roots() {
+    # TODO handle bare repositories.
+    fd --hidden --prune --type d '^\.git$' . "${1:-.}" | sed 's:/\.git$::'
+}
+
+_br_list_paths() {
+    # TODO
+}
+
+_br_list_files() {
+    # TODO
+}
+
+_br_list_dirs() {
+    # TODO
+}
+
+
+
+# EXPERIMENTAL {{{1
+# TODO
 
 # fzf
 source ~/.nix-profile/share/fzf/completion.zsh
