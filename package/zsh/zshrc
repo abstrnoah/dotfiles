@@ -4,7 +4,7 @@
 export KEYTIMEOUT=1
 export BR_REPOROOT="${HOME}/repository"
 
-# VARIABLES {{{1
+# GLOBALS {{{1
 BR_PROMPTCHAR=🢒
 NL=$'\n'
 
