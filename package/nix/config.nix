@@ -31,7 +31,6 @@
         jdk
         jq
         maven
-        nix-zsh-completions
         nodejs
         nodePackages.insect
         pdfgrep
@@ -54,7 +53,7 @@
         visidata
         weechat
         yq-go
-        zsh
+        # zsh
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
