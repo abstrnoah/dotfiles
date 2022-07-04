@@ -1,6 +1,4 @@
-#
-# Global environment
-#
+# zshenv
 
 export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/opt/jabref/bin"
 export EDITOR=vim
@@ -21,25 +19,16 @@ export AN_NIXPKGS_LOCAL="${HOME}/repository/know/explore/cs/nixpkgs"
 # 'nix-env' alias below.
 # export NIX_PATH="an_nixpkgs=${AN_NIXPKGS}"
 
-#
-# App-specific environments
-#
+# Enable firefox touch screen scrolling.
+export MOZ_USE_XINPUT2=1
 
-# firefox: Enable touch screen scrolling.
-if command -v firefox &> /dev/null; then
-    alias firefox='MOZ_USE_XINPUT2=1 firefox'
-fi
-
-# xournalpp: Dark theme.
-if command -v xournalpp &> /dev/null; then
-    alias xournalpp='GTK_THEME=Adwaita:dark xournalpp'
-fi
-
-# maven: Fix Java version.
-if command -v mvn &> /dev/null; then
-    alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
-    alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
-fi
+# # maven: Fix Java version.
+# TODO These aliases shouldn't be necessary since JAVA_HOME is exported above,
+# but in that case I'm not sure why I had these lines lol.
+# if command -v mvn &> /dev/null; then
+#     alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
+#     alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
+# fi
 
 # Nix
 if command -v nix-env &> /dev/null; then
