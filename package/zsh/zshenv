@@ -8,7 +8,7 @@ export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
 # Make locales work with Nix.
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 
-# Fix Java version.
+# Use nix's Java.
 export JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs.
@@ -29,10 +29,3 @@ export MOZ_USE_XINPUT2=1
 #     alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
 #     alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
 # fi
-
-# Nix
-if command -v nix-env &> /dev/null; then
-    alias nix-env-defexpr=$(which nix-env)
-    # Yes, it is probably redundant to have both -I and -f.
-    alias nix-env='nix-env -I an_nixpkgs=${AN_NIXPKGS} -f ${AN_NIXPKGS}'
-fi

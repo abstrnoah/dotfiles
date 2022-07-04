@@ -1,92 +1,150 @@
-# history
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=2000
+# zshrc
 
-# config
-setopt appendhistory
-setopt extendedglob nomatch notify no_beep
-setopt prompt_cr prompt_sp
-
-# env vars
+# EXPORTED ENVIRONMENT {{{1
 export KEYTIMEOUT=1
 export BR_REPOROOT="${HOME}/repository"
 
-# zle
+# VARIABLES {{{1
+BR_PROMPTCHAR=🢒
+NL=$'\n'
+
+# PARAMETERS {{{1
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=2000
+PROMPT_0="%B${BR_PROMPTCHAR}%b "
+PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
+PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
+
+# OPTIONS {{{1
+setopt appendhistory
+setopt extendedglob nomatch notify no_beep
+setopt prompt_cr prompt_sp
+setopt no_multios
+
+# KEY BINDINGS {{{1
 bindkey -v
 bindkey -v "^r" history-incremental-pattern-search-backward
 bindkey -v "^ " push-line-or-edit
 bindkey -a "^ " push-line-or-edit
 
-# completions (new completions, 'zshcompsys')
+# COMPLETIONS {{{1
+# New completions, 'zshcompsys'.
 zstyle :compinstall filename '/home/abstractednoah/.zshrc'
 autoload -Uz compinit
 compinit
 source ~/.dotfiles/package/zsh/comp-mux.zsh
 
-# prompt
-BR_PROMPTCHAR=🢒
-PROMPT_0="%B${BR_PROMPTCHAR}%b "
-PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
-NL=$'\n'
-PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
-
-# ALIAS
-# Yes, I know that aliases are supposed to be bad. But aliases for simple
-# abbreviations allow the tmux window-renaming hooks above to get the actual
-# name of the command; with functions, the preexec() hook can't get the actual
-# command name (without excessive effort).
-alias reload-zsh='. ~/.zshrc'
-if command -v tmux &> /dev/null; then
-    alias reload-tmux='tmux source-file ~/.tmux.conf'
-fi
-alias ll='ls -alF'
-if command -v xclip &> /dev/null; then
-    alias Y='xclip -selection clipboard'
-    alias P='xclip -selection clipboard -o'
-fi
-if command -v tmux &> /dev/null && command -v tmuxinator &> /dev/null; then
-    alias T='tmux a >&2 2>/dev/null || tmuxinator main'
-fi
-if command -v ranger &> /dev/null; then
-    alias R='ranger'
-fi
-if command -v vim &> /dev/null; then
-    alias v='vim'
-fi
-if command -v git &> /dev/null; then
-    alias g='git'
-fi
-if command -v curl &> /dev/null; then
-    alias wttr='curl "wttr.in/?mF&format=4"'
-fi
-if command -v nix-env &> /dev/null; then
-    # Note that 'nix-env' is aliased in 'zshenv' with pinned nixpkgs.
-    alias reload-nix-packages='nix-env -v -riA'
-fi
-function O() { # O <path to xdg-open-able file>
-    local _path="${1}"
-    # Suffix '&!' means 'disown' in zsh.
-    xdg-open "${_path}" &!
+# FUNCTIONS {{{1
+_br_command_exists () { # commands-to-check...
+    while test "${#}" -gt 0; do
+        command -v "${1}" &>/dev/null || return 1
+        shift
+    done
 }
-# Don't ssh from tmux, that's dangerous!
-alias ssh='[ -z ${TMUX} ] && ssh'
 
+_br_oops() { # message
+    echo "${1}" 1>&2
+    return 1
+}
+
+_br_require() { # required-command
+    _br_command_exists "${1}" || _br_oops "Required command not found: ${1}"
+}
+
+_br_command_exists tmux && {
+    _br_reload_tmux () {
+        _br_require tmux
+        tmux source-file ~/.tmux.conf
+    }
+}
+
+_br_command_exists xclip && {
+    Y() {
+        xclip -selection clipboard
+    }
+
+    P() {
+        xclip -selection clipboard -o
+    }
+}
+
+_br_command_exists tmux tmuxinator && {
+    _br_tmux_go_last() {
+        tmux a >&2 2>/dev/null || tmuxinator main
+    }
+    alias T='_br_tmux_go_last'
+
+    gomux() { # Init or attach tmux with start directory $1.
+        local start_directory="$(readlink -f "${1}")"
+        local session_name="$(basename "${start_directory:-.}")"
+        tmux has-session -t "${session_name}" 2> /dev/null || {
+            tmux new-session -d -s "${session_name}" -c "${start_directory}"
+        }
+        if test -z "${TMUX}"; then
+            tmux attach -t "${session_name}"
+        else
+            tmux switch-client -t "${session_name}"
+        fi
+    }
+}
+
+_br_command_exists nix-env && {
+    br_nix_env() {
+        # TODO Yes, it seems redundant to have both -I and -f. But there
+        # was some reason important reason to have both... the solution is to
+        # just learn to grok nix lol.
+        # TODO AN_NIXPKGS -> BR_NIXPKGS or just NIXPKGS
+        nix-env -I an_nixpkgs="${AN_NIXPKGS}" -f "${AN_NIXPKGS}" "${@}"
+    }
+
+    br_reload_nix_packages() {
+        nix-env -v -riA "${@}"
+    }
+}
+
+br_open () { # <path to xdg-open-able file>
+    # Suffix '&!' means 'disown' in zsh.
+    xdg-open "${1}" &!
+}
+
+ssh() {
+    test -z "${TMUX}" || _br_oops "Don't ssh from tmux, fool!" || return
+    command ssh "${@}"
+}
+
+_br_command_exists bat && {
+    cat() {
+        bat --paging=never "${@}"
+    }
+
+    bathelp() {
+        bat --plain --language help "${@}"
+    }
+
+    _br_command_exists batman && {
+        man() {
+            batman "${@}"
+        }
+    }
+
+    _br_command_exists batwatch && {
+        gitwatch() {
+            local _num_commits=$(($(tput lines) - 5))
+            batwatch \
+                --plain -lgitlog \
+                -x \
+                git log \
+                --oneline --decorate --graph --all \
+                -n ${_num_commits} \
+                "${@}"
+        }
+    }
+}
+
+# DEPRECATED TODO {{{1
 _br_fd_git_roots() { # Find git roots below $1.
     fd -H -t d '^\.git$' . "${1:-.}" | sed 's:/\.git$::'
-}
-
-gomux() { # Init or attach tmux with start directory $1.
-    local start_directory="$(readlink -f "${1}")"
-    local session_name="$(basename "${start_directory:-.}")"
-    tmux has-session -t "${session_name}" 2> /dev/null || {
-        tmux new-session -d -s "${session_name}" -c "${start_directory}"
-    }
-    if [[ -z "${TMUX}" ]]; then
-        tmux attach -t "${session_name}"
-    else
-        tmux switch-client -t "${session_name}"
-    fi
 }
 
 # fzf
@@ -116,32 +174,7 @@ if command -v fzf &> /dev/null; then
     fi
 fi
 
-# bat
-if command -v bat &> /dev/null; then
-    alias cat='bat --paging=never'
-    alias bathelp='bat --plain --language help'
-    if command -v batman &> /dev/null; then
-        alias man='batman'
-    fi
-    if command -v batwatch &> /dev/null; then
-        gitwatch() {
-            local _num_commits=$(($(tput lines) - 5))
-            batwatch \
-                --plain -lgitlog \
-                -x \
-                git log \
-                --oneline --decorate --graph --all \
-                -n ${_num_commits} \
-                "${@}"
-        }
-    fi
-fi
-
-# mux
-
-# MAIN
-# That is, what follows is our "enter hook".
-if [ -z ${TMUX} ] && command -v tmuxinator &> /dev/null; then # Not in tmux.
-    # So start tmux.
-    T
-fi
+# ENTER HOOK {{{1
+test -z "${TMUX}" && _br_command_exists tmuxinator && {
+    _br_tmux_go_last
+}
