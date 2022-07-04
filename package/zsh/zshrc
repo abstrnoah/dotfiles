@@ -175,6 +175,6 @@ if command -v fzf &> /dev/null; then
 fi
 
 # ENTER HOOK {{{1
-test -z "${TMUX}" && _br_command_exists tmuxinator && {
+test -z "${TMUX}" && _br_command_exists _br_tmux_go_last && {
     _br_tmux_go_last
 }
