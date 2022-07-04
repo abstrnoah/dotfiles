@@ -36,3 +36,5 @@ if command -v nix-env &> /dev/null; then
     # Yes, it is probably redundant to have both -I and -f.
     alias nix-env='nix-env -I an_nixpkgs=${AN_NIXPKGS} -f ${AN_NIXPKGS}'
 fi
+
+export GTK_THEME=Adwaita:dark
