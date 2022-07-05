@@ -28,14 +28,14 @@ _br_command_exists fd && {
 
 # In addition to controlling the fzf-provided CTRL_T widget, this should serve
 # as the default configuration for any file-related fzf.
-export FZF_CTRL_T_OPTS="${FZF_DEFAULT_OPTS} --preview '${BR_FZF_BAT}'"
+export FZF_CTRL_T_OPTS="--preview '${BR_FZF_VIEWER}'"
 
 # Ditto, for directory-related fzf.
-export FZF_ALT_C_OPTS="${FZF_DEFAULT_OPTS}"
+# export FZF_ALT_C_OPTS= # just FZF_DEFAULT_OPTS for now
 
-export FZF_CTRL_R_OPTS="${FZF_DEFAULT_OPTS}"
+# export FZF_CTRL_R_OPTS= # just FZF_DEFAULT_OPTS for now
 
-export FZF_COMPLETION_OPTS="${FZF_DEFAULT_OPTS} --height 60%"
+export FZF_COMPLETION_OPTS="--height 60%"
 
 # GLOBALS {{{1
 BR_PROMPTCHAR=🢒
@@ -66,7 +66,7 @@ compinit
 source "${BR_DOTFILES}/package/zsh/comp-mux.zsh"
 
 # Fzf completions.
-test -f ~/.nix-profile/share/fzf/completions.zsh && _br_command_exists fzf && {
+test -f ~/.nix-profile/share/fzf/completion.zsh && _br_command_exists fzf && {
     source ~/.nix-profile/share/fzf/completion.zsh
 }
 
@@ -74,7 +74,7 @@ test -f ~/.nix-profile/share/fzf/completions.zsh && _br_command_exists fzf && {
 # FUNCTIONS {{{1
 _br_command_exists tmux && {
     _br_reload_tmux () {
-        _br_require tmux
+        _br_require tmux || return
         tmux source-file ~/.tmux.conf
     }
 }
