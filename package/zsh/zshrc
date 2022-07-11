@@ -12,7 +12,7 @@ export BR_REPOROOT="${HOME}/repository"
 
 # FZF {{{2
 # The way we employ this variable, it should be applicable to all uses of fzf.
-export FZF_DEFAULT_OPTS='--multi --border --reverse'
+export FZF_DEFAULT_OPTS='--multi --border --reverse --bind change:first'
 
 _br_command_exists bat && {
     export BR_FZF_VIEWER='bat --style=numbers --color=always --line-range :500 {}'
