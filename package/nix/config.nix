@@ -26,6 +26,7 @@
         git
         glibcLocales
         htop
+        imagemagick
         img2pdf
         jdk
         jq
