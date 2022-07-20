@@ -126,11 +126,13 @@ _br_command_exists nix-env && {
     }
 }
 
-br_open () { # <path to xdg-open-able file>
-    # Suffix '&!' means 'disown' in zsh.
-    xdg-open "${1}" &!
+_br_command_exists xdg-open && {
+    br_open () { # <path to xdg-open-able file>
+        # Suffix '&!' means 'disown' in zsh.
+        xdg-open "${1}" &!
+    }
+    alias O='br_open'
 }
-alias O='br_open'
 
 ssh() {
     test -z "${TMUX}" || _br_oops "Don't ssh from tmux, fool!" || return
