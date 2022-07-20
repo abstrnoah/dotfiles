@@ -1,5 +1,7 @@
 """
 Personal runtime configuration for VisiData.
+
+Path: ~/.visidatarc
 """
 
 import datetime as dt

@@ -1,3 +1,5 @@
+# ~/.config/zathura/zathurarc
+
 set window-title-home-tilde true
 set window-title-basename true
 set statusbar-home-tilde true

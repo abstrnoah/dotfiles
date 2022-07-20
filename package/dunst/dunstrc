@@ -1,3 +1,5 @@
+# path: ~/.config/dunst/dunstrc
+
 [global]
     font = Ubuntu Mono 10
 
