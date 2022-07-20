@@ -2,11 +2,11 @@
 
 [Unit]
 Description=Disable wakeup on lid open
-Before=hibernate.target
+Before=sleep.target
 
 [Service]
 Type=oneshot
 ExecStart=/usr/share/brumal-utils/disable_wakeup_on_lid_open.sh
 
 [Install]
-WantedBy=hibernate.target
+WantedBy=sleep.target

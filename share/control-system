@@ -27,6 +27,15 @@ case ${_command} in
             systemctl hibernate
         fi
         ;;
+    suspend)
+        i3-input -F "exec ${_self} _suspend %s" -P "suspend...hibernate? [yN] "
+        ;;
+    _suspend)
+        if [ "${_arg}" = y ]; then
+            ${_self} lock &
+            systemctl suspend-then-hibernate
+        fi
+        ;;
     reload)
         i3-msg reload
         ;;

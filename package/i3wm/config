@@ -44,7 +44,7 @@ set $mode_audio "audio: [h]prev [l]next [k]up [j]down [m]ute [space]play"
 set $mode_focus "parent/child focus: [h][j][k][l]parent [p]arent [c]hild"
 set $mode_notify "notify: [e]nable [d]isable"
 set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
-set $mode_system "system: [l]ock [e]xit [s]hutdown [S]reboot [h]ibernate [r]econfig [R]eload"
+set $mode_system "system: [l]ock [e]xit [s]hutdown [S]reboot [h]suspend [H]ibernate [r]econfig [R]eload"
 set $mode_invert "invert screen[0][1] x[fF]lux"
 # TODO: Some modes are still hardcoded, factor them out.
 
@@ -180,8 +180,10 @@ mode $mode_system {
     bindsym s mode "default"; exec $scripts/control-system shutdown
     # Reboot.
     bindsym $shift+s mode "default"; exec $scripts/control-system reboot
+    # Suspend then hibernate.
+    bindsym h mode "default"; exec $scripts/control-system suspend
     # Hibernate.
-    bindsym h mode "default"; exec $scripts/control-system hibernate
+    bindsym $shift+h mode "default"; exec $scripts/control-system hibernate
     # Reload the configuration file.
     bindsym r mode "default"; exec $scripts/control-system reload
     # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3).
