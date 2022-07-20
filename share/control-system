@@ -24,7 +24,7 @@ case ${_command} in
     _hibernate)
         if [ "${_arg}" = y ]; then
             ${_self} lock &
-            sudo /usr/sbin/pm-hibernate
+            systemctl hibernate
         fi
         ;;
     reload)
