@@ -1,9 +1,14 @@
+# path: ~/.config/mimeapps.list
+# (Comments seem to be any lines without =.)
+
 [Default Applications]
 application/epub+zip=org.pwmt.zathura.desktop
 application/pdf=org.pwmt.zathura.desktop
 application/postscript=org.pwmt.zathura.desktop
 image/vnd.djvu=org.pwmt.zathura.desktop
+inode/directory=ranger.desktop
 text/html=org.qutebrowser.qutebrowser.desktop
+text/plain=vim.desktop
 x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop
 x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop
 x-scheme-handler/tg=telegramdesktop.desktop
