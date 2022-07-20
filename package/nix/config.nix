@@ -2,7 +2,6 @@
   pulseaudio = true;
   allowUnfreePredicate = pkg: with (import <an_nixpkgs>) {};
   builtins.elem (lib.getName pkg) [
-    "ngrok"
     "spotify"
     "spotify-unwrapped"
     "xflux"
@@ -30,6 +29,7 @@
         img2pdf
         jdk
         jq
+        libnotify
         maven
         nodejs
         nodePackages.insect
@@ -41,6 +41,7 @@
         rlwrap
         silver-searcher
         sl
+        spotify-cli-linux
         tectonic
         textql
         tmux
@@ -52,6 +53,7 @@
         vimHugeX
         visidata
         weechat
+        xclip
         yq-go
         # zsh
       ];
@@ -68,7 +70,7 @@
         rofi
         signal-desktop
         spotify
-        tor-browser-bundle-bin # Audio not working for tor.
+        # tor-browser-bundle-bin # Audio not working for tor.
         xflux
         xournalpp
         xrandr-invert-colors
