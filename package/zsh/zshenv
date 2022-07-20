@@ -1,6 +1,8 @@
 # zshenv
 
-export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/opt/jabref/bin"
+source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/sbin:/opt/jabref/bin"
 export BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
 export EDITOR=vim
 export VISUAL=vim
