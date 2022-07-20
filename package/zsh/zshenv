@@ -4,8 +4,9 @@ source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/sbin:/opt/jabref/bin"
 export BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR="${HOME}/.nix-profile/bin/vim"
+export VISUAL="${HOME}/.nix-profile/bin/vim"
+export BROWSER="${HOME}/.nix-profile/bin/qutebrowser"
 export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}:/usr/share"
 
 # Make locales work with Nix.
