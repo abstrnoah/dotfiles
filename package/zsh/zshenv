@@ -6,7 +6,7 @@ export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/sbin:/opt/jabref/bin"
 export BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
 export EDITOR=vim
 export VISUAL=vim
-export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}"
+export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}:/usr/share"
 
 # Make locales work with Nix.
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
