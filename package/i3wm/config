@@ -181,8 +181,6 @@ mode $mode_system {
     # Reboot.
     bindsym $shift+s mode "default"; exec $scripts/control-system reboot
     # Hibernate.
-    # Note that the sudoers file must be configured so that pm-hibernate can be
-    # run non-interactively by the user.
     bindsym h mode "default"; exec $scripts/control-system hibernate
     # Reload the configuration file.
     bindsym r mode "default"; exec $scripts/control-system reload
@@ -225,27 +223,27 @@ mode $mode_notify {
 bindsym XF86AudioRaiseVolume exec $keybinds audio_vol_up
 bindsym XF86AudioLowerVolume exec $keybinds audio_vol_down
 bindsym XF86AudioMute exec $keybinds audio_vol_mute
-bindsym XF86AudioPrev exec sp prev
-bindsym XF86AudioPlay exec sp play
-bindsym XF86AudioPause exec sp play
-bindsym XF86AudioNext exec sp next
+bindsym XF86AudioPrev exec spotifycli --prev
+bindsym XF86AudioPlay exec spotifycli --playpause
+bindsym XF86AudioPause exec spotifycli --playpause
+bindsym XF86AudioNext exec spotifycli --next
 
 bindsym $mod+a mode $mode_audio
 mode $mode_audio {
     bindsym XF86AudioRaiseVolume exec $keybinds audio_vol_up
     bindsym XF86AudioLowerVolume exec $keybinds audio_vol_down
     bindsym XF86AudioMute exec $keybinds audio_vol_mute
-    bindsym XF86AudioPrev exec sp prev
-    bindsym XF86AudioPlay exec sp play
-    bindsym XF86AudioPause exec sp play
-    bindsym XF86AudioNext exec sp next
+    bindsym XF86AudioPrev exec spotifycli --prev
+    bindsym XF86AudioPlay exec spotifycli --playpause
+    bindsym XF86AudioPause exec spotifycli --playpause
+    bindsym XF86AudioNext exec spotifycli --next
 
     bindsym k exec $keybinds audio_vol_up
     bindsym j exec $keybinds audio_vol_down
     bindsym m exec $keybinds audio_vol_mute
-    bindsym h exec sp prev
-    bindsym space exec sp play
-    bindsym l exec sp next
+    bindsym h exec spotifycli --prev
+    bindsym space exec spotifycli --playpause
+    bindsym l exec spotifycli --next
 
     bindsym $esc mode "default"
     bindsym Escape mode "default"
