@@ -55,6 +55,7 @@
         visidata
         weechat
         xclip
+        xorg.xbacklight
         yq-go
         # zsh
       ];
