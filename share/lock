@@ -6,16 +6,17 @@ _get_bar_mode() {
     i3-msg -t get_bar_config bar-0 | jq -r .mode
 }
 
-_old_bar_mode=$(_get_bar_mode)
+_old_bar_mode="$(_get_bar_mode)"
+_old_dunst_state="$(dunstctl is-paused)"
 
 _pre_lock() {
-    ~/.dotfiles/share/control-system notify_pause \
+    dunstctl set-paused true \
         && i3-msg bar mode invisible
 }
 
 _post_lock() {
     i3-msg bar mode "${_old_bar_mode}"
-    ~/.dotfiles/share/control-system notify_resume
+    dunstctl set-paused "${_old_dunst_state}"
 }
 
 _lock() {

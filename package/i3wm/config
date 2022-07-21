@@ -210,15 +210,7 @@ bindsym --release $mod+c \
     exec "import png:- | xclip -selection clipboard -t image/png"
 
 # Notifications.
-bindsym $mod+$alt+n mode $mode_notify
-mode $mode_notify {
-    # Enable dunst.
-    bindsym e exec killall -SIGUSR2 dunst; mode "default"
-    # Pause dunst.
-    bindsym d exec killall -SIGUSR1 dunst; mode "default"
-
-    bindsym $esc mode "default"
-}
+bindsym $mod+$alt+n exec $scripts/control-system notify_toggle
 
 # HARDWARE {{{2
 # Audio.

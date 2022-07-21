@@ -42,12 +42,18 @@ case ${_command} in
     restart)
         i3-msg restart
         ;;
+    notify_toggle)
+        dunstctl set-paused toggle
+        test "dunstctl is-paused" = false || notify-send "notifying"
+        ;;
     notify_pause)
+        echo "Deprecated in favour of notify_toggle." >&2
         if pgrep -xc dunst; then
             killall -q -SIGUSR1 dunst
         fi
         ;;
     notify_resume)
+        echo "Deprecated in favour of notify_toggle." >&2
         if pgrep -xc dunst; then
             killall -q -SIGUSR2 dunst
         fi
