@@ -4,6 +4,7 @@
 BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
 test -d "${BR_DOTFILES}" || echo "Dotfiles not found: ${BR_DOTFILES}" >&2
 source "${BR_DOTFILES}/share/utilities.zsh"
+source "${BR_DOTFILES}/share/prompt.zsh"
 
 # EXPORTED ENVIRONMENT {{{1
 export KEYTIMEOUT=1
@@ -37,6 +38,9 @@ export FZF_CTRL_T_OPTS="--preview '${BR_FZF_VIEWER}'"
 
 export FZF_COMPLETION_OPTS="--height 60%"
 
+# PROMPT HELPERS {{{1
+
+
 # GLOBALS {{{1
 BR_PROMPTCHAR=🢒
 NL=$'\n'
@@ -45,8 +49,8 @@ NL=$'\n'
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=2000
-PROMPT_0="%B${BR_PROMPTCHAR}%b "
-PROMPT_1='%s%B%n %M %75<..<%~%b %? %#'
+PROMPT_0="$(br_torified_prompt)%B${BR_PROMPTCHAR}%b "
+PROMPT_1="$(_br_join " " '%s%B%n' "$(br_host_prompt)" '%75<..<%~%b %? %#')"
 PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
 
 # OPTIONS {{{1
@@ -189,6 +193,12 @@ _br_list_dirs() {
     fd --hidden --follow --exclude ".git" --type d . "$1"
 }
 
+_br_command_exists torsocks && {
+    br_torshell() {
+        BR_NOMUX=1 torsocks --shell
+    }
+}
+
 alias _fzf_compgen_path='_br_list_paths'
 alias _fzf_compgen_dir='_br_list_dirs'
 
@@ -211,7 +221,9 @@ bindkey -M viins "^ " push-line-or-edit
 bindkey -M vicmd "^ " push-line-or-edit
 
 # ENTER HOOK {{{1
-test -z "${TMUX}" && _br_command_exists _br_tmux_go_last && {
+test -z "${TMUX}" && test -z "${BR_NOMUX}" && ! _br_is_ssh \
+    && _br_command_exists _br_tmux_go_last \
+    && {
     _br_tmux_go_last
 }
 
