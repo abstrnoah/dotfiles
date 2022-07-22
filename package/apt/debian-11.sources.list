@@ -12,5 +12,9 @@ deb-src http://security.debian.org/debian-security bullseye-security main contri
 deb http://deb.debian.org/debian/ bullseye-updates main contrib non-free
 deb-src http://deb.debian.org/debian/ bullseye-updates main contrib non-free
 
+# tor
+deb [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
+deb-src [signed-by=/usr/share/keyrings/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org bullseye main
+
 # For information about how to configure apt package sources,
 # see the sources.list(5) manual.
