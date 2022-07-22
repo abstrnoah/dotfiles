@@ -169,7 +169,7 @@ for_window [title="^Incanter Table$"] floating enable
 # SETUP {{{2
 
 bindsym $mod+$grave mode $mode_system
-bindsym $mod+$tilde exec $scripts/control-system lock
+bindsym $mod+$tilde exec $scripts/control-system suspend
 
 mode $mode_system {
     # Lock.
