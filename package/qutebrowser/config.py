@@ -16,10 +16,20 @@ _leader_hint = _leader + ";"
 
 # SETUP {{{1
 
+# Tor proxy.
+c.content.proxy = "socks://localhost:9050"
+# Not available without QtWebKit backend :(.
+# c.content.proxy_dns_requests = True
+
 # Home page.
 # Note that 'start_pages' is different from 'default_page'; ':home' goes to the
 # former while generic opens go to the latter.
 c.url.start_pages = ["https://start.duckduckgo.com/"]
+c.url.searchengines = {
+    "DEFAULT": "https://duckduckgo.com/?q={}",
+    "ddg": "https://duckduckgo.com/?q={}",
+    "ddg-onion": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
+}
 
 # Don't load autoconfig.yml.
 config.load_autoconfig(False)
