@@ -112,6 +112,8 @@ endif
 if has('syntax')
     set cursorline
     let &colorcolumn = g:br_colorcolumn
+    set spelllang=en_gb
+    let &spellfile = $BR_VIMDIR . '/spell/en.utf-8.add'
     if has('patch-8.2.953')
         set spelloptions+=camel
     endif
