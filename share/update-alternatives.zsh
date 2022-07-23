@@ -19,11 +19,12 @@ _update_alternative() {
     test -n "${_name}" \
         || _br_oops "Alternative name empty" \
         || return
-    update-alternatives --install \
+    update-alternatives --verbose --install \
         "${_ALT_BIN}/${_name}" \
         "${_name}" \
         "${_NIX_BIN}/${_command}" \
         0
+    update-alternatives --verbose --set "${_name}" "${_NIX_BIN}/${_command}"
 }
 
 _update_alternative editor vim
