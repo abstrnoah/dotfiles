@@ -1,11 +1,21 @@
 ## file: $BR_VIMDIR/spell/en.utf-8.add
-## For remaking '.spl' file, see just below `:help :spellundo`.
+##
+## For remaking '.spl' file (see just below `:help :spellundo`) run
+## `:mkspell! %` from within *this* file.
 
+arity
+Borel
 brumal
 finitary
 machine00
 machine01
 machine02
 machine03
+non-zero/!
+nonzero
+preimage
+preimages
+pullback
+pushforward
 TODO
 Zoltan
