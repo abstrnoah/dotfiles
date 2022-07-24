@@ -12,6 +12,7 @@ machine00
 machine01
 machine02
 machine03
+nonissues
 non-zero/!
 nonzero
 preimage
@@ -19,5 +20,6 @@ preimages
 pullback
 pushforward
 TODO
+vimwiki
 while/!
 Zoltan
