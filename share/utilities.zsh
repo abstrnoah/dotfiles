@@ -43,5 +43,11 @@ _br_is_git() {
     git rev-parse git-dir > /dev/null 2>&1
 }
 
+br_get_env() { # pid
+    local _pid="${1}"
+    test -e "/proc/${_pid}" || _br_oops "pid does not exist: ${_pid}" || return
+    cat "/proc/${_pid}/environ" | tr '\0' '\n' | less
+}
+
 # MODELINE {{{1
 # vim:ft=zsh:fdm=marker:fmr={{{,}}}:fen:tw=80:et:ts=4:sts=4:sw=0:
