@@ -121,8 +121,8 @@ _br_command_exists nix-env && {
         # TODO Yes, it seems redundant to have both -I and -f. But there
         # was some reason important reason to have both... the solution is to
         # just learn to grok nix lol.
-        # TODO AN_NIXPKGS -> BR_NIXPKGS or just NIXPKGS
-        nix-env -I an_nixpkgs="${AN_NIXPKGS}" -f "${AN_NIXPKGS}" "${@}"
+        # TODO Just use NIXPKGS?
+        nix-env -I an_nixpkgs="${BR_NIXPKGS}" -f "${BR_NIXPKGS}" "${@}"
     }
 
     br_reload_nix_packages() {

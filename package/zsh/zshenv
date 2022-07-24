@@ -16,12 +16,8 @@ export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs.
-export AN_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/ef01553ac5d763d2a7816051d30e92905a036364.tar.gz"
-export AN_NIXPKGS_LOCAL="${HOME}/repository/know/explore/cs/nixpkgs"
-# NIX_PATH gets overridden by Nix's site-wide profile, which is sourced from
-# '/etc/profile', which is sourced from 'zprofile'. For mitigation, see the
-# 'nix-env' alias below.
-# export NIX_PATH="an_nixpkgs=${AN_NIXPKGS}"
+export BR_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/ef01553ac5d763d2a7816051d30e92905a036364.tar.gz"
+export BR_NIXPKGS_LOCAL="${HOME}/repository/know/explore/cs/nixpkgs"
 
 # Enable firefox touch screen scrolling.
 export MOZ_USE_XINPUT2=1
