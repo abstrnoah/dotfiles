@@ -2,6 +2,7 @@
   pulseaudio = true;
   allowUnfreePredicate = pkg: with (import <an_nixpkgs>) {};
   builtins.elem (lib.getName pkg) [
+    "discord"
     "spotify"
     "spotify-unwrapped"
     "xflux"
@@ -65,6 +66,7 @@
     clientPackagesGui = pkgs.buildEnv {
       name = "clientPackagesGui";
       paths = [
+        discord
         # jabref # Broke nixos 21.11 -> 22.05.
         mpv
         okular
@@ -72,12 +74,12 @@
         rofi
         signal-desktop
         spotify
+        # tdesktop # telegram-desktop, seems to be out of date atm.
         # tor-browser-bundle-bin # Audio not working for tor.
         xflux
         xournalpp
         xrandr-invert-colors
         zathura
-        # tdesktop # telegram-desktop, seems to be out of date atm.
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
