@@ -9,6 +9,7 @@ Borel
 brumal
 brumalgraph
 finitary
+Hausdorff
 machine00
 machine01
 machine02
@@ -20,6 +21,7 @@ preimage
 preimages
 pullback
 pushforward
+submodel
 subpath
 subpaths
 TODO
