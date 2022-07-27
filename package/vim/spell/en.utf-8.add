@@ -7,6 +7,7 @@
 arity
 Borel
 brumal
+brumalgraph
 finitary
 machine00
 machine01
@@ -19,6 +20,8 @@ preimage
 preimages
 pullback
 pushforward
+subpath
+subpaths
 TODO
 vimwiki
 while/!
