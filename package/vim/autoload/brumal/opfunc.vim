@@ -21,7 +21,7 @@ let s:sandbox = function("brumal#main#sandbox", [['"', 'a'], ["'<", "'>"]])
 
 " s:getMotionText(type) {{{
 " Return the text of the last motion (the object of a operator, see g@).
-" Notice: Should be preformed in a sandbox, alters quote-register.
+" Notice: Should be executed in a sandbox, alters quote-register.
 function s:getMotionText(type) abort
     let l:keystroke = get(s:motion_type_to_visual, a:type, '') . "y"
     silent execute 'noautocmd keepjumps normal!' l:keystroke
@@ -31,7 +31,7 @@ endfunction " }}}
 " s:setMotionText(text, type) {{{
 " Set motion text to 'text'. Counterpart to s:getMotionText.
 " Return the original motion text.
-" Notice: Should be preformed in a sandbox, alters registers a and quote.
+" Notice: Should be executed in a sandbox, alters registers a and quote.
 function s:setMotionText(text, type) abort
     let l:old_paste = &paste
     try
