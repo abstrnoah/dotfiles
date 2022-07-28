@@ -80,6 +80,7 @@ let g:br_plugs = {
     \ "abstractednoah/paredit.vim": [],
     \ "junegunn/gv.vim": [],
     \ "junegunn/vim-peekaboo": [],
+    \ "fcpg/vim-showmap": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
