@@ -81,6 +81,7 @@ let g:br_plugs = {
     \ "junegunn/gv.vim": [],
     \ "junegunn/vim-peekaboo": [],
     \ "fcpg/vim-showmap": [],
+    \ "lervag/wiki.vim": [{"supported": {-> v:version >= 801}}],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -108,7 +109,7 @@ let g:br_plugs_active = [
     \ "plasticboy/vim-markdown",
     \ "mboughaba/i3config.vim",
     \ "abstractednoah/vim-colors-solarized",
-    \ "vimwiki/vimwiki",
+    \ "lervag/wiki.vim",
     \ "junegunn/vim-plug",
     \ "abstractednoah/vim-fireplace",
     \ "romainl/vim-qf",
@@ -243,10 +244,10 @@ let g:vimtex_toc_config = {"layers": ['content'], "show_help": 0}
 let g:wordmotion_prefix = '<leader>'
 let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 
-" VIMWIKI {{{2
-if brumal#main#plug_supported("vimwiki/vimwiki", g:br_plugs)
-    source ~/.vim/vimwiki_rc.vim
-endif
+" WIKI.VIM {{{2
+let g:wiki_root = "~/repository/notes/wiki"
+let g:wiki_index_name = "scratch"
+let g:wiki_completion_case_sensitive = 0
 
 " VIM-PAD {{{2
 let g:pad#dir = "~/repository/notes/vim-pad"
