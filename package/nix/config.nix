@@ -76,6 +76,7 @@
         spotify
         # tdesktop # telegram-desktop, seems to be out of date atm.
         # tor-browser-bundle-bin # Audio not working for tor.
+        wmctrl
         xflux
         xournalpp
         xrandr-invert-colors
