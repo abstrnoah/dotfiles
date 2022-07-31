@@ -5,10 +5,12 @@
 ## `:mkspell! %` from within *this* file.
 
 arity
+basename
 Borel
 brumal
 brumalgraph
 covid
+filetypes
 finitary
 Hausdorff
 machine00
@@ -18,6 +20,7 @@ machine03
 nonissues
 non-zero/!
 nonzero
+plaintext
 preimage
 preimages
 pullback
