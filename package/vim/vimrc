@@ -122,6 +122,8 @@ endif
 
 set splitbelow splitright " Put new window below or right, feels more intuitive.
 
+set noswapfile
+
 " Tabs.
 " One tab = four spaces.
 " 'shiftwidth=0' means fallback to 'tabstop'.
