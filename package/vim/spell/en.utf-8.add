@@ -5,6 +5,7 @@
 ## `:mkspell! %` from within *this* file.
 
 abstractednoah
+Aelin
 arity
 basename
 Borel
@@ -30,6 +31,7 @@ preimage
 preimages
 pullback
 pushforward
+sed
 submodel
 submodels
 subpath
@@ -39,3 +41,4 @@ TODO
 vimwiki
 while/!
 Zoltan
+Zoltan's
