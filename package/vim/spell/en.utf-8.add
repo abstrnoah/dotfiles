@@ -4,6 +4,7 @@
 ## For remaking '.spl' file (see just below `:help :spellundo`) run
 ## `:mkspell! %` from within *this* file.
 
+abstractednoah
 arity
 basename
 Borel
