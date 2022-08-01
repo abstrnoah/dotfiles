@@ -10,9 +10,11 @@ basename
 Borel
 brumal
 brumalgraph
+coauthor
 covid
 filetypes
 finitary
+Gruber
 Hausdorff
 machine00
 machine01
@@ -22,6 +24,7 @@ nonissues
 non-zero/!
 nonzero
 plaintext
+plugins
 preimage
 preimages
 pullback
