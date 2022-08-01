@@ -82,6 +82,12 @@ let g:br_plugs = {
     \ "junegunn/vim-peekaboo": [],
     \ "fcpg/vim-showmap": [],
     \ "lervag/wiki.vim": [{"supported": {-> v:version >= 801}}],
+    \ "abstractednoah/wiki.vim": [
+        \ {
+            \ "supported": {-> v:version >= 801},
+            \ "spec": {"branch": "feat-mappings-prefix"}
+        \ }
+    \ ],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -109,7 +115,7 @@ let g:br_plugs_active = [
     \ "plasticboy/vim-markdown",
     \ "mboughaba/i3config.vim",
     \ "abstractednoah/vim-colors-solarized",
-    \ "lervag/wiki.vim",
+    \ "abstractednoah/wiki.vim",
     \ "junegunn/vim-plug",
     \ "abstractednoah/vim-fireplace",
     \ "romainl/vim-qf",
@@ -248,6 +254,31 @@ let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 let g:wiki_root = "~/repository/notes/wiki"
 let g:wiki_index_name = "scratch"
 let g:wiki_completion_case_sensitive = 0
+let g:wiki_mappings_prefix = g:br_leader_note
+let g:wiki_filetypes = ['md', 'wiki']
+
+let g:wiki_link_target_type = "md"
+let g:wiki_link_extension = "." . g:wiki_link_target_type
+let g:wiki_map_text_to_link = "BrWikiMapTextToLink"
+let g:wiki_map_create_page = "BrWikiMapCreatePage"
+
+let g:wiki_tag_scan_num_lines = 'all'
+
+function BrWikiMapTextToLink(text) abort
+    return [substitute(tolower(a:text), '[^a-z_-]', '_', 'g'), a:text]
+endfunction
+
+function BrWikiMapCreatePage(name) abort
+    if empty(a:name)
+        if exists("*strftime")
+            return strftime('%Y-%m-%d_%H-%M-%S_%z')
+        else
+            throw "Missing dependency: strftime()"
+        endif
+    else
+        return BrWikiMapTextToLink(a:name)[0]
+    endif
+endfunction
 
 " VIM-PAD {{{2
 let g:pad#dir = "~/repository/notes/vim-pad"
