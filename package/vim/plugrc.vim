@@ -196,6 +196,7 @@ let g:vim_markdown_folding_level = 2
 " Disable concealing code block delims. TODO why did I disable this?
 " let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_math = 1
+let g:vim_markdown_no_defauly_key_mappings = 1
 
 " INDENTLINE {{{2
 " Note that as it stands, indentLine seems to have control over conceal. So
