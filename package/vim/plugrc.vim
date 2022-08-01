@@ -88,6 +88,7 @@ let g:br_plugs = {
             \ "spec": {"branch": "feat-mappings-prefix"}
         \ }
     \ ],
+    \ "abstractednoah/lists.vim": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -101,7 +102,6 @@ let g:br_plugs_active = [
     \ "lervag/vimtex",
     \ "justinmk/vim-sneak",
     \ "tpope/vim-eunuch",
-    \ "dkarter/bullets.vim",
     \ "dhruvasagar/vim-table-mode",
     \ "tommcdo/vim-lion",
     \ "tpope/vim-commentary",
@@ -125,6 +125,7 @@ let g:br_plugs_active = [
     \ "abstractednoah/paredit.vim",
     \ "junegunn/gv.vim",
     \ "junegunn/vim-peekaboo",
+    \ "abstractednoah/lists.vim",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -280,6 +281,10 @@ function BrWikiMapCreatePage(name) abort
     endif
 endfunction
 
+" LISTS.VIM {{{2
+let g:lists_filetypes = ['md', 'markdown', 'wiki', 'vimwiki', 'gitcommit']
+let g:lists_maps_prefix = g:br_leader_note
+
 " VIM-PAD {{{2
 let g:pad#dir = "~/repository/notes/vim-pad"
 let g:pad#local_dir = "notes"
@@ -302,6 +307,9 @@ let g:paredit_shortmaps = 0
 let g:fireplace_eval_opts = {
     \ "nrepl.middleware.print/quota": 5000,
 \ }
+
+" SURROUND {{{2
+let g:surround_no_insert_mappings = 1
 
 " BUILTIN PLUGINS {{{1
 
