@@ -48,6 +48,9 @@ execute "nnoremap" g:br_leader_nav."b" ":CtrlPBuffer<cr>"
 execute "nnoremap" g:br_leader_nav."l" ":CtrlPLine<cr>"
 execute "nnoremap" g:br_leader_nav."t" ":CtrlPTag<cr>"
 
+" WIKI
+execute "nnoremap" g:br_leader_note."p" ":WikiFzfPages<cr>"
+
 " UTL <url:vimhelp:utl> {{{1
 nnoremap <leader><cr> :Utl<cr>
 xnoremap <leader><cr> :<c-u>Utl openLink visual<cr>
