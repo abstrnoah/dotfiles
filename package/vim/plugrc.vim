@@ -267,7 +267,7 @@ let g:wiki_map_create_page = "BrWikiMapCreatePage"
 let g:wiki_tag_scan_num_lines = 'all'
 
 function BrWikiMapTextToLink(text) abort
-    return [substitute(tolower(a:text), '[^a-z_-]', '_', 'g'), a:text]
+    return [substitute(tolower(a:text), '[^a-z0-9_-]', '_', 'g'), a:text]
 endfunction
 
 function BrWikiMapCreatePage(name) abort
