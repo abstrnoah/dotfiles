@@ -1,3 +1,6 @@
+" Enable spell check by default.
+set spell
+
 " This is nearly the default, except it adds `\s*` before symbolic bullets. For
 " some reason the default only matches leading space for numerical bullets. This
 " fixes hanging indent for bullets at all levels.
@@ -7,5 +10,5 @@ setlocal formatlistpat+=\\\|^\\s*\\d\\+\\.\\s\\+
 setlocal formatlistpat+=\\\|^\\s*[-*+]\\(\\s\\[.\\]\\)\\?\\s\\+
 setlocal formatlistpat+=\\\|^\\s*\\[^\\ze[^\\]]\\+\\]:
 
-" MAPPINGS
+" Mappings
 exe "nnoremap <buffer>" g:br_leader_nav.."m" ":Toc<cr>"
