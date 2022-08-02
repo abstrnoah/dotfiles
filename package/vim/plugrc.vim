@@ -103,7 +103,6 @@ let g:br_plugs_active = [
     \ "justinmk/vim-sneak",
     \ "tpope/vim-eunuch",
     \ "dhruvasagar/vim-table-mode",
-    \ "tommcdo/vim-lion",
     \ "tpope/vim-commentary",
     \ "tpope/vim-fugitive",
     \ "preservim/nerdtree",
