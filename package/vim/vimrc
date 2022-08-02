@@ -44,6 +44,9 @@ let g:br_leader_command = "<leader>:"
 " Ftdetect *.m as mma rather than matlab.
 let g:filetype_m = "mma"
 
+" Configure tex.
+let g:tex_conceal = "agm"
+
 " Resize increments.
 let g:br_resize_width = 10
 let g:br_resize_height = 5
