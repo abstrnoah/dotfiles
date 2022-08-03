@@ -264,7 +264,7 @@ let g:wiki_link_extension = "." . g:wiki_link_target_type
 let g:wiki_map_text_to_link = "BrWikiMapTextToLink"
 let g:wiki_map_create_page = "BrWikiMapCreatePage"
 
-let g:wiki_tag_scan_num_lines = 'all'
+let g:wiki_fzf_pages_opts = '--preview "bat {1}"'
 
 function BrWikiMapTextToLink(text) abort
     return [substitute(tolower(a:text), '[^a-z0-9_-]', '_', 'g'), a:text]
