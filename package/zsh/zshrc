@@ -129,7 +129,7 @@ ssh() {
 
 _br_command_exists bat && {
     cat() {
-        bat --paging=never "${@}"
+        bat --paging=never --plain "${@}"
     }
 
     bathelp() {
