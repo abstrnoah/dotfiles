@@ -101,8 +101,8 @@ in
     #   extraOutputsToInstall = [ "man" "doc" ];
     # };
   };
-  nix-on-droid = { pkgs }: {
+  nix-on-droid = { pkgs, ... }: {
     environment.packages = (corePackagePaths pkgs) ++ [ pkgs.zsh ];
     system.stateVersion = "22.05";
-  }
+  };
 }
