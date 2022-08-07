@@ -10,6 +10,8 @@ let
         htop
         jq
         libnotify # TODO tentatively core
+        netcat-openbsd
+        nettools
         nodePackages.insect
         pdfgrep
         pfetch
@@ -102,7 +104,21 @@ in
     # };
   };
   nix-on-droid = { pkgs, ... }: {
-    environment.packages = (corePackagePaths pkgs) ++ [ pkgs.zsh ];
+    environment.packages = (corePackagePaths pkgs)
+    ++ (with pkgs; [
+      zsh
+      diffutils
+      findutils
+      utillinux
+      hostname
+      man
+      gnused
+      openssh
+      procps
+    ]);
+    environment.etcBackupExtension = ".bak";
     system.stateVersion = "22.05";
+    user.userName = "abstractednoah";
+    user.shell = "${pkgs.zsh}/bin/zsh";
   };
 }
