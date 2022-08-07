@@ -12,6 +12,7 @@
     clientPackages = pkgs.buildEnv {
       name = "clientPackages";
       paths = [
+        anki
         bat
         bat-extras.batdiff
         bat-extras.batman

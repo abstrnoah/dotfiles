@@ -31,3 +31,7 @@ export MOZ_USE_XINPUT2=1
 # fi
 
 export GTK_THEME=Adwaita:dark
+
+# Disable QT_XCB_GL_INTEGRATION globally because at least two tools (anki and
+# qutebrowser) require it as a workaround. TODO
+export QT_XCB_GL_INTEGRATION=none
