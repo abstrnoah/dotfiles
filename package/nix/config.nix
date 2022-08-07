@@ -1,3 +1,33 @@
+let
+  corePackagePaths = pkgs: with pkgs; [
+        bat
+        bat-extras.batdiff
+        bat-extras.batman
+        bat-extras.batwatch
+        fd
+        fzf
+        git
+        htop
+        jq
+        libnotify # TODO tentatively core
+        nodePackages.insect
+        pdfgrep
+        pfetch
+        ranger
+        silver-searcher
+        sl
+        tectonic
+        textql
+        tmux
+        tmuxinator
+        toilet
+        tree
+        universal-ctags
+        vimHugeX
+        visidata
+        xclip # TODO tentatively core
+  ];
+in
 {
   pulseaudio = true;
   allowUnfreePredicate = pkg: with (import <an_nixpkgs>) {};
@@ -8,55 +38,30 @@
     "xflux"
     "zoom"
   ];
-  packageOverrides = pkgs: with pkgs; {
+  packageOverrides = pkgs: {
     clientPackages = pkgs.buildEnv {
       name = "clientPackages";
-      paths = [
+      paths = with pkgs;
+      corePackagePaths pkgs
+      ++ [
         anki
-        bat
-        bat-extras.batdiff
-        bat-extras.batman
-        bat-extras.batwatch
         black
         clojure
         cowsay
         delta
         djvu2pdf
         dmidecode
-        fd
-        fzf
-        git
         glibcLocales
-        htop
         imagemagick
         img2pdf
         jdk
-        jq
-        libnotify
         maven
         nodejs
-        nodePackages.insect
-        pdfgrep
-        pfetch
         php
         python3
-        ranger
         rlwrap
-        silver-searcher
-        sl
         spotify-cli-linux
-        tectonic
-        textql
-        tmux
-        tmuxinator
-        toilet
-        tree
-        tudu
-        universal-ctags
-        vimHugeX
-        visidata
         weechat
-        xclip
         xorg.xbacklight
         yq-go
         # zsh
@@ -66,7 +71,7 @@
     };
     clientPackagesGui = pkgs.buildEnv {
       name = "clientPackagesGui";
-      paths = [
+      paths = with pkgs; [
         discord
         # jabref # Broke nixos 21.11 -> 22.05.
         mpv
@@ -86,14 +91,24 @@
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
     };
-    serverPackages = pkgs.buildEnv {
-      name = "serverPackages";
-      paths = [
-        # Nothing here for now! Currently all server applications seem to need
-        # to be installed via the native package manager.
-      ];
-      pathsToLink = [ "/share" "/bin" "/lib" ];
-      extraOutputsToInstall = [ "man" "doc" ];
-    };
+    # serverPackages = pkgs.buildEnv {
+    #   name = "serverPackages";
+    #   paths = [
+    #     # Nothing here for now! Currently all server applications seem to need
+    #     # to be installed via the native package manager.
+    #   ];
+    #   pathsToLink = [ "/share" "/bin" "/lib" ];
+    #   extraOutputsToInstall = [ "man" "doc" ];
+    # };
   };
+  # nix-on-droid =
+  #   { pkgs }:
+  #   {
+  #     environment.packages = with pkgs;
+  #     [
+  #       zsh
+  #       vim
+  #     ];
+  #     system.stateVersion = "22.05"
+  #   }
 }
