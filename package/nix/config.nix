@@ -118,7 +118,6 @@ in
     ]);
     environment.etcBackupExtension = ".bak";
     system.stateVersion = "22.05";
-    user.userName = "abstractednoah";
     user.shell = "${pkgs.zsh}/bin/zsh";
   };
 }
