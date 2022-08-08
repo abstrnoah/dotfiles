@@ -42,7 +42,7 @@ export FZF_COMPLETION_OPTS="--height 60%"
 
 
 # GLOBALS {{{1
-BR_PROMPTCHAR=🢒
+BR_PROMPTCHAR='>'
 NL=$'\n'
 
 # PARAMETERS {{{1
@@ -64,7 +64,7 @@ setopt prompt_cr prompt_sp
 
 # COMPLETIONS {{{1
 # Zsh's new completions, 'zshcompsys'.
-zstyle :compinstall filename '/home/abstractednoah/.zshrc'
+zstyle :compinstall filename "${HOME}/.zshrc"
 autoload -Uz compinit
 compinit
 source "${BR_DOTFILES}/package/zsh/comp-mux.zsh"

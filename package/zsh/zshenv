@@ -1,6 +1,9 @@
 # zshenv
 
-source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+_br_nix_profile_daemon="_/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+test -f "${_br_nix_profile_daemon}" && {
+    source "${_br_nix_profile_daemon}"
+}
 
 export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/sbin:/opt/jabref/bin"
 export BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
