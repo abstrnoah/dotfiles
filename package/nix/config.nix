@@ -8,6 +8,7 @@ let
         fd
         fzf
         git
+        glibcLocales
         htop
         jq
         netcat-openbsd
@@ -53,7 +54,6 @@ in
         delta
         djvu2pdf
         dmidecode
-        glibcLocales
         imagemagick
         img2pdf
         jdk
