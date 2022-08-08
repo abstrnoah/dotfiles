@@ -65,6 +65,10 @@ endif
 " Give more space for displaying messages.
 set cmdheight=2
 
+if has('conceal')
+    set conceallevel=2
+endif
+
 if has("folding")
     " Unset 'fillchars' items fallback to default.
     let &fillchars = "fold: "
