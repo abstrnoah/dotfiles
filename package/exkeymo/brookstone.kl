@@ -1,0 +1,14 @@
+# use https://exkeymo.herokuapp.com/ to generate apk
+
+type OVERLAY
+
+# CAPS_LOCK -> CTRL_LEFT
+map key 58 CTRL_LEFT
+
+# My old Brookstone foldable has a really cursed layout. Let's fix that.
+# DPAD_UP -> SLASH
+map key 103 SLASH
+# SLASH -> DPAD_RIGHT
+map key 53 DPAD_RIGHT
+# DPAD_RIGHT -> DPAD_UP
+map key 106 DPAD_UP

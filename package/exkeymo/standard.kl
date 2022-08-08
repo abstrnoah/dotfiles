@@ -1,0 +1,6 @@
+# use https://exkeymo.herokuapp.com/ to generate apk
+
+type OVERLAY
+
+# CAPS_LOCK -> CTRL_LEFT
+map key 58 CTRL_LEFT

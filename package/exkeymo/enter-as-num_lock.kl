@@ -1,0 +1,7 @@
+# use https://exkeymo.herokuapp.com/ to generate apk
+
+type OVERLAY
+
+# ENTER -> NUM_LOCK
+# For recovering from android misinterpreting a keyboard as a number pad.
+map key 28 NUM_LOCK
