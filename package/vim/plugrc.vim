@@ -109,7 +109,6 @@ let g:br_plugs_active = [
     \ "preservim/tagbar",
     \ "tpope/vim-abolish",
     \ "chaoren/vim-wordmotion",
-    \ "Yggdroot/indentLine",
     \ "neoclide/coc.nvim",
     \ "plasticboy/vim-markdown",
     \ "mboughaba/i3config.vim",
