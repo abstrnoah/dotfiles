@@ -4,15 +4,15 @@ let
         bat-extras.batdiff
         bat-extras.batman
         bat-extras.batwatch
+        curl
         fd
         fzf
         git
         htop
         jq
-        libnotify # TODO tentatively core
         netcat-openbsd
         nettools
-        nodePackages.insect
+        nodejs
         pdfgrep
         pfetch
         ranger
@@ -27,7 +27,6 @@ let
         universal-ctags
         vimHugeX
         visidata
-        xclip # TODO tentatively core
   ];
 in
 {
@@ -46,6 +45,7 @@ in
       paths = with pkgs;
       corePackagePaths pkgs
       ++ [
+        # zsh
         anki
         black
         clojure
@@ -58,7 +58,7 @@ in
         img2pdf
         jdk
         maven
-        nodejs
+        nodePackages.insect
         php
         python3
         rlwrap
@@ -66,7 +66,6 @@ in
         weechat
         xorg.xbacklight
         yq-go
-        # zsh
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
@@ -74,17 +73,19 @@ in
     clientPackagesGui = pkgs.buildEnv {
       name = "clientPackagesGui";
       paths = with pkgs; [
-        discord
         # jabref # Broke nixos 21.11 -> 22.05.
+        # tdesktop # telegram-desktop, seems to be out of date atm.
+        # tor-browser-bundle-bin # Audio not working for tor.
+        discord
+        libnotify
         mpv
         okular
         qutebrowser
         rofi
         signal-desktop
         spotify
-        # tdesktop # telegram-desktop, seems to be out of date atm.
-        # tor-browser-bundle-bin # Audio not working for tor.
         wmctrl
+        xclip
         xflux
         xournalpp
         xrandr-invert-colors
@@ -106,15 +107,17 @@ in
   nix-on-droid = { pkgs, ... }: {
     environment.packages = (corePackagePaths pkgs)
     ++ (with pkgs; [
-      zsh
       diffutils
       findutils
-      utillinux
+      getconf
+      gnugrep
+      gnused
       hostname
       man
-      gnused
       openssh
       procps
+      utillinux
+      zsh
     ]);
     environment.etcBackupExtension = ".bak";
     system.stateVersion = "22.05";
