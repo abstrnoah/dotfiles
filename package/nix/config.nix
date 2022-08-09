@@ -25,6 +25,7 @@ let
         tmuxinator
         toilet
         tree
+        tuptime
         universal-ctags
         vimHugeX
         visidata
