@@ -47,8 +47,7 @@ in
       paths = with pkgs;
       corePackagePaths pkgs
       ++ [
-        # zsh
-        anki
+        # anki (needs QT_XCB_GL_INTEGRATION=none workaround)
         black
         clojure
         cowsay
@@ -67,6 +66,7 @@ in
         weechat
         xorg.xbacklight
         yq-go
+        # zsh
       ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
