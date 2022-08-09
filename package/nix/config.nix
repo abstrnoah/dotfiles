@@ -1,34 +1,34 @@
 let
   corePackagePaths = pkgs: with pkgs; [
-        bat
-        bat-extras.batdiff
-        bat-extras.batman
-        bat-extras.batwatch
-        curl
-        fd
-        fzf
-        git
-        glibcLocales
-        htop
-        jq
-        netcat-openbsd
-        nettools
-        nodejs
-        pdfgrep
-        pfetch
-        ranger
-        silver-searcher
-        sl
-        tectonic
-        textql
-        tmux
-        tmuxinator
-        toilet
-        tree
-        tuptime
-        universal-ctags
-        vimHugeX
-        visidata
+    bat
+    bat-extras.batdiff
+    bat-extras.batman
+    bat-extras.batwatch
+    curl
+    fd
+    fzf
+    git
+    glibcLocales
+    htop
+    jq
+    netcat-openbsd
+    nettools
+    nodejs
+    pdfgrep
+    pfetch
+    ranger
+    silver-searcher
+    sl
+    tectonic
+    textql
+    tmux
+    tmuxinator
+    toilet
+    tree
+    tuptime
+    universal-ctags
+    vimHugeX
+    visidata
   ];
 in
 {
