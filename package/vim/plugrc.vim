@@ -257,6 +257,8 @@ let g:wiki_index_name = "scratch"
 let g:wiki_completion_case_sensitive = 0
 let g:wiki_mappings_prefix = g:br_leader_note
 let g:wiki_filetypes = ['md', 'wiki']
+" TODO is this sketchy???
+let g:wiki_journal= {'name': ''}
 
 let g:wiki_link_target_type = "md"
 let g:wiki_link_extension = "." . g:wiki_link_target_type
