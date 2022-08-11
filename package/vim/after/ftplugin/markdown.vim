@@ -4,4 +4,4 @@ set spell
 " Mappings
 exe "nnoremap <buffer>" g:br_leader_nav.."m" ":Toc<cr>"
 " Override a terrible choice by markdown plugin.
-nunmap <buffer> ge
+silent! nunmap <buffer> ge
