@@ -8,6 +8,7 @@ abstractednoah
 Aelin
 anki
 arity
+Baire
 basename
 Borel
 brumal
@@ -24,6 +25,9 @@ Hausdorff
 hypergraph
 hypergraphs
 injectivity
+intergraph
+intergraphs
+interhypergraph
 intermodel
 intermodels
 machine00
@@ -46,6 +50,7 @@ pullback
 pushforward
 reparametrised
 sed
+subgraph
 submodel
 submodels
 subpath
