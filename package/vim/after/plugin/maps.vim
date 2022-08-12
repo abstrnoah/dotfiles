@@ -132,8 +132,3 @@ execute "nnoremap" "<c-w><c-l>" ":vertical resize +".g:br_resize_width."<cr>"
 execute "nnoremap" "<c-w><c-j>" ":resize -".g:br_resize_height."<cr>"
 execute "nnoremap" "<c-w><c-k>" ":resize +".g:br_resize_height."<cr>"
 
-" Command mode shortcuts.
-execute "nnoremap" g:br_leader_command."t" ":tab<space>"
-execute "nnoremap" g:br_leader_command."T" ":tab<space>"
-execute "nnoremap" g:br_leader_command."v" ":vert<space>"
-execute "nnoremap" g:br_leader_command."V" ":vert<space>"
