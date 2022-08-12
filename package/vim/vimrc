@@ -80,15 +80,13 @@ if has("folding")
 endif
 
 " Format.
-" One line = 80 characters.
-set wrap
+set nowrap
 set textwidth=80
-if has('linebreak')
-    set linebreak " TODO: ?
-endif
 set autoindent
 set formatoptions+=j
 set nojoinspaces
+set list
+set listchars=tab:<->,trail:_,precedes:<,extends:>
 
 set hidden
 
@@ -209,15 +207,6 @@ autocmd BufWinLeave * call clearmatches()
 " highlight Search ctermbg=black
 " highlight Visual ctermbg=black
 hi Folded cterm=none
-
-" TrailingWhitespace.
-" TODO: Factor some of these regexes as variables.
-highlight TrailingWhitespace ctermbg=red
-match TrailingWhitespace /\s\+$/
-autocmd BufWinEnter * match TrailingWhitespace /\s\+$/
-" TODO Figure out how this pattern works.
-autocmd InsertEnter * match TrailingWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match TrailingWhitespace /\s\+$/
 
 " Accent current line number.
 hi CursorLine cterm=none
