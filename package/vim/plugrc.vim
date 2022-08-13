@@ -85,7 +85,7 @@ let g:br_plugs = {
     \ "abstractednoah/wiki.vim": [
         \ {
             \ "supported": {-> v:version >= 801},
-            \ "spec": {"branch": "feat-mappings-prefix"}
+            \ "spec": {"branch": "hf-journal-rename"}
         \ }
     \ ],
     \ "abstractednoah/lists.vim": [],
