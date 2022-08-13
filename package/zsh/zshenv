@@ -1,6 +1,6 @@
 # zshenv
 
-_br_nix_profile_daemon="_/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+_br_nix_profile_daemon="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
 test -f "${_br_nix_profile_daemon}" && {
     source "${_br_nix_profile_daemon}"
 }
