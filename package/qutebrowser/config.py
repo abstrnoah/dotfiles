@@ -26,7 +26,7 @@ c.content.proxy = "socks://localhost:9050"
 # former while generic opens go to the latter.
 c.url.start_pages = ["https://start.duckduckgo.com/"]
 c.url.searchengines = {
-    "DEFAULT": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
+    "DEFAULT": c.url.searchengines["ddg"],
     "ddg": "https://duckduckgo.com/?q={}",
     "ddg-onion": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
 }
