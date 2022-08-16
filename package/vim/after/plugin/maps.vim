@@ -19,8 +19,6 @@ inoremap <silent> <ESC>OC <NOP>
 inoremap <silent> <ESC>OD <NOP>
 inoremap <silent> <ESC>OD <NOP>
 inoremap <silent> <DEL> <NOP>
-" This doesn't actually disable backspace, idk why.
-inoremap <silent> <BS> <NOP>
 
 " Disable ex-mode keys.
 map Q <nop>
