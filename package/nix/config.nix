@@ -117,6 +117,7 @@ in
       man
       openssh
       procps
+      unzip
       utillinux
       zsh
     ]);
