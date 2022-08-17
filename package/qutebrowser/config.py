@@ -25,11 +25,12 @@ c.content.proxy = "socks://localhost:9050"
 # Note that 'start_pages' is different from 'default_page'; ':home' goes to the
 # former while generic opens go to the latter.
 c.url.start_pages = ["https://start.duckduckgo.com/"]
-c.url.searchengines = {
-    "DEFAULT": c.url.searchengines["ddg"],
+_searchengines = {
     "ddg": "https://duckduckgo.com/?q={}",
     "ddg-onion": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
 }
+_searchengines["DEFAULT"] = _searchengines["ddg"]
+c.url.searchengines = _searchengines
 
 # Don't load autoconfig.yml.
 config.load_autoconfig(False)
