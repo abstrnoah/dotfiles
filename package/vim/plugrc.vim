@@ -271,7 +271,8 @@ let g:wiki_fzf_pages_opts = join([
 \ ])
 
 function BrWikiMapTextToLink(text) abort
-    return [substitute(tolower(a:text), '[^a-z0-9_-]', '_', 'g'), a:text]
+    return [substitute(tolower(a:text), '[^a-z0-9_/-]\|^\@<!/', '_', 'g'),
+          \ a:text]
 endfunction
 
 function BrWikiMapCreatePage(name) abort
