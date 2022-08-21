@@ -14,9 +14,12 @@ basename
 Borel
 brumal
 brumalgraph
+carabiner
 coauthor
 colimit
 colimits
+coprojection
+coprojections
 covid
 Dabney
 dotfiles
@@ -32,11 +35,13 @@ intergraphs
 interhypergraph
 intermodel
 intermodels
+kuhl
 machine00
 machine01
 machine02
 machine03
 modeline
+multitool
 nonempty
 nonissues
 nontrivial
@@ -53,6 +58,8 @@ pullback
 pushforward
 reparametrised
 sed
+shortsleeved
+stuffable
 subgraph
 submodel
 submodels
