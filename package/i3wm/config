@@ -53,6 +53,9 @@ set $resize_sm 2
 set $resize_lg 50
 set $gap_interval 2
 
+# Default brightness incremenets.
+set $brightness_interval 2
+
 # Dimensions.
 set $default_border 1
 set $base_gap 7
@@ -255,8 +258,8 @@ mode $mode_brightness {
     bindsym Shift+XF86MonBrightnessUp exec xbacklight -set 100
     bindsym Shift+XF86MonBrightnessDown exec xbacklight -set 0
 
-    bindsym k exec xbacklight -inc 10
-    bindsym j exec xbacklight -dec 10
+    bindsym k exec xbacklight -inc $brightness_interval
+    bindsym j exec xbacklight -dec $brightness_interval
     bindsym Shift+k exec xbacklight -set 100
     bindsym Shift+j exec xbacklight -set 0
 
