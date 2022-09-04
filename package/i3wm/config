@@ -46,6 +46,7 @@ set $mode_notify "notify: [e]nable [d]isable"
 set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
 set $mode_system "system: [l]ock [e]xit [s]hutdown [S]reboot [h]suspend [H]ibernate [r]econfig [R]eload"
 set $mode_invert "invert screen[0][1] x[fF]lux"
+set $mode_gaps "gaps [sS][vV][hH][jJ][kK][lL]outer[o] [iI]inner[f]"
 # TODO: Some modes are still hardcoded, factor them out.
 
 # Default resize increments.
@@ -58,7 +59,8 @@ set $brightness_interval 2
 
 # Dimensions.
 set $default_border 1
-set $base_gap 7
+set $base_gap_inner 7
+set $base_gap_outer 0
 
 # Solarized colours.
 set $base03  #002b36
@@ -122,8 +124,11 @@ client.unfocused        $base03 $base03 $base01 $base01   $base03
 
 # Gaps, *snazzy*.
 for_window [class=".*"] border pixel $default_border
-gaps inner $base_gap
-smart_gaps on
+gaps inner $base_gap_inner
+# TODO As it is impossible to toggle smart_gaps in runtime without writing an
+# IPC script, we for now compromise with the 'f' binding in $mode_gaps instead
+# of having smart_gaps always on.
+# smart_gaps on
 mode "border" {
     bindsym $esc border pixel $default_border; mode "default"
 }
@@ -337,8 +342,31 @@ mode "resize" {
 
 bindsym $mod+$minus gaps inner current minus $gap_interval
 bindsym $mod+$plus gaps inner current plus $gap_interval
-bindsym $mod+$underscore gaps inner current set $base_gap
+bindsym $mod+$underscore gaps inner current set $base_gap_inner
 bindsym $mod+Shift+b border normal; mode "border"
+
+bindsym $mod+$shift+g mode $mode_gaps
+mode $mode_gaps {
+    bindsym s gaps horizontal current plus $gap_interval
+    bindsym $shift+s gaps horizontal current minus $gap_interval
+    bindsym v gaps vertical current plus $gap_interval
+    bindsym $shift+v gaps vertical current minus $gap_interval
+    bindsym h gaps left current plus $gap_interval
+    bindsym $shift+h gaps left current minus $gap_interval
+    bindsym j gaps bottom current plus $gap_interval
+    bindsym $shift+j gaps bottom current minus $gap_interval
+    bindsym k gaps top current plus $gap_interval
+    bindsym $shift+k gaps top current minus $gap_interval
+    bindsym l gaps right current plus $gap_interval
+    bindsym $shift+l gaps right current minus $gap_interval
+    bindsym o gaps outer current toggle $base_gap_outer
+
+    bindsym i gaps inner current plus $gap_interval
+    bindsym $shift+i gaps inner current minus $gap_interval
+    bindsym f gaps inner current toggle $base_gap_inner
+
+    bindsym $esc mode "default"
+}
 
 
 # NAVIGATION {{{2
