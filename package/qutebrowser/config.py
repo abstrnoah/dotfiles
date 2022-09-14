@@ -165,3 +165,6 @@ config.bind("cm", "clear-messages")
 
 # Toggle status.
 config.bind(_leader + "f", "config-cycle -t statusbar.show in-mode always")
+
+# Command mode
+config.bind("<Ctrl-f>", "edit-command", mode="command")
