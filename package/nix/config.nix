@@ -5,6 +5,8 @@ let
     bat-extras.batman
     bat-extras.batwatch
     curl
+    dig
+    dnstracer
     fd
     fzf
     git
@@ -64,7 +66,9 @@ in
         rlwrap
         spotify-cli-linux
         weechat
+        wego
         xorg.xbacklight
+        yj
         yq-go
         # zsh
       ];
