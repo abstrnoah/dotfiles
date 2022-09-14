@@ -103,8 +103,14 @@ xnoremap Q :<c-u>call brumal#main#unformatOperator("visual")<cr>
 nnoremap <leader>tm :call brumal#main#toggleTableMode()<cr>
 
 " QUICKFIX {{{1
-nmap <f5> <plug>(qf_qf_toggle)
-nmap <f6> <plug>(qf_loc_toggle)
+execute "nmap" g:br_leader_qf.g:br_leader_qf '<plug>(qf_qf_toggle)'
+execute "nmap" g:br_leader_qf_loc.g:br_leader_qf_loc '<plug>(qf_loc_toggle)'
+execute "nmap" g:br_leader_qf.g:br_leader_qf_loc '<plug>(qf_qf_switch)'
+
+execute "nmap" g:br_leader_qf.'p' '<plug>(qf_qf_previous)'
+execute "nmap" g:br_leader_qf.'n' '<plug>(qf_qf_next)'
+execute "nmap" g:br_leader_qf_loc.'p' '<plug>(qf_loc_previous)'
+execute "nmap" g:br_leader_qf_loc.'n' '<plug>(qf_loc_next)'
 
 " DEPRECATED {{{1
 " Compiler workflow.

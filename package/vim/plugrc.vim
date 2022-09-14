@@ -317,6 +317,9 @@ let g:fireplace_eval_opts = {
 " SURROUND {{{2
 let g:surround_no_insert_mappings = 1
 
+" QF QUICKFIX {{{2
+let g:qf_auto_quit = 0
+
 " BUILTIN PLUGINS {{{1
 
 runtime macros/matchit.vim

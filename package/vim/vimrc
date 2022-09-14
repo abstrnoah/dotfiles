@@ -40,6 +40,9 @@ let g:br_leader_bang = "<leader>!"
 let g:br_leader_sexp = "<leader>."
 " For command-mode shortcut.
 let g:br_leader_command = "<leader>:"
+" For location/quickfix.
+let g:br_leader_qf = "<f5>"
+let g:br_leader_qf_loc = "<f6>"
 
 " Ftdetect *.m as mma rather than matlab.
 let g:filetype_m = "mma"
