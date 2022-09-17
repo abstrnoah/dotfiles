@@ -197,9 +197,9 @@ alias _fzf_compgen_dir='_br_list_dirs'
 # KEY BINDINGS {{{1
 
 _br_command_exists fzf && {
-    source ~/.nix-profile/share/fzf/key-bindings.zsh \
+    source ~/.nix-profile/share/fzf/key-bindings.zsh 2>&1 \
     || source ~/.local/share/fzf/key-bindings.zsh \
-    || {
+    && {
         bindkey -M viins -r '\ec'
         bindkey -M vicmd -r '\ec'
         bindkey -M viins '^G' fzf-cd-widget
