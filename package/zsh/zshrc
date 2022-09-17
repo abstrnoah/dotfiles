@@ -197,11 +197,14 @@ alias _fzf_compgen_dir='_br_list_dirs'
 # KEY BINDINGS {{{1
 
 _br_command_exists fzf && {
-    source ~/.nix-profile/share/fzf/key-bindings.zsh
-    bindkey -M viins -r '\ec'
-    bindkey -M vicmd -r '\ec'
-    bindkey -M viins '^G' fzf-cd-widget
-    bindkey -M vicmd '^G' fzf-cd-widget
+    source ~/.nix-profile/share/fzf/key-bindings.zsh \
+    || source ~/.local/share/fzf/key-bindings.zsh \
+    || {
+        bindkey -M viins -r '\ec'
+        bindkey -M vicmd -r '\ec'
+        bindkey -M viins '^G' fzf-cd-widget
+        bindkey -M vicmd '^G' fzf-cd-widget
+    }
 } || {
     bindkey -M viins "^r" history-incremental-pattern-search-backward
 }
