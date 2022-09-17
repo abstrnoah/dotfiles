@@ -27,7 +27,8 @@ let g:br_plugs = {
     \ "ludovicchabant/vim-gutentags": [
         \ {
             \ "spec": {"commit": "3314afd"},
-            \ "supported": {-> v:version >= 700 && v:version < 800}
+            \ "supported": {-> v:version >= 700 && v:version < 800
+                          \ && executable('ctags')}
         \ },
         \ {
             \ "supported": {-> v:version >= 800}
