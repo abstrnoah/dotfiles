@@ -13,5 +13,3 @@
 [include]
     ; This is where site-specific directives should go, such as aliasing urls.
     path = ~/.site.gitconfig
-[url "/media/analyticalnoa/portable02/repository/"]
-    insteadOf = portable02:
