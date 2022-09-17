@@ -142,9 +142,12 @@ endfunction " }}}
 function brumal#main#declare_plugs(specs, active_plugs) abort
     for plug_name in a:active_plugs
         if has_key(a:specs, plug_name)
-            if !brumal#main#declare_plug(plug_name, a:specs)
-                echomsg "No compatible version of plugin '".plug_name."' found."
-            endif
+            " TODO enable via some debug flag; disabling for now bc hit-enter on
+            " cmd line is annoying
+            " if !brumal#main#declare_plug(plug_name, a:specs)
+            "     echomsg "No compatible version of plugin '".plug_name."' found."
+            " endif
+            call brumal#main#declare_plug(plug_name, a:specs)
         endif
     endfor
 endfunction " }}}
