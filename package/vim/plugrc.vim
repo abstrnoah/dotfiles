@@ -28,10 +28,10 @@ let g:br_plugs = {
         \ {
             \ "spec": {"commit": "3314afd"},
             \ "supported": {-> v:version >= 700 && v:version < 800
-                          \ && executable('ctags')}
+                             \ && executable('ctags')}
         \ },
         \ {
-            \ "supported": {-> v:version >= 800}
+            \ "supported": {-> v:version >= 800 && executable('ctags')}
         \ }
     \ ],
     \ "ctrlpvim/ctrlp.vim": [],
@@ -166,7 +166,8 @@ let g:ctrlp_user_command = {
 
 " GUTENTAGS {{{2
 let g:gutentags_cache_dir = "~/.cache/gutentags"
-if has('statusline')
+if brumal#main#plug_supported("ludovicchabant/vim-gutentags", g:br_plugs)
+ \ && has('statusline')
     set statusline^=%{gutentags#statusline()}\|
 endif
 
