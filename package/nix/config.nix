@@ -56,6 +56,7 @@ in
         delta
         djvu2pdf
         dmidecode
+        exiftool
         imagemagick
         img2pdf
         jdk
@@ -65,6 +66,7 @@ in
         python3
         rlwrap
         spotify-cli-linux
+        stow
         weechat
         wego
         xorg.xbacklight
