@@ -2,6 +2,8 @@
 
 # Init or attach tmux with start directory $1.
 
+# set -x
+
 source "${BR_DOTFILES}/share/utilities.zsh" || exit 1
 _br_require tmux || exit
 
@@ -10,7 +12,7 @@ local session_name="$(basename "${start_directory:-.}")"
 session_name="${session_name//./_}" # dots confuse tmux
 test -d "${start_directory}" \
     || _br_oops "Directory not found: ${start_directory}" || exit
-tmux has-session -t "${session_name}" 2> /dev/null || {
+tmux has-session -t="${session_name}" 2> /dev/null || {
     tmux new-session -d -s "${session_name}" -c "${start_directory}"
 }
 if test -z "${TMUX}"; then
