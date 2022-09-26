@@ -138,3 +138,6 @@ execute "nnoremap" "<c-w><c-k>" ":resize +".g:br_resize_height."<cr>"
 
 " Toggle list.
 nmap <leader>l :set list!<cr>
+
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
