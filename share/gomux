@@ -7,8 +7,8 @@
 source "${BR_DOTFILES}/share/utilities.zsh" || exit 1
 _br_require tmux || exit
 
-local start_directory="$(readlink -f "${1}")"
-local session_name="$(basename "${start_directory:-.}")"
+start_directory="$(readlink -f "${1}")"
+session_name="$(basename "${start_directory:-.}")"
 session_name="${session_name//./_}" # dots confuse tmux
 test -d "${start_directory}" \
     || _br_oops "Directory not found: ${start_directory}" || exit

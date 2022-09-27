@@ -18,6 +18,7 @@ export FZF_DEFAULT_OPTS=$(_br_join " " \
     "--reverse" \
     "--bind change:first" \
     "--bind tab:replace-query" \
+    "--bind alt-enter:print-query" \
 )
 
 _br_command_exists bat && {
