@@ -90,6 +90,7 @@ let g:br_plugs = {
         \ }
     \ ],
     \ "abstractednoah/lists.vim": [],
+    \ "lervag/lists.vim": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
