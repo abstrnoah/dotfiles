@@ -2,7 +2,11 @@
 
 # set -x
 
-session_name="$(tmux list-sessions -F '#S' | fzf-tmux -p)"
+_fzf() {
+    fzf-tmux -w 25 -- --border=none --prompt="session> "
+}
+
+session_name="$(tmux list-sessions -F '#S' | _fzf)"
 session_name="${session_name//./_}" # dots confuse tmux
 test -n "${session_name}" || exit 0
 
