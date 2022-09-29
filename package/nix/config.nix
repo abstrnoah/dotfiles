@@ -40,6 +40,7 @@ in
     "discord"
     "spotify"
     "spotify-unwrapped"
+    "vscode"
     "xflux"
     "zoom"
   ];
@@ -91,6 +92,7 @@ in
         rofi
         signal-desktop
         spotify
+        vscode
         wmctrl
         xclip
         xflux
