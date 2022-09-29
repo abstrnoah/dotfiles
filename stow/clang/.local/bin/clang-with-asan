@@ -1,3 +1,18 @@
 #!/bin/bash
-command -v clang-10 &> /dev/null || alias clang='clang-10'
-LSAN_OPTIONS=suppressions=leaks.supp clang -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer $@
+
+_get_clang_version() {
+    clang --version | head -n1 \
+        | awk '{print $3}' | sed -n 's/^\([0-9]\+\)\..*/\1/p'
+}
+_supported_clang_version=10
+
+if command -v clang-10 &> /dev/null; then
+    _clang() { clang-10 "${@}"; }
+elif test "${_supported_clang_version}" = "$(_get_clang_version)"; then
+    _clang() { clang "${@}"; }
+else
+    echo "Wrong version of clang, we demand ${_supported_clang_version}" 1>&2
+    exit 1
+fi
+
+LSAN_OPTIONS=suppressions=leaks.supp _clang -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer $@
