@@ -1,0 +1,3 @@
+#!/bin/bash
+command -v clang-10 &> /dev/null || alias clang='clang-10'
+LSAN_OPTIONS=suppressions=leaks.supp clang -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer $@
