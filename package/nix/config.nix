@@ -84,7 +84,7 @@ in
         # jabref # Broke nixos 21.11 -> 22.05.
         # tdesktop # telegram-desktop, seems to be out of date atm.
         # tor-browser-bundle-bin # Audio not working for tor.
-        discord
+        # discord
         libnotify
         mpv
         okular
