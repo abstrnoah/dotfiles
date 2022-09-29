@@ -4,3 +4,4 @@ autoload/plug.vim
 sessions/
 .netrwhist
 spell/*.spl
+spell/*.sug
