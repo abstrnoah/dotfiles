@@ -1,6 +1,11 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # set -x
+
+command -v fzf-tmux &> /dev/null || {
+    tmux choose-tree -swZG -Oname
+    exit
+}
 
 _fzf() {
     fzf-tmux -w 25 -- --border=none --prompt="session> "
