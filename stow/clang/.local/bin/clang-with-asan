@@ -8,11 +8,10 @@ _supported_clang_version=10
 
 if command -v clang-10 &> /dev/null; then
     _clang() { clang-10 "${@}"; }
-elif test "${_supported_clang_version}" = "$(_get_clang_version)"; then
-    _clang() { clang "${@}"; }
+# elif test "${_supported_clang_version}" = "$(_get_clang_version)"; then
+#     _clang() { clang "${@}"; }
 else
-    echo "Wrong version of clang, we demand ${_supported_clang_version}" 1>&2
-    exit 1
+    _clang() { clang "${@}"; }
 fi
 
 LSAN_OPTIONS=suppressions=leaks.supp _clang -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer $@
