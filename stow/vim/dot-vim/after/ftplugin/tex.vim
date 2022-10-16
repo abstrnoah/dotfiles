@@ -9,3 +9,5 @@ exe "nmap <buffer>" g:br_leader_nav.."m" "<plug>(vimtex-toc-open)"
 " Custom surrounds
 " TeXt -> %%<newline>TeXt%%<newline>
 let b:surround_{char2nr('P')} = "%%\n\r%%\n"
+" \(math\)
+let b:surround_{char2nr('$')} = "\\(\r\\)"
