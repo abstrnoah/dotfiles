@@ -141,11 +141,9 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeHijackNetrw = 1
 
 " COC {{{2
-" TODO we are disabling cocrc for now to see if i really miss it
-" TODO improve plugin system so that we can reliably isolate plugins
-" if brumal#main#plug_supported("neoclide/coc.nvim", g:br_plugs)
-    " source ~/.vim/cocrc.vim
-" endif
+if brumal#main#plug_supported("neoclide/coc.nvim", g:br_plugs)
+    source ~/.vim/cocrc.vim
+endif
 
 " VIMSPECTOR {{{2
 let g:vimspector_install_gadgets = [
