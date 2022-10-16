@@ -59,6 +59,7 @@ in
         djvu2pdf
         dmidecode
         exiftool
+        gcal
         imagemagick
         img2pdf
         jdk
