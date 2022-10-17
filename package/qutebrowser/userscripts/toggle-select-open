@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# send_cmd(command, ...) - Send command to qutebrowser. {{{2
+# send_cmd(command, ...) - Send command to qutebrowser.
 # Command may be split into args, they will be joined with spaces.
 send_cmd() {
     echo "${@}" >> "${QUTE_FIFO}"
@@ -15,9 +15,9 @@ test -n "${qb_argument}" || smt_flag="-s"
 
 case "${qb_command}" in
     :tab-select)
-        send_cmd "set-cmd-text "${smt_flag}" :open ${qb_argument}"
+        send_cmd "set-cmd-text "${smt_flag}" :open -t ${qb_argument}"
         ;;
-    :open)
-        send_cmd "set-cmd-text "${smt_flag}" :tab-select ${qb_argument}"
-        ;;
+    # :open)
+    #     send_cmd "set-cmd-text "${smt_flag}" :tab-select ${qb_argument}"
+    #     ;;
 esac
