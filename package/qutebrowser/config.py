@@ -144,6 +144,7 @@ config.bind("gH", "set-cmd-text -s :back")
 config.bind("gL", "set-cmd-text -s :forward")
 
 # Tab navigation.
+config.bind(_leader + "<space>", "set-cmd-text -s :tab-select")
 config.unbind("d")
 config.unbind("D")
 config.unbind("<Ctrl-w>")
@@ -168,3 +169,4 @@ config.bind(_leader + "f", "config-cycle -t statusbar.show in-mode always")
 
 # Command mode
 config.bind("<Ctrl-f>", "edit-command", mode="command")
+config.bind("<Ctrl-t>", "spawn --userscript toggle-select-open", mode="command")
