@@ -16,6 +16,7 @@ let
     netcat-openbsd
     nettools
     nodejs
+    pandoc
     pdfgrep
     pfetch
     ranger
@@ -72,6 +73,7 @@ in
         stow
         weechat
         wego
+        wkhtmltopdf
         xorg.xbacklight
         yj
         yq-go
