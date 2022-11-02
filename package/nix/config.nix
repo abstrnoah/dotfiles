@@ -18,6 +18,7 @@ let
     nodejs
     pandoc
     pdfgrep
+    pdftk
     pfetch
     ranger
     silver-searcher
