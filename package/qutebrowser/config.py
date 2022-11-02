@@ -17,7 +17,7 @@ _leader_hint = _leader + ";"
 # SETUP {{{1
 
 # Tor proxy.
-c.content.proxy = "socks://localhost:9050"
+# c.content.proxy = "socks://localhost:9050"
 # Not available without QtWebKit backend :(.
 # c.content.proxy_dns_requests = True
 
