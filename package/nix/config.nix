@@ -25,6 +25,7 @@ let
     sl
     tectonic
     textql
+    time
     tmux
     tmuxinator
     toilet
