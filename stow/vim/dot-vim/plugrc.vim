@@ -198,6 +198,7 @@ let g:vim_markdown_folding_level = 2
 " let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_math = 1
 let g:vim_markdown_no_defauly_key_mappings = 1
+let g:vim_markdown_conceal_code_blocks = 0
 
 " INDENTLINE {{{2
 " Note that as it stands, indentLine seems to have control over conceal. So
