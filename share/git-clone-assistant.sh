@@ -31,7 +31,7 @@ echo "Press Enter to continue when you get a response or Ctrl-C to exit now"
 echo "(you can safely run the script again later)."
 read _
 
-echo "Cloning "${USER}@${remote}" in current directory..."
+echo "Cloning \"${USER}@${remote}\" in current directory..."
 export GIT_SSH_COMMAND="ssh -p 2202 -o 'ProxyCommand /bin/nc -X connect -x %h:443 %h %p' -i ${key_path} -l ${USER}"
 if git clone "${remote}"; then
     echo
