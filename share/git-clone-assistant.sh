@@ -21,17 +21,17 @@ get_key() {
     cat "${key_path}.pub"
 }
 
-echo "Please email the following public key to abstractednoah@brumal.org" \
-     "and await a response..."
+echo "Please email the following public key to the admin and await a"
+echo "response..."
 echo
 get_key
 
 echo
-echo "Press Enter to continue when you get a response or Ctrl-C to exit now" \
-     "(you can run safely run the script again later)."
+echo "Press Enter to continue when you get a response or Ctrl-C to exit now"
+echo "(you can safely run the script again later)."
 read _
 
-echo "Cloning "${remote}" in current directory..."
+echo "Cloning "${USER}@${remote}" in current directory..."
 export GIT_SSH_COMMAND="ssh -p 2202 -o 'ProxyCommand /bin/nc -X connect -x %h:443 %h %p' -i ${key_path} -l ${USER}"
 if git clone "${remote}"; then
     echo
