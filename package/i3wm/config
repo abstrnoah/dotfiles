@@ -82,7 +82,7 @@ set $green   #859900
 
 # Workspaces.
 set $ws_audio audio
-set $ws_comm  comm
+set $ws_telegram tel
 
 # SETUP {{{1
 
@@ -161,6 +161,7 @@ bar {
 
 
 for_window [class="(?i)^spotify$"] move window to workspace $ws_audio
+for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_telegram
 
 # Auto-float clojure incanter 'view' popups.
 for_window [title="^Incanter Table$"] floating enable
