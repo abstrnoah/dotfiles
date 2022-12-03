@@ -55,7 +55,7 @@ set $resize_lg 50
 set $gap_interval 2
 
 # Default brightness incremenets.
-set $brightness_interval 2
+set $brightness_interval 5
 
 # Dimensions.
 set $default_border 1
