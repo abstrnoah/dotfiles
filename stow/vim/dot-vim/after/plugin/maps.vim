@@ -33,10 +33,10 @@ map Q <nop>
 " nnoremap <leader>. m[vib:<c-u>sleep 350m<cr>`[
 
 " Move by mark.
-" Move mark TO here.
+" Move marked line below.
 nnoremap <expr> <leader>m ":'".nr2char(getchar())." m .<cr>"
-" Move here TO mark.
-nnoremap <expr> <leader>M ":. m '".nr2char(getchar())."<cr>"
+" Move marked line above.
+nnoremap <expr> <leader>M ":'".nr2char(getchar())." m -1<cr>"
 
 " EXPLORE {{{1
 execute "nnoremap" g:br_leader_nav."m" ":TagbarOpenAutoClose<CR>"
