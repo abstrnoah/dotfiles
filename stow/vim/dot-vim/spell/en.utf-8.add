@@ -4,10 +4,13 @@
 ## For remaking '.spl' file (see just below `:help :spellundo`) run
 ## `:mkspell! %` from within *this* file.
 
+abelian
 abstractednoah
+add
 administrivia
 Aebi
 Aelin
+Alekos
 anki
 arity
 Aronszajn
@@ -36,8 +39,11 @@ decarbonisation
 directedness
 dotfiles
 dwindlingly
+embeddability
 filetypes
 finitary
+Fraïssé
+Fraïssé's
 functorial
 globals
 Gruber
@@ -63,10 +69,12 @@ machine03
 Malik
 malloc
 Mantovan
+Math Club
 meatman
 metrizable
 modeline
 Mom
+monic
 multitool
 NLP
 nonempty
@@ -82,18 +90,23 @@ plugin
 plugins
 pointwise
 poset
+posets
 prefrosh
 preimage
 preimages
 pullback
 pushforward
 quesadilla
+quicksort
+rationals
+reals
 recurse
 reparametrised
 routy
 sed
 shortsleeved
 shroom
+spelllang
 structs
 stuffable
 subdiagram
@@ -103,6 +116,7 @@ submodel
 submodels
 subpath
 subpaths
+subposet
 subtree
 supercategory
 surveil
@@ -113,6 +127,7 @@ typedefs
 Uber
 unanchored
 unoriented
+vim
 vimwiki
 Winshell's
 Zoltan
