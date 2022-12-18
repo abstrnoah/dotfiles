@@ -94,6 +94,7 @@ in
         libnotify
         mpv
         okular
+        python310Packages.grip
         qutebrowser
         rofi
         signal-desktop
