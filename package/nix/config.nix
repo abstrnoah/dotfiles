@@ -70,6 +70,7 @@ in
         nodePackages.insect
         php
         python3
+        qemu
         rlwrap
         spotify-cli-linux
         stow
