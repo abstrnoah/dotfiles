@@ -17,6 +17,7 @@ let
     nettools
     nodejs
     pandoc
+    pass
     pdfgrep
     pdftk
     pfetch
