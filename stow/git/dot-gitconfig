@@ -1,7 +1,7 @@
 ; path: ~/.gitconfig
 [user]
     name = Noah D. Ortiz
-    email = abstractednoah@brumal.org
+    email = abstrnoah@brumal.org
 [merge]
     conflict = diff3
 [push]
