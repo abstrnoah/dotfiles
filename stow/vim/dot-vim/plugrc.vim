@@ -91,6 +91,7 @@ let g:br_plugs = {
     \ ],
     \ "abstractednoah/lists.vim": [],
     \ "lervag/lists.vim": [],
+    \ "whonore/Coqtail": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -126,6 +127,7 @@ let g:br_plugs_active = [
     \ "junegunn/gv.vim",
     \ "junegunn/vim-peekaboo",
     \ "abstractednoah/lists.vim",
+    \ "whonore/Coqtail",
 \ ]
 
 " PLUGIN CONFIG {{{1

@@ -58,6 +58,7 @@ in
         black
         clang_10 # version 10 so consistent with labradoodle.caltech.edu
         clojure
+        coq
         cowsay
         delta
         djvu2pdf
