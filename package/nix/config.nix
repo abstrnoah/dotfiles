@@ -70,6 +70,7 @@ in
         jdk
         maven
         nodePackages.insect
+        ocaml
         php
         python3
         qemu
