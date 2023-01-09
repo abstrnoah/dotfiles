@@ -11,13 +11,14 @@ let
     fzf
     git
     glibcLocales
+    # gnupg
     htop
     jq
     netcat-openbsd
     nettools
     nodejs
     pandoc
-    pass
+    # pass
     pdfgrep
     pdftk
     pfetch

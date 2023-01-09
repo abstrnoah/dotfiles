@@ -226,6 +226,9 @@ bindsym --release $mod+c \
 # Notifications.
 bindsym $mod+$alt+n exec $scripts/control-system notify_toggle
 
+# pass
+bindsym $mod+$alt+p exec $scripts/passmenu
+
 # HARDWARE {{{2
 # Audio.
 bindsym XF86AudioRaiseVolume exec $keybinds audio_vol_up
