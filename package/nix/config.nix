@@ -49,6 +49,9 @@ in
     "xflux"
     "zoom"
   ];
+  permittedInsecurePackages = [
+    "qtwebkit-5.212.0-alpha4" # for qutebrowser (TODO)
+  ];
   packageOverrides = pkgs: {
     clientPackages = pkgs.buildEnv {
       name = "clientPackages";
