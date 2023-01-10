@@ -108,7 +108,6 @@ in
         rofi
         signal-desktop
         spotify
-        vscode
         wmctrl
         xclip
         xflux
