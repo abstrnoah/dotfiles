@@ -72,6 +72,7 @@ in
         maven
         nodePackages.insect
         ocaml
+        ocamlformat
         php
         python3
         qemu
