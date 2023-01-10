@@ -57,7 +57,7 @@ in
       ++ [
         # anki (needs QT_XCB_GL_INTEGRATION=none workaround)
         black
-        clang_10 # version 10 so consistent with labradoodle.caltech.edu
+        clang
         clojure
         coq
         cowsay
