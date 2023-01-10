@@ -11,14 +11,14 @@ let
     fzf
     git
     glibcLocales
-    # gnupg
+    # gnupg # version conflict due to systemd supervision of gpg-agent
     htop
     jq
     netcat-openbsd
     nettools
     nodejs
     pandoc
-    # pass
+    # pass # see gnupg issue
     pdfgrep
     pdftk
     pfetch
