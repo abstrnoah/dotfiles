@@ -67,6 +67,7 @@ setopt no_match
 setopt no_multios
 setopt notify
 setopt prompt_cr prompt_sp
+setopt hist_ignore_space
 
 # COMPLETIONS {{{1
 # Zsh's new completions, 'zshcompsys'.
@@ -194,6 +195,7 @@ _br_command_exists torsocks && {
 
 alias _fzf_compgen_path='_br_list_paths'
 alias _fzf_compgen_dir='_br_list_dirs'
+alias tomb=' tomb'
 
 # KEY BINDINGS {{{1
 
