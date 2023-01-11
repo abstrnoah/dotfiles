@@ -33,6 +33,7 @@ let
     toilet
     tree
     tuptime
+    # udiskie # TODO from apt
     universal-ctags
     vimHugeX
     visidata
