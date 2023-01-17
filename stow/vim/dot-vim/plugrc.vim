@@ -169,10 +169,11 @@ let g:ctrlp_user_command = {
 
 " GUTENTAGS {{{2
 let g:gutentags_cache_dir = "~/.cache/gutentags"
-if brumal#main#plug_supported("ludovicchabant/vim-gutentags", g:br_plugs)
- \ && has('statusline')
-    set statusline^=%{gutentags#statusline()}\|
-endif
+" if brumal#main#plug_supported("ludovicchabant/vim-gutentags", g:br_plugs)
+"  \ && has('statusline')
+"     TODO
+"     set statusline^=%{gutentags#statusline()}\|
+" endif
 
 " TAGBAR {{{2
 let g:tagbar_sort = 1

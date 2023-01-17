@@ -120,7 +120,7 @@ endif
 
 if has('statusline')
     set laststatus=2 " Always display statusline.
-    set statusline=%<%f\ %h%m%r\ %y%=%-14.(%l,%c%V%)\ %P
+    let &statusline = '%<%f %m%r%y%=(%l/%L %P, %c)'
 endif
 
 if has('syntax')
