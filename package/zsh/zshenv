@@ -34,3 +34,6 @@ export MOZ_USE_XINPUT2=1
 # fi
 
 export GTK_THEME=Adwaita:dark
+
+# for `rlue/timer`
+export AUDIODRIVER=alsa
