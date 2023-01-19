@@ -9,8 +9,8 @@ configuration {
     kb-remove-to-eol: "";
     kb-row-tab: "";
     // Custom binds.
-    kb-row-up: "Control+k";
-    kb-row-down: "Control+j";
+    kb-element-prev: "Control+k";
+    kb-element-next: "Control+j";
     kb-row-select: "Tab";
     kb-accept-entry: "Return";
     kb-accept-custom: "Control+Return";

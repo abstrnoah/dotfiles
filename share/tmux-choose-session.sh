@@ -8,7 +8,7 @@ command -v fzf-tmux &> /dev/null || {
 }
 
 _fzf() {
-    fzf-tmux -w 25 -- --border=none --prompt="session> "
+    fzf-tmux -w 25 -- --prompt="session> "
 }
 
 session_name="$(tmux list-sessions -F '#S' | _fzf)"

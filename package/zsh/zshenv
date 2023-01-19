@@ -19,7 +19,7 @@ export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
 
 # Pin nixpkgs.
-export BR_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/ef01553ac5d763d2a7816051d30e92905a036364.tar.gz"
+export BR_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/37c045276cbedf0651305c564e7b696df12bc5fc.tar.gz"
 export BR_NIXPKGS_LOCAL="${HOME}/repository/know/explore/cs/nixpkgs"
 
 # Enable firefox touch screen scrolling.

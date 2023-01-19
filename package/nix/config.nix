@@ -33,7 +33,6 @@ let
     toilet
     tree
     tuptime
-    # udiskie # TODO from apt
     universal-ctags
     vimHugeX
     visidata
@@ -49,9 +48,6 @@ in
     "vscode"
     "xflux"
     "zoom"
-  ];
-  permittedInsecurePackages = [
-    "qtwebkit-5.212.0-alpha4" # for qutebrowser (TODO)
   ];
   packageOverrides = pkgs: {
     clientPackages = pkgs.buildEnv {
@@ -77,15 +73,16 @@ in
         nodePackages.insect
         ocaml
         ocamlformat
+        ocamlPackages.utop
         php
         python3
-        qemu
+        # qemu
         rlwrap
         spotify-cli-linux
         stow
         weechat
         wego
-        wkhtmltopdf
+        # wkhtmltopdf # needs deprecated webkit
         xorg.xbacklight
         yj
         yq-go
