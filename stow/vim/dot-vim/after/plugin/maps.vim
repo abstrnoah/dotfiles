@@ -138,3 +138,6 @@ nmap <leader>l :set list!<cr>
 
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
+
+" toggle cursor column
+nnoremap <leader>c :set cursorcolumn!<cr>

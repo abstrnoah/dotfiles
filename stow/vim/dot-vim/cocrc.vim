@@ -175,7 +175,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " " Resume latest coc list.
 " nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Open list list.
-nnoremap <silent><nowait> <leader>cl  :<C-u>CocList<CR>
+" nnoremap <silent><nowait> <leader>cl  :<C-u>CocList<CR>
 
 
 "
