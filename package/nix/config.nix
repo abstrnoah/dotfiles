@@ -79,6 +79,7 @@ in
         # qemu
         rlwrap
         spotify-cli-linux
+        sqlfluff
         stow
         weechat
         wego
