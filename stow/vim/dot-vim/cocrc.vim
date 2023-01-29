@@ -15,7 +15,6 @@ let g:coc_global_extensions = [
     \ 'coc-word',
     \ 'coc-java-debug',
     \ 'coc-yaml',
-    \ 'coc-git',
     \ 'coc-clang-format-style-options',
     \ 'coc-vimtex',
 \]
@@ -24,6 +23,7 @@ let g:coc_global_extensions = [
     " \ 'coc-clangd',
     " \ 'coc-json',
     " \ 'coc-snippets',
+    " \ 'coc-git',
 
 "
 " Config for coc.nvim.

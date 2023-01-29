@@ -1,5 +1,4 @@
 " Author: Noah <abstractednoah@brumal.org>
-
 " Note: This script does not check whether plugins should be loaded; that should
 " be done in vimrc where this is sourced.
 
@@ -92,6 +91,7 @@ let g:br_plugs = {
     \ "abstractednoah/lists.vim": [],
     \ "lervag/lists.vim": [],
     \ "whonore/Coqtail": [],
+    \ "airblade/vim-gitgutter": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -128,6 +128,7 @@ let g:br_plugs_active = [
     \ "junegunn/vim-peekaboo",
     \ "abstractednoah/lists.vim",
     \ "whonore/Coqtail",
+    \ "airblade/vim-gitgutter",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -329,6 +330,9 @@ let g:qf_auto_quit = 0
 
 " COQTAIL {{{2
 let g:coqtail_noimap = 1
+
+" GIT GUTTER {{{2
+let g:gitgutter_set_sign_backgrounds = 0
 
 " BUILTIN PLUGINS {{{1
 
