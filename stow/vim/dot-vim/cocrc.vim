@@ -5,7 +5,6 @@
 "
 " FIXME: 'coc-sh' not working.
 let g:coc_global_extensions = [
-    \ 'coc-json',
     \ 'coc-python',
     \ 'coc-java',
     \ 'coc-html',
@@ -14,7 +13,6 @@ let g:coc_global_extensions = [
     \ 'coc-dictionary',
     \ 'coc-tag',
     \ 'coc-word',
-    \ 'coc-snippets',
     \ 'coc-java-debug',
     \ 'coc-yaml',
     \ 'coc-git',
@@ -24,6 +22,8 @@ let g:coc_global_extensions = [
 " TODO: clangd disabled until I figure out how to get it to work with complex
 " projects.
     " \ 'coc-clangd',
+    " \ 'coc-json',
+    " \ 'coc-snippets',
 
 "
 " Config for coc.nvim.
