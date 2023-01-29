@@ -125,6 +125,7 @@ endif
 
 if has('syntax')
     set cursorline
+    set cursorcolumn
     let &colorcolumn = g:br_colorcolumn
     set spelllang=en_gb
     let &spellfile = $BR_VIMDIR . '/spell/en.utf-8.add'
@@ -223,13 +224,15 @@ autocmd BufWinLeave * call clearmatches()
 hi Folded cterm=none
 
 " Accent current line number.
-hi CursorLine cterm=none
-hi CursorLineNr cterm=bold
+hi CursorLine ctermbg=black
+hi CursorLineNr cterm=bold ctermbg=none
+hi CursorLineSign cterm=none ctermbg=none
+hi CursorLineFold cterm=none
+hi SignColumn ctermbg=black
+hi ColorColumn ctermbg=black
+hi CursorColumn cterm=bold ctermbg=none
 
-"
-" Indent, wrap, margins, format
-"
-highlight ColorColumn ctermbg=black
+
 
 " NOTES {{{1
 " [^2]: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
