@@ -224,15 +224,14 @@ autocmd BufWinLeave * call clearmatches()
 hi Folded cterm=none
 
 " Accent current line number.
-hi CursorLine ctermbg=black
+hi CursorLine ctermbg=black cterm=bold
 hi CursorLineNr cterm=bold ctermbg=none
 hi CursorLineSign cterm=none ctermbg=none
 hi CursorLineFold cterm=none
 hi SignColumn ctermbg=black
 hi ColorColumn ctermbg=black
 hi CursorColumn cterm=bold ctermbg=none
-
-
+hi Cursor cterm=bold
 
 " NOTES {{{1
 " [^2]: https://vim.fandom.com/wiki/Highlight_unwanted_spaces
