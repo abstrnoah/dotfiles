@@ -31,6 +31,8 @@ REPEATMARK = "⭯"
 # Options
 #
 
+options.csv_dialect="unix"
+
 # Safety.
 options.confirm_overwrite = False
 options.safety_first = True
