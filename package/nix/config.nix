@@ -34,8 +34,10 @@ let
     tree
     tuptime
     universal-ctags
+    unzip
     vimHugeX
     visidata
+    zip
   ];
 in
 {
@@ -139,7 +141,6 @@ in
       man
       openssh
       procps
-      unzip
       utillinux
       zsh
     ]);
