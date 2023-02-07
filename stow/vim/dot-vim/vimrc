@@ -78,7 +78,7 @@ if has("folding")
     let &fillchars = "fold: "
     set foldmethod=marker
     set foldtext=brumal#main#foldtext()
-    set foldcolumn=2
+    set foldcolumn=1
     " Start with top-level tolds open.
     set foldlevelstart=1
 endif
