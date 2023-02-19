@@ -144,7 +144,7 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeHijackNetrw = 1
 
 " COC {{{2
-if brumal#main#plug_supported("neoclide/coc.nvim", g:br_plugs)
+if index(g:br_plugs_active, "neoclide/coc.nvim") >= 0
     source ~/.vim/cocrc.vim
 endif
 
