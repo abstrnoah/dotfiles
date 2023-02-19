@@ -215,12 +215,8 @@ if &loadplugins
     colorscheme solarized
 endif
 
-" (Still not sure about these.)
-" highlight Search ctermbg=black
-" highlight Visual ctermbg=black
 hi Folded cterm=none
 
-" Accent current line number.
 hi CursorLine ctermbg=black cterm=bold
 hi CursorLineNr cterm=bold ctermbg=none
 hi CursorLineSign cterm=none ctermbg=none
