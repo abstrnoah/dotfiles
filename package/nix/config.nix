@@ -83,6 +83,7 @@ in
         spotify-cli-linux
         sqlfluff
         stow
+        texlive.combined.scheme-small
         weechat
         wego
         # wkhtmltopdf # needs deprecated webkit
