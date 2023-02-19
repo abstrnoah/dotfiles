@@ -59,6 +59,7 @@ in
       ++ [
         # anki (needs QT_XCB_GL_INTEGRATION=none workaround)
         black
+        bup
         clang
         clojure
         coq
