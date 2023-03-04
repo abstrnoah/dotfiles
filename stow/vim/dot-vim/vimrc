@@ -211,6 +211,7 @@ endif
 
 " TODO: Move to a fork of solarized.
 if &loadplugins
+    let g:solarized_contrast = "high"
     set background=dark
     colorscheme solarized
 endif
