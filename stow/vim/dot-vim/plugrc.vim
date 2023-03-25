@@ -1,4 +1,4 @@
-" Author: Noah <abstractednoah@brumal.org>
+" Author: Noah <abstrnoah@brumal.org>
 " Note: This script does not check whether plugins should be loaded; that should
 " be done in vimrc where this is sourced.
 
@@ -57,7 +57,7 @@ let g:br_plugs = {
     \ "honza/vim-snippets": [],
     \ "plasticboy/vim-markdown": [{"spec": {'for': 'markdown'}}],
     \ "mboughaba/i3config.vim": [],
-    \ "abstractednoah/vim-colors-solarized": [{"spec": {"branch": "develop"}}],
+    \ "abstrnoah/vim-colors-solarized": [{"spec": {"branch": "develop"}}],
     \ "vimwiki/vimwiki": [{"supported": {-> v:version >= 730}}],
     \ "junegunn/vim-plug": [],
     \ "Konfekt/FastFold": [],
@@ -72,23 +72,23 @@ let g:br_plugs = {
         \ }
     \ ],
     \ "tpope/vim-fireplace": [],
-    \ "abstractednoah/vim-fireplace": [],
+    \ "abstrnoah/vim-fireplace": [],
     \ "romainl/vim-qf": [],
     \ "tommcdo/vim-exchange": [],
     \ "vim-scripts/utl.vim": [],
     \ "vim-scripts/paredit.vim": [],
-    \ "abstractednoah/paredit.vim": [],
+    \ "abstrnoah/paredit.vim": [],
     \ "junegunn/gv.vim": [],
     \ "junegunn/vim-peekaboo": [],
     \ "fcpg/vim-showmap": [],
     \ "lervag/wiki.vim": [{"supported": {-> v:version >= 801}}],
-    \ "abstractednoah/wiki.vim": [
+    \ "abstrnoah/wiki.vim": [
         \ {
             \ "supported": {-> v:version >= 801},
             \ "spec": {"branch": "hf-journal-rename"}
         \ }
     \ ],
-    \ "abstractednoah/lists.vim": [],
+    \ "abstrnoah/lists.vim": [],
     \ "lervag/lists.vim": [],
     \ "whonore/Coqtail": [],
     \ "airblade/vim-gitgutter": [],
@@ -115,18 +115,18 @@ let g:br_plugs_active = [
     \ "neoclide/coc.nvim",
     \ "plasticboy/vim-markdown",
     \ "mboughaba/i3config.vim",
-    \ "abstractednoah/vim-colors-solarized",
-    \ "abstractednoah/wiki.vim",
+    \ "abstrnoah/vim-colors-solarized",
+    \ "abstrnoah/wiki.vim",
     \ "junegunn/vim-plug",
-    \ "abstractednoah/vim-fireplace",
+    \ "abstrnoah/vim-fireplace",
     \ "romainl/vim-qf",
     \ "tommcdo/vim-exchange",
     \ "Konfekt/FastFold",
     \ "vim-scripts/utl.vim",
-    \ "abstractednoah/paredit.vim",
+    \ "abstrnoah/paredit.vim",
     \ "junegunn/gv.vim",
     \ "junegunn/vim-peekaboo",
-    \ "abstractednoah/lists.vim",
+    \ "abstrnoah/lists.vim",
     \ "whonore/Coqtail",
     \ "airblade/vim-gitgutter",
 \ ]
