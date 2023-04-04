@@ -111,6 +111,7 @@ in
         rofi
         signal-desktop
         spotify
+        thunderbird
         wmctrl
         xclip
         xflux
