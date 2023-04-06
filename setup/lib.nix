@@ -29,5 +29,5 @@
     make_module name config (merge deps)
   ;
 
-  specs_to_modules = specs: map spec_to_module specs;
+  specs_to_modules = specs: mapAttrs spec_to_module specs;
 }
