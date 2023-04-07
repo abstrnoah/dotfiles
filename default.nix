@@ -12,10 +12,28 @@ in
 rec {
   inherit nixpkgs;
 
-  is_drv = x: if (x ? type) then (x.type == "derivation") else false;
+  is_drv = x: x.type or null == "derivation";
 
-  # TODO should really check whether relative path (then must exist) or store path
-  is_env = x: with builtins; isPath x || isString x || is_drv x;
+  is_env = x: is_drv x && x._type or null == "env";
+
+  fold = builtins.foldl';
+
+  override = key: value: set@{ ... }: set // { ${key} = value; };
+
+  intern =
+    key: value: set@{ ... }:
+    assert builtins.hasAttr key set -> (builtins.getAttr key set) == value;
+    override key value set;
+
+  curry =
+    key:
+    f: # function of the form (set@{ key, ... }: ...)
+    value: set@{ ... }:
+    f (intern key value set);
+
+  extern = key: set@{ ... }: { "${set.${key}}" = set; };
+
+  list_to_set = key: fold (s: x: s // (extern key x)) {};
 
   make_env =
     {
@@ -33,49 +51,21 @@ rec {
       pathsToLink = paths;
       ignoreCollisions = false; # TODO check if these two give desired behaviour
       checkCollisionContents = true;
-    };
+    } // { _type = "env"; };
 
-  spec_to_env =
-    spec@{ envs, ... }:
-    let
-      dive = e: if (is_env e) then e else (spec_to_env e);
-    in
-    make_env (spec // { envs = map dive spec.envs; });
-
-  specs_to_envs = specs: builtins.mapAttrs (n: s: spec_to_env s) specs;
-
-  spec_dotfiles =
+  make_dotfiles =
     name: spec@{ ... }:
-    spec // { inherit name; envs = [ (./dotfiles + "/${name}") ]; };
+    make_env (spec // { inherit name; envs = [ (./dotfiles + "/${name}") ]; });
 
-  make_dotfiles = n: s: make_env (spec_dotfiles n s);
+  envs = user_envs // provided_envs;
 
-  name_sets =
-    sets:
-    let
-      m =
-        name: s:
-        assert s ? name -> s.name == name;
-        s // { inherit name; };
-      in
-      builtins.mapAttrs m sets;
+  provided_envs = list_to_set "name" [
+    (make_env { name = "stow_bin";
+                envs = [ nixpkgs.stow ]; paths = [ "/bin" ]; })
+    (make_env { name = "boot_reqs"; envs = [ envs.stow_bin ]; })
+  ];
 
-  provided_envs =
-    let
-      _ = name_sets _';
-      _' = rec {
-        stow_bin = { envs = [ nixpkgs.stow ]; paths = [ "/bin" ]; };
-        boot_reqs = { envs = [ _.stow_bin ]; };
-      };
-    in
-    specs_to_envs _;
-
-  envs =
-    let
-      _ = name_sets _';
-      _' = rec {
-        root = spec_dotfiles "root" {};
-      };
-    in
-    specs_to_envs _;
+  user_envs = list_to_set "name" [
+    (make_dotfiles "root" {})
+  ];
 }
