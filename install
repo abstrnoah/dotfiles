@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# All configuration is via the following environment variables:
+#
+# DOTFILES_INSTALL_MODE one of "portable", "nonportable", "auto"
+# NIX_INSTALLER_NO_MODIFY_PROFILE TODO
+# DEBUG
+
+{
+    if test -n "${DEBUG}"; then
+        set -x
+    fi
+
+    umask 0022
+
+    oops() {
+        echo "${0}:" fatal: "${@}"
+        exit 1
+    }
+
+    temp_dir="$(mktemp -d \
+                || oops "unable to create temporary build directory")"
+
+    NIX_INSTALLER_URL="https://releases.nixos.org/nix/nix-2.13.3/install"
+    NIX_INSTALLER_SCRIPT="${temp_dir}/install_nix"
+    NIX_INSTALLER_HASH="a90a3dadfe59fcebbafd361d0a0d05474008d82b17337fb94b06a5f1fa29ba32"
+    NIX_PORTABLE_URL="https://github.com/DavHau/nix-portable/releases/download/v009/nix-portable"
+    NIX_PORTABLE_HASH="e371dc77d8cdb4fefacdd2d8abf9b5ce013bb384a2b37def7b96e8dcb0d77790"
+
+    teardown() {
+        rm -rf "${temp_dir}"
+    }
+    trap teardown EXIT INT QUIT TERM
+
+    command_exists() {
+        command -v "${1}" > /dev/null 2>&1
+    }
+
+    require_exec() {
+        command_exists "${1}" || oops "requisite executable missing: ${1}"
+    }
+
+    require_file() {
+        test -f "${1}" || oops "requisite file missing: ${1}"
+    }
+
+    get_hash() {
+        require_file "${1}"
+        ./nix-portable nix-shell -p coreutils --run \
+            "sha256sum ${1} | cut -c1-64"
+    }
+
+    check_hash() {
+        local h="$(get_hash "${1}")"
+        test "${h}" = "${2}" || oops "hash mismatch: ${1}"
+    }
+
+    fetch() {
+        echo "fetching ${1} to ${2}..."
+        ./nix-portable nix-shell -p curl --run "curl --fail -L ${1} -o ${2}"
+        check_hash "${2}" "${3}"
+    }
+
+    install_nix() {
+        require_file "${NIX_INSTALLER_SCRIPT}"
+        # TODO support other modes
+        echo "starting nix installer in multi-user mode..."
+        sh "${NIX_INSTALLER_SCRIPT}" "${@}" || oops "nix installer failed"
+        echo "nix installer exited successfully"
+    }
+
+    echo "looking for nix-portable in current directory (see README)..."
+    require_exec ./nix-portable
+    check_hash ./nix-portable "${NIX_PORTABLE_HASH}"
+
+    fetch "${NIX_INSTALLER_URL}" "${NIX_INSTALLER_SCRIPT}" "${NIX_INSTALLER_HASH}"
+
+    install_nix --daemon
+}
