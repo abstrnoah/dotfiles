@@ -38,34 +38,41 @@ rec {
   make_env =
     {
       name ? "env"
-    , envs
+    , deps
     , prefix_substs ? null # { "dot-files" = ".file"; } # TODO not implemented
     , excludes ? null # TODO not implemented
     , paths ? [ "/" ]
     }:
     nixpkgs.buildEnv {
       inherit name;
-      paths = envs;
+      paths = deps;
       # TODO buildEnv requires pathsToLink to be directories; I'd like it to
       # support regular files eventually.
       pathsToLink = paths;
       ignoreCollisions = false; # TODO check if these two give desired behaviour
       checkCollisionContents = true;
+      extraOutputsToInstall = [ "man" "doc" ];
     } // { _type = "env"; };
 
   make_dotfiles =
     name: spec@{ ... }:
-    make_env (spec // { inherit name; envs = [ (./dotfiles + "/${name}") ]; });
+    let
+      deps = [ (./dotfiles + "/${name}") envs.install_reqs ]
+             ++ (spec.deps or []);
+    in
+    make_env (spec // { inherit name deps; });
 
   envs = user_envs // provided_envs;
 
   provided_envs = list_to_set "name" [
     (make_env { name = "stow_bin";
-                envs = [ nixpkgs.stow ]; paths = [ "/bin" ]; })
-    (make_env { name = "boot_reqs"; envs = [ envs.stow_bin ]; })
+                deps = [ nixpkgs.stow ]; paths = [ "/bin" ]; })
+    (make_env { name = "install_reqs";
+                deps = [ envs.stow_bin nixpkgs.glibcLocales ]; })
   ];
 
   user_envs = list_to_set "name" [
-    (make_dotfiles "root" {})
+    (make_dotfiles "test1" {})
+    (make_dotfiles "test2" { deps = [ envs.test1 ]; })
   ];
 }

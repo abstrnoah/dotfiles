@@ -1,12 +1,59 @@
 #!/bin/sh
 
-# All configuration is via the following environment variables:
+# usage: sh ./install <name>
 #
-# DOTFILES_INSTALL_MODE one of "portable", "nonportable", "auto"
-# NIX_INSTALLER_NO_MODIFY_PROFILE TODO
+# Where attribute `envs.<name>` is the environment to be deployed to $HOME.
+#
+# All configuration except <name> is via the following environment variables:
+#
+# HOME
+#     determines destination of ~/.dotfiles and ~/.dotfiles-env
 # DEBUG
+#     whether to run with `set -x`
+# DOTFILES_INSTALL_MODE
+#     TODO not implemented
+#     one of "portable", "nonportable", "auto"
 
-{
+# The goal of this script is to deploy the specified dotfiles environment to
+# your home directory with minimal dependencies. The script tries to
+# fetch/install Nix, the dotfiles repository, and any other requirements
+# automatically. This means that the script can (hopefully) be run in the
+# absence of the containing git repository like
+#
+#     sh <(curl -L https://raw.githubusercontent.com/abstrnoah/dotfiles/main/install)
+#
+# or after the repo has already been installed and is under development, or
+# anywhere in between.
+#
+# Procedural outline:
+# - bootstrap if Nix or $HOME/.dotfiles is missing
+#     - this requires nix, nix-portable, curl, wget, or bash with tcp support,
+#       to be installed, in that order of preference
+#     - bootstrap means install working version of Nix and deploy dotfiles
+#       repository to $HOME/.dotfiles
+#     - TODO currently only supports nix-portable
+# - build envs.$1 in nix store and link to temp dir
+# - unstow $HOME/.dotfiles-env/home/me from $HOME if the former exists
+# - link envs.$1 result at $HOME/.dotfiles-env
+# - stow $HOME/.dotfiles-env/home/me to $HOME
+#
+# TODO:
+# The script attempts to be as atomic as possible. It trys dry-runs first where
+# possible and does as much as possible in a temporary directory. There are two
+# notable exceptions:
+# - If the process is inturrupted after unstowing and is unable to re-stow
+#   during trap, then $HOME may be left in an unstable state.
+# - Currently, the dotfiles repo is cloned directly to $HOME/.dotfiles if it
+#   does not already exist, and no attempt is made to remove it during clean up.
+#   This is for simplicitly and to make live development easy (as is common with
+#   dotfiles).
+#
+# TODO: Currently, the script only supports installing Nix in multi-user mode
+# (though if another natively-intalled Nix is installed already, then it can be
+# used) and does not support using nix-portable for post-bootstrap operations.
+
+{ # wrap to avoid execution if incompletely fetched
+
     if test -n "${DEBUG}"; then
         set -x
     fi
@@ -21,19 +68,36 @@
     temp_dir="$(mktemp -d \
                 || oops "unable to create temporary build directory")"
 
+    teardown() {
+        # TODO make things atomic, namely wrt stow operations
+        rm -rf "${temp_dir}"
+    }
+    trap teardown EXIT INT QUIT TERM
+
     NIX_INSTALLER_URL="https://releases.nixos.org/nix/nix-2.13.3/install"
     NIX_INSTALLER_SCRIPT="${temp_dir}/install_nix"
     NIX_INSTALLER_HASH="a90a3dadfe59fcebbafd361d0a0d05474008d82b17337fb94b06a5f1fa29ba32"
     NIX_PORTABLE_URL="https://github.com/DavHau/nix-portable/releases/download/v009/nix-portable"
     NIX_PORTABLE_HASH="e371dc77d8cdb4fefacdd2d8abf9b5ce013bb384a2b37def7b96e8dcb0d77790"
 
-    teardown() {
-        rm -rf "${temp_dir}"
-    }
-    trap teardown EXIT INT QUIT TERM
+    test -d "${HOME}" || oops "you seem to be homeless: HOME=${HOME}"
+
+    # DOTFILES_INSTALL_MODE="${DOTFILES_INSTALL_MODE:-auto}" # TODO support
+
+    # TODO poorly documented, check that this works
+    export NIX_INSTALLER_NO_MODIFY_PROFILE=1
+
+    DOTFILES_URL="https://github.com/abstrnoah/dotfiles"
+    DOTFILES_PATH="${HOME}/.dotfiles"
+    DOTFILES_RESULT="${temp_dir}/dotfiles-env"
+    DOTFILES_ENV="${HOME}/.dotfiles-env"
 
     command_exists() {
         command -v "${1}" > /dev/null 2>&1
+    }
+
+    repo_exists() {
+        git -C "${1}" status > /dev/null 2>&1
     }
 
     require_exec() {
@@ -57,23 +121,81 @@
 
     fetch() {
         echo "fetching ${1} to ${2}..."
+        require_exec ./nix-portable
         ./nix-portable nix-shell -p curl --run "curl --fail -L ${1} -o ${2}"
         check_hash "${2}" "${3}"
     }
 
-    install_nix() {
-        require_file "${NIX_INSTALLER_SCRIPT}"
-        # TODO support other modes
-        echo "starting nix installer in multi-user mode..."
-        sh "${NIX_INSTALLER_SCRIPT}" "${@}" || oops "nix installer failed"
-        echo "nix installer exited successfully"
+    git_clone() {
+        echo "cloning ${1} to ${2}..."
+        require_exec ./nix-portable
+        ./nix-portable nix-shell -p git --run "git clone ${1} ${2}"
+        repo_exists "${2}" || oops "clone failed"
     }
 
-    echo "looking for nix-portable in current directory (see README)..."
-    require_exec ./nix-portable
-    check_hash ./nix-portable "${NIX_PORTABLE_HASH}"
+    install_nix() {
+        if command_exists nix; then return; fi
 
-    fetch "${NIX_INSTALLER_URL}" "${NIX_INSTALLER_SCRIPT}" "${NIX_INSTALLER_HASH}"
+        fetch \
+            "${NIX_INSTALLER_URL}" \
+            "${NIX_INSTALLER_SCRIPT}" \
+            "${NIX_INSTALLER_HASH}"
+        require_file "${NIX_INSTALLER_SCRIPT}"
 
-    install_nix --daemon
+        echo "starting nix installer in multi-user mode..."
+        # TODO support other modes
+        # sh "${NIX_INSTALLER_SCRIPT}" "${@}" || oops "nix installer failed"
+        sh "${NIX_INSTALLER_SCRIPT}" --daemon || oops "nix installer failed"
+        echo "nix installer exited successfully"
+
+        command_exists nix || oops "nix failed to appear in PATH"
+    }
+
+    fetch_dotfiles() {
+        if repo_exists "${DOTFILES_PATH}"; then return; fi
+
+        test -d "${DOTFILES_PATH}" \
+        || oops "refusing to overwrite non-vced ~/.dotfiles"
+        git_clone "${DOTFILES_URL}" "${DOTFILES_PATH}"
+    }
+
+    bootstrap() {
+        # TODO currently we assume nix-portable is installed, eventually support
+        # alternative bootstrappings
+        echo "looking for nix-portable in current directory..."
+        require_exec ./nix-portable
+        check_hash ./nix-portable "${NIX_PORTABLE_HASH}"
+
+        echo "bootstrapping..."
+        install_nix
+        fetch_dotfiles
+        echo "bootstrapping complete"
+    }
+
+    build_env() {
+        local env_name="${1}"
+        echo "building env: ${env_name}..."
+        require_exec nix-build
+        require_file ./default.nix
+        nix-build "${DOTFILES_PATH}/default.nix" \
+            -A "envs.${env_name}" -o "${DOTFILES_RESULT}" \
+        || oops "failed to build env: ${env_name}"
+    }
+
+    deploy_env() {
+        echo "deploying env..."
+        test -d "${DOTFILES_RESULT}" || oops "build missing: ${DOTFILES_RESULT}"
+        if test -d "${DOTFILES_ENV}/home/me"; then
+            stow_env --delete # unstow
+        fi
+        ln -sf "${DOTFILES_RESULT}" "${DOTFILES_ENV}" \
+        || oops "failed to symlink new env"
+        stow_env
+        echo "deployment complete"
+    }
+
+    bootstrap
+    build_env "${1}"
+    deploy_env
+
 }
