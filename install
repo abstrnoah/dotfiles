@@ -6,13 +6,23 @@
 #
 # All configuration except <name> is via the following environment variables:
 #
-# HOME
-#     determines destination of ~/.dotfiles and ~/.dotfiles-env
-# DEBUG
-#     whether to run with `set -x`
-# DOTFILES_INSTALL_MODE
-#     TODO not implemented
-#     one of "portable", "nonportable", "auto"
+# - HOME
+#     - determines destination of ~/.dotfiles-env
+# - DOTFILES_PATH
+#     - seat of the live git repository
+#     - default $HOME/.dotfiles
+# - DEBUG
+#     - whether to run with `set -x`
+# - DOTFILES_INSTALL_MODE
+#     - TODO not implemented
+#     - one of "portable", "nonportable", "auto"
+#
+# Note that the user may not configure DOTFILES_ENV, the seat of the resulting
+# dotfiles environment, which is hard-coded to $HOME/.dotfiles-env. The script
+# will not overwrite this path if it does not already point to the nix store (as
+# interpreted by nix-build). One reason for this is that we need to be able to
+# determine if DOTFILES_ENV already is deployed so that it can be unstowed
+# before deploying the new one.
 
 # The goal of this script is to deploy the specified dotfiles environment to
 # your home directory with minimal dependencies. The script tries to
@@ -32,10 +42,11 @@
 #     - bootstrap means install working version of Nix and deploy dotfiles
 #       repository to $HOME/.dotfiles
 #     - TODO currently only supports nix-portable
-# - build envs.$1 in nix store and link to temp dir
-# - unstow $HOME/.dotfiles-env/home/me from $HOME if the former exists
-# - link envs.$1 result at $HOME/.dotfiles-env
-# - stow $HOME/.dotfiles-env/home/me to $HOME
+# - atomically (as best we can) build and deploy envs.$1
+#     - unstow $HOME/.dotfiles-env/home/me if exists
+#     - save old $HOME/.dotfiles-env temporarily
+#     - build envs.$1 in nix store and link to $HOME/.dotfiles-env
+#     - stow $HOME/.dotfiles-env/home/me to $HOME
 #
 # TODO:
 # The script attempts to be as atomic as possible. It trys dry-runs first where
@@ -68,8 +79,13 @@
     temp_dir="$(mktemp -d \
                 || oops "unable to create temporary build directory")"
 
+    success=false
     teardown() {
-        # TODO make things atomic, namely wrt stow operations
+        if test "${success}" = false && test -L "${DOTFILES_ENV_OLD}"; then
+            mv -T "${DOTFILES_ENV_OLD}" "${DOTFILES_ENV}" \
+            && stow_env \
+            || echo "${0}: unable to restore env during premature termination"
+        fi
         rm -rf "${temp_dir}"
     }
     trap teardown EXIT INT QUIT TERM
@@ -88,16 +104,12 @@
     export NIX_INSTALLER_NO_MODIFY_PROFILE=1
 
     DOTFILES_URL="https://github.com/abstrnoah/dotfiles"
-    DOTFILES_PATH="${HOME}/.dotfiles"
-    DOTFILES_RESULT="${temp_dir}/dotfiles-env"
+    DOTFILES_PATH="${DOTFILES_PATH:-${HOME}/.dotfiles}"
     DOTFILES_ENV="${HOME}/.dotfiles-env"
+    DOTFILES_ENV_OLD="${temp_dir}/dotfiles-env.old"
 
     command_exists() {
         command -v "${1}" > /dev/null 2>&1
-    }
-
-    repo_exists() {
-        git -C "${1}" status > /dev/null 2>&1
     }
 
     require_exec() {
@@ -108,10 +120,40 @@
         test -f "${1}" || oops "requisite file missing: ${1}"
     }
 
+    nix_shell() {
+        # TODO move to flake
+        require_exec ./nix-portable
+        LOCALE_ARCHIVE=/nix/store/20dyxqvd9rnwzdnpdzb8vnv8w3vwa8wx-glibc-locales-2.31-74/lib/locale/locale-archive \
+            ./nix-portable nix shell \
+                'nixpkgs#coreutils' \
+                'nixpkgs#curl' \
+                'nixpkgs#git' \
+                'nixpkgs#glibcLocales' \
+                'nixpkgs#stow' \
+                -c "${@}"
+    }
+
+    # TODO
+    nix_shell_post_boot() {
+        require_exec nix
+        nix --extra-experimental-features nix-command \
+            --extra-experimental-features flakes \
+            shell \
+            'nixpkgs#coreutils' \
+            'nixpkgs#curl' \
+            'nixpkgs#git' \
+            'nixpkgs#glibcLocales' \
+            'nixpkgs#stow' \
+            -c "${@}"
+    }
+
+    repo_exists() {
+        nix_shell git -C "${1}" status > /dev/null 2>&1
+    }
+
     get_hash() {
         require_file "${1}"
-        ./nix-portable nix-shell -p coreutils --run \
-            "sha256sum ${1} | cut -c1-64"
+        nix_shell sha256sum "${1}" | nix_shell cut -c1-64
     }
 
     check_hash() {
@@ -120,16 +162,14 @@
     }
 
     fetch() {
-        echo "fetching ${1} to ${2}..."
-        require_exec ./nix-portable
-        ./nix-portable nix-shell -p curl --run "curl --fail -L ${1} -o ${2}"
+        echo "fetching ${1} to ${2} ..."
+        nix_shell curl --fail -L "${1}" -o "${2}"
         check_hash "${2}" "${3}"
     }
 
     git_clone() {
-        echo "cloning ${1} to ${2}..."
-        require_exec ./nix-portable
-        ./nix-portable nix-shell -p git --run "git clone ${1} ${2}"
+        echo "cloning ${1} to ${2} ..."
+        nix_shell git clone "${1}" "${2}"
         repo_exists "${2}" || oops "clone failed"
     }
 
@@ -143,8 +183,6 @@
         require_file "${NIX_INSTALLER_SCRIPT}"
 
         echo "starting nix installer in multi-user mode..."
-        # TODO support other modes
-        # sh "${NIX_INSTALLER_SCRIPT}" "${@}" || oops "nix installer failed"
         sh "${NIX_INSTALLER_SCRIPT}" --daemon || oops "nix installer failed"
         echo "nix installer exited successfully"
 
@@ -155,47 +193,69 @@
         if repo_exists "${DOTFILES_PATH}"; then return; fi
 
         test -d "${DOTFILES_PATH}" \
-        || oops "refusing to overwrite non-vced ~/.dotfiles"
+        || oops "refusing to overwrite: ${DOTFILES_PATH}"
         git_clone "${DOTFILES_URL}" "${DOTFILES_PATH}"
     }
 
     bootstrap() {
-        # TODO currently we assume nix-portable is installed, eventually support
-        # alternative bootstrappings
-        echo "looking for nix-portable in current directory..."
-        require_exec ./nix-portable
-        check_hash ./nix-portable "${NIX_PORTABLE_HASH}"
-
         echo "bootstrapping..."
         install_nix
         fetch_dotfiles
         echo "bootstrapping complete"
     }
 
-    build_env() {
-        local env_name="${1}"
-        echo "building env: ${env_name}..."
-        require_exec nix-build
-        require_file ./default.nix
-        nix-build "${DOTFILES_PATH}/default.nix" \
-            -A "envs.${env_name}" -o "${DOTFILES_RESULT}" \
-        || oops "failed to build env: ${env_name}"
+    stow() {
+        # TODO
+        # (https://github.com/aspiers/stow/issues/65)
+        # nix_shell_post_boot stow "$@" \
+        #     2>&1 | (grep -v 'BUG in find_stowed_path? Absolute/relative mismatch' 1>&2 || true)
+        nix_shell_post_boot stow "$@" > /dev/null 2>&1
+    }
+
+    stow_home() {
+        local oper="${1}"
+        local src="${2}/home"
+
+        test "${oper}" = --delete || test "${oper}" = --stow \
+        || oops "unrecognised stow operation: ${oper}"
+        test -d "${src}" || oops "stow source missing: ${src}"
+
+        stow --target "${HOME}" --dir "${src}" "${oper}" me
+    }
+
+    unstow_env() {
+        stow_home --delete "${DOTFILES_ENV}" || oops "failed to unstow env"
+    }
+
+    stow_env() {
+        stow_home --stow "${DOTFILES_ENV}" || oops "failed to stow env"
     }
 
     deploy_env() {
-        echo "deploying env..."
-        test -d "${DOTFILES_RESULT}" || oops "build missing: ${DOTFILES_RESULT}"
-        if test -d "${DOTFILES_ENV}/home/me"; then
-            stow_env --delete # unstow
+        local env_name="${1}"
+        test -n "${env_name}" || oops "env name is empty"
+
+        echo "deploying env: ${1} ..."
+
+        if test -L "${DOTFILES_ENV}"; then
+            unstow_env
+            mv -T "${DOTFILES_ENV}" "${DOTFILES_ENV_OLD}"
         fi
-        ln -sf "${DOTFILES_RESULT}" "${DOTFILES_ENV}" \
-        || oops "failed to symlink new env"
+
+        require_exec nix-build
+        require_file "${DOTFILES_PATH}/default.nix"
+        nix-build "${DOTFILES_PATH}/default.nix" \
+            -A "envs.${env_name}" -o "${DOTFILES_ENV}" \
+        || oops "failed to build env: ${env_name}"
+
         stow_env
+
         echo "deployment complete"
     }
 
     bootstrap
-    build_env "${1}"
-    deploy_env
+    deploy_env "${1}"
+
+    success=true # for trap
 
 }
