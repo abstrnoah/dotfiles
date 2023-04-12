@@ -41,7 +41,6 @@
 #       to be installed, in that order of preference
 #     - bootstrap means install working version of Nix and deploy dotfiles
 #       repository to $HOME/.dotfiles
-#     - TODO currently only supports nix-portable
 # - atomically (as best we can) build and deploy envs.$1
 #     - unstow $HOME/.dotfiles-env/home/me if exists
 #     - save old $HOME/.dotfiles-env temporarily
@@ -49,19 +48,12 @@
 #     - stow $HOME/.dotfiles-env/home/me to $HOME
 #
 # TODO:
-# The script attempts to be as atomic as possible. It trys dry-runs first where
-# possible and does as much as possible in a temporary directory. There are two
-# notable exceptions:
-# - If the process is inturrupted after unstowing and is unable to re-stow
-#   during trap, then $HOME may be left in an unstable state.
-# - Currently, the dotfiles repo is cloned directly to $HOME/.dotfiles if it
-#   does not already exist, and no attempt is made to remove it during clean up.
-#   This is for simplicitly and to make live development easy (as is common with
-#   dotfiles).
-#
-# TODO: Currently, the script only supports installing Nix in multi-user mode
-# (though if another natively-intalled Nix is installed already, then it can be
-# used) and does not support using nix-portable for post-bootstrap operations.
+# - move to flake
+# - become capable of boot-strapping nix-portable
+# - make nix operations more pure
+# - pin nix version
+# - support portable nix installation
+# - uninstall script
 
 { # wrap to avoid execution if incompletely fetched
 
@@ -98,7 +90,7 @@
 
     test -d "${HOME}" || oops "you seem to be homeless: HOME=${HOME}"
 
-    # DOTFILES_INSTALL_MODE="${DOTFILES_INSTALL_MODE:-auto}" # TODO support
+    # DOTFILES_INSTALL_MODE="${DOTFILES_INSTALL_MODE:-auto}" # TODO not implemented
 
     # TODO poorly documented, check that this works
     export NIX_INSTALLER_NO_MODIFY_PROFILE=1
@@ -120,7 +112,7 @@
         test -f "${1}" || oops "requisite file missing: ${1}"
     }
 
-    nix_shell() {
+    nix_shell_portable() {
         # TODO move to flake
         require_exec ./nix-portable
         LOCALE_ARCHIVE=/nix/store/20dyxqvd9rnwzdnpdzb8vnv8w3vwa8wx-glibc-locales-2.31-74/lib/locale/locale-archive \
@@ -129,12 +121,10 @@
                 'nixpkgs#curl' \
                 'nixpkgs#git' \
                 'nixpkgs#glibcLocales' \
-                'nixpkgs#stow' \
                 -c "${@}"
     }
 
-    # TODO
-    nix_shell_post_boot() {
+    nix_shell() {
         require_exec nix
         nix --extra-experimental-features nix-command \
             --extra-experimental-features flakes \
@@ -143,17 +133,17 @@
             'nixpkgs#curl' \
             'nixpkgs#git' \
             'nixpkgs#glibcLocales' \
-            'nixpkgs#stow' \
+            'nixpkgs#xstow' \
             -c "${@}"
     }
 
     repo_exists() {
-        nix_shell git -C "${1}" status > /dev/null 2>&1
+        nix_shell_portable git -C "${1}" status > /dev/null 2>&1
     }
 
     get_hash() {
         require_file "${1}"
-        nix_shell sha256sum "${1}" | nix_shell cut -c1-64
+        nix_shell_portable sha256sum "${1}" | nix_shell_portable cut -c1-64
     }
 
     check_hash() {
@@ -163,13 +153,13 @@
 
     fetch() {
         echo "fetching ${1} to ${2} ..."
-        nix_shell curl --fail -L "${1}" -o "${2}"
+        nix_shell_portable curl --fail -L "${1}" -o "${2}"
         check_hash "${2}" "${3}"
     }
 
     git_clone() {
         echo "cloning ${1} to ${2} ..."
-        nix_shell git clone "${1}" "${2}"
+        nix_shell_portable git clone "${1}" "${2}"
         repo_exists "${2}" || oops "clone failed"
     }
 
@@ -205,11 +195,7 @@
     }
 
     stow() {
-        # TODO
-        # (https://github.com/aspiers/stow/issues/65)
-        # nix_shell_post_boot stow "$@" \
-        #     2>&1 | (grep -v 'BUG in find_stowed_path? Absolute/relative mismatch' 1>&2 || true)
-        nix_shell_post_boot stow "$@" > /dev/null 2>&1
+        nix_shell stow "$@" > /dev/null 2>&1
     }
 
     stow_home() {
@@ -223,12 +209,25 @@
         stow --target "${HOME}" --dir "${src}" "${oper}" me
     }
 
+    xstow() {
+        nix_shell xstow "$@"
+    }
+
+    xstow_home() {
+        local src="${1}/home"
+        shift
+
+        test -d "${src}" || oops "stow source missing: ${src}"
+
+        xstow -t "${HOME}" -d "${src}" "${@}"
+    }
+
     unstow_env() {
-        stow_home --delete "${DOTFILES_ENV}" || oops "failed to unstow env"
+        xstow_home "${DOTFILES_ENV}" -D me || oops "failed to unstow env"
     }
 
     stow_env() {
-        stow_home --stow "${DOTFILES_ENV}" || oops "failed to stow env"
+        xstow_home "${DOTFILES_ENV}" me || oops "failed to stow env"
     }
 
     deploy_env() {

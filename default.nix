@@ -74,5 +74,6 @@ rec {
   user_envs = list_to_set "name" [
     (make_dotfiles "test1" {})
     (make_dotfiles "test2" { deps = [ envs.test1 ]; })
+    (make_dotfiles "test3" { deps = [ envs.test2 ]; })
   ];
 }
