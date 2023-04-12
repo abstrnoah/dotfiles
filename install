@@ -63,6 +63,7 @@
 # TODO:
 # - move to flake
 # - pin nix version
+# - actually install nix-portable on bootstrap
 # - support portable nix installation
 # - README
 
@@ -109,9 +110,12 @@
     export NIX_INSTALLER_NO_MODIFY_PROFILE=1
 
     DOTFILES_URL="https://github.com/abstrnoah/dotfiles"
+    DOTFILES_FLAKE="git+file:///home/abstractednoah/repos/dotfiles" # TODO
     DOTFILES_PATH="${DOTFILES_PATH:-${HOME}/.dotfiles}"
     DOTFILES_ENV="${HOME}/.dotfiles-env"
     DOTFILES_ENV_OLD="${temp_dir}/dotfiles-env.old"
+
+    export LOCALE_ARCHIVE=/nix/store/jbyiz1bkviwd0bvvh3jg7zzgg6gg1yjd-glibc-locales-2.35-224/lib/locale/locale-archive
 
     command_exists() {
         command -v "${1}" > /dev/null 2>&1
@@ -152,26 +156,16 @@
     }
 
     nix_shell_portable() {
-        # TODO move to flake
-        LOCALE_ARCHIVE=/nix/store/20dyxqvd9rnwzdnpdzb8vnv8w3vwa8wx-glibc-locales-2.31-74/lib/locale/locale-archive \
-            nix_portable nix shell -i -k HOME -k LOCALE_ARCHIVE \
-                'nixpkgs#coreutils' \
-                'nixpkgs#curl' \
-                'nixpkgs#git' \
-                'nixpkgs#glibcLocales' \
-                -c "${@}"
+        nix_portable nix shell -i -k HOME -k LOCALE_ARCHIVE \
+            "${DOTFILES_FLAKE}#install" \
+            -c "${@}"
     }
 
     nix_shell() {
         require_exec nix
-        nix --extra-experimental-features nix-command \
-            --extra-experimental-features flakes \
+        nix --extra-experimental-features 'nix-command flakes' \
             shell -i -k HOME -k LOCALE_ARCHIVE \
-            'nixpkgs#coreutils' \
-            'nixpkgs#curl' \
-            'nixpkgs#git' \
-            'nixpkgs#glibcLocales' \
-            'nixpkgs#xstow' \
+            "${DOTFILES_FLAKE}#install" \
             -c "${@}"
     }
 
