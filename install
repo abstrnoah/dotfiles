@@ -42,8 +42,8 @@
 #
 # Procedural outline:
 # - bootstrap if Nix or $HOME/.dotfiles is missing
-#     - this requires nix, nix-portable, curl, wget, or bash with tcp support,
-#       to be installed, in that order of preference
+#     - this requires nix-portable, curl, wget, to be
+#       installed, in that order of preference
 #     - bootstrap means install working version of Nix and deploy dotfiles
 #       repository to $HOME/.dotfiles
 # - atomically (as best we can) build and deploy envs.$1
@@ -54,7 +54,6 @@
 #
 # TODO:
 # - move to flake
-# - become capable of boot-strapping nix-portable
 # - make nix operations more pure
 # - pin nix version
 # - support portable nix installation
@@ -116,11 +115,36 @@
         test -f "${1}" || oops "requisite file missing: ${1}"
     }
 
+    nix_portable() {
+        oops "you haven't bootstrapped nix-portable yet!"
+    }
+
+    bootstrap_nix_portable() {
+        if command_exists nix-portable; then
+            nix_portable() { nix-portable "${@}"; }
+        elif command_exists ./nix-portable; then
+            cp ./nix-portable "${temp_dir}/nix-portable" \
+            || oops "failed to cp nix-portable to temp_dir"
+            nix_portable() { "${temp_dir}/nix-portable" "${@}"; }
+        elif command_exists curl; then
+            curl --fail -L "${NIX_PORTABLE_URL}" -o "${temp_dir}/nix-portable" \
+            && chmod +x "${temp_dir}/nix-portable" \
+            || oops "failed to fetch nix-portable"
+            nix_portable() { "${temp_dir}/nix-portable" "${@}"; }
+        elif command_exists wget; then
+            wget "${NIX_PORTABLE_URL}" -O "${temp_dir}/nix-portable" \
+            && chmod +x "${temp_dir}/nix-portable" \
+            || oops "failed to fetch nix-portable"
+            nix_portable() { "${temp_dir}/nix-portable" "${@}"; }
+        else
+            oops "failed to bootstrap nix-portable (see README)"
+        fi
+    }
+
     nix_shell_portable() {
         # TODO move to flake
-        require_exec ./nix-portable
         LOCALE_ARCHIVE=/nix/store/20dyxqvd9rnwzdnpdzb8vnv8w3vwa8wx-glibc-locales-2.31-74/lib/locale/locale-archive \
-            ./nix-portable nix shell \
+            nix_portable nix shell \
                 'nixpkgs#coreutils' \
                 'nixpkgs#curl' \
                 'nixpkgs#git' \
@@ -193,6 +217,7 @@
 
     bootstrap() {
         echo "bootstrapping..."
+        bootstrap_nix_portable
         install_nix
         fetch_dotfiles
         echo "bootstrapping complete"
