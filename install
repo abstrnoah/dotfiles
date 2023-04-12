@@ -56,6 +56,7 @@
 # - move to flake
 # - pin nix version
 # - support portable nix installation
+# - README
 
 { # wrap to avoid execution if incompletely fetched
 
@@ -222,20 +223,23 @@
         echo "bootstrapping complete"
     }
 
-    stow() {
-        nix_shell stow "$@" > /dev/null 2>&1
-    }
+    # TODO stow deprecated because of lack of maintenance and inability to stow
+    # trees containing absolute symlinks; using xstow instead which works but is
+    # less mainstream and poorly documented; honestly i should just write my own
+    # at this point
+    # stow() {
+    #     nix_shell stow "$@" > /dev/null 2>&1
+    # }
+    # stow_home() {
+    #     local oper="${1}"
+    #     local src="${2}/home"
 
-    stow_home() {
-        local oper="${1}"
-        local src="${2}/home"
+    #     test "${oper}" = --delete || test "${oper}" = --stow \
+    #     || oops "unrecognised stow operation: ${oper}"
+    #     test -d "${src}" || oops "stow source missing: ${src}"
 
-        test "${oper}" = --delete || test "${oper}" = --stow \
-        || oops "unrecognised stow operation: ${oper}"
-        test -d "${src}" || oops "stow source missing: ${src}"
-
-        stow --target "${HOME}" --dir "${src}" "${oper}" me
-    }
+    #     stow --target "${HOME}" --dir "${src}" "${oper}" me
+    # }
 
     xstow() {
         nix_shell xstow "$@"
