@@ -21,6 +21,14 @@
 # - DOTFILES_INSTALL_MODE
 #     - TODO not implemented
 #     - one of "portable", "nonportable", "auto"
+# - DOTFILES_NIX_PORTABLE
+#     - path to nix-portable executable
+#     - nix-portable is tried in the following order
+#         - DOTFILES_NIX_PORTABLE
+#         - from PATH
+#         - via curl
+#         - via wget
+#     - default "./nix-portable"
 #
 # Note that the user may not configure DOTFILES_ENV, the seat of the resulting
 # dotfiles environment, which is hard-coded to $HOME/.dotfiles-env. The script
@@ -88,6 +96,8 @@
     NIX_INSTALLER_URL="https://releases.nixos.org/nix/nix-2.13.3/install"
     NIX_INSTALLER_SCRIPT="${temp_dir}/install_nix"
     NIX_INSTALLER_HASH="a90a3dadfe59fcebbafd361d0a0d05474008d82b17337fb94b06a5f1fa29ba32"
+
+    DOTFILES_NIX_PORTABLE="${DOTFILES_NIX_PORTABLE:-./nix-portable}"
     NIX_PORTABLE_URL="https://github.com/DavHau/nix-portable/releases/download/v009/nix-portable"
     NIX_PORTABLE_HASH="e371dc77d8cdb4fefacdd2d8abf9b5ce013bb384a2b37def7b96e8dcb0d77790"
 
@@ -122,8 +132,8 @@
     bootstrap_nix_portable() {
         if command_exists nix-portable; then
             nix_portable() { nix-portable "${@}"; }
-        elif command_exists ./nix-portable; then
-            cp ./nix-portable "${temp_dir}/nix-portable" \
+        elif command_exists "${DOTFILES_NIX_PORTABLE}"; then
+            cp "${DOTFILES_NIX_PORTABLE}" "${temp_dir}/nix-portable" \
             || oops "failed to cp nix-portable to temp_dir"
             nix_portable() { "${temp_dir}/nix-portable" "${@}"; }
         elif command_exists curl; then
