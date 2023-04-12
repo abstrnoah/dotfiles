@@ -54,7 +54,6 @@
 #
 # TODO:
 # - move to flake
-# - make nix operations more pure
 # - pin nix version
 # - support portable nix installation
 
@@ -144,7 +143,7 @@
     nix_shell_portable() {
         # TODO move to flake
         LOCALE_ARCHIVE=/nix/store/20dyxqvd9rnwzdnpdzb8vnv8w3vwa8wx-glibc-locales-2.31-74/lib/locale/locale-archive \
-            nix_portable nix shell \
+            nix_portable nix shell -i -k HOME -k LOCALE_ARCHIVE \
                 'nixpkgs#coreutils' \
                 'nixpkgs#curl' \
                 'nixpkgs#git' \
@@ -156,7 +155,7 @@
         require_exec nix
         nix --extra-experimental-features nix-command \
             --extra-experimental-features flakes \
-            shell \
+            shell -i -k HOME -k LOCALE_ARCHIVE \
             'nixpkgs#coreutils' \
             'nixpkgs#curl' \
             'nixpkgs#git' \
@@ -187,8 +186,8 @@
 
     git_clone() {
         echo "cloning ${1} to ${2} ..."
-        nix_shell_portable git clone "${1}" "${2}"
-        repo_exists "${2}" || oops "clone failed"
+        nix_shell_portable git clone "${1}" "${2}" || oops "clone failed"
+        repo_exists "${2}" || oops "clone exited successfully but result missing"
     }
 
     install_nix() {
