@@ -1,8 +1,13 @@
 #!/bin/sh
 
 # usage: sh ./install <name>
+#        sh ./install
 #
 # Where attribute `envs.<name>` is the environment to be deployed to $HOME.
+#
+# If <name> is omitted, then uninstall stowed files and remove
+# $HOME/.dotfiles-env. Note that this does not uninstall Nix nor remove the
+# cloned $HOME/.dotfiles repository.
 #
 # All configuration except <name> is via the following environment variables:
 #
@@ -53,7 +58,6 @@
 # - make nix operations more pure
 # - pin nix version
 # - support portable nix installation
-# - uninstall script
 
 { # wrap to avoid execution if incompletely fetched
 
@@ -230,16 +234,23 @@
         xstow_home "${DOTFILES_ENV}" me || oops "failed to stow env"
     }
 
-    deploy_env() {
-        local env_name="${1}"
-        test -n "${env_name}" || oops "env name is empty"
-
-        echo "deploying env: ${1} ..."
-
+    uninstall() {
+        echo "uninstalling old env..."
         if test -L "${DOTFILES_ENV}"; then
             unstow_env
             mv -T "${DOTFILES_ENV}" "${DOTFILES_ENV_OLD}"
         fi
+        echo "old env uninstalled"
+    }
+
+    deploy_env() {
+        local env_name="${1}"
+
+        uninstall
+
+        test -n "${env_name}" || return
+
+        echo "deploying env: ${env_name} ..."
 
         require_exec nix-build
         require_file "${DOTFILES_PATH}/default.nix"
