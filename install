@@ -109,11 +109,12 @@
     export NIX_INSTALLER_NO_MODIFY_PROFILE=1
 
     DOTFILES_URL="https://github.com/abstrnoah/dotfiles"
-    # TODO update flake url
+    DOTFILES_PATH="$(readlink -f "${DOTFILES_PATH:-${HOME}/.dotfiles}")"
     DOTFILES_FLAKE="github:abstrnoah/dotfiles/nixify"
-    DOTFILES_PATH="${DOTFILES_PATH:-${HOME}/.dotfiles}"
+    DOTFILES_FLAKE_LOCAL="git+file://${DOTFILES_PATH}"
     DOTFILES_ENV="${HOME}/.dotfiles-env"
     DOTFILES_ENV_OLD="${temp_dir}/dotfiles-env.old"
+
     DOTFILES_NIX_PORTABLE="${DOTFILES_NIX_PORTABLE:-${DOTFILES_PATH}/nix-portable}"
 
     export LOCALE_ARCHIVE=/nix/store/jbyiz1bkviwd0bvvh3jg7zzgg6gg1yjd-glibc-locales-2.35-224/lib/locale/locale-archive
@@ -172,10 +173,14 @@
             -c "${@}"
     }
 
+    nix3() {
+        require_exec nix
+        nix --extra-experimental-features 'nix-command flakes' "${@}"
+    }
+
     nix_shell() {
         require_exec nix
-        nix --extra-experimental-features 'nix-command flakes' \
-            shell -i -k HOME -k LOCALE_ARCHIVE \
+        nix3 shell -i -k HOME -k LOCALE_ARCHIVE \
             "${DOTFILES_FLAKE}#install" \
             -c "${@}"
     }
@@ -277,10 +282,8 @@
 
         echo "deploying env: ${env_name} ..."
 
-        require_exec nix-build
-        require_file "${DOTFILES_PATH}/default.nix"
-        nix-build "${DOTFILES_PATH}/default.nix" \
-            -A "envs.${env_name}" -o "${DOTFILES_ENV}" \
+        require_exec nix
+        nix3 build "${DOTFILES_FLAKE_LOCAL}#${env_name}" -o "${DOTFILES_ENV}" \
         || oops "failed to build env: ${env_name}"
 
         stow_env
