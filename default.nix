@@ -27,149 +27,170 @@ rec {
 
   srcs = by_name (map mk_src (lib.list_dir dotfiles_path));
 
-  packages = by_name [
+  packages = {
 
     # originally from corePackagePaths
 
-    (add_deps nixpkgs.bat (with nixpkgs.bat-extras; [
-      batdiff
-      batman
-      batwatch
-    ]))
+    bat = (mk_coll "bat" [
+      nixpkgs.bat
+      nixpkgs.bat-extras.batdiff
+      nixpkgs.bat-extras.batman
+      nixpkgs.bat-extras.batwatch
+    ]);
 
-    (add_pkg srcs.curl)
+    curl = (add_pkg srcs.curl);
 
-    nixpkgs.dig
-    nixpkgs.dnstracer
-    nixpkgs.fd
-    nixpkgs.fzf
+    inherit (nixpkgs)
+    dig
+    dnstracer
+    fd
+    fzf
+    ;
 
-    (add_pkg srcs.git)
+    git = (add_pkg srcs.git);
 
-    nixpkgs.glibcLocales
-    nixpkgs.htop
-    nixpkgs.jq
-    nixpkgs.netcat-openbsd
-    nixpkgs.nettools
-    nixpkgs.nodejs
-    nixpkgs.pandoc
-    nixpkgs.pdfgrep
-    nixpkgs.pdftk
-    nixpkgs.pfetch
-    nixpkgs.ranger
-    nixpkgs.silver-searcher
-    nixpkgs.sl
-    nixpkgs.tectonic
-    nixpkgs.textql
-    nixpkgs.time
+    inherit (nixpkgs)
+    glibcLocales
+    htop
+    jq
+    netcat-openbsd
+    nettools
+    nodejs
+    pandoc
+    pdfgrep
+    pdftk
+    pfetch
+    ranger
+    silver-searcher
+    sl
+    tectonic
+    textql
+    time
+    ;
 
-    (add_deps srcs.tmux [ nixpkgs.tmux nixpkgs.tmuxinator ])
+    tmux = (add_deps srcs.tmux [ nixpkgs.tmux nixpkgs.tmuxinator ]);
 
-    nixpkgs.toilet
-    nixpkgs.tree
-    nixpkgs.tuptime
-    nixpkgs.universal-ctags
+    inherit (nixpkgs)
+    toilet
+    tree
+    tuptime
+    universal-ctags
+    ;
 
-    (add_deps nixpkgs.zip [ nixpkgs.unzip ])
+    zip = (mk_coll "zip" [ nixpkgs.zip nixpkgs.unzip ]);
 
-    (add_deps srcs.vim [ nixpkgs.vimHugeX ])
+    vim = (add_deps srcs.vim [ nixpkgs.vimHugeX ]);
 
-    nixpkgs.visidata
+    inherit (nixpkgs) visidata;
 
     # originally from clientPackages
 
-    nixpkgs.black
-    nixpkgs.bup
-    nixpkgs.clang
-    nixpkgs.clojure
-    nixpkgs.coq
-    nixpkgs.cowsay
-    nixpkgs.delta
-    nixpkgs.djvu2pdf
-    nixpkgs.dmidecode
-    nixpkgs.exiftool
-    nixpkgs.gcal
-    nixpkgs.imagemagick
-    nixpkgs.img2pdf
-    nixpkgs.jdk
-    nixpkgs.maven
+    inherit (nixpkgs)
+    black
+    bup
+    clang
+    clojure
+    coq
+    cowsay
+    delta
+    djvu2pdf
+    dmidecode
+    exiftool
+    gcal
+    imagemagick
+    img2pdf
+    jdk
+    maven
+    ;
 
-    (amend_name "insect" nixpkgs.nodePackages.insect)
+    inherit (nixpkgs.nodePackages) insect;
 
-    (add_deps nixpkgs.ocaml [
+    ocaml = (mk_coll "ocaml" [
+      nixpkgs.ocaml
       nixpkgs.ocamlformat
       nixpkgs.ocamlPackages.utop
-    ])
+    ]);
 
-    nixpkgs.php
-    nixpkgs.python3
-    nixpkgs.rlwrap
-    nixpkgs.spotify-cli-linux
-    nixpkgs.sqlfluff
-    nixpkgs.stow
-    nixpkgs.texlive.combined.scheme-small
-    nixpkgs.weechat
-    nixpkgs.wego
-    nixpkgs.yj
-    nixpkgs.yq-go
+    inherit (nixpkgs)
+    php
+    python3
+    rlwrap
+    spotify-cli-linux
+    sqlfluff
+    stow
+    weechat
+    wego
+    yj
+    yq-go
+    ;
+
+    texlive-combined-small = nixpkgs.texlive.combined.scheme-small;
 
     # originally from clientPackagesGui
 
-    nixpkgs.libnotify
-    nixpkgs.mpv
-    nixpkgs.okular
-    (amend_name "grip" nixpkgs.python310Packages.grip)
+    inherit (nixpkgs)
+    libnotify
+    mpv
+    okular
+    ;
 
-    (add_pkg srcs.qutebrowser)
+    inherit (nixpkgs.python310Packages) grip;
 
-    (add_pkg srcs.rofi)
+    qutebrowser = (add_pkg srcs.qutebrowser);
 
-    nixpkgs.signal-desktop
-    nixpkgs.spotify
-    nixpkgs.wmctrl
-    nixpkgs.xclip
+    rofi = (add_pkg srcs.rofi);
 
-    (add_pkg srcs.xflux)
+    inherit (nixpkgs)
+    signal-desktop
+    spotify
+    wmctrl
+    xclip
+    ;
 
-    nixpkgs.xournalpp
+    xflux = (add_pkg srcs.xflux);
 
-    (add_pkg srcs.zathura)
+    inherit (nixpkgs) xournalpp;
+
+    zathura = (add_pkg srcs.zathura);
 
     # originally from nix-on-droid
 
-    nixpkgs.diffutils
-    nixpkgs.findutils
-    nixpkgs.getconf
-    nixpkgs.gnugrep
-    nixpkgs.gnused
-    nixpkgs.hostname
-    nixpkgs.man
-    nixpkgs.openssh
-    nixpkgs.procps
-    nixpkgs.utillinux
+    inherit (nixpkgs)
+    diffutils
+    findutils
+    getconf
+    gnugrep
+    gnused
+    hostname
+    man
+    openssh
+    procps
+    utillinux
+    ;
 
-    (add_pkg srcs.zsh)
+    zsh = (add_pkg srcs.zsh);
 
 
-    (add_deps srcs.x [
+    x = (add_deps srcs.x [
       nixpkgs.xrandr-invert-colors
       nixpkgs.xorg.xbacklight
-    ])
+    ]);
 
-    srcs.i3wm
-    (add_pkg srcs.dunst)
+    inherit (srcs) i3wm;
+
+    dunst = (add_pkg srcs.dunst);
 
 
     # collections
 
-    (mk_coll "nix-on-droid" (with packages; [
+    nix-on-droid = (mk_coll "nix-on-droid" (with packages; [
       core_env
       openssh
       procps
       utillinux
-    ]))
+    ]));
 
-    (mk_coll "core_env" (with packages; [
+    core_env = (mk_coll "core_env" (with packages; [
       diffutils
       findutils
       getconf
@@ -209,9 +230,9 @@ rec {
       vim
       visidata
       rlwrap
-    ]))
+    ]));
 
-    (mk_coll "default" (with packages; [
+    default = (mk_coll "default" (with packages; [
       core_env
       black
       bup
@@ -229,9 +250,9 @@ rec {
       ocaml
       python3
       stow
-    ]))
+    ]));
 
-    (mk_coll "gui_env" (with packages; [
+    gui_env = (mk_coll "gui_env" (with packages; [
       default
       libnotify
       mpv
@@ -242,9 +263,9 @@ rec {
       xclip
       xournalpp
       zathura
-    ]))
+    ]));
 
-    (mk_coll "wm_env" (with packages; [
+    wm_env = (mk_coll "wm_env" (with packages; [
       gui_env
       rofi
       wmctrl
@@ -252,8 +273,8 @@ rec {
       x
       i3wm
       dunst
-    ]))
+    ]));
 
-  ];
+  };
 
 }
