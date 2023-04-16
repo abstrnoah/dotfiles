@@ -1,3 +1,4 @@
+# TODO move to nixphile repository
 {
   nixpkgs ? null
 }:
@@ -7,8 +8,6 @@ rec {
   inherit nixpkgs;
 
   is_drv = x: (x.type or null) == "derivation";
-
-  is_env = x: is_drv x && x._type or null == "env";
 
   fold = builtins.foldl';
 
@@ -30,14 +29,32 @@ rec {
   list_to_set = key: fold (s: x: s // (extern key x)) {};
 
   gen_set = f: fold (a: h: a // { "${h}" = f h; }) {};
+  for_all = l: f: gen_set f l;
 
-  make_env =
-    {
+  make_amendable =
+    f: s@{ ... }:
+    (f s) // { __constructor = make_amendable f; __preimage = s; };
+
+  amend =
+    amender: # new: old: final
+    new:
+    image@{ __constructor, __preimage, ... }:
+    __constructor (amender new __preimage);
+
+  amend_over = amend (new: old: old // new);
+  amend_under = amend (new: old: new // old);
+  amend_add =
+    key:
+    amend (new: old: override key ((builtins.getAttr key old) ++ new) old);
+
+  make_env = make_amendable
+    ({
       name ? "env"
     , deps
     , prefix_substs ? null # { "dot-files" = ".file"; } # TODO not implemented
     , excludes ? null # TODO not implemented
     , paths ? [ "/" ]
+    , ...
     }:
     assert nixpkgs != null;
     nixpkgs.buildEnv {
@@ -49,17 +66,10 @@ rec {
       ignoreCollisions = false; # TODO check if these two give desired behaviour
       checkCollisionContents = true;
       extraOutputsToInstall = [ "man" "doc" ];
-    } // { _type = "env"; };
+    });
 
-  make_dotfiles =
-    dotfiles: # path to source environments
-    base_env: # base env to include in all results
-    name: spec@{ ... }:
-    let
-      deps = [ (dotfiles + "/${name}") ]
-             ++ (spec.deps or [])
-             ++ (if base_env != null then [ base_env ] else []);
-    in
-    make_env (spec // { inherit name deps; });
+  add_deps = amend_add "deps";
+
+  # TODO trivial builder like for nixphile
 
 }
