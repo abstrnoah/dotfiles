@@ -41,8 +41,8 @@ rec {
 
   amend =
     amender: # new: old: final
-    new:
     image@{ __constructor, __preimage, ... }:
+    new:
     __constructor (amender new __preimage);
 
   amend_over = amend (new: old: old // new);
@@ -50,6 +50,7 @@ rec {
   amend_add =
     key:
     amend (new: old: override key ((builtins.getAttr key old) ++ new) old);
+  amend_name = name: image: amend_over image { inherit name; };
 
   make_env = make_amendable
     ({
