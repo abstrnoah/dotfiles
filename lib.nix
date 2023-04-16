@@ -6,8 +6,6 @@
 
 rec {
 
-  inherit nixpkgs;
-
   is_drv = x: (x.type or null) == "derivation";
 
   fold = builtins.foldl';
