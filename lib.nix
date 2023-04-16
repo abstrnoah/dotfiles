@@ -1,4 +1,5 @@
 # TODO move to nixphile repository
+# TODO trivial builder like for nixphile
 {
   nixpkgs ? null
 }:
@@ -10,6 +11,8 @@ rec {
   is_drv = x: (x.type or null) == "derivation";
 
   fold = builtins.foldl';
+
+  get = builtins.getAttr;
 
   override = key: value: set@{ ... }: set // { ${key} = value; };
 
@@ -27,6 +30,7 @@ rec {
   extern = key: set@{ ... }: { "${set.${key}}" = set; };
 
   list_to_set = key: fold (s: x: s // (extern key x)) {};
+  by_name = list_to_set "name";
 
   gen_set = f: fold (a: h: a // { "${h}" = f h; }) {};
   for_all = l: f: gen_set f l;
@@ -70,6 +74,6 @@ rec {
 
   add_deps = amend_add "deps";
 
-  # TODO trivial builder like for nixphile
+  list_dir = path: builtins.attrNames (builtins.readDir path);
 
 }

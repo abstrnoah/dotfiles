@@ -7,21 +7,26 @@
   outputs =
     { self, nixpkgs }:
     let
-      # these are just the tested systems, probably would work anywhere
-      supported_systems = [ "x86_64-linux" "armv7l-linux" ];
-      lib_basic = import ./lib.nix {};
-      for_all_systems = f: lib_basic.gen_set f supported_systems;
-      nixpkgs_f = system: import nixpkgs { inherit system; };
-      lib_f = system: import ./lib.nix { nixpkgs = nixpkgs_f system; };
-      envs_f =
+      lib_agnostic = import ./lib.nix {};
+      for_all_systems = lib_agnostic.for_all [ "x86_64-linux" "armv7l-linux" ];
+      nixpkgs_for =
         system:
-        (import ./default.nix { lib = lib_f system; }).envs;
+        import nixpkgs {
+          inherit system;
+          config = import ./nixpkgs-config.nix { nixpkgs_lib = nixpkgs.lib; };
+        };
     in
     rec {
-      lib = for_all_systems lib_f // { basic = lib_basic; };
-      # In this flake, "package" means "env".
-      # For example, the "install" package is the env used by the ./install
-      # script; it is not an installer itself.
-      packages = for_all_systems envs_f;
+      lib =
+        (for_all_systems
+          (system: import ./lib.nix { nixpkgs = nixpkgs_for system; }))
+        // { agnostic = lib_agnostic; };
+
+      packages = for_all_systems
+          (system:
+          (import ./default.nix {
+            lib = lib.${system};
+            nixpkgs = nixpkgs_for system;
+          }).packages);
     };
 }
