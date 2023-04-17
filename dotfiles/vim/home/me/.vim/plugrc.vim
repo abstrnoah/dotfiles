@@ -50,7 +50,7 @@ let g:br_plugs = {
     \ "Yggdroot/indentLine": [],
     \ "neoclide/coc.nvim": [
         \ {
-            \ "spec": {"tag": "v0.0.81"},
+            \ "spec": {"branch": "release"},
             \ "supported": {-> has("patch-8.1.1719")}
         \ }
     \ ],
