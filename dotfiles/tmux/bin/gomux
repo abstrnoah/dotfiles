@@ -2,9 +2,11 @@
 
 # Init or attach tmux with start directory $1.
 
+# TODO rewrite this script to be portable, just use sh
+
 # set -x
 
-source "${BR_DOTFILES}/share/utilities.zsh" || exit 1
+source "~/.nixphile/env/lib/utilities.zsh" || exit 1
 _br_require tmux || exit
 
 start_directory="$(readlink -f "${1}")"

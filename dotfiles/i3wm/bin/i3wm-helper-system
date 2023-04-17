@@ -7,7 +7,7 @@ _arg="${2}"
 
 case ${_command} in
     lock)
-        ~/.dotfiles/share/lock
+        i3wm-helper-lock
         ;;
     exit)
         i3-nagbar -t warning -m 'Exit i3wm?' -b 'Yeah.' 'i3-msg exit'

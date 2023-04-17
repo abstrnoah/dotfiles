@@ -6,19 +6,17 @@
 
 _dotfiles_scripts="${HOME}/.dotfiles/share"
 
-_rofi="${_dotfiles_scripts}/rofi.sh"
-
 function gen_workspaces()
 {
     i3-msg -t get_workspaces | tr ',' '\n' | grep "name" | sed 's/"name":"\(.*\)"/\1/g' | sort -n
 }
 
 
-WORKSPACE=$( (echo "-"; gen_workspaces)  | "${_rofi}" -dmenu -p "workspace")
+WORKSPACE=$( (echo "-"; gen_workspaces)  | rofi -dmenu -p "workspace")
 
 if [ x"-" = x"${WORKSPACE}" ]
 then
-    WORKSPACE=$("$_dotfiles_scripts/empty-workspace.sh")
+    WORKSPACE=$(i3wm-helper-empty-ws)
 fi
 if [ -n "${WORKSPACE}" ]
 then

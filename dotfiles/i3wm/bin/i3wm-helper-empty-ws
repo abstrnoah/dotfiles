@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# TODO nix substitute shebangs here and elsewhere
 
 # Echo number of next empty workspace to standard out.
 

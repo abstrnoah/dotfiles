@@ -1,6 +1,7 @@
 # path: ~/.config/dunst/dunstrc
 
 [global]
+    # TODO handle font dependencies
     font = Ubuntu Mono 10
 
     # Allow a small subset of html markup:

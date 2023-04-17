@@ -30,8 +30,7 @@ set $mod Mod4
 # Paths.
 set $home /home/abstractednoah
 # TODO: Needs to be deprecated.
-set $keybinds /home/abstractednoah/.dotfiles/package/i3wm/keybinds
-set $scripts /home/abstractednoah/.dotfiles/share
+set $keybinds i3wm-helper-keybinds
 
 # Prompt character, for dmenu.
 set $promptchar "❯"
@@ -107,7 +106,7 @@ exec_always --no-startup-id xinput set-prop 12 "Synaptics Click Action" 0
 
 # Start xflux.
 # 'exec_always' so we can restart xflux easily.
-exec_always $home/.dotfiles/share/start-xflux.sh
+exec_always auto-xflux
 
 # Start the composition manager.
 exec --no-startup-id compton -b -CG
@@ -187,25 +186,25 @@ for_window [title="^QEMU$"] floating enable
 # SETUP {{{2
 
 bindsym $mod+$grave mode $mode_system
-bindsym $mod+$tilde exec $scripts/control-system suspend
+bindsym $mod+$tilde exec i3wm-helper-system suspend
 
 mode $mode_system {
     # Lock.
-    bindsym l exec $scripts/control-system lock; mode "default"
+    bindsym l exec i3wm-helper-system lock; mode "default"
     # Exit i3 (logs you out of your X session).
-    bindsym e mode "default"; exec $scripts/control-system exit
+    bindsym e mode "default"; exec i3wm-helper-system exit
     # Shutdown.
-    bindsym s mode "default"; exec $scripts/control-system shutdown
+    bindsym s mode "default"; exec i3wm-helper-system shutdown
     # Reboot.
-    bindsym $shift+s mode "default"; exec $scripts/control-system reboot
+    bindsym $shift+s mode "default"; exec i3wm-helper-system reboot
     # Suspend then hibernate.
-    bindsym h mode "default"; exec $scripts/control-system suspend
+    bindsym h mode "default"; exec i3wm-helper-system suspend
     # Hibernate.
-    bindsym $shift+h mode "default"; exec $scripts/control-system hibernate
+    bindsym $shift+h mode "default"; exec i3wm-helper-system hibernate
     # Reload the configuration file.
-    bindsym r mode "default"; exec $scripts/control-system reload
+    bindsym r mode "default"; exec i3wm-helper-system reload
     # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3).
-    bindsym $shift+r mode "default"; exec $scripts/control-system restart
+    bindsym $shift+r mode "default"; exec i3wm-helper-system restart
 
     bindsym $esc mode "default"
 }
@@ -215,10 +214,10 @@ bindsym $mod+$alt+F bar mode toggle
 # APPS {{{2
 
 # Rofi runner.
-bindsym $mod+$colon exec $scripts/rofi.sh -show run
+bindsym $mod+$colon exec rofi -show run
 
 # Rofi file browser.
-bindsym $mod+slash exec $scripts/rofi.sh -show filebrowser
+bindsym $mod+slash exec rofi -show filebrowser
 
 # Terminal.
 bindsym $mod+$enter exec i3-sensible-terminal
@@ -228,10 +227,10 @@ bindsym --release $mod+c \
     exec "import png:- | xclip -selection clipboard -t image/png"
 
 # Notifications.
-bindsym $mod+$alt+n exec $scripts/control-system notify_toggle
+bindsym $mod+$alt+n exec i3wm-helper-system notify_toggle
 
 # pass
-bindsym $mod+$alt+p exec $scripts/passmenu
+bindsym $mod+$alt+p exec passmenu
 
 # HARDWARE {{{2
 # Audio.
@@ -291,7 +290,7 @@ bindsym $mod+$alt+i mode $mode_invert
 mode $mode_invert {
     bindsym 0 exec xrandr-invert-colors -s 0
     bindsym 1 exec xrandr-invert-colors -s 1
-    bindsym f exec $scripts/start-xflux.sh
+    bindsym f exec auto-xflux
     bindsym $shift+f exec pkill xflux
     bindsym $esc mode "default"
 }
@@ -388,20 +387,18 @@ mode $mode_gaps {
 bindsym $mod+m exec i3-input -F 'mark --add %s' -l 1 -P 'mark: '
 bindsym $mod+$singlequote \
     exec i3-input -F '[con_mark="^%s$"] focus' -l 1 -P 'goto: '
-# bindsym $mod+$alt+m exec $scripts/i3-mark-for-alt.sh
-# bindsym $mod+period exec $scripts/i3-go-alt.sh
 bindsym $mod+$shift+m unmark
 
 # Go to window.
-bindsym $mod+d exec $scripts/rofi.sh -show window
-bindsym $mod+$alt+d exec $scripts/move-window-to-other.sh
+bindsym $mod+d exec rofi -show window
+bindsym $mod+$alt+d exec i3wm-rofi-window-to-other
 
 # Change workspace.
 bindsym $mod+n workspace next_on_output
 bindsym $mod+p workspace prev_on_output
 bindsym $mod+comma workspace back_and_forth
-bindsym $mod+g exec $scripts/switch-workspace.sh
-bindsym $mod+$alt+g exec $scripts/move-window-to-current.sh
+bindsym $mod+g exec i3wm-rofi-switch-ws
+bindsym $mod+$alt+g exec i3wm-rofi-window-to-current
 bindsym $mod+$alt+r exec i3-input -F 'rename workspace to "%s"' -P 'rename ws: '
 
 # Move workspace to different output.

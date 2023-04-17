@@ -4,8 +4,8 @@
 #   qute://help/configuring.html
 #   qute://help/settings.html
 
-__author__ = "abstractednoah"
-__email__ = "abstractednoah@brumal.org"
+__author__ = "abstrnoah"
+__email__ = "abstrnoah@brumal.org"
 
 # GLOBALS {{{1
 
@@ -109,16 +109,7 @@ config.bind(_leader + "F", "spawn firefox {url}")
 # Passthrough mode.
 # <Escape> always escapes to normal.
 config.bind("<Escape>", "mode-leave", mode="passthrough")
-# Toggle behavior of ^[ between mode-leave and passthru <Escape>.
-# We need a userscript because this implementation of toggling is inherently
-# recursive (unsure how else to do such a toggle with qutebrowser).
-# See 'toggle-esc --help' for more info.
 config.bind("<Ctrl-[>", "mode-leave", mode="passthrough")
-config.bind(
-    "<Shift-Escape>",
-    "spawn --userscript toggle-esc passthru",
-    mode="passthrough",
-)
 
 # Passthrough common clipboard chords.
 config.bind(_leader + "y", "fake-key <Ctrl-c>")

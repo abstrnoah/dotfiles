@@ -68,7 +68,14 @@ rec {
     time
     ;
 
-    tmux = (add_deps srcs.tmux [ nixpkgs.tmux nixpkgs.tmuxinator ]);
+    tmux = (add_deps srcs.tmux [
+      nixpkgs.tmux
+      nixpkgs.tmuxinator
+      packages.zsh # TODO avoid circular dependency?
+      packages.fzf
+      # TODO xclip?
+      packages.gcal
+    ]);
 
     inherit (nixpkgs)
     toilet
@@ -138,6 +145,7 @@ rec {
 
     qutebrowser = (add_pkg srcs.qutebrowser);
 
+    # TODO handle environment issue
     rofi = (add_pkg srcs.rofi);
 
     inherit (nixpkgs)
@@ -147,7 +155,7 @@ rec {
     xclip
     ;
 
-    xflux = (add_pkg srcs.xflux);
+    xflux = add_deps (add_pkg srcs.xflux) [ packages.curl packages.jq ];
 
     inherit (nixpkgs) xournalpp;
 
@@ -171,12 +179,35 @@ rec {
     zsh = (add_pkg srcs.zsh);
 
 
+    # TODO currently xsession execs native i3; really this should depend on i3wm
     x = (add_deps srcs.x [
       nixpkgs.xrandr-invert-colors
       nixpkgs.xorg.xbacklight
     ]);
 
-    inherit (srcs) i3wm;
+    # TODO
+    # wallpapers = ;
+
+    inherit (srcs)
+    pass
+    pulseaudio
+    ;
+
+    # TODO eventually have nix provide i3-gaps, i3lock, pulse, feh
+    # TODO requires pactl, which is currently provided natively
+    # TODO requires systemctl
+    # TODO passmenu?
+    i3wm = add_deps srcs.i3wm (with packages; [
+      jq
+      # wallpapers # TODO
+      dunst
+      rofi
+      wmctrl
+      spotify-cli-linux
+      x
+      xflux
+      pass
+    ]);
 
     dunst = (add_pkg srcs.dunst);
 
@@ -263,6 +294,7 @@ rec {
       xclip
       xournalpp
       zathura
+      pulseaudio
     ]));
 
     wm_env = (mk_coll "wm_env" (with packages; [
