@@ -6,7 +6,8 @@
 #
 # Global Order: zshenv, zprofile, zshrc, zlogin
 
-test \! -f /etc/profile || {
+test -f /etc/profile || exit
+
 _old_path="${PATH}"
 
 # Bring in system-wide profile via emulation.
@@ -18,4 +19,3 @@ emulate sh -c 'source /etc/profile'
 # Prepend our path since /etc/profile seems to overwrite instead of prepending
 # as one might expect.
 PATH="${_old_path}:${PATH}"
-}

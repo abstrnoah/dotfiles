@@ -1,3 +1,4 @@
+# TODO bundle pass, gpg, tomb? tomb,gpg provided natively
 {
   lib
 , nixpkgs
@@ -176,7 +177,11 @@ rec {
     utillinux
     ;
 
-    zsh = (add_pkg srcs.zsh);
+    zsh = add_deps (add_pkg srcs.zsh) (with packages; [
+      bat
+      fzf
+      fd
+    ]);
 
 
     # TODO currently xsession execs native i3; really this should depend on i3wm

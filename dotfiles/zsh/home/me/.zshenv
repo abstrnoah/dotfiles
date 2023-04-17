@@ -1,37 +1,26 @@
 # zshenv
 
-_br_nix_profile_daemon="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-test -f "${_br_nix_profile_daemon}" && {
-    source "${_br_nix_profile_daemon}"
-}
+nix_profile_daemon="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+if test -f "${nix_profile_daemon}"; then source "${nix_profile_daemon}"; fi
 
-export PATH="${HOME}/.bin:${HOME}/.local/bin:${PATH}:/sbin:/opt/jabref/bin"
-export BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
-export EDITOR="${HOME}/.nix-profile/bin/vim"
-export VISUAL="${HOME}/.nix-profile/bin/vim"
-export BROWSER="${HOME}/.nix-profile/bin/qutebrowser"
-export XDG_DATA_DIRS="${HOME}/.nix-profile/share:${XDG_DATA_DIRS}:/usr/share"
+export NIXPHILE_ENV="${HOME}/.nixphile/env"
+nixphile_paths="${NIXPHILE_ENV}/bin:${HOME}/.nixphile/bin"
+
+
+export PATH="${nixphile_paths}:${HOME}/.bin:${HOME}/.local/bin:${PATH}:/sbin:/opt/jabref/bin"
+export EDITOR="${NIXPHILE_ENV}/bin/vim"
+export VISUAL="${EDITOR}"
+export BROWSER="${NIXPHILE_ENV}/bin/qutebrowser"
+export XDG_DATA_DIRS="${NIXPHILE_ENV}/share:${XDG_DATA_DIRS}:/usr/share"
 
 # Make locales work with Nix.
-export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
+export LOCALE_ARCHIVE="$(readlink -f "${NIXPHILE_ENV}/lib/locale")/locale-archive"
 
 # Use nix's Java.
-export JAVA_HOME="$(readlink ~/.nix-profile)/lib/openjdk"
-
-# Pin nixpkgs.
-export BR_NIXPKGS="https://github.com/abstractednoah/nixpkgs/archive/37c045276cbedf0651305c564e7b696df12bc5fc.tar.gz"
-export BR_NIXPKGS_LOCAL="${HOME}/repository/know/explore/cs/nixpkgs"
+export JAVA_HOME="${NIXPHILE_ENV}/lib/openjdk"
 
 # Enable firefox touch screen scrolling.
 export MOZ_USE_XINPUT2=1
-
-# # maven: Fix Java version.
-# TODO These aliases shouldn't be necessary since JAVA_HOME is exported above,
-# but in that case I'm not sure why I had these lines lol.
-# if command -v mvn &> /dev/null; then
-#     alias mvn='JAVA_HOME=${JAVA_HOME} mvn'
-#     alias mvnDebug='JAVA_HOME=${JAVA_HOME} mvnDebug'
-# fi
 
 export GTK_THEME=Adwaita:dark
 

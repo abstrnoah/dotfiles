@@ -1,10 +1,8 @@
 # zshrc
 
 # SETUP {{{1
-BR_DOTFILES="${BR_DOTFILES:-${HOME}/.dotfiles}"
-test -d "${BR_DOTFILES}" || echo "Dotfiles not found: ${BR_DOTFILES}" >&2
-source "${BR_DOTFILES}/share/utilities.zsh"
-source "${BR_DOTFILES}/share/prompt.zsh"
+source "${NIXPHILE_ENV}/share/utilities.zsh"
+source "${NIXPHILE_ENV}/share/prompt.zsh"
 
 # EXPORTED ENVIRONMENT {{{1
 export KEYTIMEOUT=1
@@ -74,11 +72,11 @@ setopt hist_ignore_space
 zstyle :compinstall filename "${HOME}/.zshrc"
 autoload -Uz compinit
 compinit
-source "${BR_DOTFILES}/package/zsh/comp-mux.zsh"
+# source "${BR_DOTFILES}/package/zsh/comp-mux.zsh" # TODO do i care enuf?
 
 # Fzf completions.
-test -f ~/.nix-profile/share/fzf/completion.zsh && _br_command_exists fzf && {
-    source ~/.nix-profile/share/fzf/completion.zsh
+test -f "${NIXPHILE_ENV}/share/fzf/completion.zsh" && _br_command_exists fzf && {
+    source "${NIXPHILE_ENV}/share/fzf/completion.zsh"
 }
 
 
@@ -105,20 +103,6 @@ _br_command_exists tmux tmuxinator && {
         tmux a >&2 2>/dev/null || tmuxinator main
     }
     alias T='_br_tmux_go_last'
-}
-
-_br_command_exists nix-env && {
-    br_nix_env() {
-        # TODO Yes, it seems redundant to have both -I and -f. But there
-        # was some reason important reason to have both... the solution is to
-        # just learn to grok nix lol.
-        # TODO Just use NIXPKGS?
-        nix-env -I an_nixpkgs="${BR_NIXPKGS}" -f "${BR_NIXPKGS}" "${@}"
-    }
-
-    br_reload_nix_packages() {
-        br_nix_env -v -riA "${@}"
-    }
 }
 
 _br_command_exists xdg-open && {
@@ -205,7 +189,7 @@ alias timer='TMUX= timer'
 # KEY BINDINGS {{{1
 
 _br_command_exists fzf && {
-    source ~/.nix-profile/share/fzf/key-bindings.zsh &>/dev/null \
+    source "${NIXPHILE_ENV}/share/fzf/key-bindings.zsh" &>/dev/null \
     || source ~/.local/share/fzf/key-bindings.zsh \
     && {
         bindkey -M viins -r '\ec'
