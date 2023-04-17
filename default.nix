@@ -1,3 +1,5 @@
+# TODO SHELL
+# TODO vim bootstrapping???
 # TODO bundle pass, gpg, tomb? tomb,gpg provided natively
 {
   lib
