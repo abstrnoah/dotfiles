@@ -231,6 +231,7 @@ rec {
     ]));
 
     core_env = (mk_coll "core_env" (with packages; [
+      # TODO nixphile
       diffutils
       findutils
       getconf
