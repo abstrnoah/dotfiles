@@ -92,6 +92,7 @@ let g:br_plugs = {
     \ "lervag/lists.vim": [],
     \ "whonore/Coqtail": [],
     \ "airblade/vim-gitgutter": [],
+    \ "junegunn/fzf": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -129,6 +130,7 @@ let g:br_plugs_active = [
     \ "abstrnoah/lists.vim",
     \ "whonore/Coqtail",
     \ "airblade/vim-gitgutter",
+    \ "junegunn/fzf",
 \ ]
 
 " PLUGIN CONFIG {{{1
