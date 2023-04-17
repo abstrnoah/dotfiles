@@ -75,4 +75,22 @@ rec {
 
   list_dir = path: builtins.attrNames (builtins.readDir path);
 
+  store_text =
+    source: target:
+    nixpkgs.concatTextFile {
+      name = baseNameOf target;
+      files = [ source ];
+      executable = false;
+      destination = target;
+    };
+
+  store_script =
+    source: target:
+    nixpkgs.concatTextFile {
+      name = baseNameOf target;
+      files = [ source ];
+      executable = true;
+      destination = target;
+    };
+
 }

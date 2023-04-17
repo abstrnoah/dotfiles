@@ -14,6 +14,7 @@ with {
   add_deps
   by_name
   get
+  store_text
   ;
 };
 let
@@ -91,10 +92,16 @@ rec {
 
     zip = (mk_coll "zip" [ nixpkgs.zip nixpkgs.unzip ]);
 
+    vim-plug =
+      store_text
+      "${nixpkgs.vimPlugins.vim-plug}/plug.vim"
+      "/home/me/.vim/autoload/plug.vim";
+
     vim = add_deps srcs.vim [
       nixpkgs.vimHugeX
       packages.fzf
       packages.curl
+      packages.vim-plug
     ];
 
     inherit (nixpkgs) visidata;
