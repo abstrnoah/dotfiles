@@ -253,6 +253,7 @@ rec {
 
     core_env = (mk_coll "core_env" (with packages; [
       srcs.core_env
+      srcs.nix
       # TODO nixphile
       diffutils
       findutils
