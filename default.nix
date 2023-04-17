@@ -87,7 +87,11 @@ rec {
 
     zip = (mk_coll "zip" [ nixpkgs.zip nixpkgs.unzip ]);
 
-    vim = (add_deps srcs.vim [ nixpkgs.vimHugeX ]);
+    vim = add_deps srcs.vim [
+      nixpkgs.vimHugeX
+      packages.fzf
+      packages.curl
+    ];
 
     inherit (nixpkgs) visidata;
 

@@ -1,4 +1,4 @@
-" Author: Noah <abstractednoah@brumal.org>
+" Author: Noah <abstrnoah@brumal.org>
 
 for c in ["a", "c", "d"]
     exe "set guioptions+=".c
