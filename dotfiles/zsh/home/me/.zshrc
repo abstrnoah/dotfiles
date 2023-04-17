@@ -1,8 +1,8 @@
 # zshrc
 
 # SETUP {{{1
-source "${NIXPHILE_ENV}/share/utilities.zsh"
-source "${NIXPHILE_ENV}/share/prompt.zsh"
+source "${NIXPHILE_ENV}/lib/utilities.zsh"
+source "${NIXPHILE_ENV}/lib/prompt.zsh"
 
 # EXPORTED ENVIRONMENT {{{1
 export KEYTIMEOUT=1

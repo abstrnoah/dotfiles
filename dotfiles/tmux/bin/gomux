@@ -6,7 +6,7 @@
 
 # set -x
 
-source "~/.nixphile/env/lib/utilities.zsh" || exit 1
+source ~/.nixphile/env/lib/utilities.zsh || exit 1
 _br_require tmux || exit
 
 start_directory="$(readlink -f "${1}")"

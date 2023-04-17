@@ -12,7 +12,7 @@ WORKSPACE=$( (echo "-"; gen_workspaces)  | rofi -dmenu -p "move to ws")
 
 if [ x"-" = x"${WORKSPACE}" ]
 then
-    WORKSPACE=$(dotfiles/i3wm/bin/i3wm-helper-empty-ws)
+    WORKSPACE=$(i3wm-helper-empty-ws)
 fi
 if [ -n "${WORKSPACE}" ]
 then
