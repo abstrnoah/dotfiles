@@ -2,6 +2,7 @@
 {
   lib
 , nixpkgs
+, system ? builtins.currentSystem # TODO maybe improve how we handle system
 }:
 
 with {
@@ -59,7 +60,6 @@ rec {
     nodejs
     pandoc
     pdfgrep
-    pdftk
     pfetch
     ranger
     silver-searcher
@@ -101,7 +101,6 @@ rec {
     black
     bup
     clang
-    clojure
     coq
     cowsay
     delta
@@ -111,8 +110,6 @@ rec {
     gcal
     imagemagick
     img2pdf
-    jdk
-    maven
     ;
 
     inherit (nixpkgs.nodePackages) insect;
@@ -254,7 +251,6 @@ rec {
       nodejs
       pandoc
       pdfgrep
-      pdftk
       pfetch
       ranger
       silver-searcher
@@ -278,20 +274,23 @@ rec {
       black
       bup
       clang
-      clojure
       coq
       cowsay
       exiftool
       gcal
       imagemagick
       img2pdf
-      jdk
-      maven
       insect
       ocaml
       python3
       stow
-    ]));
+    ] ++ (if system == "x86_64-linux" then [
+    # TODO supporting 32 bit machine was harder than anticipated, come back to
+    # this later
+      nixpkgs.clojure
+      nixpkgs.jdk
+      nixpkgs.pdftk
+    ] else [])));
 
     gui_env = (mk_coll "gui_env" (with packages; [
       default
