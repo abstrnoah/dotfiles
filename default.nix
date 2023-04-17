@@ -1,5 +1,4 @@
 # TODO SHELL
-# TODO vim bootstrapping???
 # TODO nix config, namely enable experimental features
 # TODO handle secrets
 # TODO bundle pass, gpg, tomb? tomb,gpg provided natively
@@ -57,7 +56,6 @@ rec {
     git = (add_pkg srcs.git);
 
     inherit (nixpkgs)
-    glibcLocales
     htop
     jq
     netcat-openbsd
@@ -73,6 +71,20 @@ rec {
     textql
     time
     ;
+
+    # TODO probably better to achive this with substituteAll instead
+    nix_env_exports =
+      let
+        locale_archive = "${nixpkgs.glibcLocales}/lib/locale/locale-archive";
+      in
+      nixpkgs.writeTextFile rec {
+        name = "nix_env_exports";
+        text = ''
+          export ${nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
+        '';
+        destination = "/lib/${name}";
+      };
+
 
     tmux = (add_deps srcs.tmux [
       nixpkgs.tmux
@@ -193,6 +205,7 @@ rec {
       bat
       fzf
       fd
+      nix_env_exports
     ]);
 
 
@@ -255,7 +268,6 @@ rec {
       fd
       fzf
       git
-      glibcLocales
       htop
       jq
       netcat-openbsd
