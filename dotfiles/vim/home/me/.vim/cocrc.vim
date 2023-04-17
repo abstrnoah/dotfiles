@@ -6,14 +6,12 @@
 " FIXME: 'coc-sh' not working.
 let g:coc_global_extensions = [
     \ 'coc-python',
-    \ 'coc-java',
     \ 'coc-html',
     \ 'coc-xml',
     \ 'coc-vimlsp',
     \ 'coc-dictionary',
     \ 'coc-tag',
     \ 'coc-word',
-    \ 'coc-java-debug',
     \ 'coc-yaml',
     \ 'coc-clang-format-style-options',
     \ 'coc-vimtex',
@@ -24,6 +22,8 @@ let g:coc_global_extensions = [
     " \ 'coc-json',
     " \ 'coc-snippets',
     " \ 'coc-git',
+    " \ 'coc-java',
+    " \ 'coc-java-debug',
 
 "
 " Config for coc.nvim.
