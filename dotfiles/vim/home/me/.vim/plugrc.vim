@@ -341,14 +341,6 @@ runtime macros/matchit.vim
 
 " VIM-PLUG PLUGINS {{{1
 
-" TODO see if this is no longer needed with nixification of vim-plug
-" " Automatic installation of vim-plug[^1].
-" if empty(glob('~/.vim/autoload/plug.vim'))
-"     !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-" endif
-
 " Declare the plugins.
 call plug#begin('~/.cache/vimplug')
 call brumal#main#declare_plugs(g:br_plugs, g:br_plugs_active)
