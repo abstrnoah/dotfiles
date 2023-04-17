@@ -1,5 +1,7 @@
 # TODO SHELL
 # TODO vim bootstrapping???
+# TODO nix config, namely enable experimental features
+# TODO handle secrets
 # TODO bundle pass, gpg, tomb? tomb,gpg provided natively
 {
   lib
