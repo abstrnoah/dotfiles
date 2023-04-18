@@ -75,6 +75,14 @@ rec {
 
   list_dir = path: builtins.attrNames (builtins.readDir path);
 
+  store_file =
+    source: target:
+    nixpkgs.runCommand (baseNameOf source) { inherit source target; } ''
+        dest=$out${nixpkgs.lib.escapeShellArg target}
+        mkdir -p "$(dirname "$dest")"
+        cp "$source" "$dest"
+      '';
+
   store_text =
     source: target:
     nixpkgs.concatTextFile {

@@ -189,8 +189,14 @@ rec {
       destination = "/home/me/.xsession";
     };
 
-    # TODO
-    # wallpapers = ;
+    wallpapers = mk_coll "wallpapers" [
+      (lib.store_file
+      ./share/wallpapers/solarized-disks.png
+      "/home/me/.wallpaper")
+      (lib.store_file
+      ./share/wallpapers/solarized-stars.png
+      "/home/me/.wallpaperlock")
+    ];
 
     passmenu = srcs.pass;
 
@@ -292,7 +298,7 @@ rec {
       i3status
       xsession
       jq
-      # wallpapers # TODO
+      wallpapers
       dunst
       rofi
       wmctrl
