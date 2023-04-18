@@ -1,3 +1,0 @@
-# ~/.xsession
-
-exec i3

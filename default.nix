@@ -1,7 +1,7 @@
 # TODO SHELL
-# TODO nix config, namely enable experimental features
 # TODO handle secrets
 # TODO bundle pass, gpg, tomb? tomb,gpg provided natively
+# TODO vim spellfile and other "mutable" deployed paths
 {
   lib
 , nixpkgs
@@ -175,10 +175,11 @@ rec {
 
     inherit (nixpkgs)
     signal-desktop
-    spotify
     wmctrl
     xclip
     ;
+
+    spotify = mk_coll "spotify" [ nixpkgs.spotify packages.spotify-cli-linux ];
 
     xflux = add_deps (add_pkg srcs.xflux) [ packages.curl packages.jq ];
 
@@ -208,12 +209,13 @@ rec {
       nix_env_exports
     ]);
 
-
-    # TODO currently xsession execs native i3; really this should depend on i3wm
-    x = (add_deps srcs.x [
-      nixpkgs.xrandr-invert-colors
-      nixpkgs.xorg.xbacklight
-    ]);
+    xsession = nixpkgs.writeTextFile {
+      name = "xsession";
+      text = ''
+        exec "${nixpkgs.i3-gaps}/bin/i3"
+      '';
+      destination = "/home/me/.xsession";
+    };
 
     # TODO
     # wallpapers = ;
@@ -227,20 +229,23 @@ rec {
     # TODO requires pactl, which is currently provided natively
     # TODO requires systemctl
     # TODO passmenu?
-    i3wm = add_deps srcs.i3wm (with packages; [
-      jq
+    i3wm = add_deps srcs.i3wm [
+      nixpkgs.i3-gaps
+      nixpkgs.i3lock
+      nixpkgs.i3status
+      packages.xsession
+      packages.jq
       # wallpapers # TODO
-      dunst
-      rofi
-      wmctrl
-      spotify-cli-linux
-      x
-      xflux
-      pass
-    ]);
+      packages.dunst
+      packages.rofi
+      packages.wmctrl
+      packages.spotify-cli-linux
+      packages.xflux
+      nixpkgs.xrandr-invert-colors
+      nixpkgs.xorg.xbacklight
+    ];
 
     dunst = (add_pkg srcs.dunst);
-
 
     # collections
 
@@ -336,7 +341,6 @@ rec {
       rofi
       wmctrl
       xflux
-      x
       i3wm
       dunst
     ]));
