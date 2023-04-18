@@ -1,12 +1,9 @@
+# TODO for nixphile
+# - secrets handling
+# - mutable paths
+
 # TODO
-# - i3lock
-# - gnome-terminal ugh sigh urg pensive
-# - SHELL
-# - handle secrets
-# - bundle pass, gpg, tomb? tomb,gpg provided natively
-# - vim spellfile and other "mutable" deployed paths
-# - qutebrowser perms
-#     (temporary fix: manually 'touch ~/.config/qutebrowser/.keep' before nixphile)
+# - xclip? non-x-reliant clipboard manager?
 {
   lib
 , nixpkgs
@@ -38,9 +35,71 @@ rec {
 
   srcs = by_name (map mk_src (lib.list_dir dotfiles_path));
 
-  packages = {
+  packages = rec {
 
-    # originally from corePackagePaths
+    inherit (nixpkgs)
+    black
+    bup
+    clang
+    coq
+    cowsay
+    diffutils
+    dig
+    dnstracer
+    exiftool
+    fd
+    findutils
+    fzf
+    gcal
+    getconf
+    gnugrep
+    gnused
+    grip
+    hostname
+    htop
+    i3status
+    imagemagick
+    img2pdf
+    jdk
+    jq
+    libnotify
+    man
+    mpv
+    netcat-openbsd
+    nettools
+    nodejs
+    openssh
+    pandoc
+    pdfgrep
+    pdftk
+    pfetch
+    procps
+    ranger
+    rlwrap
+    signal-desktop
+    silver-searcher
+    sl
+    spotify-cli-linux
+    stow
+    tectonic
+    textql
+    time
+    tmuxinator
+    toilet
+    tree
+    tuptime
+    universal-ctags
+    utillinux
+    visidata
+    wmctrl
+    xclip
+    xournalpp
+    xrandr-invert-colors
+    ;
+
+    inherit (nixpkgs.nodePackages) insect;
+
+    xorg-xbacklight = nixpkgs.xorg.xbacklight;
 
     bat = (mk_coll "bat" [
       nixpkgs.bat
@@ -49,33 +108,9 @@ rec {
       nixpkgs.bat-extras.batwatch
     ]);
 
-    curl = (add_pkg srcs.curl);
+    curl = add_pkg srcs.curl;
 
-    inherit (nixpkgs)
-    dig
-    dnstracer
-    fd
-    fzf
-    ;
-
-    git = (add_pkg srcs.git);
-
-    inherit (nixpkgs)
-    htop
-    jq
-    netcat-openbsd
-    nettools
-    nodejs
-    pandoc
-    pdfgrep
-    pfetch
-    ranger
-    silver-searcher
-    sl
-    tectonic
-    textql
-    time
-    ;
+    git = add_pkg srcs.git;
 
     # TODO probably better to achive this with substituteAll instead
     nix_env_exports =
@@ -90,22 +125,14 @@ rec {
         destination = "/lib/${name}";
       };
 
-
-    tmux = (add_deps srcs.tmux [
+    tmux = (mk_coll "tmux" [
+      fzf
+      gcal
       nixpkgs.tmux
-      nixpkgs.tmuxinator
-      packages.zsh # TODO avoid circular dependency?
-      packages.fzf
-      # TODO xclip?
-      packages.gcal
+      srcs.tmux
+      tmuxinator # TODO pull in projects from shh
+      zsh # TODO rm this dep
     ]);
-
-    inherit (nixpkgs)
-    toilet
-    tree
-    tuptime
-    universal-ctags
-    ;
 
     zip = (mk_coll "zip" [ nixpkgs.zip nixpkgs.unzip ]);
 
@@ -114,110 +141,52 @@ rec {
       "${nixpkgs.vimPlugins.vim-plug}/plug.vim"
       "/home/me/.vim/autoload/plug.vim";
 
-    vim = add_deps srcs.vim [
+    # TODO mutable spellfile
+    vim = mk_coll "vim" [
+      curl
+      fzf
       nixpkgs.vimHugeX
-      packages.fzf
-      packages.curl
-      packages.vim-plug
+      srcs.vim
+      vim-plug
     ];
 
-    inherit (nixpkgs) visidata;
-
-    # originally from clientPackages
-
-    inherit (nixpkgs)
-    black
-    bup
-    clang
-    coq
-    cowsay
-    delta
-    djvu2pdf
-    dmidecode
-    exiftool
-    gcal
-    imagemagick
-    img2pdf
-    ;
-
-    inherit (nixpkgs.nodePackages) insect;
-
-    ocaml = (mk_coll "ocaml" [
+    ocaml = mk_coll "ocaml" [
       nixpkgs.ocaml
       nixpkgs.ocamlformat
       nixpkgs.ocamlPackages.utop
-    ]);
+    ];
 
-    inherit (nixpkgs)
-    php
-    python3
-    rlwrap
-    spotify-cli-linux
-    sqlfluff
-    stow
-    weechat
-    wego
-    yj
-    yq-go
-    ;
+    # TODO needs ~/.config/qutebrowser/.keep
+    qutebrowser = add_pkg srcs.qutebrowser;
 
-    texlive-combined-small = nixpkgs.texlive.combined.scheme-small;
+    rofi = add_pkg srcs.rofi;
 
-    # originally from clientPackagesGui
+    spotify = mk_coll "spotify" [ nixpkgs.spotify spotify-cli-linux ];
 
-    inherit (nixpkgs)
-    libnotify
-    mpv
-    okular
-    ;
-
-    inherit (nixpkgs.python310Packages) grip;
-
-    qutebrowser = (add_pkg srcs.qutebrowser);
-
-    # TODO handle environment issue
-    rofi = (add_pkg srcs.rofi);
-
-    inherit (nixpkgs)
-    signal-desktop
-    wmctrl
-    xclip
-    ;
-
-    spotify = mk_coll "spotify" [ nixpkgs.spotify packages.spotify-cli-linux ];
-
-    xflux = add_deps (add_pkg srcs.xflux) [ packages.curl packages.jq ];
-
-    inherit (nixpkgs) xournalpp;
+    xflux = mk_coll "xflux" [
+      curl
+      jq
+      nixpkgs.xflux
+      srcs.xflux
+    ];
 
     zathura = (add_pkg srcs.zathura);
 
-    # originally from nix-on-droid
-
-    inherit (nixpkgs)
-    diffutils
-    findutils
-    getconf
-    gnugrep
-    gnused
-    hostname
-    man
-    openssh
-    procps
-    utillinux
-    ;
-
-    zsh = add_deps (add_pkg srcs.zsh) (with packages; [
+    zsh = mk_coll "zsh" [
       bat
-      fzf
       fd
+      fzf
       nix_env_exports
-    ]);
+      nixpkgs.zsh
+      srcs.zsh
+    ];
+
+    i3wm = nixpkgs.i3-gaps;
 
     xsession = nixpkgs.writeTextFile {
       name = "xsession";
       text = ''
-        exec "${nixpkgs.i3-gaps}/bin/i3"
+        exec "${i3wm}/bin/i3"
       '';
       destination = "/home/me/.xsession";
     };
@@ -225,43 +194,21 @@ rec {
     # TODO
     # wallpapers = ;
 
-    inherit (srcs)
-    pass
-    pulseaudio
-    ;
+    passmenu = srcs.pass;
 
-    # TODO eventually have nix provide i3-gaps, i3lock, pulse, feh, etc.
-    # TODO requires pactl, which is currently provided natively
-    # TODO requires systemctl
-    # TODO passmenu?
-    i3wm = add_deps srcs.i3wm [
-      nixpkgs.i3-gaps
-      # nixpkgs.i3lock # TODO due to PAM permissions issue nix version fails
-      nixpkgs.i3status
-      packages.xsession
-      packages.jq
-      # wallpapers # TODO
-      packages.dunst
-      packages.rofi
-      packages.wmctrl
-      packages.spotify-cli-linux
-      packages.xflux
-      nixpkgs.xrandr-invert-colors
-      nixpkgs.xorg.xbacklight
-    ];
+    # TODO needs ~/.config/pulse/.keep
+    dunst = add_pkg srcs.dunst;
 
-    dunst = (add_pkg srcs.dunst);
+    pulseaudio = add_pkg srcs.pulseaudio;
 
-    # collections
-
-    nix-on-droid = (mk_coll "nix-on-droid" (with packages; [
+    nix-on-droid = mk_coll "nix-on-droid" [
       core_env
       openssh
       procps
       utillinux
-    ]));
+    ];
 
-    core_env = (mk_coll "core_env" (with packages; [
+    core_env = mk_coll "core_env" [
       srcs.core_env
       srcs.nix
       # TODO nixphile
@@ -302,9 +249,9 @@ rec {
       vim
       visidata
       rlwrap
-    ]));
+    ];
 
-    default = (mk_coll "default" (with packages; [
+    default = mk_coll "default" [
       core_env
       black
       bup
@@ -319,15 +266,11 @@ rec {
       ocaml
       # python3 # rming from default bc causes heavy initial build
       stow
-    ] ++ (if system == "x86_64-linux" then [
-    # TODO supporting 32 bit machine was harder than anticipated, come back to
-    # this later
-      # nixpkgs.clojure
-      nixpkgs.jdk
-      nixpkgs.pdftk
-    ] else [])));
+      jdk
+      pdftk
+    ];
 
-    gui_env = (mk_coll "gui_env" (with packages; [
+    gui_env = (mk_coll "gui_env" [
       default
       libnotify
       mpv
@@ -339,22 +282,29 @@ rec {
       xournalpp
       zathura
       pulseaudio
-    ]));
+    ]);
 
-    # TODO wm_env works great except two outstanding issues:
-    # - qutebrowser requires manual 'touch ~/.config/qutebrowser/.keep' before
-    #   nixphile
-    # - gnome-terminal, being the way it is, needs to be manually configured via
-    #   gconf (just once, at initial setup)
-    # - due to pam perm issue, i3lock needs to be provided natively
-    wm_env = (mk_coll "wm_env" (with packages; [
-      gui_env
+    # TODO relies on systemd... how to deal with this on non-systemd distros?
+    wm_env = mk_coll "wm_env" [
+      srcs.i3wm
+      i3wm
+      # nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
+      i3status
+      xsession
+      jq
+      # wallpapers # TODO
+      dunst
       rofi
       wmctrl
+      spotify-cli-linux
       xflux
-      i3wm
-      dunst
-    ]));
+      xrandr-invert-colors
+      xorg-xbacklight
+      # TODO pulse, viz pactl
+      # TODO feh
+      # TODO gnome-terminal needs to be manualy configured
+      passmenu
+    ];
 
   };
 
