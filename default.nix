@@ -1,7 +1,3 @@
-# TODO for nixphile
-# - secrets handling
-# - mutable paths
-
 # TODO
 # - xclip? non-x-reliant clipboard manager?
 {
