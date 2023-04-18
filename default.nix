@@ -307,12 +307,12 @@ rec {
       img2pdf
       insect
       ocaml
-      python3
+      # python3 # rming from default bc causes heavy initial build
       stow
     ] ++ (if system == "x86_64-linux" then [
     # TODO supporting 32 bit machine was harder than anticipated, come back to
     # this later
-      nixpkgs.clojure
+      # nixpkgs.clojure
       nixpkgs.jdk
       nixpkgs.pdftk
     ] else [])));
