@@ -285,6 +285,7 @@ rec {
 
     # TODO relies on systemd... how to deal with this on non-systemd distros?
     wm_env = mk_coll "wm_env" [
+      gui_env
       srcs.i3wm
       i3wm
       # nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
