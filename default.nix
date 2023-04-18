@@ -99,12 +99,12 @@ rec {
 
     xorg-xbacklight = nixpkgs.xorg.xbacklight;
 
-    bat = (mk_coll "bat" [
+    bat = mk_coll "bat" [
       nixpkgs.bat
       nixpkgs.bat-extras.batdiff
       nixpkgs.bat-extras.batman
       nixpkgs.bat-extras.batwatch
-    ]);
+    ];
 
     curl = add_pkg srcs.curl;
 
@@ -123,16 +123,16 @@ rec {
         destination = "/lib/${name}";
       };
 
-    tmux = (mk_coll "tmux" [
+    tmux = mk_coll "tmux" [
       fzf
       gcal
       nixpkgs.tmux
       srcs.tmux
       tmuxinator # TODO pull in projects from shh
       zsh # TODO rm this dep
-    ]);
+    ];
 
-    zip = (mk_coll "zip" [ nixpkgs.zip nixpkgs.unzip ]);
+    zip = mk_coll "zip" [ nixpkgs.zip nixpkgs.unzip ];
 
     vim-plug =
       store_text
@@ -168,7 +168,7 @@ rec {
       srcs.xflux
     ];
 
-    zathura = (add_pkg srcs.zathura);
+    zathura = add_pkg srcs.zathura;
 
     zsh = mk_coll "zsh" [
       bat
@@ -268,7 +268,7 @@ rec {
       pdftk
     ];
 
-    gui_env = (mk_coll "gui_env" [
+    gui_env = mk_coll "gui_env" [
       default
       grip
       libnotify
@@ -281,7 +281,7 @@ rec {
       xclip
       xournalpp
       zathura
-    ]);
+    ];
 
     # TODO relies on systemd... how to deal with this on non-systemd distros?
     wm_env = mk_coll "wm_env" [
