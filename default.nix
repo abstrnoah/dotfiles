@@ -95,6 +95,8 @@ rec {
 
     inherit (nixpkgs.nodePackages) insect;
 
+    telegram = nixpkgs.tdesktop;
+
     xorg-xbacklight = nixpkgs.xorg.xbacklight;
 
     bat = (mk_coll "bat" [
@@ -268,16 +270,17 @@ rec {
 
     gui_env = (mk_coll "gui_env" [
       default
+      grip
       libnotify
       mpv
-      grip
+      pulseaudio
       qutebrowser
       signal-desktop
       spotify
+      telegram
       xclip
       xournalpp
       zathura
-      pulseaudio
     ]);
 
     # TODO relies on systemd... how to deal with this on non-systemd distros?
