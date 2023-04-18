@@ -1,7 +1,12 @@
-# TODO SHELL
-# TODO handle secrets
-# TODO bundle pass, gpg, tomb? tomb,gpg provided natively
-# TODO vim spellfile and other "mutable" deployed paths
+# TODO
+# - i3lock
+# - gnome-terminal ugh sigh urg pensive
+# - SHELL
+# - handle secrets
+# - bundle pass, gpg, tomb? tomb,gpg provided natively
+# - vim spellfile and other "mutable" deployed paths
+# - qutebrowser perms
+#     (temporary fix: manually 'touch ~/.config/qutebrowser/.keep' before nixphile)
 {
   lib
 , nixpkgs
@@ -225,13 +230,13 @@ rec {
     pulseaudio
     ;
 
-    # TODO eventually have nix provide i3-gaps, i3lock, pulse, feh
+    # TODO eventually have nix provide i3-gaps, i3lock, pulse, feh, etc.
     # TODO requires pactl, which is currently provided natively
     # TODO requires systemctl
     # TODO passmenu?
     i3wm = add_deps srcs.i3wm [
       nixpkgs.i3-gaps
-      nixpkgs.i3lock
+      # nixpkgs.i3lock # TODO due to PAM permissions issue nix version fails
       nixpkgs.i3status
       packages.xsession
       packages.jq
@@ -336,6 +341,12 @@ rec {
       pulseaudio
     ]));
 
+    # TODO wm_env works great except two outstanding issues:
+    # - qutebrowser requires manual 'touch ~/.config/qutebrowser/.keep' before
+    #   nixphile
+    # - gnome-terminal, being the way it is, needs to be manually configured via
+    #   gconf (just once, at initial setup)
+    # - due to pam perm issue, i3lock needs to be provided natively
     wm_env = (mk_coll "wm_env" (with packages; [
       gui_env
       rofi
