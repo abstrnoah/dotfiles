@@ -73,7 +73,6 @@ rec {
     netcat-openbsd
     nettools
     nodejs
-    openssh
     pandoc
     pdfgrep
     pdftk
@@ -258,9 +257,11 @@ rec {
       '')
     ];
 
+    ssh = nixpkgs.openssh;
+
     nix-on-droid = bundle "nix-on-droid" [
       core_env
-      openssh
+      ssh
       procps
       utillinux
     ];
