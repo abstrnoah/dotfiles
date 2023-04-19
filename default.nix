@@ -5,6 +5,8 @@
   lib
 , nixpkgs
 , system ? builtins.currentSystem # TODO maybe improve how we handle system
+, nixphile
+, ...
 }:
 
 with {
@@ -31,10 +33,13 @@ let
       source = dotfiles_path + "/${name}";
       excludes = map (p: source + "/${p}") rel_excludes;
     });
+    nixphile_default = nixphile.default;
 in
 rec {
 
   packages = rec {
+
+    nixphile = nixphile_default;
 
     inherit (nixpkgs)
     black
@@ -261,7 +266,7 @@ rec {
       '')
       (mk_src "core_env" {})
       (mk_src "nix" {})
-      # TODO nixphile
+      nixphile
       diffutils
       findutils
       getconf
@@ -358,6 +363,8 @@ rec {
       # TODO gnome-terminal needs to be manualy configured
       passmenu
     ];
+
+    machine03 = wm_env;
 
   };
 

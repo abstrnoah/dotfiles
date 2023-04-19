@@ -2,6 +2,7 @@
 # TODO trivial builder like for nixphile
 {
   nixpkgs ? null
+, ...
 }:
 
 rec {
