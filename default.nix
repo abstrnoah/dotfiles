@@ -8,28 +8,24 @@
 
 with {
   inherit (lib)
-  add_deps
   by_name
   get
   store_text
+  make_env
+  bundle
   ;
 };
 let
   dotfiles_path = ./dotfiles;
-  mk = lib.curry "name" lib.make_env;
-  mk_with_src = lib.curry "name"
-    (spec@{ name, ... }:
-    lib.make_env ({
+  mk_src =
+    name:
+    spec@{ ... }:
+    lib.make_env (spec // {
       inherit name;
       deps = [ (dotfiles_path + "/${name}") ];
-    } // spec));
-  mk_src = name: mk_with_src name {};
-  add_pkg = env: add_deps env [ (get env.name nixpkgs) ];
-  mk_coll = name: deps: mk name { inherit deps; };
+    });
 in
 rec {
-
-  srcs = by_name (map mk_src (lib.list_dir dotfiles_path));
 
   packages = rec {
 
@@ -44,6 +40,7 @@ rec {
     dnstracer
     exiftool
     fd
+    feh
     findutils
     fzf
     gcal
@@ -99,16 +96,16 @@ rec {
 
     xorg-xbacklight = nixpkgs.xorg.xbacklight;
 
-    bat = mk_coll "bat" [
+    bat = bundle "bat" [
       nixpkgs.bat
       nixpkgs.bat-extras.batdiff
       nixpkgs.bat-extras.batman
       nixpkgs.bat-extras.batwatch
     ];
 
-    curl = add_pkg srcs.curl;
+    curl = bundle "curl" [ nixpkgs.curl (mk_src "curl" {}) ];
 
-    git = add_pkg srcs.git;
+    git = bundle "git" [ nixpkgs.git (mk_src "git" {}) ];
 
     # TODO probably better to achive this with substituteAll instead
     nix_env_exports =
@@ -123,16 +120,16 @@ rec {
         destination = "/lib/${name}";
       };
 
-    tmux = mk_coll "tmux" [
+    tmux = bundle "tmux" [
       fzf
       gcal
       nixpkgs.tmux
-      srcs.tmux
+      (mk_src "tmux" {})
       tmuxinator # TODO pull in projects from shh
       zsh # TODO rm this dep
     ];
 
-    zip = mk_coll "zip" [ nixpkgs.zip nixpkgs.unzip ];
+    zip = bundle "zip" [ nixpkgs.zip nixpkgs.unzip ];
 
     vim-plug =
       store_text
@@ -140,43 +137,46 @@ rec {
       "/home/me/.vim/autoload/plug.vim";
 
     # TODO mutable spellfile
-    vim = mk_coll "vim" [
+    vim = bundle "vim" [
       curl
       fzf
       nixpkgs.vimHugeX
-      srcs.vim
+      (mk_src "vim" {})
       vim-plug
     ];
 
-    ocaml = mk_coll "ocaml" [
+    ocaml = bundle "ocaml" [
       nixpkgs.ocaml
       nixpkgs.ocamlformat
       nixpkgs.ocamlPackages.utop
     ];
 
     # TODO needs ~/.config/qutebrowser/.keep
-    qutebrowser = add_pkg srcs.qutebrowser;
+    qutebrowser = bundle "qutebrowser" [
+      nixpkgs.qutebrowser
+      (mk_src "qutebrowser" {})
+    ];
 
-    rofi = add_pkg srcs.rofi;
+    rofi = bundle "rofi" [ nixpkgs.rofi (mk_src "rofi" {}) ];
 
-    spotify = mk_coll "spotify" [ nixpkgs.spotify spotify-cli-linux ];
+    spotify = bundle "spotify" [ nixpkgs.spotify spotify-cli-linux ];
 
-    xflux = mk_coll "xflux" [
+    xflux = bundle "xflux" [
       curl
       jq
       nixpkgs.xflux
-      srcs.xflux
+      (mk_src "xflux" {})
     ];
 
-    zathura = add_pkg srcs.zathura;
+    zathura = bundle "zathura" [ nixpkgs.zathura (mk_src "zathura" {}) ];
 
-    zsh = mk_coll "zsh" [
+    zsh = bundle "zsh" [
       bat
       fd
       fzf
       nix_env_exports
       nixpkgs.zsh
-      srcs.zsh
+      (mk_src "zsh" {})
     ];
 
     i3wm = nixpkgs.i3-gaps;
@@ -189,7 +189,7 @@ rec {
       destination = "/home/me/.xsession";
     };
 
-    wallpapers = mk_coll "wallpapers" [
+    wallpapers = bundle "wallpapers" [
       (lib.store_file
       ./share/wallpapers/solarized-disks.png
       "/home/me/.wallpaper")
@@ -198,23 +198,27 @@ rec {
       "/home/me/.wallpaperlock")
     ];
 
-    passmenu = srcs.pass;
+    passmenu = (mk_src "pass" {});
 
     # TODO needs ~/.config/pulse/.keep
-    dunst = add_pkg srcs.dunst;
+    dunst = bundle "dunst" [ nixpkgs.dunst (mk_src "dunst" {}) ];
 
-    pulseaudio = add_pkg srcs.pulseaudio;
+    # TODO do we really want nix's pulse??
+    pulseaudio = bundle "pulseaudio" [
+      nixpkgs.pulseaudio
+      (mk_src "pulseaudio" {})
+    ];
 
-    nix-on-droid = mk_coll "nix-on-droid" [
+    nix-on-droid = bundle "nix-on-droid" [
       core_env
       openssh
       procps
       utillinux
     ];
 
-    core_env = mk_coll "core_env" [
-      srcs.core_env
-      srcs.nix
+    core_env = bundle "core_env" [
+      (mk_src "core_env" {})
+      (mk_src "nix" {})
       # TODO nixphile
       diffutils
       findutils
@@ -255,7 +259,7 @@ rec {
       rlwrap
     ];
 
-    default = mk_coll "default" [
+    default = bundle "default" [
       core_env
       black
       bup
@@ -274,7 +278,7 @@ rec {
       pdftk
     ];
 
-    gui_env = mk_coll "gui_env" [
+    gui_env = bundle "gui_env" [
       default
       grip
       libnotify
@@ -290,9 +294,9 @@ rec {
     ];
 
     # TODO relies on systemd... how to deal with this on non-systemd distros?
-    wm_env = mk_coll "wm_env" [
+    wm_env = bundle "wm_env" [
       gui_env
-      srcs.i3wm
+      (mk_src "i3wm" {})
       i3wm
       # nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
       i3status
@@ -307,7 +311,7 @@ rec {
       xrandr-invert-colors
       xorg-xbacklight
       # TODO pulse, viz pactl
-      # TODO feh
+      feh
       # TODO gnome-terminal needs to be manualy configured
       passmenu
     ];

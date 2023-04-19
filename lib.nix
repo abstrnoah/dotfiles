@@ -33,31 +33,33 @@ rec {
   gen_set = f: fold (a: h: a // { "${h}" = f h; }) {};
   for_all = l: f: gen_set f l;
 
-  make_amendable =
-    f: s@{ ... }:
-    (f s) // { __constructor = make_amendable f; __preimage = s; };
+  # TODO a good idea but if i'm going to use this i need to support compsing
+  #      things like composing nixphile_hook_pre etc.
+  #      also, nixpkgs already has its override mechanism so
+  # make_amendable =
+  #   f: s@{ ... }:
+  #   (f s) // { __constructor = make_amendable f; __preimage = s; };
+  # amend =
+  #   amender: # new: old: final
+  #   image@{ __constructor, __preimage, ... }:
+  #   new:
+  #   __constructor (amender new __preimage);
+  # amend_over = amend (new: old: old // new);
+  # amend_under = amend (new: old: new // old);
+  # amend_add =
+  #   key:
+  #   amend (new: old: override key ((builtins.getAttr key old) ++ new) old);
+  # amend_name = name: image: amend_over image { inherit name; };
+  # add_deps = amend_add "deps";
 
-  amend =
-    amender: # new: old: final
-    image@{ __constructor, __preimage, ... }:
-    new:
-    __constructor (amender new __preimage);
-
-  amend_over = amend (new: old: old // new);
-  amend_under = amend (new: old: new // old);
-  amend_add =
-    key:
-    amend (new: old: override key ((builtins.getAttr key old) ++ new) old);
-  amend_name = name: image: amend_over image { inherit name; };
-
-  make_env = make_amendable
-    ({
+  make_env =
+    {
       name ? "env"
-    , deps
-    , prefix_substs ? null # { "dot-files" = ".file"; } # TODO not implemented
-    , excludes ? null # TODO not implemented
-    , paths ? [ "/" ]
-    , ...
+      , deps
+      , prefix_substs ? null # { "dot-files" = ".file"; } # TODO not implemented
+      , excludes ? null # TODO not implemented
+      , paths ? [ "/" ]
+      , ...
     }:
     assert nixpkgs != null;
     nixpkgs.buildEnv {
@@ -69,9 +71,9 @@ rec {
       ignoreCollisions = false; # TODO check if these two give desired behaviour
       checkCollisionContents = true;
       extraOutputsToInstall = [ "man" "doc" ];
-    });
+    };
 
-  add_deps = amend_add "deps";
+  bundle = name: deps: make_env { inherit name deps; };
 
   list_dir = path: builtins.attrNames (builtins.readDir path);
 
