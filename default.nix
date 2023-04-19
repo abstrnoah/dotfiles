@@ -151,8 +151,9 @@ rec {
       vim-plug
       (make_nixphile_hook_pre ''
         mkdir -p "$HOME/.vim/spell"
-        ln -Ts \
-          "$HOME/.dotfiles/.vim/spell/en.utf-8.add" \
+        test -h "$HOME/.vim/spell/en.utf-8.add" \
+        || ln -Ts \
+          "$HOME/.dotfiles/dotfiles/.vim/spell/en.utf-8.add" \
           "$HOME/.vim/spell/en.utf-8.add"
       '')
     ];
