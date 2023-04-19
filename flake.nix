@@ -1,8 +1,7 @@
 {
   description = "abstrnoah's dotfiles";
 
-  inputs.nixpkgs.url =
-    "github:abstrnoah/nixpkgs/37c045276cbedf0651305c564e7b696df12bc5fc";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
 
   outputs =
     { self, nixpkgs }:
