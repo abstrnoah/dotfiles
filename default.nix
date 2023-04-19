@@ -300,7 +300,7 @@ rec {
     ];
 
     # TODO relies on systemd... how to deal with this on non-systemd distros?
-    wm_env = bundle "wm_env" [
+    wm_env = (bundle "wm_env" [
       gui_env
       (mk_src "i3wm" {})
       i3wm
@@ -320,7 +320,11 @@ rec {
       feh
       # TODO gnome-terminal needs to be manualy configured
       passmenu
-    ];
+    ]) // {
+      nixphile.hooks.pre = [
+        '' touch $HOME/hooktest ''
+      ];
+    };
 
   };
 
