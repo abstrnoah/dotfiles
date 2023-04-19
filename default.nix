@@ -85,6 +85,7 @@ rec {
     time
     tmuxinator
     toilet
+    tor-browser-bundle-bin
     tree
     tuptime
     universal-ctags
@@ -325,6 +326,7 @@ rec {
       mpv
       pulseaudio
       qutebrowser
+      tor-browser-bundle-bin
       signal-desktop
       spotify
       telegram
