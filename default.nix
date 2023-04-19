@@ -206,6 +206,14 @@ rec {
 
     zathura = bundle "zathura" [ nixpkgs.zathura (mk_src "zathura" {}) ];
 
+    # FIXME video issue
+    zoom = nixpkgs.zoom-us.overrideAttrs (prev: {
+      nativeBuildInputs = (prev.nativeBuildInputs or []) ++ [ nixpkgs.makeWrapper ];
+      postFixup = prev.postFixup + ''
+        wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
+      '';
+    });
+
     zsh = bundle "zsh" [
       bat
       fd
@@ -362,6 +370,7 @@ rec {
       feh
       # TODO gnome-terminal needs to be manualy configured
       passmenu
+      zoom
     ];
 
     machine03 = wm_env;
