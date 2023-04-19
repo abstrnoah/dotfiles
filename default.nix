@@ -167,7 +167,18 @@ rec {
     # TODO needs ~/.config/qutebrowser/.keep
     # TODO move env patch here from nixpkgs fork
     qutebrowser = bundle "qutebrowser" [
-      nixpkgs.qutebrowser
+      (nixpkgs.qutebrowser.overrideAttrs (prev: {
+          preFixup =
+            let
+              alsaPluginDir = (nixpkgs.lib.getLib nixpkgs.alsa-plugins) + "/lib/alsa-lib";
+            in
+            prev.preFixup + ''
+              makeWrapperArgs+=(
+                --set QT_XCB_GL_INTEGRATION none
+                --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
+              )
+            '';
+      }))
       (mk_src "qutebrowser" {})
       (make_nixphile_hook_pre ''
         mkdir -p "$HOME/.config/qutebrowser"
