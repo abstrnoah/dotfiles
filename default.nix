@@ -151,7 +151,9 @@ rec {
       vim-plug
       (make_nixphile_hook_pre ''
         mkdir -p "$HOME/.vim/spell"
-        ln -Ts "$HOME/.dotfiles/.vim/spell/en.utf-8.add" "$HOME/.vim/spell/en.utf-8.add"
+        ln -Ts \
+          "$HOME/.dotfiles/.vim/spell/en.utf-8.add" \
+          "$HOME/.vim/spell/en.utf-8.add"
       '')
     ];
 
@@ -238,7 +240,10 @@ rec {
 
     core_env = bundle "core_env" [
       (make_nixphile_hook_pre ''
-        git clone -o github https://github.com/abstrnoah/dotfiles ~/.dotfiles
+        test -d "$HOME/.dotfiles" \
+        || git clone -o github \
+          https://github.com/abstrnoah/dotfiles \
+          "$HOME/.dotfiles"
       '')
       (mk_src "core_env" {})
       (mk_src "nix" {})
