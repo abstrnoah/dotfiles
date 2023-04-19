@@ -55,11 +55,9 @@ rec {
   make_env =
     {
       name ? "env"
-      , deps
-      , prefix_substs ? null # { "dot-files" = ".file"; } # TODO not implemented
-      , excludes ? null # TODO not implemented
-      , paths ? [ "/" ]
-      , ...
+    , deps
+    , paths ? [ "/" ]
+    , ...
     }:
     assert nixpkgs != null;
     nixpkgs.buildEnv {
@@ -82,7 +80,7 @@ rec {
     nixpkgs.runCommand (baseNameOf source) { inherit source target; } ''
         dest=$out${nixpkgs.lib.escapeShellArg target}
         mkdir -p "$(dirname "$dest")"
-        cp "$source" "$dest"
+        cp -T "$source" "$dest"
       '';
 
   store_text =
@@ -102,5 +100,20 @@ rec {
       executable = true;
       destination = target;
     };
+
+  # NOTE: Returns a _path_, not a derivation.
+  make_source =
+    {
+      source # NOTE: should NOT be a store path
+    , excludes ? []
+    , ...
+    }:
+    # needed so that equality testing works
+    assert builtins.all (p: builtins.typeOf p == "path") excludes;
+    let
+      name = baseNameOf source;
+      filter = path: type: ! builtins.elem (/. + path) excludes;
+    in
+    builtins.filterSource filter source;
 
 }

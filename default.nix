@@ -13,16 +13,21 @@ with {
   store_text
   make_env
   bundle
+  make_source
   ;
 };
 let
   dotfiles_path = ./dotfiles;
   mk_src =
     name:
-    spec@{ ... }:
-    lib.make_env (spec // {
-      inherit name;
-      deps = [ (dotfiles_path + "/${name}") ];
+    spec@{ excludes ? [], ... }:
+    let
+      # avoid infinite recursion
+      rel_excludes = excludes;
+    in
+    lib.make_source (spec // rec {
+      source = dotfiles_path + "/${name}";
+      excludes = map (p: source + "/${p}") rel_excludes;
     });
 in
 rec {
@@ -141,7 +146,7 @@ rec {
       curl
       fzf
       nixpkgs.vimHugeX
-      (mk_src "vim" {})
+      (mk_src "vim" { excludes = [ "/home/me/.vim/spell/en.utf-8.add" ]; })
       vim-plug
     ];
 
@@ -198,7 +203,8 @@ rec {
       "/home/me/.wallpaperlock")
     ];
 
-    passmenu = (mk_src "pass" {});
+    # bundle bc mk_src returns path not derivation
+    passmenu = bundle "passmenu" [ (mk_src "pass" {}) ];
 
     # TODO needs ~/.config/pulse/.keep
     dunst = bundle "dunst" [ nixpkgs.dunst (mk_src "dunst" {}) ];
