@@ -186,6 +186,11 @@ alias pass=' pass'
 # disable timer tmux integration
 alias timer='TMUX= timer'
 
+pastebin() {
+    curl -X PUT -T - "https://transfer.sh/${1}"
+    echo
+}
+
 # KEY BINDINGS {{{1
 
 _br_command_exists fzf && {

@@ -1,5 +1,6 @@
 # TODO
 # - xclip? non-x-reliant clipboard manager?
+# - speedup evaluation time
 {
   lib
 , nixpkgs
