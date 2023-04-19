@@ -24,7 +24,7 @@ _leader_hint = _leader + ";"
 # Home page.
 # Note that 'start_pages' is different from 'default_page'; ':home' goes to the
 # former while generic opens go to the latter.
-c.url.start_pages = ["http://brumal.org/"]
+c.url.start_pages = ["http://neverssl.com"]
 _searchengines = {
     "ddg": "https://duckduckgo.com/?q={}",
     "ddg-onion": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
