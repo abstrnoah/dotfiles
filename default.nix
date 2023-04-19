@@ -14,6 +14,7 @@ with {
   make_env
   bundle
   make_source
+  make_nixphile_hook_pre
   ;
 };
 let
@@ -148,6 +149,10 @@ rec {
       nixpkgs.vimHugeX
       (mk_src "vim" { excludes = [ "/home/me/.vim/spell/en.utf-8.add" ]; })
       vim-plug
+      (make_nixphile_hook_pre ''
+        mkdir -p "$HOME/.vim/spell"
+        ln -Ts "$HOME/.dotfiles/.vim/spell/en.utf-8.add" "$HOME/.vim/spell/en.utf-8.add"
+      '')
     ];
 
     ocaml = bundle "ocaml" [
@@ -157,9 +162,14 @@ rec {
     ];
 
     # TODO needs ~/.config/qutebrowser/.keep
+    # TODO move env patch here from nixpkgs fork
     qutebrowser = bundle "qutebrowser" [
       nixpkgs.qutebrowser
       (mk_src "qutebrowser" {})
+      (make_nixphile_hook_pre ''
+        mkdir -p "$HOME/.config/qutebrowser"
+        touch "$HOME/.config/qutebrowser/.keep"
+      '')
     ];
 
     rofi = bundle "rofi" [ nixpkgs.rofi (mk_src "rofi" {}) ];
@@ -206,13 +216,17 @@ rec {
     # bundle bc mk_src returns path not derivation
     passmenu = bundle "passmenu" [ (mk_src "pass" {}) ];
 
-    # TODO needs ~/.config/pulse/.keep
     dunst = bundle "dunst" [ nixpkgs.dunst (mk_src "dunst" {}) ];
 
     # TODO do we really want nix's pulse??
+    # TODO needs ~/.config/pulse/.keep
     pulseaudio = bundle "pulseaudio" [
       nixpkgs.pulseaudio
       (mk_src "pulseaudio" {})
+      (make_nixphile_hook_pre ''
+        mkdir -p "$HOME/.config/pulse"
+        touch "$HOME/.config/pulse/.keep"
+      '')
     ];
 
     nix-on-droid = bundle "nix-on-droid" [
@@ -223,6 +237,9 @@ rec {
     ];
 
     core_env = bundle "core_env" [
+      (make_nixphile_hook_pre ''
+        git clone -o github https://github.com/abstrnoah/dotfiles ~/.dotfiles
+      '')
       (mk_src "core_env" {})
       (mk_src "nix" {})
       # TODO nixphile
@@ -300,7 +317,7 @@ rec {
     ];
 
     # TODO relies on systemd... how to deal with this on non-systemd distros?
-    wm_env = (bundle "wm_env" [
+    wm_env = bundle "wm_env" [
       gui_env
       (mk_src "i3wm" {})
       i3wm
@@ -320,11 +337,7 @@ rec {
       feh
       # TODO gnome-terminal needs to be manualy configured
       passmenu
-    ]) // {
-      nixphile.hooks.pre = [
-        '' touch $HOME/hooktest ''
-      ];
-    };
+    ];
 
   };
 

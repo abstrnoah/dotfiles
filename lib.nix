@@ -33,24 +33,20 @@ rec {
   gen_set = f: fold (a: h: a // { "${h}" = f h; }) {};
   for_all = l: f: gen_set f l;
 
-  # TODO a good idea but if i'm going to use this i need to support compsing
-  #      things like composing nixphile_hook_pre etc.
-  #      also, nixpkgs already has its override mechanism so
-  # make_amendable =
-  #   f: s@{ ... }:
-  #   (f s) // { __constructor = make_amendable f; __preimage = s; };
-  # amend =
-  #   amender: # new: old: final
-  #   image@{ __constructor, __preimage, ... }:
-  #   new:
-  #   __constructor (amender new __preimage);
-  # amend_over = amend (new: old: old // new);
-  # amend_under = amend (new: old: new // old);
-  # amend_add =
-  #   key:
-  #   amend (new: old: override key ((builtins.getAttr key old) ++ new) old);
-  # amend_name = name: image: amend_over image { inherit name; };
-  # add_deps = amend_add "deps";
+  # This is very similar to nixpkgs' makeOverridable. One important difference
+  # is that it is easier to get the original arguments with this implementation,
+  # TODO what happens when you make_amendable an already-amentable function?
+
+  make_amendable =
+    f: s@{ ... }:
+    (f s) // { __constructor = make_amendable f; __preimage = s; };
+  amend =
+    amender: # new: old: final
+    image@{ __constructor, __preimage, ... }:
+    new:
+    __constructor (amender new __preimage);
+  amend_over = amend (new: old: old // new);
+  amend_under = amend (new: old: new // old);
 
   make_env =
     {
@@ -60,7 +56,14 @@ rec {
     , ...
     }:
     assert nixpkgs != null;
-    nixpkgs.buildEnv {
+    let
+      # TODO FIXME awful terrible doesn't work when two deps have same common dep
+      nixphile_hook_pre =
+        bundle_scripts
+          (map (get "nixphile_hook_pre")
+            (builtins.filter (x: x ? nixphile_hook_pre) deps));
+    in
+    (nixpkgs.buildEnv {
       inherit name;
       paths = deps;
       # TODO buildEnv requires pathsToLink to be directories; I'd like it to
@@ -69,7 +72,8 @@ rec {
       ignoreCollisions = false; # TODO check if these two give desired behaviour
       checkCollisionContents = true;
       extraOutputsToInstall = [ "man" "doc" ];
-    };
+    })
+    // { inherit nixphile_hook_pre; };
 
   bundle = name: deps: make_env { inherit name deps; };
 
@@ -115,5 +119,35 @@ rec {
       filter = path: type: ! builtins.elem (/. + path) excludes;
     in
     builtins.filterSource filter source;
+
+  # Make nixpkgs' writeShellApplication amendable.
+  # Use make_amendable instead of nixpkgs.makeOverridable because my
+  # implementation easily exposes original args.
+  write_script = make_amendable nixpkgs.writeShellApplication;
+
+  cat_scripts =
+    a: b:
+    if a == null then
+      b
+    else if b == null then
+      a
+    else
+      amend (new: old: old // {
+        text = old.text + new.text;
+        runtimeInputs = old.runtimeInputs or [] ++ new.runtimeInputs or [];
+      }) a b.__preimage;
+
+  bundle_scripts = scripts: fold cat_scripts null scripts;
+
+  # TODO FIXME this whole nixphile hook riffraff.
+  # - Handle circular dependencies.
+  # - When bundling packages with common hooks, deduplicate.
+  # - Handle ordering?
+  make_nixphile_hook_pre =
+    text:
+    {
+      nixphile_hook_pre =
+        write_script { name = "nixphile_hook_pre"; inherit text; };
+    };
 
 }
