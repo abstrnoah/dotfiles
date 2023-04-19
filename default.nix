@@ -153,7 +153,7 @@ rec {
         mkdir -p "$HOME/.vim/spell"
         test -h "$HOME/.vim/spell/en.utf-8.add" \
         || ln -Ts \
-          "$HOME/.dotfiles/dotfiles/.vim/spell/en.utf-8.add" \
+          "$HOME/.dotfiles/dotfiles/vim/home/me/.vim/spell/en.utf-8.add" \
           "$HOME/.vim/spell/en.utf-8.add"
       '')
     ];
