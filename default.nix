@@ -59,7 +59,6 @@ rec {
     getconf
     gnugrep
     gnused
-    grip
     hostname
     htop
     i3status
@@ -102,6 +101,7 @@ rec {
     ;
 
     inherit (nixpkgs.nodePackages) insect;
+    inherit (nixpkgs.python310Packages) grip;
 
     telegram = nixpkgs.tdesktop;
 
