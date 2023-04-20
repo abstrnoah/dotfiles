@@ -24,7 +24,7 @@ _leader_hint = _leader + ";"
 # Home page.
 # Note that 'start_pages' is different from 'default_page'; ':home' goes to the
 # former while generic opens go to the latter.
-c.url.start_pages = ["http://neverssl.com"]
+c.url.start_pages = ["http://neverssl.com/"]
 _searchengines = {
     "ddg": "https://duckduckgo.com/?q={}",
     "ddg-onion": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
@@ -51,26 +51,8 @@ c.content.autoplay = False
 c.statusbar.show = "in-mode"
 c.tabs.show = "multiple"
 
-# DARKMODE {{{1
-
-# Value to use for `prefers-color-scheme:` for websites.
+# # DARKMODE {{{1
 c.colors.webpage.preferred_color_scheme = "dark"
-
-# Render all web contents using a dark theme.
-c.colors.webpage.darkmode.enabled = False
-
-# Which algorithm to use for modifying how colors are rendered with
-# darkmode.
-c.colors.webpage.darkmode.algorithm = "lightness-hsl"
-
-# Contrast for dark mode.
-c.colors.webpage.darkmode.contrast = 0.0
-
-# Render all colors as grayscale.
-c.colors.webpage.darkmode.grayscale.all = True
-
-# Desaturation factor for images in dark mode.
-c.colors.webpage.darkmode.grayscale.images = 1.0
 
 # PER-DOMAIN SETTINGS {{{1
 with config.pattern("https://mail.google.com/") as p:
