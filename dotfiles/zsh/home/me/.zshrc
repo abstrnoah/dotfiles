@@ -103,6 +103,7 @@ _br_command_exists tmux tmuxinator && {
         tmux a >&2 2>/dev/null || tmuxinator main
     }
     alias T='_br_tmux_go_last'
+    alias mux=tmuxinator
 }
 
 _br_command_exists xdg-open && {

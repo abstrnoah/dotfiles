@@ -88,7 +88,6 @@ rec {
     tectonic
     textql
     time
-    tmuxinator
     toilet
     tor-browser-bundle-bin
     tree
@@ -132,12 +131,17 @@ rec {
         destination = "/lib/${name}";
       };
 
+    tmuxinator = bundle "tmuxinator" [
+      nixpkgs.tmuxinator
+      (mk_src "tmuxinator" {})
+    ];
+
     tmux = bundle "tmux" [
       fzf
       gcal
       nixpkgs.tmux
       (mk_src "tmux" {})
-      tmuxinator # TODO pull in projects from shh
+      tmuxinator
       zsh # TODO rm this dep
     ];
 
