@@ -112,6 +112,8 @@ rec {
     nixpkgs.bat-extras.batwatch
   ];
 
+  bluetooth = bundle "bluetooth" [ (mk_src "bluetooth" {}) ];
+
   curl = bundle "curl" [ nixpkgs.curl (mk_src "curl" {}) ];
 
   git = bundle "git" [ nixpkgs.git (mk_src "git" {}) ];
@@ -330,6 +332,7 @@ rec {
     stow
     jdk
     pdftk
+    bluetooth
   ];
 
   gui_env = bundle "gui_env" [
