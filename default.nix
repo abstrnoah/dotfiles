@@ -1,6 +1,6 @@
 # TODO
 # - xclip? non-x-reliant clipboard manager?
-# - speedup evaluation time
+# - speedup, namely rewrite `bundle` and reduce core_env
 {
   lib
 , nixpkgs
