@@ -15,6 +15,10 @@ nix run 'github:abstrnoah/dotfiles#PACKAGE.nixphile_hook_pre'
 # Deploy the environment.
 nix run 'github:abstrnoah/nixphile' 'github:abstrnoah/dotfiles#PACKAGE'
 
+# Set login shell (requires `sudo` because nix's zsh is not in /etc/shells).
+# (If no root privileges, then probably use nix-portable for everything anyway.)
+sudo chsh -s $(which zsh) abstrnoah
+
 # Create an ssh key, transfer public key to personal server via pastebin.
 ssh-keygen
 cat ~/.ssh/id_rsa.pub | pastebin -

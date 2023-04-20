@@ -174,8 +174,6 @@ rec {
       nixpkgs.ocamlPackages.utop
     ];
 
-    # TODO needs ~/.config/qutebrowser/.keep
-    # TODO move env patch here from nixpkgs fork
     qutebrowser = bundle "qutebrowser" [
       (nixpkgs.qutebrowser.overrideAttrs (prev: {
           preFixup =
@@ -251,7 +249,6 @@ rec {
     dunst = bundle "dunst" [ nixpkgs.dunst (mk_src "dunst" {}) ];
 
     # TODO do we really want nix's pulse??
-    # TODO needs ~/.config/pulse/.keep
     pulseaudio = bundle "pulseaudio" [
       nixpkgs.pulseaudio
       (mk_src "pulseaudio" {})
@@ -332,7 +329,6 @@ rec {
       img2pdf
       insect
       ocaml
-      # python3 # rming from default bc causes heavy initial build
       stow
       jdk
       pdftk
@@ -371,9 +367,7 @@ rec {
       xflux
       xrandr-invert-colors
       xorg-xbacklight
-      # TODO pulse, viz pactl
       feh
-      # TODO gnome-terminal needs to be manualy configured
       passmenu
       zoom
     ];
