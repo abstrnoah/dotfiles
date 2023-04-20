@@ -1,0 +1,69 @@
+#!/bin/sh
+
+set -e
+# set -x
+
+print_usage() {
+    cat <<EOF
+usage: ${0} [OPTIONS] [<root>]
+
+Print git repositories under <root>, delimit by newlines, to standard out. If
+<root> is omitted, then use \$PWD.
+
+Options:
+    -h
+        Print usage and exit.
+    -r
+        Print paths relative to <root>. Otherwise paths are resolved via
+        'readlink -f'.
+EOF
+}
+
+# fd_git_roots(root)
+# Print newline-delimited list of git roots in <root> in the form
+# '/absolute/path/to/git/root' (without '.git' and without trailing slash).
+fd_git_roots() {
+    local root="${1}"
+    fd -a -H -t d '^.git$' "${root}" \
+    | sed 's:/.git$::'
+}
+
+# <stdin> | strip_root(root)
+# Relativise records of standard in by stripping <root> and print to standard
+# out. In the special case that record equals the root, then print '.'.
+strip_root() {
+    local root=$(readlink -f "${1}")
+    sed -r 's:'"${root}"'/*::' \
+    | awk '/^$/ {print "."} /./ { print }'
+}
+
+root=$(readlink -f "${PWD}")
+relative="false"
+
+while [ "${#}" -gt 0 ]
+do
+    case "${1}" in
+        -h)
+            print_usage
+            exit
+            ;;
+        -r)
+            relative="true"
+            shift
+            ;;
+        *)
+            root=$(readlink -f "${1}")
+            break
+            ;;
+    esac
+done
+
+fd_git_roots "${root}" \
+| {
+    if [ "${relative}" = "true" ]
+    then
+        strip_root "${root}"
+    else
+        cat
+    fi
+}
