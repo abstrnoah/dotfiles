@@ -31,8 +31,7 @@
       packages =
         for_all_systems
           (system:
-          lib_agnostic.get "packages"
-            (import ./default.nix
-              ((inputs_for system) // { lib = lib.${system}; })));
+          import ./default.nix
+            ((inputs_for system) // { lib = lib.${system}; }));
     };
 }
