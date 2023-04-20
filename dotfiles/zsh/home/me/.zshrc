@@ -1,6 +1,19 @@
 # zshrc
 
+# TODO overhaul function names, ancient '_' prefixes are dumb and conflict with
+# comp.
+
+# Pull in native fpath that Nix's zsh probably misses.
+fpath=(
+    /usr/share/zsh/functions
+    /usr/local/share/zsh/site-functions
+    /usr/share/zsh/vendor-functions
+    /usr/share/zsh/vendor-completions
+    $fpath
+)
+
 # SETUP {{{1
+# TODO learn about autoload lol
 source "${NIXPHILE_ENV}/lib/utilities.zsh"
 source "${NIXPHILE_ENV}/lib/prompt.zsh"
 
@@ -68,11 +81,9 @@ setopt prompt_cr prompt_sp
 setopt hist_ignore_space
 
 # COMPLETIONS {{{1
-# Zsh's new completions, 'zshcompsys'.
-zstyle :compinstall filename "${HOME}/.zshrc"
+# See zshcompsys(1).
 autoload -Uz compinit
 compinit
-# source "${BR_DOTFILES}/package/zsh/comp-mux.zsh" # TODO do i care enuf?
 
 # Fzf completions.
 test -f "${NIXPHILE_ENV}/share/fzf/completion.zsh" && _br_command_exists fzf && {
