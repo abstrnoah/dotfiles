@@ -1,4 +1,4 @@
-# abstrnoah/dotfiles
+# `~abstrnoah/.dotfiles`
 
 My dotfiles use [nixphile] (also by me) for most deployment. Setup goes
 something like the following. Throughout, `PACKAGE` refers to the flake package
