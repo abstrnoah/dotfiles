@@ -10,6 +10,10 @@ _old_bar_mode="$(_get_bar_mode)"
 _old_dunst_state="$(dunstctl is-paused)"
 
 _pre_lock() {
+    if sudo -n tomb -q list; then
+        sudo -n tomb -q close all
+    fi
+
     dunstctl set-paused true \
         && i3-msg bar mode invisible
 }
