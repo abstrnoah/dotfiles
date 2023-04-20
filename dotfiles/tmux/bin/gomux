@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+# Init or attach tmux with start directory $1.
+
+# TODO rewrite this script to be portable, just use sh
+
+# set -x
+
+source ~/.nixphile/env/lib/utilities.zsh || exit 1
+_br_require tmux || exit
+
+start_directory="$(readlink -f "${1}")"
+session_name="${2:-$(basename "${start_directory:-.}")}"
+session_name="${session_name//./_}" # dots confuse tmux
+test -d "${start_directory}" \
+    || _br_oops "Directory not found: ${start_directory}" || exit
+tmux has-session -t="${session_name}" 2> /dev/null || {
+    tmux new-session -d -s "${session_name}" -c "${start_directory}"
+}
+if test -z "${TMUX}"; then
+    tmux attach -t "${session_name}"
+else
+    tmux switch-client -t "${session_name}"
+fi

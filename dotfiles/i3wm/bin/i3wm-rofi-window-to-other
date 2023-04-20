@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This is extremely hackily put together from the other forked rofi scripts
+# here, it is a TODO to clean these scripts up but for now they work :)
+
+function gen_workspaces()
+{
+    i3-msg -t get_workspaces | tr ',' '\n' | grep "name" | sed 's/"name":"\(.*\)"/\1/g' | sort -n
+}
+
+WORKSPACE=$( (echo "-"; gen_workspaces)  | rofi -dmenu -p "move to ws")
+
+if [ x"-" = x"${WORKSPACE}" ]
+then
+    WORKSPACE=$(i3wm-helper-empty-ws)
+fi
+if [ -n "${WORKSPACE}" ]
+then
+    i3-msg "move window to workspace ${WORKSPACE}"
+fi

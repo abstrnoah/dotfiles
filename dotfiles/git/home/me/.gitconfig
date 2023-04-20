@@ -1,0 +1,16 @@
+; path: ~/.gitconfig
+[user]
+    name = Noah D. Ortiz
+    email = abstrnoah@brumal.org
+[merge]
+    conflict = diff3
+[push]
+    default = simple
+[pull]
+    ff = only
+[init]
+    defaultBranch = "main"
+[include]
+    ; This is where site-specific directives should go, such as aliasing urls.
+    ; TODO handle machine-specific dependency
+    path = ~/.site.gitconfig

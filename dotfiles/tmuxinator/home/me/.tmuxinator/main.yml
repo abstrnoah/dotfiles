@@ -1,0 +1,5 @@
+name: main
+root: ~/<%= @args[0] %>
+
+windows:
+  - null:

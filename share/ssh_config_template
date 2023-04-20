@@ -1,0 +1,6 @@
+# pagekite host template
+Host name
+    HostName hostname
+    Port port
+    User username
+    ProxyCommand /bin/nc -X connect -x %h:443 %h %p
