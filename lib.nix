@@ -82,11 +82,15 @@ rec {
 
   store_file =
     source: target:
-    nixpkgs.runCommand (baseNameOf source) { inherit source target; } ''
-        dest=$out${nixpkgs.lib.escapeShellArg target}
-        mkdir -p "$(dirname "$dest")"
-        ln -s "${source}" "$dest"
-      '';
+    nixpkgs.runCommand (baseNameOf source) {
+      source = "${source}"; # copy source to nix store
+      inherit target;
+    }
+    ''
+      dest=$out${nixpkgs.lib.escapeShellArg target}
+      mkdir -p "$(dirname "$dest")"
+      ln -s "$source" "$dest"
+    '';
 
   store_text =
     source: target:
