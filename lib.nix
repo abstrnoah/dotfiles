@@ -85,7 +85,7 @@ rec {
     nixpkgs.runCommand (baseNameOf source) { inherit source target; } ''
         dest=$out${nixpkgs.lib.escapeShellArg target}
         mkdir -p "$(dirname "$dest")"
-        cp -T "$source" "$dest"
+        ln -s "${source}" "$dest"
       '';
 
   store_text =
@@ -151,4 +151,5 @@ rec {
         write_script { name = "nixphile_hook_pre"; inherit text; };
     };
 
+  # TODO helper that easily creates a flake from static assets like in wallpapers
 }

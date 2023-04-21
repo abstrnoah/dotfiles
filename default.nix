@@ -1,12 +1,13 @@
 # TODO
 # - xclip? non-x-reliant clipboard manager?
 # - speedup, namely rewrite `bundle` and reduce core_env
-{
+inputs@{
   lib
 , nixpkgs
 , nixpkgs_unstable
 , system ? builtins.currentSystem # TODO maybe improve how we handle system
 , nixphile
+, wallpapers
 , ...
 }:
 
@@ -242,10 +243,10 @@ rec {
 
   wallpapers = bundle "wallpapers" [
     (lib.store_file
-    ./share/wallpapers/solarized-disks.png
+    inputs.wallpapers.mount_fuji_jpg
     "/home/me/.wallpaper")
     (lib.store_file
-    ./share/wallpapers/solarized-stars.png
+    inputs.wallpapers.solarized-stars_png
     "/home/me/.wallpaperlock")
   ];
 

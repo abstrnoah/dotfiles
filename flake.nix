@@ -4,9 +4,10 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
   inputs.nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.nixphile.url = "github:abstrnoah/nixphile";
+  inputs.wallpapers.url = "github:abstrnoah/wallpapers";
 
   outputs =
-    inputs@{ self, nixpkgs, nixpkgs_unstable, ... }:
+    inputs@{ self, nixpkgs, nixpkgs_unstable, wallpapers, ... }:
     let
       lib_agnostic = import ./lib.nix {};
       for_all_systems = lib_agnostic.for_all [
