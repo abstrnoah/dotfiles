@@ -7,7 +7,7 @@
   inputs.wallpapers.url = "github:abstrnoah/wallpapers";
 
   outputs =
-    inputs@{ self, nixpkgs, nixpkgs_unstable, wallpapers, ... }:
+    inputs@{ self, nixpkgs, nixpkgs_unstable, ... }:
     let
       lib_agnostic = import ./lib.nix {};
       for_all_systems = lib_agnostic.for_all [
