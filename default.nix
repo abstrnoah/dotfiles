@@ -35,11 +35,10 @@ let
       source = dotfiles_path + "/${name}";
       excludes = map (p: source + "/${p}") rel_excludes;
     });
-    nixphile_default = nixphile.default;
 in
 rec {
 
-  nixphile = nixphile_default;
+  nixphile = inputs.nixphile.default;
 
   # TODO Move unstable packages to stable as soon as possible.
   inherit (nixpkgs_unstable)
