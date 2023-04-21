@@ -4,6 +4,7 @@
 {
   lib
 , nixpkgs
+, nixpkgs_unstable
 , system ? builtins.currentSystem # TODO maybe improve how we handle system
 , nixphile
 , ...
@@ -38,6 +39,11 @@ in
 rec {
 
   nixphile = nixphile_default;
+
+  # TODO Move unstable packages to stable as soon as possible.
+  inherit (nixpkgs_unstable)
+  jabref # Awaiting OpenJDK update.
+  ;
 
   inherit (nixpkgs)
   black
@@ -349,6 +355,7 @@ rec {
     xclip
     xournalpp
     zathura
+    jabref
   ];
 
   # TODO relies on systemd... how to deal with this on non-systemd distros?
