@@ -241,7 +241,7 @@ rec {
     (mk_src "zsh" {})
   ];
 
-  i3wm = nixpkgs.i3-gaps;
+  i3wm = nixpkgs.i3-rounded;
 
   xsession = nixpkgs.writeTextFile {
     name = "xsession";

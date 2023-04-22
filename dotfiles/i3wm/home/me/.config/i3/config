@@ -124,6 +124,7 @@ client.unfocused        $base03 $base03 $base01 $base01   $base03
 # Gaps, *snazzy*.
 for_window [class=".*"] border pixel $default_border
 gaps inner $base_gap_inner
+border_radius 2
 # TODO As it is impossible to toggle smart_gaps in runtime without writing an
 # IPC script, we for now compromise with the 'f' binding in $mode_gaps instead
 # of having smart_gaps always on.
