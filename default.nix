@@ -35,6 +35,17 @@ let
       source = dotfiles_path + "/${name}";
       excludes = map (p: source + "/${p}") rel_excludes;
     });
+  xrandr-switch-output =
+    name:
+    active:
+    inactive:
+    lib.write_script {
+      name = "xrandr-switch-${name}";
+      text = ''
+        xrandr --output ${nixpkgs.lib.escapeShellArg active} --auto \
+               --output ${nixpkgs.lib.escapeShellArg inactive} --off
+      '';
+    };
 in
 rec {
 
@@ -380,6 +391,10 @@ rec {
     zoom
   ];
 
-  machine03 = wm_env;
+  machine03 = bundle "machine03" [
+    wm_env
+    (xrandr-switch-output "builtin" "LVDS1" "VGA1")
+    (xrandr-switch-output "external" "VGA1" "LVDS1")
+  ];
 
 }

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+output_is_active() {
+    local output="${1}"
+    xrandr --listactivemonitors | grep -qF "${output}"
+}
+
+toggle_output() {
+    local output="${1}"
+    if output_is_active "${output}"; then
+        xrandr --output "${output}" --off
+    else
+        xrandr --output "${output}" --auto
+    fi
+}
+
+toggle_output "${1}"
