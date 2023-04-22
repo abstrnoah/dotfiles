@@ -139,7 +139,7 @@ _br_command_exists bat && {
         bat --plain --language help "${@}"
     }
     help() {
-        "${@}" -h 2>&1 | bathelp
+        ("${@}" -h || "${@}" --help) 2>&1 | bathelp
     }
 
     _br_command_exists batman && {
