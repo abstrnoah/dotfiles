@@ -28,7 +28,6 @@ set $mod Mod4
 # common overloads with $mod+$alt. This is mainly for ergonomic reasons.
 
 # Paths.
-set $home /home/abstractednoah
 # TODO: Needs to be deprecated.
 set $keybinds i3wm-helper-keybinds
 
@@ -115,7 +114,7 @@ focus_follows_mouse yes
 # THEME {{{1
 
 # Wallpaper.
-exec_always --no-startup-id feh --bg-fill $home/.wallpaper
+exec_always --no-startup-id feh --bg-fill $HOME/.wallpaper
 
 #class                  border  bg      text    indicator child_border
 client.focused          $base03 $base02 $base1  $green    $yellow
