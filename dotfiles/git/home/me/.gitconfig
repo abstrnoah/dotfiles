@@ -11,10 +11,6 @@
     ff = only
 [init]
     defaultBranch = "main"
-[include]
-    ; This is where site-specific directives should go, such as aliasing urls.
-    ; TODO handle machine-specific dependency
-    path = ~/.site.gitconfig
 [commit]
     gpgsign = true
 [tab]
