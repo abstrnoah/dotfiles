@@ -19,6 +19,7 @@ source "${NIXPHILE_ENV}/lib/prompt.zsh"
 
 # EXPORTED ENVIRONMENT {{{1
 export KEYTIMEOUT=1
+export GPG_TTY="$(tty)"
 
 export BR_REPOROOT="${HOME}/repository"
 
