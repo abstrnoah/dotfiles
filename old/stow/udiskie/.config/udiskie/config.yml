@@ -1,7 +1,0 @@
-program_options:
-  automount: false
-device_config:
-  - id_uuid: 79e9-089e
-    automount: true
-  - id_uuid: 2018-10-04-13-06-37-00
-    automount: true

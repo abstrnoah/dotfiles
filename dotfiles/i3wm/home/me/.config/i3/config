@@ -108,6 +108,8 @@ exec_always --no-startup-id xinput set-prop 12 "Synaptics Click Action" 0
 # 'exec_always' so we can restart xflux easily.
 exec_always auto-xflux
 
+exec udiskie
+
 # Focus follows mouse.
 focus_follows_mouse yes
 

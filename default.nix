@@ -135,6 +135,8 @@ rec {
 
   git = bundle "git" [ nixpkgs.git (mk_src "git" {}) ];
 
+  udiskie = bundle "udiskie" [ nixpkgs.udiskie (mk_src "udiskie" {}) ];
+
   # TODO probably better to achive this with substituteAll instead
   nix_env_exports =
     let
@@ -367,6 +369,7 @@ rec {
     xournalpp
     zathura
     jabref
+    udiskie
   ];
 
   # TODO relies on systemd... how to deal with this on non-systemd distros?
