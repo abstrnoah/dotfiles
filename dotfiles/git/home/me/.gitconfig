@@ -2,6 +2,7 @@
 [user]
     name = Noah D. Ortiz
     email = abstrnoah@brumal.net
+    signingKey = A99804C0F82B99C88DAF2CFD39436096D08807E8
 [merge]
     conflict = diff3
 [push]
@@ -14,3 +15,7 @@
     ; This is where site-specific directives should go, such as aliasing urls.
     ; TODO handle machine-specific dependency
     path = ~/.site.gitconfig
+[commit]
+    gpgsign = true
+[tab]
+    gpgsign = true
