@@ -1,5 +1,3 @@
-" Author: Noah <abstractednoah@brumal.org>
-
 " Note: We attempt to sort maps by mnemonic, not necessarily by plugin unless a
 " plugin occupies its own niche.
 

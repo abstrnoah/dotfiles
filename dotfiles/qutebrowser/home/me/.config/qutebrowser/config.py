@@ -5,7 +5,6 @@
 #   qute://help/settings.html
 
 __author__ = "abstrnoah"
-__email__ = "abstrnoah@brumal.org"
 
 # GLOBALS {{{1
 

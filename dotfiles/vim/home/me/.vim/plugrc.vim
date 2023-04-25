@@ -1,4 +1,3 @@
-" Author: Noah <abstrnoah@brumal.org>
 " Note: This script does not check whether plugins should be loaded; that should
 " be done in vimrc where this is sourced.
 
