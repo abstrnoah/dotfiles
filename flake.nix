@@ -38,5 +38,7 @@
           (system:
           import ./default.nix
             ((inputs_for system) // { lib = lib.${system}; }));
+
+      # TODO add default app
     };
 }
