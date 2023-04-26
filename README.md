@@ -33,7 +33,7 @@ vim ~/.ssh/config
 
 # nix-on-droid
 
-See the [nix-on-droid] README about [installing via
+See the [nix-on-droid] README about [installing as
 flake][nix-on-droid-readme-flake].
 
 Install the app.
@@ -45,7 +45,7 @@ In the nix-on-droid terminal, do
 nix-on-droid switch --flake 'github:abstrnoah/dotfiles#default'
 ```
 
-and then continue as above from the `nixphile_hook_pre`, with
+and then continue as above from the `nixphile_hook_pre` step, with
 `PACKAGE=nix-on-droid`.
 
 ---
