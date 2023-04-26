@@ -54,6 +54,7 @@ rec {
   # TODO Move unstable packages to stable as soon as possible.
   inherit (nixpkgs_unstable)
   jabref # Awaiting OpenJDK update.
+  mononoki # Awaiting version bump to fix recognition issue.
   ;
 
   inherit (nixpkgs)
@@ -349,11 +350,19 @@ rec {
     tectonic
   ];
 
+  termux.nixphile_hook_pre = lib.write_script {
+    name = "setup-termux";
+    text = ''
+      mkdir -p ~/.termux
+      cp ~/.dotfiles/dotfiles/termux/home/me/.termux/* ~/.termux
+      cp "${mononoki}/share/fonts/mononoki/mononoki-Regular.ttf" \
+          ~/.termux/font.ttf
+    '';
+  };
+
   nix-on-droid = bundle "nix-on-droid" [
     core_env
-    (make_nixphile_hook_pre ''
-      cp -rT ~/.dotfiles/dotfiles/termux/home/me/.termux ~/.termux
-    '')
+    termux
     nixpkgs.coreutils
     ssh
     nixpkgs.procps
@@ -416,7 +425,7 @@ rec {
       '';
       destination = "/home/me/.site.gitconfig";
     })
-    nixpkgs_unstable.mononoki # TODO document fc riffraff
+    mononoki # TODO document fc riffraff
   ];
 
 }
