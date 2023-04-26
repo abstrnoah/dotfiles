@@ -4,20 +4,23 @@
       "inputs": {
         "nixphile": "nixphile_2",
         "nixpkgs": "nixpkgs_4",
-        "nixpkgs_unstable": "nixpkgs_unstable_2"
+        "nixpkgs_unstable": "nixpkgs_unstable_2",
+        "wallpapers": [
+          "wallpapers"
+        ]
       },
       "locked": {
-        "lastModified": 1682038122,
-        "narHash": "sha256-e1XCmEU8xujXQ7HQonejmtsGEG6WoogtsPSpJOwoCSE=",
+        "lastModified": 1682485135,
+        "narHash": "sha256-UHv1GI3bZggESsw8+55IxHrMnqSOX5c+oWCY27wdNag=",
         "owner": "abstrnoah",
         "repo": "dotfiles",
-        "rev": "c801d944cd89bbf4b210891e1eb2c4e01761ecc3",
+        "rev": "ecd8de5c692066ac9018f9cd4b18295b14e027d8",
         "type": "github"
       },
       "original": {
         "owner": "abstrnoah",
         "repo": "dotfiles",
-        "rev": "c801d944cd89bbf4b210891e1eb2c4e01761ecc3",
+        "rev": "ecd8de5c692066ac9018f9cd4b18295b14e027d8",
         "type": "github"
       }
     },
@@ -26,11 +29,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1681964874,
-        "narHash": "sha256-DPKhrLRi3tN5L9/KS6Diy8W2pKVfEIRuTj1WvmpaY+o=",
+        "lastModified": 1682474714,
+        "narHash": "sha256-4TXs+Z24lDuharl0MMahOtznq3RpC2HCICC9emYixsw=",
         "owner": "abstrnoah",
         "repo": "nixphile",
-        "rev": "ed49a1f29f223364c7da902abe5cb7c4f4cc6510",
+        "rev": "d2953b2d103fe3588ffdee32ac6b654b7d83c887",
         "type": "github"
       },
       "original": {
@@ -75,11 +78,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1682134069,
-        "narHash": "sha256-TnI/ZXSmRxQDt2sjRYK/8j8iha4B4zP2cnQCZZ3vp7k=",
+        "lastModified": 1682303062,
+        "narHash": "sha256-x+KAADp27lbxeoPXLUMxKcRsUUHDlg+qVjt5PjgBw9A=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fd901ef4bf93499374c5af385b2943f5801c0833",
+        "rev": "f5364316e314436f6b9c8fd50592b18920ab18f9",
         "type": "github"
       },
       "original": {
@@ -166,11 +169,11 @@
         "dotfiles": "dotfiles"
       },
       "locked": {
-        "lastModified": 1682110717,
-        "narHash": "sha256-pi8ST6xN3g1Laqi55YpGiZ5lafiwX+dWE0Ph74m1gjY=",
+        "lastModified": 1682485501,
+        "narHash": "sha256-g1yeT3luBMwhW7eXn8ah+iCXhSBlmuX9byKayf62I0M=",
         "owner": "abstrnoah",
         "repo": "wallpapers",
-        "rev": "98cb3ab753f97e37549238aad9e31db9353f60b8",
+        "rev": "0842b2874db0d4e15aa0d0d158a64a2d89f78f87",
         "type": "github"
       },
       "original": {
