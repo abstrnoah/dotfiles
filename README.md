@@ -38,17 +38,15 @@ flake][nix-on-droid-readme-flake].
 
 Install the app.
 
-In the nix-on-droid terminal:
+In the nix-on-droid terminal, do
 
 ```sh
 # Bootstrap nix-on-droid environment.
-nix-on-droid switch --flake 'github:abstrnoah/dotfiles'
-
-# Deploy the rest via nixphile.
-nix run 'github:abstrnoah/nixphile' 'github:abstrnoah/dotfiles#android'
-
-# Continue as above, starting from ssh-keygen...
+nix-on-droid switch --flake 'github:abstrnoah/dotfiles#default'
 ```
+
+and then continue as above from the `nixphile_hook_pre`, with
+`PACKAGE=nix-on-droid`.
 
 ---
 

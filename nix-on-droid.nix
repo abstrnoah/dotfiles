@@ -7,6 +7,9 @@
     coreutils
     curl
     openssh
+    git
+    netcat-openbsd
+    nettools
   ];
 
   environment.etcBackupExtension = ".bak";
