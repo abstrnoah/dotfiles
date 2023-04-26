@@ -35,7 +35,7 @@ set $keybinds i3wm-helper-keybinds
 set $promptchar "❯"
 
 # Default font.
-set $font_family ubuntu mono
+set $font_family mononoki regular
 
 # Modes.
 set $mode_audio "audio: [h]prev [l]next [k]up [j]down [m]ute [space]play"
@@ -90,7 +90,7 @@ set $ws_firefox fire
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:$font_family 8
+font pango:$font_family 7
 
 # Bind caps to ctrl.
 # (It seems to be important that this is 'exec_always', it doesn't always work

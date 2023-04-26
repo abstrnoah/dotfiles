@@ -416,6 +416,7 @@ rec {
       '';
       destination = "/home/me/.site.gitconfig";
     })
+    nixpkgs_unstable.mononoki # TODO document fc riffraff
   ];
 
 }
