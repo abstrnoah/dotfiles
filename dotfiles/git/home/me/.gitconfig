@@ -13,3 +13,5 @@
     defaultBranch = "main"
 [tag]
     gpgSign = true
+[include]
+    path = ~/.site.gitconfig

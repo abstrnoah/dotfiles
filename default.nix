@@ -408,6 +408,14 @@ rec {
     wm_env
     (xrandr-switch-output "builtin" "LVDS1" "VGA1")
     (xrandr-switch-output "external" "VGA1" "LVDS1")
+    (nixpkgs.writeTextFile {
+      name = "machine03-gitconfig";
+      text = ''
+        [commit]
+          gpgSign = true
+      '';
+      destination = "/home/me/.site.gitconfig";
+    })
   ];
 
 }
