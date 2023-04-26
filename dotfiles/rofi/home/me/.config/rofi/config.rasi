@@ -14,4 +14,9 @@ configuration {
     kb-row-select: "Tab";
     kb-accept-entry: "Return";
     kb-accept-custom: "Control+Return";
+    // theme
+    font: "mononoki 10";
+    location: 2;
 }
+
+@theme "solarized_alternate"
