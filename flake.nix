@@ -32,11 +32,24 @@
         (for_all_systems (system: import ./lib.nix (inputs_for system)))
         // { agnostic = lib_agnostic; };
 
-      packages =
+      dotfiles =
         for_all_systems
           (system:
           import ./default.nix
             ((inputs_for system) // { lib = lib.${system}; }));
+
+      # Explicitly choose which packages to expose.
+      packages = {
+        x86_64-linux = dotfiles.x86_64-linux;
+
+        aarch64-linux = {
+          inherit (dotfiles.aarch64-linux)
+          core_env
+          default
+          nix-on-droid
+          ;
+        };
+      };
 
       # TODO add default app
     };

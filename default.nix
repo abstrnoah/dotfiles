@@ -279,13 +279,6 @@ rec {
 
   ssh = nixpkgs.openssh;
 
-  nix-on-droid = bundle "nix-on-droid" [
-    core_env
-    ssh
-    procps
-    utillinux
-  ];
-
   core_env = bundle "core_env" [
     (make_nixphile_hook_pre ''
       test -d "$HOME/.dotfiles" \
@@ -321,7 +314,6 @@ rec {
     ranger
     silver-searcher
     sl
-    tectonic
     textql
     time
     tmux
@@ -346,12 +338,23 @@ rec {
     gcal
     imagemagick
     img2pdf
-    insect
     ocaml
     stow
-    jdk
+    # jdk # TODO Do I really need this?
     pdftk
     bluetooth
+    tectonic
+  ];
+
+  nix-on-droid = bundle "nix-on-droid" [
+    core_env
+    nixpkgs.coreutils
+    ssh
+    nixpkgs.procps
+  ];
+
+  extras = bundle "extras" [
+    insect # Requires x86_64-linux.
   ];
 
   gui_env = bundle "gui_env" [
@@ -395,6 +398,7 @@ rec {
   ];
 
   machine03 = bundle "machine03" [
+    extras
     wm_env
     (xrandr-switch-output "builtin" "LVDS1" "VGA1")
     (xrandr-switch-output "external" "VGA1" "LVDS1")
