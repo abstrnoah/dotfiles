@@ -1,10 +1,12 @@
 {
   description = "abstrnoah's dotfiles";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-  inputs.nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.nixphile.url = "github:abstrnoah/nixphile";
-  inputs.wallpapers.url = "github:abstrnoah/wallpapers";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixphile.url = "github:abstrnoah/nixphile";
+    wallpapers.url = "github:abstrnoah/wallpapers";
+  };
 
   outputs =
     inputs@{ self, nixpkgs, nixpkgs_unstable, ... }:
