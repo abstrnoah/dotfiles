@@ -350,8 +350,10 @@ rec {
   ];
 
   nix-on-droid = bundle "nix-on-droid" [
-    (mk_src "termux" {})
     core_env
+    (make_nixphile_hook_pre ''
+      cp -rT ~/.dotfiles/dotfiles/termux/home/me/.termux ~/.termux
+    '')
     nixpkgs.coreutils
     ssh
     nixpkgs.procps
