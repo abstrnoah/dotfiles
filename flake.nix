@@ -6,10 +6,14 @@
     nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixphile.url = "github:abstrnoah/nixphile";
     wallpapers.url = "github:abstrnoah/wallpapers";
+    nix-on-droid = {
+      url = "github:t184256/nix-on-droid/release-22.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ self, nixpkgs, nixpkgs_unstable, ... }:
+    inputs@{ self, nixpkgs, nixpkgs_unstable, nix-on-droid, ... }:
     let
       lib_agnostic = import ./lib.nix {};
       for_all_systems = lib_agnostic.for_all lib_agnostic.supported_systems;
@@ -20,7 +24,7 @@
         };
       inputs_for =
         system:
-        builtins.mapAttrs (_: input: input.packages.${system}) inputs
+        builtins.mapAttrs (_: input: input.packages.${system} or {}) inputs
         // {
           inherit system;
           nixpkgs = nixpkgs_for system nixpkgs;
@@ -51,6 +55,11 @@
         };
       };
 
-      # TODO add default app
+      # TODO add shell as default app
+
+      nixOnDroidConfigurations.default =
+        nix-on-droid.lib.nixOnDroidConfiguration {
+          modules = [ ./nix-on-droid.nix ];
+        };
     };
 }
