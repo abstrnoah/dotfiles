@@ -118,6 +118,8 @@ rec {
   inherit (nixpkgs.nodePackages) insect;
   inherit (nixpkgs.python310Packages) grip;
 
+  awk = nixpkgs.gawk;
+
   telegram = nixpkgs.tdesktop;
 
   xorg-xbacklight = nixpkgs.xorg.xbacklight;
@@ -288,6 +290,7 @@ rec {
     '')
     (mk_src "core_env" {})
     (mk_src "nix" {})
+    awk
     nixphile
     diffutils
     findutils
