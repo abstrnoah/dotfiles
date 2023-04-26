@@ -350,6 +350,7 @@ rec {
   ];
 
   nix-on-droid = bundle "nix-on-droid" [
+    (mk_src "termux" {})
     core_env
     nixpkgs.coreutils
     ssh
