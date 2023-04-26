@@ -12,10 +12,7 @@
     inputs@{ self, nixpkgs, nixpkgs_unstable, ... }:
     let
       lib_agnostic = import ./lib.nix {};
-      for_all_systems = lib_agnostic.for_all [
-        "x86_64-linux"
-        # "armv7l-linux" # TODO (for raspberry pi)
-      ];
+      for_all_systems = lib_agnostic.for_all lib_agnostic.supported_systems;
       nixpkgs_for = system: input:
         import input {
           inherit system;

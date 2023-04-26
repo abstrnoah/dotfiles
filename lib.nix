@@ -7,6 +7,12 @@
 
 rec {
 
+  supported_systems = [
+    "x86_64-linux"
+    "aarch64-linux" # for android
+    # "armv7l-linux" # TODO (for raspberry pi)
+  ];
+
   is_drv = x: (x.type or null) == "derivation";
 
   fold = builtins.foldl';
