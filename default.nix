@@ -65,6 +65,7 @@ rec {
   cowsay
   diffutils
   dig
+  discord
   dnstracer
   exiftool
   fd
@@ -383,6 +384,7 @@ rec {
     signal-desktop
     spotify
     telegram
+    discord
     xclip
     xournalpp
     zathura
