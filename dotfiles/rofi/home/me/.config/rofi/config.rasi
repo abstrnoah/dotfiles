@@ -19,4 +19,4 @@ configuration {
     location: 2;
 }
 
-@theme "solarized_alternate"
+@theme "solarized"
