@@ -108,6 +108,7 @@ rec {
   tor-browser-bundle-bin
   tree
   tuptime
+  uni
   universal-ctags
   utillinux
   visidata
@@ -371,6 +372,7 @@ rec {
 
   extras = bundle "extras" [
     insect # Requires x86_64-linux.
+    uni
   ];
 
   gui_env = bundle "gui_env" [
