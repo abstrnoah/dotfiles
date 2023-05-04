@@ -14,7 +14,7 @@ if [[ -n $WAYLAND_DISPLAY ]]; then
     dmenu=dmenu-wl
     xdotool="ydotool type --file -"
 elif [[ -n $DISPLAY ]]; then
-    dmenu="rofi -dmenu"
+    dmenu="rofi -dmenu -p pass"
     xdotool="xdotool type --clearmodifiers --file -"
 else
     echo "Error: No Wayland or X11 display detected" >&2
