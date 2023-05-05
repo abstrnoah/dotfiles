@@ -85,11 +85,9 @@
                 name = "minimal_nixless";
                 runtimeInputs = [ (inputs_for system).nixpkgs.git ];
                 text = ''
-                  cat <<EOF
                   git clone -o github https://github.com/abstrnoah/dotfiles "$HOME/.dotfiles"
                   mkdir -p "$HOME/.config" "$HOME/.config/nix"
                   ${builtins.concatStringsSep "\n" lns}
-                  EOF
                 '';
               };
             in
