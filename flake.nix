@@ -88,6 +88,9 @@
                   git clone -o github https://github.com/abstrnoah/dotfiles "$HOME/.dotfiles"
                   mkdir -p "$HOME/.config" "$HOME/.config/nix"
                   ${builtins.concatStringsSep "\n" lns}
+
+                  mkdir -p "$HOME/.vim/autoload"
+                  cp -T "${self.packages.${system}.vim-plug}/home/me/.vim/autoload/plug.vim" "$HOME/.vim/autoload/plug.vim"
                 '';
               };
             in
