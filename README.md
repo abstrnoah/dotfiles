@@ -48,6 +48,22 @@ nix-on-droid switch --flake 'github:abstrnoah/dotfiles#default'
 and then continue as above from the `nixphile_hook_pre` step, with
 `PACKAGE=nix-on-droid`.
 
+# minimal nixless
+
+To deploy a minimal set of dotfiles that doesn't depend on Nix (other than
+nix-portable for deployment), do
+
+```sh
+# Fetch nix-portable.
+NIXPHILE_MODE=portable sh <(curl -L https://raw.githubusercontent.com/abstrnoah/nixphile/main/nixphile)
+
+# Deploy minimal dotfiles.
+~/.nixphile/bin/nix-portable nix run 'github:abstrnoah/dotfiles#minimal_nixless'
+```
+
+Note that this feature is really poorly implemented for now until I have more
+time.
+
 ---
 
 [nixphile]: https://github.com/abstrnoah/nixphile
