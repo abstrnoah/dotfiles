@@ -83,9 +83,13 @@
                 assets;
               app = (inputs_for system).nixpkgs.writeShellApplication {
                 name = "minimal_nixless";
+                runtimeInputs = [ (inputs_for system).nixpkgs.git ];
                 text = ''
-                  mkdir -p $HOME/.config $HOME/.config/nix
+                  cat <<EOF
+                  git clone -o github https://github.com/abstrnoah/dotfiles "$HOME/.dotfiles"
+                  mkdir -p "$HOME/.config" "$HOME/.config/nix"
                   ${builtins.concatStringsSep "\n" lns}
+                  EOF
                 '';
               };
             in
