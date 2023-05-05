@@ -55,7 +55,43 @@
         };
       };
 
-      # TODO add shell as default app
+      # TODO This is temporary slapdash solution to deploying dotfiles in the
+      # situation that I don't want to install Nix globally but do have/need to
+      # use sudo.
+      apps = for_all_systems (system: {
+        minimal_nixless = {
+          type = "app";
+          program =
+            let
+              # It is important that all "paths" are _strings_ so nothing gets
+              # copied to Nix store.
+              src = "~/.dotfiles/dotfiles";
+              assets = [
+                [ "core_env" ".config/mimeapps.list" ".editrc" ".inputrc" ]
+                [ "git" ".gitconfig" ]
+                [ "tmux" ".tmux.conf" ]
+                [ "vim" ".vim" ]
+                [ "nix" ".config/nix/nix.conf" ]
+              ];
+              lns =
+                builtins.concatMap (l: (map (p:
+                let
+                  source = "$HOME/.dotfiles/dotfiles/${builtins.head l}/home/me/${p}";
+                  target = "$HOME/${p}";
+                in
+                ''ln -s "${source}" "${target}"'') (builtins.tail l)))
+                assets;
+              app = (inputs_for system).nixpkgs.writeShellApplication {
+                name = "minimal_nixless";
+                text = ''
+                  mkdir -p $HOME/.config $HOME/.config/nix
+                  ${builtins.concatStringsSep "\n" lns}
+                '';
+              };
+            in
+            "${app}/bin/${app.name}";
+          };
+      });
 
       nixOnDroidConfigurations.default =
         nix-on-droid.lib.nixOnDroidConfiguration {
