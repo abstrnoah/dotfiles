@@ -1,13 +1,14 @@
 #!/bin/sh
 
 # Instructions:
-# - Save the script in the directory where you want to clone the repository.
-# - Change directories there by running `cd PATH/WHERE/YOU/SAVED/THE/SCRIPT`.
-# - Make the script executable by running `chmod +x ./git-clone-assistant.sh`.
-# - Clone the repository by running `./git-clone-assistant.sh REPOSITORY_NAME`.
+# In the terminal, run
+#
+#   sh <(curl -L https://raw.githubusercontent.com/abstrnoah/dotfiles/main/share/git-clone-assistant.sh) REPOSITORY_NAME
+
+{ # Prevent run on incomplete fetch.
 
 key_path=~/.ssh/id_rsa
-remote="server02.brumal.org:${1}"
+remote="server02.brumal.net:${1}"
 
 [ -n "${1}" ] || { echo "usage: ${0} REMOTE_DIRECTORY"; exit 1; }
 
@@ -40,3 +41,5 @@ else
     echo
     echo "An error occured, contact the admin."
 fi
+
+}
