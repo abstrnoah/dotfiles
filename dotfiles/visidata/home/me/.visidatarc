@@ -1,0 +1,3 @@
+options.csv_lineterminator = "\n"
+
+# vim: ft=python

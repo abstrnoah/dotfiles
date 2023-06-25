@@ -112,7 +112,6 @@ rec {
   uni
   universal-ctags
   utillinux
-  visidata
   wmctrl
   xclip
   xournalpp
@@ -193,6 +192,11 @@ rec {
         "$HOME/.dotfiles/dotfiles/vim/home/me/.vim/spell/en.utf-8.add" \
         "$HOME/.vim/spell/en.utf-8.add"
     '')
+  ];
+
+  visidata = bundle "visidata" [
+    nixpkgs.visidata
+    (mk_src "visidata" {})
   ];
 
   ocaml = bundle "ocaml" [
