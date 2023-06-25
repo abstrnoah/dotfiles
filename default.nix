@@ -67,6 +67,7 @@ rec {
   dig
   discord
   dnstracer
+  dos2unix
   exiftool
   fd
   feh
@@ -118,8 +119,10 @@ rec {
   xrandr-invert-colors
   ;
 
+  texlive = nixpkgs.texlive.combined.scheme-small;
+
   inherit (nixpkgs.nodePackages) insect;
-  inherit (nixpkgs.python310Packages) grip;
+  inherit (nixpkgs.python310Packages) grip weasyprint;
 
   awk = nixpkgs.gawk;
 
@@ -296,6 +299,7 @@ rec {
     awk
     nixphile
     diffutils
+    dos2unix
     findutils
     getconf
     gnugrep
@@ -373,6 +377,8 @@ rec {
   extras = bundle "extras" [
     insect # Requires x86_64-linux.
     uni
+    texlive
+    weasyprint
   ];
 
   gui_env = bundle "gui_env" [
