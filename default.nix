@@ -78,6 +78,7 @@ rec {
   gnugrep
   gnused
   hostname
+  htmlq
   htop
   i3status
   imagemagick
@@ -383,6 +384,7 @@ rec {
     uni
     texlive
     weasyprint
+    htmlq
   ];
 
   gui_env = bundle "gui_env" [
