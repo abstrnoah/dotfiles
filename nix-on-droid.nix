@@ -14,7 +14,7 @@
 
   environment.etcBackupExtension = ".bak";
 
-  system.stateVersion = "22.11";
+  system.stateVersion = pkgs.lib.versions.majorMinor pkgs.lib.version;
 
   user.shell = "${pkgs.zsh}/bin/zsh";
 
