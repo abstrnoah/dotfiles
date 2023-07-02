@@ -347,7 +347,6 @@ rec {
     black
     bup
     clang
-    coq
     cowsay
     exiftool
     gcal
@@ -355,7 +354,6 @@ rec {
     img2pdf
     ocaml
     stow
-    # jdk # TODO Do I really need this?
     pdftk
     bluetooth
     tectonic
