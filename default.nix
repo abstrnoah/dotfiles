@@ -86,6 +86,7 @@ rec {
   jdk
   jq
   libnotify
+  libreoffice
   man
   mpv
   netcat-openbsd
@@ -390,6 +391,7 @@ rec {
     default
     grip
     libnotify
+    libreoffice
     mpv
     pulseaudio
     qutebrowser
