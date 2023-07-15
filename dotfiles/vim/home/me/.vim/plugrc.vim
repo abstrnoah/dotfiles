@@ -224,7 +224,7 @@ let g:sneak#label = 0
 let g:vimtex_compiler_enabled = 1
 let g:vimtex_compiler_method = "tectonic"
 let g:vimtex_compiler_tectonic = {
-    \ 'build_dir' : 'build',
+    \ 'out_dir' : 'out',
     \ 'options' : [
     \   '--keep-logs',
     \ ],
