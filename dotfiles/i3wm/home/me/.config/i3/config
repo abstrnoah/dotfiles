@@ -169,6 +169,7 @@ for_window [class="(?i)^signal$"] move window to workspace $ws_signal
 for_window [class="(?i)firefox"] move window to workspace $ws_firefox
 for_window [class="(?i)jabref"] move window to workspace jabref
 for_window [class="(?i)gnucash"] move window to workspace gnucash
+for_window [class="(?i)slack"] move window to workspace slack
 
 # Auto-float clojure incanter 'view' popups.
 for_window [title="^Incanter Table$"] floating enable

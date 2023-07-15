@@ -11,5 +11,6 @@
       "vscode"
       "xflux"
       "zoom"
+      "slack"
     ];
 }

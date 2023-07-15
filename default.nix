@@ -101,6 +101,7 @@ rec {
   signal-desktop
   silver-searcher
   sl
+  slack
   spotify-cli-linux
   stow
   tectonic
@@ -395,6 +396,7 @@ rec {
     tor-browser-bundle-bin
     signal-desktop
     spotify
+    slack
     telegram
     discord
     xclip
