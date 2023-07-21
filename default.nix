@@ -39,11 +39,13 @@ let
     name:
     active:
     inactive:
+    wallpapers:
     lib.write_script {
       name = "xrandr-switch-${name}";
       text = ''
         xrandr --output ${nixpkgs.lib.escapeShellArg active} --auto --primary \
                --output ${nixpkgs.lib.escapeShellArg inactive} --off
+        feh --bg-fill ${wallpapers}/home/me/.wallpaper
       '';
     };
 in
@@ -433,8 +435,8 @@ rec {
   machine03 = bundle "machine03" [
     extras
     wm_env
-    (xrandr-switch-output "builtin" "LVDS1" "VGA1")
-    (xrandr-switch-output "external" "VGA1" "LVDS1")
+    (xrandr-switch-output "builtin" "LVDS1" "VGA1" wallpapers)
+    (xrandr-switch-output "external" "VGA1" "LVDS1" wallpapers)
     mononoki # TODO document fc riffraff
   ];
 
