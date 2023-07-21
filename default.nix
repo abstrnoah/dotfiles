@@ -42,7 +42,7 @@ let
     lib.write_script {
       name = "xrandr-switch-${name}";
       text = ''
-        xrandr --output ${nixpkgs.lib.escapeShellArg active} --auto \
+        xrandr --output ${nixpkgs.lib.escapeShellArg active} --auto --primary \
                --output ${nixpkgs.lib.escapeShellArg inactive} --off
       '';
     };
