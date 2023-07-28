@@ -95,6 +95,7 @@ rec {
   nettools
   nodejs
   pandoc
+  par
   pdfgrep
   pdftk
   pfetch
@@ -344,6 +345,7 @@ rec {
     vim
     visidata
     rlwrap
+    par
   ];
 
   default = bundle "default" [
