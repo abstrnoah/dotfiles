@@ -9,7 +9,8 @@ to deploy, probably the new machine's hostname.
 sh <(curl -L https://raw.githubusercontent.com/abstrnoah/nixphile/main/nixphile)
 
 # Somewhat hacky solutions to outstanding deployment issues.
-# Among other things, clone dotfiles to ~/.dotfiles.
+# Among other things, clone dotfiles to ~/.dotfiles if not already present.
+# Note that if ~/.dotfiles is already cloned, then we may need to manually pull.
 nix run 'github:abstrnoah/dotfiles#PACKAGE.nixphile_hook_pre'
 
 # Deploy the environment.
