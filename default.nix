@@ -370,7 +370,7 @@ rec {
     name = "setup-termux";
     text = ''
       mkdir -p ~/.termux
-      cp ${env_src_path}/termux/home/me/.termux/* ~/.termux
+      cp "${env_src_path}"/termux/home/me/.termux/* ~/.termux
       cp "${mononoki}/share/fonts/mononoki/mononoki-Regular.ttf" \
           ~/.termux/font.ttf
     '';
