@@ -23,7 +23,8 @@ with {
   ;
 };
 let
-  dotfiles_path = ./dotfiles;
+  src_path = ./src;
+  env_src_path = "$HOME/.dotfiles/src";
   mk_src =
     name:
     spec@{ excludes ? [], ... }:
@@ -32,7 +33,7 @@ let
       rel_excludes = excludes;
     in
     lib.make_source (spec // rec {
-      source = dotfiles_path + "/${name}";
+      source = src_path + "/${name}";
       excludes = map (p: source + "/${p}") rel_excludes;
     });
   xrandr-switch-output =
@@ -195,7 +196,7 @@ rec {
       mkdir -p "$HOME/.vim/spell"
       test -h "$HOME/.vim/spell/en.utf-8.add" \
       || ln -Ts \
-        "$HOME/.dotfiles/dotfiles/vim/home/me/.vim/spell/en.utf-8.add" \
+        "${env_src_path}/vim/home/me/.vim/spell/en.utf-8.add" \
         "$HOME/.vim/spell/en.utf-8.add"
     '')
   ];
@@ -369,7 +370,7 @@ rec {
     name = "setup-termux";
     text = ''
       mkdir -p ~/.termux
-      cp ~/.dotfiles/dotfiles/termux/home/me/.termux/* ~/.termux
+      cp ${env_src_path}/termux/home/me/.termux/* ~/.termux
       cp "${mononoki}/share/fonts/mononoki/mononoki-Regular.ttf" \
           ~/.termux/font.ttf
     '';

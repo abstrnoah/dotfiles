@@ -65,7 +65,7 @@
             let
               # It is important that all "paths" are _strings_ so nothing gets
               # copied to Nix store.
-              src = "~/.dotfiles/dotfiles";
+              src = "$HOME/.dotfiles/src";
               assets = [
                 [ "core_env" ".config/mimeapps.list" ".editrc" ".inputrc" ]
                 [ "git" ".gitconfig" ]
@@ -76,7 +76,7 @@
               lns =
                 builtins.concatMap (l: (map (p:
                 let
-                  source = "$HOME/.dotfiles/dotfiles/${builtins.head l}/home/me/${p}";
+                  source = "${src}/${builtins.head l}/home/me/${p}";
                   target = "$HOME/${p}";
                 in
                 ''ln -s "${source}" "${target}"'') (builtins.tail l)))
