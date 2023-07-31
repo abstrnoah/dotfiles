@@ -23,6 +23,7 @@ with {
   ;
 };
 let
+  username = "abstrnoah";
   src_path = ./src;
   env_src_path = "$HOME/.dotfiles/src";
   mk_src =
@@ -298,6 +299,28 @@ rec {
 
   ssh = nixpkgs.openssh;
 
+  # TODO this is so hacky it's painful but no time
+  # - should lock before hibernating
+  # - locking first would require nixifying i3wm-helper-system
+  # - there are permission/environment issues: i3lock would probably need to run
+  #   under the current user and with DISPLAY set; hibernation needs to run as
+  #   root
+  # - if i am going to move more things to systemd, then i need to improve the
+  #   nix/systemd workflow
+  battery_hook_setup =
+    with
+      (import ./src/battery_hook) {
+        inherit nixpkgs username;
+        battery_device = "BAT0";
+        hibernate_command = "systemctl hibernate";
+      };
+    make_nixphile_hook_pre ''
+      systemctl reenable ${service}
+      systemctl reenable ${timer}
+      systemctl start "$(basename ${timer})"
+      systemctl start "$(basename ${service})"
+    '';
+
   core_env = bundle "core_env" [
     (make_nixphile_hook_pre ''
       test -d "$HOME/.dotfiles" \
@@ -418,6 +441,7 @@ rec {
     gui_env
     (mk_src "i3wm" {})
     i3wm
+    low_battery_systemd_unit
     # nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
     i3status
     xsession
