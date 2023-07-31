@@ -10,7 +10,7 @@ let
     name = "battery-hook";
     text = ''
       device="${battery_device}"
-      critical_threshold=72
+      critical_threshold=10
 
       get_level() {
           local energy_now
