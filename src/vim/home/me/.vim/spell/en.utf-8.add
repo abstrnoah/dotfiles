@@ -21,6 +21,8 @@ arXiv
 autos
 Baire
 basename
+basepoint
+basepoints
 Bernalillo
 boba
 Boimler
@@ -37,6 +39,7 @@ codomain
 colimit
 colimits
 colourability
+coproduct
 coprojection
 coprojections
 coset
@@ -86,6 +89,7 @@ kuhl
 let
 Lilia
 lol
+loopless
 machine00
 machine01
 machine02
@@ -143,7 +147,7 @@ rationals
 reals
 recurse
 reparametrised
-routy
+resp.
 sed
 sextic
 shortsleeved
@@ -172,7 +176,6 @@ superkeys
 surjectivity
 surveil
 suspensefully
-Suspensefully
 tilings
 timestamp
 todo
