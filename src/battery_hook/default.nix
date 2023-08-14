@@ -52,6 +52,7 @@ in
     Description=Battery level hook timer
 
     [Timer]
+    OnBootSec=2min
     OnUnitActiveSec=2min
 
     [Install]
