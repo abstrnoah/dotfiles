@@ -92,6 +92,11 @@ endif
 set nojoinspaces
 set list
 set listchars=tab:<->,trail:_,precedes:<,extends:>
+if has("linebreak") && has("patch-7.4.354")
+    set wrap " enable soft wrap
+    set linebreak " wrap at reasonable characters
+    set breakindent " respect indentation when soft wrapping
+endif
 
 set hidden
 
