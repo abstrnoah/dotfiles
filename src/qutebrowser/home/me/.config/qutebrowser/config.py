@@ -90,7 +90,7 @@ config.bind(_leader + "F", "spawn firefox {url}")
 # Passthrough mode.
 # <Escape> always escapes to normal.
 config.bind("<Escape>", "mode-leave", mode="passthrough")
-config.bind("<Ctrl-[>", "mode-leave", mode="passthrough")
+config.bind("<Ctrl-[>", "fake-key <Escape>", mode="passthrough")
 
 # Passthrough common clipboard chords.
 config.bind(_leader + "y", "fake-key <Ctrl-c>")
