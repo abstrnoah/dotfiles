@@ -441,7 +441,6 @@ rec {
     gui_env
     (mk_src "i3wm" {})
     i3wm
-    low_battery_systemd_unit
     # nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
     i3status
     xsession
