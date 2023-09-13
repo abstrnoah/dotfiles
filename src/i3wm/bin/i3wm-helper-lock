@@ -1,35 +1,35 @@
 #!/usr/bin/env bash
 
-_image_path="${HOME}/.wallpaperlock"
+# TODO xss-lock?
 
-_get_bar_mode() {
-    i3-msg -t get_bar_config bar-0 | jq -r .mode
-}
+image_path="${HOME}/.wallpaperlock"
 
-_old_bar_mode="$(_get_bar_mode)"
-_old_dunst_state="$(dunstctl is-paused)"
+old_dunst_state="$(dunstctl is-paused)"
 
-_pre_lock() {
+pre_lock() {
     if sudo -n tomb -q list; then
         sudo -n tomb -q close all
     fi
 
-    dunstctl set-paused true \
-        && i3-msg bar mode invisible
+    pactl set-sink-mute @DEFAULT_SINK@ 1
+
+    # TODO I'm no longer sure this is necessary, i3lock seems to do a good job
+    # blocking all screen activity these days.
+    dunstctl set-paused true
 }
 
-_post_lock() {
-    i3-msg bar mode "${_old_bar_mode}"
-    dunstctl set-paused "${_old_dunst_state}"
+post_lock() {
+    dunstctl set-paused "${old_dunst_state}"
 }
 
-_lock() {
+lock() {
     i3lock \
-        --dpms --inactivity-timeout 10 \
-        --tiling --image="${_image_path}" \
+        --tiling --image="${image_path}" \
         --nofork
 }
 
-_pre_lock
-_lock
-_post_lock
+pre_lock
+lock &
+test "${#}" -eq 0 || eval "${@}"
+wait
+post_lock

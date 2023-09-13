@@ -23,13 +23,11 @@ case ${_command} in
         ;;
     _hibernate)
         if [ "${_arg}" = y ]; then
-            ${_self} lock &
-            systemctl hibernate
+            i3wm-helper-lock systemctl hibernate
         fi
         ;;
     suspend)
-        ${_self} lock &
-        systemctl suspend-then-hibernate
+        i3wm-helper-lock systemctl suspend-then-hibernate
         ;;
     reload)
         i3-msg reload
@@ -39,7 +37,7 @@ case ${_command} in
         ;;
     notify_toggle)
         dunstctl set-paused toggle
-        test "dunstctl is-paused" = false || notify-send "notifying"
+        test "$(dunstctl is-paused)" = false || notify-send "notifying"
         ;;
     notify_pause)
         echo "Deprecated in favour of notify_toggle." >&2
