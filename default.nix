@@ -64,6 +64,7 @@ rec {
   inherit (nixpkgs)
   black
   bup
+  chromium
   clang
   coq
   cowsay
@@ -413,6 +414,7 @@ rec {
     texlive
     weasyprint
     htmlq
+    chromium
   ];
 
   gui_env = bundle "gui_env" [
