@@ -322,6 +322,8 @@ rec {
       systemctl start "$(basename ${service})"
     '';
 
+  captive-browser = (import ./src/captive-browser) { inherit nixpkgs bundle; };
+
   core_env = bundle "core_env" [
     (make_nixphile_hook_pre ''
       test -d "$HOME/.dotfiles" \
@@ -418,6 +420,7 @@ rec {
   ];
 
   gui_env = bundle "gui_env" [
+    captive-browser
     default
     grip
     libnotify
