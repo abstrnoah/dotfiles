@@ -264,7 +264,7 @@ rec {
     (mk_src "zsh" {})
   ];
 
-  i3wm = nixpkgs.i3-rounded;
+  i3wm = bundle "i3wm" [nixpkgs.i3-rounded (mk_src "i3wm" {})];
 
   xsession = nixpkgs.writeTextFile {
     name = "xsession";
@@ -444,7 +444,6 @@ rec {
   # TODO relies on systemd... how to deal with this on non-systemd distros?
   wm_env = bundle "wm_env" [
     gui_env
-    (mk_src "i3wm" {})
     i3wm
     # nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
     i3status
