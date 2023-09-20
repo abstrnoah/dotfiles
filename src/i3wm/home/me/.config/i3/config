@@ -203,7 +203,7 @@ mode $mode_system {
     # Suspend then hibernate.
     bindsym h mode "default"; exec i3wm-helper-system suspend
     # Hibernate.
-    bindsym $shift+h mode "default"; exec i3wm-helper-system hibernate
+    bindsym $shift+h mode "default"; exec i3wm-helper-system hibernate-give-prompt
     # Reload the configuration file.
     bindsym r mode "default"; exec i3wm-helper-system reload
     # Restart i3 inplace (preserves your layout/session, can be used to upgrade i3).

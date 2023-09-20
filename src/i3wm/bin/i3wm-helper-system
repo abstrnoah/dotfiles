@@ -1,11 +1,11 @@
 #!/bin/bash
 
-_self=$(readlink -f "${0}")
+self=$(readlink -f "${0}")
 
-_command="${1}"
-_arg="${2}"
+cmd="${1}"
+arg="${2}"
 
-case ${_command} in
+case ${cmd} in
     lock)
         i3wm-helper-lock
         ;;
@@ -18,13 +18,16 @@ case ${_command} in
     reboot)
         i3-nagbar -t warning -m 'Reboot?' -b 'Yeah.' 'shutdown -r now'
         ;;
-    hibernate)
-        i3-input -F "exec ${_self} _hibernate %s" -P "hibernate? [yN] "
+    hibernate-give-prompt)
+        i3-input -F "exec ${self} hibernate-get-prompt %s" -P "hibernate? [yN] "
         ;;
-    _hibernate)
-        if [ "${_arg}" = y ]; then
-            i3wm-helper-lock systemctl hibernate
+    hibernate-get-prompt)
+        if [ "${arg}" = y ]; then
+            "${self}" hibernate
         fi
+        ;;
+    hibernate)
+        i3wm-helper-lock systemctl hibernate
         ;;
     suspend)
         i3wm-helper-lock systemctl suspend-then-hibernate
