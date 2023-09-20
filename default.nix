@@ -315,6 +315,9 @@ rec {
         inherit nixpkgs username;
         battery_device = "BAT0";
         hibernate_command = "systemctl hibernate";
+        # TODO We want the following, but it requires i3wm-helper-system be
+        # nixified; currently it is too impure to run as a systemd service.
+        # hibernate_command = "${i3wm}/bin/i3wm-helper-system hibernate";
       };
     make_nixphile_hook_pre ''
       systemctl reenable ${service}
