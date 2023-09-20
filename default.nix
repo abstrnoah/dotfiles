@@ -46,7 +46,8 @@ let
       name = "xrandr-switch-${name}";
       text = ''
         xrandr --output ${nixpkgs.lib.escapeShellArg active} --auto --primary \
-               --output ${nixpkgs.lib.escapeShellArg inactive} --off
+               --output ${nixpkgs.lib.escapeShellArg inactive} --off \
+               --dpi 100
         feh --bg-fill ${wallpapers}/home/me/.wallpaper
       '';
     };
