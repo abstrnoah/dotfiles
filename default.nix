@@ -66,6 +66,7 @@ rec {
   black
   bup
   chromium
+  ungoogled-chromium
   clang
   coq
   cowsay
@@ -420,7 +421,7 @@ rec {
     texlive
     weasyprint
     htmlq
-    chromium
+    ungoogled-chromium
   ];
 
   gui_env = bundle "gui_env" [
