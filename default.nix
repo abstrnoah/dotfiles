@@ -78,6 +78,7 @@ rec {
   exiftool
   fd
   feh
+  fetchmail
   findutils
   fzf
   gcal
@@ -94,8 +95,11 @@ rec {
   jq
   libnotify
   libreoffice
+  maildrop
   man
   mpv
+  mutt
+  fdm
   netcat-openbsd
   nettools
   nodejs
@@ -127,6 +131,7 @@ rec {
   xclip
   xournalpp
   xrandr-invert-colors
+  thunderbird
   ;
 
   texlive = nixpkgs.texlive.combined.scheme-small;
@@ -424,6 +429,10 @@ rec {
     ungoogled-chromium
   ];
 
+  email = bundle "email" [
+    thunderbird
+  ];
+
   gui_env = bundle "gui_env" [
     captive-browser
     default
@@ -468,6 +477,7 @@ rec {
   ];
 
   machine03 = bundle "machine03" [
+    email
     extras
     wm_env
     (xrandr-switch-output "builtin" "LVDS1" "VGA1" wallpapers)

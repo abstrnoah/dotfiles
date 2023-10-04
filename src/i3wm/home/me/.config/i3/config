@@ -167,6 +167,7 @@ for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_telegram
 for_window [class="(?i)discord$"] move window to workspace $ws_discord
 for_window [class="(?i)^signal$"] move window to workspace $ws_signal
 for_window [class="(?i)firefox"] move window to workspace $ws_firefox
+for_window [class="(?i)thunderbird"] move window to workspace thund
 for_window [class="(?i)chromium"] move window to workspace chrom
 for_window [class="(?i)jabref"] move window to workspace jabref
 for_window [class="(?i)gnucash"] move window to workspace gnucash
