@@ -132,6 +132,7 @@ rec {
   xournalpp
   xrandr-invert-colors
   thunderbird
+  hydra-check
   ;
 
   texlive = nixpkgs.texlive.combined.scheme-small;
@@ -400,6 +401,7 @@ rec {
     pdftk
     bluetooth
     tectonic
+    hydra-check
   ];
 
   termux.nixphile_hook_pre = lib.write_script {
