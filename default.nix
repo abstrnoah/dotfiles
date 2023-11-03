@@ -142,7 +142,7 @@ rec {
 
   awk = nixpkgs.gawk;
 
-  telegram = nixpkgs.tdesktop;
+  telegram = nixpkgs_unstable.telegram-desktop;
 
   xorg-xbacklight = nixpkgs.xorg.xbacklight;
 
