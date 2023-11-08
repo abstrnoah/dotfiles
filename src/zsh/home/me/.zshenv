@@ -15,7 +15,8 @@ export BROWSER="${NIXPHILE_ENV}/bin/qutebrowser"
 export XDG_DATA_DIRS="${NIXPHILE_ENV}/share:${XDG_DATA_DIRS}:/usr/share"
 
 # Use nix's Java.
-export JAVA_HOME="${NIXPHILE_ENV}/lib/openjdk"
+# TODO/FIXME Doesn't exist anymore?
+# export JAVA_HOME="${NIXPHILE_ENV}/lib/openjdk"
 
 # Enable firefox touch screen scrolling.
 export MOZ_USE_XINPUT2=1

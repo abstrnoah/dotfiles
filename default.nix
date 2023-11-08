@@ -63,6 +63,7 @@ rec {
   ;
 
   inherit (nixpkgs)
+  apache-jena
   black
   bup
   chromium
@@ -402,6 +403,7 @@ rec {
     bluetooth
     tectonic
     hydra-check
+    apache-jena
   ];
 
   termux.nixphile_hook_pre = lib.write_script {
