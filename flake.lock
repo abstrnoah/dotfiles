@@ -16,7 +16,6 @@
       },
       "original": {
         "ref": "main",
-        "rev": "08e8443356f173bc1d765aefd947be25f92b0ad8",
         "type": "git",
         "url": "ssh://server02/home/abstractednoah/srv/brumalspark"
       }

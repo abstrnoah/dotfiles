@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     brumalspark.url =
-      "git+ssh://server02/home/abstractednoah/srv/brumalspark?ref=main&rev=08e8443356f173bc1d765aefd947be25f92b0ad8";
+      "git+ssh://server02/home/abstractednoah/srv/brumalspark?ref=main";
   };
 
   outputs =
