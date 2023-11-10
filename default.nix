@@ -8,6 +8,7 @@ inputs@{
 , system ? builtins.currentSystem # TODO maybe improve how we handle system
 , nixphile
 , wallpapers
+, brumalspark
 , ...
 }:
 
@@ -140,6 +141,8 @@ rec {
 
   inherit (nixpkgs.nodePackages) insect;
   inherit (nixpkgs.python310Packages) grip weasyprint;
+
+  inherit (brumalspark) brdfq;
 
   awk = nixpkgs.gawk;
 
@@ -404,6 +407,7 @@ rec {
     tectonic
     hydra-check
     apache-jena
+    brdfq
   ];
 
   termux.nixphile_hook_pre = lib.write_script {
