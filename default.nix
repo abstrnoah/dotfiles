@@ -426,6 +426,7 @@ rec {
     nixpkgs.coreutils
     ssh
     nixpkgs.procps
+    brdfq
   ];
 
   extras = bundle "extras" [
