@@ -132,7 +132,7 @@ let g:br_plugs_active = [
     \ "whonore/Coqtail",
     \ "airblade/vim-gitgutter",
     \ "junegunn/fzf",
-    \ "niklasl/vim-rdf",
+    \ "epitzer/vim-rdf-turtle",
 \ ]
 
 " PLUGIN CONFIG {{{1
