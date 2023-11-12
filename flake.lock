@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1699605651,
-        "narHash": "sha256-+ZECbOq7uqlm1kSZgjchfelGGBjH2o5J+ceC9CnCLis=",
+        "lastModified": 1699780033,
+        "narHash": "sha256-b80g14CRIBiYhE30qiRnu9+bqaM435q6+V9aNYFCAJM=",
         "ref": "main",
-        "rev": "fc75b4c7d6cf341549f2239618eb94aad03a56cc",
-        "revCount": 4,
+        "rev": "e2409f3c3dc5493f26bc4abc2cfa30267a4aa932",
+        "revCount": 7,
         "type": "git",
         "url": "ssh://server02/home/abstractednoah/srv/brumalspark"
       },
