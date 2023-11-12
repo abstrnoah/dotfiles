@@ -232,6 +232,9 @@ bindsym $mod+$alt+$enter exec "BR_NOMUX=1 i3-sensible-terminal"
 bindsym --release $mod+c \
     exec "import png:- | xclip -selection clipboard -t image/png"
 
+# UUID
+bindsym $mod+8 exec "uuidgen | head -c-1 | xclip -select clipboard"
+
 # Notifications.
 bindsym $mod+$alt+n exec i3wm-helper-system notify_toggle
 

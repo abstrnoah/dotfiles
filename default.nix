@@ -128,7 +128,7 @@ rec {
   tuptime
   uni
   universal-ctags
-  utillinux
+  util-linux
   wmctrl
   xclip
   xournalpp
@@ -408,6 +408,7 @@ rec {
     hydra-check
     apache-jena
     brdfq
+    util-linux
   ];
 
   termux.nixphile_hook_pre = lib.write_script {
