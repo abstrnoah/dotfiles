@@ -94,12 +94,13 @@ let g:br_plugs = {
     \ "junegunn/fzf": [],
     \ "epitzer/vim-rdf-turtle": [],
     \ "niklasl/vim-rdf": [],
+    \ "kana/vim-textobj-user": [],
+    \ "machakann/vim-sandwich": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
 let g:br_plugs_active = [
     \ "907th/vim-auto-save",
-    \ "tpope/vim-surround",
     \ "wellle/targets.vim",
     \ "ludovicchabant/vim-gutentags",
     \ "ctrlpvim/ctrlp.vim",
@@ -133,6 +134,7 @@ let g:br_plugs_active = [
     \ "airblade/vim-gitgutter",
     \ "junegunn/fzf",
     \ "niklasl/vim-rdf",
+    \ "machakann/vim-sandwich",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -337,17 +339,25 @@ let g:coqtail_noimap = 1
 " GIT GUTTER {{{2
 let g:gitgutter_set_sign_backgrounds = 0
 
-" BUILTIN PLUGINS {{{1
+" SANDWICH {{{2
+let g:sandwich_no_default_key_mappings = 1
+
+" LOAD PLUGINS {{{1
 
 runtime macros/matchit.vim
 
-
-" VIM-PLUG PLUGINS {{{1
-
-" Declare the plugins.
 call plug#begin('~/.cache/vimplug')
 call brumal#main#declare_plugs(g:br_plugs, g:br_plugs_active)
 call plug#end()
+
+" POST-LOAD CONFIG {{{1
+
+" SANDWICH {{{2
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+let g:sandwich#recipes += [
+    \ {'buns': ['"""', '"""'] }
+\ ]
+
 
 
 

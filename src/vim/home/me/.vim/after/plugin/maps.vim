@@ -141,3 +141,26 @@ inoremap <c-w> <c-g>u<c-w>
 if has('syntax')
     nnoremap <leader>c :set cursorcolumn!<cr>
 endif
+
+" sandwich
+" add
+nmap ys <Plug>(sandwich-add)
+xmap ys <Plug>(sandwich-add)
+omap ys <Plug>(sandwich-add)
+" delete
+nmap ds <Plug>(sandwich-delete)
+xmap ds <Plug>(sandwich-delete)
+nmap dsb <Plug>(sandwich-delete-auto)
+" replace
+nmap cs <Plug>(sandwich-replace)
+xmap cs <Plug>(sandwich-replace)
+nmap csb <Plug>(sandwich-replace-auto)
+" text-objects
+omap ib <Plug>(textobj-sandwich-auto-i)
+xmap ib <Plug>(textobj-sandwich-auto-i)
+omap ab <Plug>(textobj-sandwich-auto-a)
+xmap ab <Plug>(textobj-sandwich-auto-a)
+omap is <Plug>(textobj-sandwich-query-i)
+xmap is <Plug>(textobj-sandwich-query-i)
+omap as <Plug>(textobj-sandwich-query-a)
+xmap as <Plug>(textobj-sandwich-query-a)
