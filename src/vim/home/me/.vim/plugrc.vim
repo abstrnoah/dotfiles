@@ -96,6 +96,7 @@ let g:br_plugs = {
     \ "niklasl/vim-rdf": [],
     \ "kana/vim-textobj-user": [],
     \ "machakann/vim-sandwich": [],
+    \ "pianohacker/vim-textobj-indented-paragraph": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -135,6 +136,8 @@ let g:br_plugs_active = [
     \ "junegunn/fzf",
     \ "niklasl/vim-rdf",
     \ "machakann/vim-sandwich",
+    \ "kana/vim-textobj-user",
+    \ "pianohacker/vim-textobj-indented-paragraph",
 \ ]
 
 " PLUGIN CONFIG {{{1
