@@ -83,6 +83,7 @@ rec {
   fetchmail
   findutils
   fzf
+  gimp
   gcal
   getconf
   gnugrep
