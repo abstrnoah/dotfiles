@@ -7,7 +7,7 @@
     nixphile.url = "github:abstrnoah/nixphile";
     wallpapers.url = "github:abstrnoah/wallpapers";
     nix-on-droid = {
-      url = "github:t184256/nix-on-droid/release-23.05";
+      url = "github:nix-community/nix-on-droid/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     brumalspark.url =
