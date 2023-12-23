@@ -135,9 +135,9 @@ let g:br_plugs_active = [
     \ "airblade/vim-gitgutter",
     \ "junegunn/fzf",
     \ "niklasl/vim-rdf",
-    \ "machakann/vim-sandwich",
     \ "kana/vim-textobj-user",
     \ "pianohacker/vim-textobj-indented-paragraph",
+    \ "tpope/vim-surround",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -356,13 +356,12 @@ call plug#end()
 " POST-LOAD CONFIG {{{1
 
 " SANDWICH {{{2
-let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-let g:sandwich#recipes += [
-    \ {'buns': ['"""', '"""'] }
-\ ]
-
-
-
+if exists("g:sandwich#default_recipes")
+    let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+    let g:sandwich#recipes += [
+        \ {'buns': ['"""', '"""'] }
+    \ ]
+endif
 
 " NOTES {{{1
 " [^1]: https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
