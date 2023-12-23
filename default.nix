@@ -136,6 +136,7 @@ rec {
   xrandr-invert-colors
   thunderbird
   hydra-check
+  minecraft
   ;
 
   texlive = nixpkgs.texlive.combined.scheme-small;

@@ -12,5 +12,6 @@
       "xflux"
       "zoom"
       "slack"
+      "minecraft-launcher"
     ];
 }
