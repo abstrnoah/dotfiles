@@ -50,6 +50,9 @@ c.content.autoplay = False
 c.statusbar.show = "in-mode"
 c.tabs.show = "multiple"
 
+# use both brave and hosts blocking
+c.content.blocking.method = "both"
+
 # # DARKMODE {{{1
 c.colors.webpage.preferred_color_scheme = "dark"
 
