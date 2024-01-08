@@ -236,10 +236,19 @@ rec {
           let
             alsaPluginDir = (nixpkgs.lib.getLib nixpkgs.alsa-plugins) + "/lib/alsa-lib";
           in
+          # I don't know much about the following workarounds and don't care to
+          # learn because graphics suck. Unfortunately, the third workaround
+          # probably comes at a performance cost.
+          # (1) QT_XCB_GL_INTEGRATION is a workaround from a while back, idk see
+          # commit logs.
+          # (2) ALSA_PLUGIN_DIR makes audio work under nix.
+          # (3) QT_QUICK_BACKEND is a workaround for Qt6 issue where qutebrowser
+          # UI is literally nonexistent.
           prev.preFixup + ''
             makeWrapperArgs+=(
               --set QT_XCB_GL_INTEGRATION none
               --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
+              --set QT_QUICK_BACKEND software
             )
           '';
     }))

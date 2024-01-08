@@ -31,6 +31,7 @@ _searchengines = {
 }
 _searchengines["DEFAULT"] = _searchengines["!ddg"]
 c.url.searchengines = _searchengines
+c.url.default_page = "qute://start/"
 
 # Don't load autoconfig.yml.
 config.load_autoconfig(False)
@@ -117,11 +118,11 @@ config.unbind("H")
 config.unbind("L")
 config.bind("gh", "back")
 config.bind("gl", "forward")
-config.bind("gH", "set-cmd-text -s :back")
-config.bind("gL", "set-cmd-text -s :forward")
+config.bind("gH", "cmd-set-text -s :back")
+config.bind("gL", "cmd-set-text -s :forward")
 
 # Tab navigation.
-config.bind(_leader + "<space>", "set-cmd-text -s :tab-select")
+config.bind(_leader + "<space>", "cmd-set-text -s :tab-select")
 config.unbind("d")
 config.unbind("D")
 config.unbind("<Ctrl-w>")
@@ -136,7 +137,7 @@ config.bind(_leader_tab + "R", "reload -f")
 # Tab movement to the end (right-most).
 config.bind("gm", "tab-move -1")
 # Move (give) to window, prompt.
-config.bind("gD", "set-cmd-text -s :tab-give")
+config.bind("gD", "cmd-set-text -s :tab-give")
 
 # Clear messages on the fly.
 config.bind("cm", "clear-messages")
@@ -145,8 +146,8 @@ config.bind("cm", "clear-messages")
 config.bind(_leader + "f", "config-cycle -t statusbar.show in-mode always")
 
 # Command mode
-config.bind("<Ctrl-f>", "edit-command", mode="command")
+config.bind("<Ctrl-f>", "cmd-edit", mode="command")
 config.bind("<Ctrl-t>", "spawn --userscript toggle-select-open", mode="command")
 
 # javascript clipboard access
-config.bind("tsy", "config-cycle -p -t -u *://{url:host}/* content.javascript.can_access_clipboard ;; reload")
+config.bind("tsy", "config-cycle -p -t -u *://{url:host}/* content.javascript.clipboard none access ;; reload")
