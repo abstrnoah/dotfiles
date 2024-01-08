@@ -173,6 +173,7 @@ for_window [class="(?i)jabref"] move window to workspace jabref
 for_window [class="(?i)gnucash"] move window to workspace gnucash
 for_window [class="(?i)slack"] move window to workspace slack
 for_window [class="(?i)minecraft"] move window to workspace mine
+for_window [class="(?i)prismlauncher"] move window to workspace mine
 
 # Auto-float clojure incanter 'view' popups.
 for_window [title="^Incanter Table$"] floating enable

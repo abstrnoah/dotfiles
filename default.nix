@@ -136,7 +136,7 @@ rec {
   xrandr-invert-colors
   thunderbird
   hydra-check
-  minecraft
+  # minecraft # broken https://github.com/NixOS/nixpkgs/issues/179323
   ;
 
   texlive = nixpkgs.texlive.combined.scheme-small;
@@ -166,6 +166,8 @@ rec {
   git = bundle "git" [ nixpkgs.git (mk_src "git" {}) ];
 
   udiskie = bundle "udiskie" [ nixpkgs.udiskie (mk_src "udiskie" {}) ];
+
+  minecraft = nixpkgs.prismlauncher ;
 
   # TODO probably better to achive this with substituteAll instead
   nix_env_exports =
@@ -439,6 +441,7 @@ rec {
     weasyprint
     htmlq
     ungoogled-chromium
+    gimp
   ];
 
   email = bundle "email" [
