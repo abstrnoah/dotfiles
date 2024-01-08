@@ -2,7 +2,7 @@
   description = "abstrnoah's dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixphile.url = "github:abstrnoah/nixphile";
     wallpapers.url = "github:abstrnoah/wallpapers";
