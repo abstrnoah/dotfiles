@@ -79,6 +79,7 @@ rec {
   dos2unix
   exiftool
   fd
+  sd
   feh
   fetchmail
   findutils
@@ -376,6 +377,7 @@ rec {
     dig
     dnstracer
     fd
+    sd
     fzf
     git
     htop
