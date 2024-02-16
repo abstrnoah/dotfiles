@@ -178,12 +178,12 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " nnoremap <silent><nowait> <leader>cl  :<C-u>CocList<CR>
 
 
-"
-" coc-snippets
-" See [https://github.com/neoclide/coc-snippets/Readme.md].
-"
-"" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+""
+"" coc-snippets
+"" See [https://github.com/neoclide/coc-snippets/Readme.md].
+""
+""" Use <C-l> for trigger snippet expand.
+"imap <C-l> <Plug>(coc-snippets-expand)
 
 " Use <C-j> for select text for visual placeholder of snippet.
 vmap <C-j> <Plug>(coc-snippets-select)
