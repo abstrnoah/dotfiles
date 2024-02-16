@@ -79,6 +79,7 @@ rec {
   dos2unix
   exiftool
   fd
+  rargs
   sd
   feh
   fetchmail
@@ -378,6 +379,7 @@ rec {
     dnstracer
     fd
     sd
+    rargs
     fzf
     git
     htop
