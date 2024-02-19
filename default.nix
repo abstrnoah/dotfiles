@@ -138,6 +138,7 @@ rec {
   xrandr-invert-colors
   thunderbird
   hydra-check
+  zbar
   # minecraft # broken https://github.com/NixOS/nixpkgs/issues/179323
   ;
 
@@ -455,6 +456,7 @@ rec {
     htmlq
     ungoogled-chromium
     gimp
+    zbar
   ];
 
   email = bundle "email" [
