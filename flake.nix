@@ -10,8 +10,6 @@
       url = "github:nix-community/nix-on-droid/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    brumalspark.url =
-      "git+ssh://server02/home/abstractednoah/srv/brumalspark?ref=main";
   };
 
   outputs =
