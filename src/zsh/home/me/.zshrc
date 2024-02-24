@@ -126,11 +126,6 @@ _br_command_exists xdg-open && {
     alias O='br_open'
 }
 
-ssh() {
-    test -z "${TMUX}" || _br_oops "Don't ssh from tmux, fool!" || return
-    command ssh "${@}"
-}
-
 _br_command_exists bat && {
     cat() {
         bat --paging=never --plain "${@}"
