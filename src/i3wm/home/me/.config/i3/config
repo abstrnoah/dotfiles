@@ -236,7 +236,7 @@ bindsym --release $mod+c \
 
 # Barcode scan.
 bindsym $mod+$alt+c \
-    exec "zbarcam -q1 --raw | xclip -selection clipboard -t image/png && notify-send i3wm 'qr captured'"
+    exec "zbarcam -q1 --raw | xclip -selection clipboard"
 
 # UUID
 bindsym $mod+3 exec "uuidgen | head -c-1 | xclip -select clipboard"
