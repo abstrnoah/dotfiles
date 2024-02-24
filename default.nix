@@ -146,6 +146,8 @@ rec {
   inherit (nixpkgs.nodePackages) insect;
   inherit (nixpkgs.python310Packages) grip weasyprint;
 
+  ttdl = bundle "ttdl" [nixpkgs.ttdl (mk_src "ttdl" {})];
+
   awk = nixpkgs.gawk;
 
   telegram = nixpkgs_unstable.telegram-desktop;
@@ -423,6 +425,7 @@ rec {
     hydra-check
     apache-jena
     util-linux
+    ttdl
   ];
 
   termux.nixphile_hook_pre = lib.write_script {
