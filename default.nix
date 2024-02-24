@@ -504,7 +504,7 @@ rec {
     zoom
   ];
 
-  machine03 = bundle "machine03" [
+  coyote = bundle "coyote" [
     email
     extras
     wm_env

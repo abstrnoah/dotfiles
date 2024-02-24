@@ -8,7 +8,7 @@
 { # Prevent run on incomplete fetch.
 
 key_path=~/.ssh/id_rsa
-remote="server02.brumal.net:${1}"
+remote="tipu.brumal.net:${1}"
 
 [ -n "${1}" ] || { echo "usage: ${0} REMOTE_DIRECTORY"; exit 1; }
 
