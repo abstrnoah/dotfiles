@@ -10,7 +10,7 @@ top = "bright red"
 important = "white"
 done = "0x58,0x6e,0x75"
 # todos that are due today
-today = "bright yellow"
+today = "white"
 # todos that are due in and less in `ranges.soon` days
 soon = "white"
 # todos that old (color for creation date)
@@ -42,7 +42,7 @@ creation_date_auto = true
 # fields = "pri,due,done"
 
 # default sorting
-# sort = "pri"
+sort = "pri,due"
 
 # enables strict command-line mode
 strict_mode = true
