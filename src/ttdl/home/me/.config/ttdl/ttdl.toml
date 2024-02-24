@@ -21,7 +21,7 @@ old = "0x58,0x6e,0x75"
 [ranges]
 # TTDL filter `soon` selects todos that are due in and less than in `soon` days
 # 0 - disable `soon` feature
-soon = 1
+soon = 3
 # todos that have priority equal or higher than `important` are displayed in
 #   in `colors.important` font color.
 # Priority is a character from 'a'(highest priority) through 'z'. Setting
@@ -67,7 +67,7 @@ auto_show_columns = true
 # Comma-separated list of tags that are hidden always.
 # Use it with auto_show_columns=true to hide non-empty columns that you
 # do not want to see in a separate columns
-# always_hide_columns =
+always_hide_columns = "created"
 
 # What to do with task priority when the task is completed:
 #    keep  = only prepend 'x' (default)
