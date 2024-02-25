@@ -3,7 +3,7 @@
 [colors]
 color_term = "ansi"
 overdue = "bright red"
-threshold = "red"
+# threshold = "white"
 # todos with highest priority (A)
 top = "bright red"
 # important todos - with a priority equal to or higher than `ranges.important`
@@ -42,7 +42,7 @@ creation_date_auto = true
 # fields = "pri,due,done"
 
 # default sorting
-sort = "pri,due"
+sort = "due,pri"
 
 # enables strict command-line mode
 strict_mode = true
@@ -67,7 +67,7 @@ auto_show_columns = true
 # Comma-separated list of tags that are hidden always.
 # Use it with auto_show_columns=true to hide non-empty columns that you
 # do not want to see in a separate columns
-always_hide_columns = "created"
+always_hide_columns = "created,threshold,prj,ctx,thr"
 
 # What to do with task priority when the task is completed:
 #    keep  = only prepend 'x' (default)
@@ -81,12 +81,10 @@ always_hide_columns = "created"
 # priority_on_done = keep
 
 [syntax]
-# Set enabled to 'true' to highlight projects, contexts, tags, and hashtags
-#     inside the subject
-# enabled = false
-tag_color = "bright cyan"
+enabled = true
+tag_color = "0x58,0x6e,0x75"
 hashtag_color = "cyan"
-project_color = "bright green"
+project_color = "blue"
 context_color = "green"
 
 # Example of a custom field of `date` type with conditional highlight.
