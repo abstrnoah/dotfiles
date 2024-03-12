@@ -16,5 +16,6 @@
 [alias]
     log- = log --oneline --decorate --graph
     diff- = diff --color-words
+    update = commit -a -m update
 [include]
     path = ~/.site.gitconfig
