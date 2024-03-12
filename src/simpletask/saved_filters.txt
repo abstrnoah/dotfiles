@@ -18,5 +18,25 @@
     "USE_SCRIPT": false,
     "LUASCRIPT_TEST_TASK": "",
     "query": ""
+  },
+  "all": {
+    "CONTEXTS": "",
+    "CONTEXTSnot": false,
+    "PROJECTS": "",
+    "PROJECTSnot": false,
+    "PRIORITIES": "",
+    "PRIORITIESnot": false,
+    "SORTS": "+!completed\n+!by_due_date\n+!by_prio\n+!alphabetical\n+!file_order\n+!by_project\n+!by_creation_date\n+!in_future\n+!by_threshold_date\n+!by_completion_date\n+!by_lua\n+!by_context",
+    "HIDECOMPLETED": false,
+    "HIDEFUTURE": false,
+    "HIDELISTS": false,
+    "HIDETAGS": false,
+    "HIDECREATEDATE": true,
+    "HIDEHIDDEN": false,
+    "CREATEISTHRESHOLD": false,
+    "LUASCRIPT": "",
+    "USE_SCRIPT": false,
+    "LUASCRIPT_TEST_TASK": "",
+    "query": ""
   }
 }
