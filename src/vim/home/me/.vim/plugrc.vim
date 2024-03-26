@@ -197,16 +197,10 @@ let g:bullets_checkbox_markers = '    x'
 let g:bullets_outline_levels = ['num']
 
 " VIM-MARKDOWN {{{2
-let g:vim_markdown_override_foldtext = 0
 let g:vim_markdown_toc_autofit = 1
 " To avoid conflict with bullet plugin, still not ideal TODO.
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
-" Folding.
-let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_override_foldtext = 0
-" Because there's a bug where the first H3 folds all the following H3s under it.
-let g:vim_markdown_folding_level = 2
 " Disable concealing code block delims. TODO why did I disable this?
 " let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_math = 1
@@ -238,7 +232,6 @@ let g:vimtex_compiler_tectonic = {
     \ ],
 \}
 let g:vimtex_quickfix_mode = 0
-let g:vimtex_fold_enabled = 1
 " Vimtex's formatexpr works almost perfectly, except:
 " ISSUE: When an environment is given a trailing optional argument. Then 'gqie'
 " moves the text inside the environment to start on the same line as the closing

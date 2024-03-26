@@ -72,6 +72,7 @@ if has('conceal')
 endif
 
 if has("folding")
+    set nofoldenable
     " Unset 'fillchars' items fallback to default.
     let &fillchars = "fold: "
     set foldmethod=marker
