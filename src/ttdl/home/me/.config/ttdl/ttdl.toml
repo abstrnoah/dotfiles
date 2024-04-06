@@ -67,7 +67,7 @@ auto_show_columns = true
 # Comma-separated list of tags that are hidden always.
 # Use it with auto_show_columns=true to hide non-empty columns that you
 # do not want to see in a separate columns
-always_hide_columns = "created,threshold,prj,ctx,thr"
+always_hide_columns = "created,threshold,prj,ctx,thr,http,https"
 
 # What to do with task priority when the task is completed:
 #    keep  = only prepend 'x' (default)
