@@ -511,6 +511,17 @@ rec {
     (xrandr-switch-output "builtin" "LVDS1" "VGA1" wallpapers)
     (xrandr-switch-output "external" "VGA1" "LVDS1" wallpapers)
     mononoki # TODO document fc riffraff
+    gnupg # TODO
   ];
+
+  gnupg = bundle "gnupg" # TODO
+    [((import ./src/gnupg)
+      { inherit bundle;
+        inherit (nixpkgs) writeTextFile;
+        systemd-user-units-path = "/home/me/.config/systemd/user";
+        dotfiles-out-path = "/home/me/.dotfiles.out"; }
+      { inherit (nixpkgs) gnupg;
+        pinentry = nixpkgs.pinentry-qt; })
+     nixpkgs.pinentry-qt];
 
 }
