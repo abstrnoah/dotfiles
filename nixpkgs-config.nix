@@ -1,10 +1,10 @@
-{ nixpkgs_lib }:
+{ getName }:
 {
   pulseaudio = true;
 
   allowUnfreePredicate =
     p:
-    builtins.elem (nixpkgs_lib.getName p) [
+    builtins.elem (getName p) [
       "discord"
       "spotify"
       "spotify-unwrapped"

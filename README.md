@@ -86,10 +86,11 @@ following sections:
 Top-level packages are then `bundle`d together via [nixpkgs]'
 `buildEnv`.
 
-Reserved keywords:
+Reserved names:
 * `config` - A set containing configuration data. In particular, values are
-  _not_ derivations; instead, they are paths, strings, etc. This _includes_
-  utility functions like `bundle` and `writeTextFile`.
+  _not_ derivations; instead, they are paths, strings, etc.
+* `config.lib` - Utilities that I want to expose to clients of the flake via
+  `this-repository.lib`.
 * `packages` - A set containing packages, i.e. values are bona fide
   _derivations_. (The _only_ time `packages` is separated by system is at the
   top of the flake, where we delegate to [flake-utils].)

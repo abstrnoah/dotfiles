@@ -1,16 +1,43 @@
 {
   description = "abstrnoah's dotfiles";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixphile.url = "github:abstrnoah/nixphile";
-    wallpapers.url = "github:abstrnoah/wallpapers";
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+  inputs.systems.url = "github:nix-systems/default-linux";
+
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.flake-utils.inputs.systems.follows = "systems";
+
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+
+  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+  inputs.wallpapers.url = "github:abstrnoah/wallpapers";
+
+  inputs.nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.05";
+  inputs.nix-on-droid.inputs.nixpkgs.follows = "nixpkgs";
+
+
+  outputs =
+    inputs@{ self, ... }:
+    flake-utils.lib.eachDefaultSystem
+      (system:
+      let
+        config =
+          import config.nix
+            { inherit system ;
+              inherit (nixpkgs.lib) getName; };
+        nixpkgs-packages =
+          import nixpkgs
+            { inherit system;
+              config =
+                import ./nixpkgs-config.nix { inherit (config) getName; }; };
+      in
+        { lib = /*TODO*/ ;
+          dotfiles = import ./default.nix config inputs-for-system;
+        }
+
+
+
+  # TODO OLD
 
   outputs =
     inputs@{ self, nixpkgs, nixpkgs_unstable, nix-on-droid, ... }:
