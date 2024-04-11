@@ -1,15 +1,14 @@
-# TODO
-# - xclip? non-x-reliant clipboard manager?
-# - speedup, namely rewrite `bundle` and reduce core_env
 inputs@{
-  lib
+  self
 , nixpkgs
-, nixpkgs_unstable
-, system ? builtins.currentSystem # TODO maybe improve how we handle system
+, nixpkgs-unstable
 , nixphile
 , wallpapers
 , ...
 }:
+
+
+# TODO old
 
 with {
   inherit (lib)

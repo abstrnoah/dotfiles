@@ -111,6 +111,11 @@ scratch for better robustness and stability under leaf changes.
 bundle = "name": [<derivations>]: <derivation>
 ```
 
+# TODO
+
+* [ ] xclip? non-x-reliant clipboard manager?
+* [ ] speedup, namely rewrite `bundle` and reduce core_env
+
 ---
 
 [nixphile]: https://github.com/abstrnoah/nixphile
