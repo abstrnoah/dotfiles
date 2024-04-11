@@ -2,7 +2,6 @@ config @ {
   writeTextFile
 , systemd-user-units-path
 , bundle
-, dotfiles-out-path
 }:
 packages @ {
   gnupg
@@ -19,15 +18,10 @@ let
           Requires=gpg-agent.socket
 
           [Service]
-          ExecStart=${gnupg}/bin/gpg-agent --supervised
+          ExecStart=${gnupg}/bin/gpg-agent --supervised --pinentry-program ${pinentry}/bin/pinentry
           ExecReload=${gnupg}/bin/gpgconf --reload gpg-agent
         '';
       destination = systemd-user-units-path + "/gpg-agent.service";
     };
-  gpg-agent-conf = writeTextFile {
-      name = "gpg-agent-conf";
-      text = "pinentry-program ${pinentry}/bin/pinentry";
-      destination = dotfiles-out-path + "/gpg-agent.conf";
-    };
 in
-  bundle "gnupg" [gnupg gpg-agent-service gpg-agent-conf]
+  bundle "gnupg" [gnupg gpg-agent-service pinentry]

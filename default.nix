@@ -514,14 +514,11 @@ rec {
     gnupg # TODO
   ];
 
-  gnupg = bundle "gnupg" # TODO
-    [((import ./src/gnupg)
+  gnupg = # TODO
+    (import ./src/gnupg)
       { inherit bundle;
         inherit (nixpkgs) writeTextFile;
-        systemd-user-units-path = "/home/me/.config/systemd/user";
-        dotfiles-out-path = "/home/me/.dotfiles.out"; }
+        systemd-user-units-path = "/home/me/.config/systemd/user"; }
       { inherit (nixpkgs) gnupg;
-        pinentry = nixpkgs.pinentry-qt; })
-     nixpkgs.pinentry-qt];
-
+        pinentry = nixpkgs.pinentry-qt; } ;
 }
