@@ -1,6 +1,6 @@
 config@{
-  system
-, getName
+  self,
+  system,
 }:
 
 {
@@ -14,7 +14,7 @@ config@{
           { pulseaudio = true;
             allowUnfreePredicate =
               p:
-              builtins.elem (getName p) [
+              builtins.elem (nixpkgs.lib.getName p) [
                 "discord"
                 "spotify"
                 "spotify-unwrapped"
@@ -24,6 +24,12 @@ config@{
                 "slack"
                 "minecraft-launcher"
               ]; }; };
+
+  nix-formatter-pack-args =
+    { inherit system;
+      pkgs = self.nixpkgs;
+      checkFiles = [ ./. ];
+      config.tools.alejandra.enable = true; };
 }
 //
 config
