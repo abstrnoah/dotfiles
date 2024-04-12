@@ -1,9 +1,4 @@
-{
-  nixpkgs
-, battery_device
-, username
-, hibernate_command
-}:
+{ nixpkgs, battery_device, username, hibernate_command }:
 let
   write_text = name: text: "${nixpkgs.writeTextDir name text}/${name}";
   hook_script = nixpkgs.writeShellApplication {
@@ -35,8 +30,7 @@ let
       fi
     '';
   };
-in
-{
+in {
   service = write_text "battery-hook.service" ''
     [Unit]
     Description=Battery level hook

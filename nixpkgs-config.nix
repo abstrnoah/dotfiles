@@ -1,9 +1,7 @@
-{ getName }:
-{
+{ getName }: {
   pulseaudio = true;
 
-  allowUnfreePredicate =
-    p:
+  allowUnfreePredicate = p:
     builtins.elem (getName p) [
       "discord"
       "spotify"

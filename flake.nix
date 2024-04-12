@@ -17,52 +17,37 @@
 
   inputs.nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
 
-  outputs = inputs @ {...}: let
-    # choose-system ["key" ...] input -> { key = input.key.system; ... }
-    choose-system = system: keys: input:
-      builtins.mapAttrs
-      (key: value:
-        if builtins.elem key keys
-        then value.${system}
-        else value)
-      input;
-    # keys whose values are sets organised by system
-    keys-by-system = [
-      "config"
-      "nixpkgs"
-      "nixpkgs-unstable"
-      "packages"
-      "apps"
-    ];
-    # outputs organised by system
-    outputs-by-system =
-      inputs.flake-utils.lib.eachDefaultSystem
-      (system: let
-        inputs-for-system =
-          builtins.mapAttrs
-          (_: input: choose-system system keys-by-system input)
-          inputs;
-      in
-        with inputs-for-system; {
-          config =
-            import ./config.nix
-            {inherit self system;};
+  outputs = inputs@{ ... }:
+    let
+      # choose-system ["key" ...] input -> { key = input.key.system; ... }
+      choose-system = system: keys: input:
+        builtins.mapAttrs
+        (key: value: if builtins.elem key keys then value.${system} else value)
+        input;
+      # keys whose values are sets organised by system
+      keys-by-system =
+        [ "config" "nixpkgs" "nixpkgs-unstable" "packages" "apps" ];
+      # outputs organised by system
+      outputs-by-system = inputs.flake-utils.lib.eachDefaultSystem (system:
+        let
+          inputs-for-system = builtins.mapAttrs
+            (_: input: choose-system system keys-by-system input) inputs;
+        in with inputs-for-system; {
+          config = import ./config.nix { inherit self system; };
           nixpkgs = self.config.cons-nixpkgs-packages nixpkgs;
           nixpkgs-unstable = self.config.cons-nixpkgs-packages nixpkgs-unstable;
           packages = import ./default.nix inputs-for-system;
           checks.nix-formatter-pack-check =
-            nix-formatter-pack.lib.mkCheck
-            self.config.nix-formatter-pack-args;
-          formatter =
-            nix-formatter-pack.lib.mkFormatter
+            nix-formatter-pack.lib.mkCheck self.config.nix-formatter-pack-args;
+          formatter = nix-formatter-pack.lib.mkFormatter
             self.config.nix-formatter-pack-args;
         });
-    # outputs not organised by system
-    outputs-any-system = {
-      nixOnDroidConfigurations.default =
-        inputs.nix-on-droid.lib.nixOnDroidConfiguration
-        {modules = [./nix-on-droid.nix];};
-    };
-  in
-    outputs-by-system // outputs-any-system;
+      # outputs not organised by system
+      outputs-any-system = {
+        nixOnDroidConfigurations.default =
+          inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+            modules = [ ./nix-on-droid.nix ];
+          };
+      };
+    in outputs-by-system // outputs-any-system;
 }

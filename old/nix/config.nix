@@ -1,98 +1,98 @@
 let
-  corePackagePaths = pkgs: with pkgs; [
-    bat
-    bat-extras.batdiff
-    bat-extras.batman
-    bat-extras.batwatch
-    curl
-    dig
-    dnstracer
-    fd
-    fzf
-    git
-    glibcLocales
-    # gnupg # version conflict due to systemd supervision of gpg-agent
-    htop
-    jq
-    netcat-openbsd
-    nettools
-    nodejs
-    pandoc
-    # pass # see gnupg issue
-    pdfgrep
-    pdftk
-    pfetch
-    ranger
-    silver-searcher
-    sl
-    tectonic
-    textql
-    time
-    tmux
-    tmuxinator
-    toilet
-    tree
-    tuptime
-    universal-ctags
-    unzip
-    vimHugeX
-    visidata
-    zip
-  ];
-in
-{
+  corePackagePaths = pkgs:
+    with pkgs; [
+      bat
+      bat-extras.batdiff
+      bat-extras.batman
+      bat-extras.batwatch
+      curl
+      dig
+      dnstracer
+      fd
+      fzf
+      git
+      glibcLocales
+      # gnupg # version conflict due to systemd supervision of gpg-agent
+      htop
+      jq
+      netcat-openbsd
+      nettools
+      nodejs
+      pandoc
+      # pass # see gnupg issue
+      pdfgrep
+      pdftk
+      pfetch
+      ranger
+      silver-searcher
+      sl
+      tectonic
+      textql
+      time
+      tmux
+      tmuxinator
+      toilet
+      tree
+      tuptime
+      universal-ctags
+      unzip
+      vimHugeX
+      visidata
+      zip
+    ];
+in {
   pulseaudio = true;
-  allowUnfreePredicate = pkg: with (import <an_nixpkgs>) {};
-  builtins.elem (lib.getName pkg) [
-    "discord"
-    "spotify"
-    "spotify-unwrapped"
-    "vscode"
-    "xflux"
-    "zoom"
-  ];
+  allowUnfreePredicate = pkg:
+    with (import <an_nixpkgs>) { };
+    builtins.elem (lib.getName pkg) [
+      "discord"
+      "spotify"
+      "spotify-unwrapped"
+      "vscode"
+      "xflux"
+      "zoom"
+    ];
   packageOverrides = pkgs: {
     clientPackages = pkgs.buildEnv {
       name = "clientPackages";
       paths = with pkgs;
-      corePackagePaths pkgs
-      ++ [
-        # anki (needs QT_XCB_GL_INTEGRATION=none workaround)
-        black
-        bup
-        clang
-        clojure
-        coq
-        cowsay
-        delta
-        djvu2pdf
-        dmidecode
-        exiftool
-        gcal
-        imagemagick
-        img2pdf
-        jdk
-        maven
-        nodePackages.insect
-        ocaml
-        ocamlformat
-        ocamlPackages.utop
-        php
-        python3
-        # qemu
-        rlwrap
-        spotify-cli-linux
-        sqlfluff
-        stow
-        texlive.combined.scheme-small
-        weechat
-        wego
-        # wkhtmltopdf # needs deprecated webkit
-        xorg.xbacklight
-        yj
-        yq-go
-        # zsh
-      ];
+        corePackagePaths pkgs ++ [
+          # anki (needs QT_XCB_GL_INTEGRATION=none workaround)
+          black
+          bup
+          clang
+          clojure
+          coq
+          cowsay
+          delta
+          djvu2pdf
+          dmidecode
+          exiftool
+          gcal
+          imagemagick
+          img2pdf
+          jdk
+          maven
+          nodePackages.insect
+          ocaml
+          ocamlformat
+          ocamlPackages.utop
+          php
+          python3
+          # qemu
+          rlwrap
+          spotify-cli-linux
+          sqlfluff
+          stow
+          texlive.combined.scheme-small
+          weechat
+          wego
+          # wkhtmltopdf # needs deprecated webkit
+          xorg.xbacklight
+          yj
+          yq-go
+          # zsh
+        ];
       pathsToLink = [ "/share" "/bin" "/lib" ];
       extraOutputsToInstall = [ "man" "doc" ];
     };
@@ -133,8 +133,7 @@ in
     # };
   };
   nix-on-droid = { pkgs, ... }: {
-    environment.packages = (corePackagePaths pkgs)
-    ++ (with pkgs; [
+    environment.packages = (corePackagePaths pkgs) ++ (with pkgs; [
       diffutils
       findutils
       getconf
