@@ -3,7 +3,9 @@ config@{ self, system, }:
 {
   fold = builtins.foldl';
 
-  cons-nixpkgs-packages = nixpkgs: # nixpkgs flake input
+  cons-nixpkgs-packages =
+    # the nixpkgs flake input
+    nixpkgs:
     import nixpkgs {
       inherit system;
       config = {
@@ -24,8 +26,9 @@ config@{ self, system, }:
 
   nix-formatter-pack-args = {
     inherit system;
-    pkgs = self.nixpkgs;
+    pkgs = self.nixpkgs-packages;
     checkFiles = [ ./. ];
     config.tools.nixfmt.enable = true;
   };
+
 } // config
