@@ -188,7 +188,7 @@ _br_command_exists torsocks && {
 alias _fzf_compgen_path='_br_list_paths'
 alias _fzf_compgen_dir='_br_list_dirs'
 
-alias tomb=' sudo tomb'
+alias tomb='sudo tomb'
 alias pass=' pass'
 
 # disable timer tmux integration
