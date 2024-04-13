@@ -115,6 +115,10 @@ bundle = "name": [<derivations>]: <derivation>
 
 * [ ] xclip? non-x-reliant clipboard manager?
 * [ ] speedup, namely rewrite `bundle` and reduce core_env
+* [ ] nixphile hooks
+* [ ] refactor inputs follow nixpkgs
+* [ ] more flake-zen way of loading nixpkgs with system and config than
+      `import`?
 
 ---
 

@@ -2,7 +2,7 @@
   "nodes": {
     "dotfiles": {
       "inputs": {
-        "nixphile": "nixphile",
+        "nixphile": "nixphile_2",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs_unstable": "nixpkgs_unstable",
         "wallpapers": [
@@ -135,6 +135,26 @@
       }
     },
     "nixphile": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1682474714,
+        "narHash": "sha256-4TXs+Z24lDuharl0MMahOtznq3RpC2HCICC9emYixsw=",
+        "owner": "abstrnoah",
+        "repo": "nixphile",
+        "rev": "d2953b2d103fe3588ffdee32ac6b654b7d83c887",
+        "type": "github"
+      },
+      "original": {
+        "owner": "abstrnoah",
+        "repo": "nixphile",
+        "type": "github"
+      }
+    },
+    "nixphile_2": {
       "inputs": {
         "nixpkgs": "nixpkgs_3"
       },
@@ -349,6 +369,7 @@
         "flake-utils": "flake-utils",
         "nix-formatter-pack": "nix-formatter-pack",
         "nix-on-droid": "nix-on-droid",
+        "nixphile": "nixphile",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "systems": "systems",

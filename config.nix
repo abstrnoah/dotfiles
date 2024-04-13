@@ -1,6 +1,9 @@
 config@{ self, system, }:
 
 {
+  # TODO deprecate
+  legacy = import ./lib.nix { nixpkgs = self.nixpkgs-packages; };
+
   fold = builtins.foldl';
 
   cons-nixpkgs-packages =

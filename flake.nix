@@ -12,6 +12,9 @@
 
   inputs.wallpapers.url = "github:abstrnoah/wallpapers";
 
+  inputs.nixphile.url = "github:abstrnoah/nixphile";
+  inputs.nixphile.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.05";
   inputs.nix-on-droid.inputs.nixpkgs.follows = "nixpkgs";
 

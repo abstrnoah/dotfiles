@@ -1,10 +1,32 @@
-inputs@{ self, nixpkgs, nixpkgs-unstable, nixphile, wallpapers, ... }:
+inputs@{
+  self,
+  nixphile,
+  wallpapers,
+  ...
+}:
 
-# TODO old
+let
+  pkgs = self.packages;
+  upstreams = {
+    # TODO
+  };
+  ours = {
+    # TODO
+  };
+  bundles = {
+    # TODO
+  };
+in
 
+# TODO legacy bindings
+let
+    lib = self.config.legacy;
+    nixpkgs = self.nixpkgs-packages;
+    nixpkgs_unstable = self.nixpkgs-unstable-packages;
+legacy =
 with {
   inherit (lib)
-    by_name get store_text make_env bundle make_source make_nixphile_hook_pre;
+    store_text bundle make_source make_nixphile_hook_pre;
 };
 let
   username = "abstrnoah";
@@ -31,7 +53,7 @@ let
     };
 in rec {
 
-  nixphile = inputs.nixphile.default;
+  nixphile = inputs.nixphile.packages.default;
 
   # TODO Move unstable packages to stable as soon as possible.
   inherit (nixpkgs_unstable)
@@ -193,8 +215,8 @@ in rec {
   };
 
   wallpapers = bundle "wallpapers" [
-    (lib.store_file inputs.wallpapers.mount_fuji_jpg "/home/me/.wallpaper")
-    (lib.store_file inputs.wallpapers.solarized-stars_png
+    (lib.store_file inputs.wallpapers.packages.mount_fuji_jpg "/home/me/.wallpaper")
+    (lib.store_file inputs.wallpapers.packages.solarized-stars_png
       "/home/me/.wallpaperlock")
   ];
 
@@ -412,4 +434,9 @@ in rec {
       nixpkgs.pinentry-qt
     ];
 
-}
+};
+
+
+# TODO remove legacy
+in
+  upstreams // ours // bundles // legacy
