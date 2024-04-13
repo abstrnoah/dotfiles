@@ -34,4 +34,6 @@ config@{ self, system, }:
     config.tools.nixfmt.enable = true;
   };
 
+  username = "abstrnoah";
+
 } // config

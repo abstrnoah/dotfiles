@@ -119,6 +119,7 @@ bundle = "name": [<derivations>]: <derivation>
 * [ ] refactor inputs follow nixpkgs
 * [ ] more flake-zen way of loading nixpkgs with system and config than
       `import`?
+* [ ] names replace `_` with `-`
 
 ---
 

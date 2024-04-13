@@ -6,30 +6,13 @@ inputs@{
 }:
 
 let
-  pkgs = self.packages;
-  upstreams = {
-    # TODO
-  };
-  ours = {
-    # TODO
-  };
-  bundles = {
-    # TODO
-  };
+  inherit (self) config packages nixpkgs-packages nixpkgs-unstable-packages;
 in
 
-# TODO legacy bindings
-let
-    lib = self.config.legacy;
-    nixpkgs = self.nixpkgs-packages;
-    nixpkgs_unstable = self.nixpkgs-unstable-packages;
-legacy =
-with {
+let # TODO LEGACY BINDINGS
+    lib = self.config.legacy; # TODO remove this dependency
   inherit (lib)
     store_text bundle make_source make_nixphile_hook_pre;
-};
-let
-  username = "abstrnoah";
   src_path = ./src;
   env_src_path = "$HOME/.dotfiles/src";
   mk_src = name:
@@ -45,23 +28,25 @@ let
     lib.write_script {
       name = "xrandr-switch-${name}";
       text = ''
-        xrandr --output ${nixpkgs.lib.escapeShellArg active} --auto --primary \
-               --output ${nixpkgs.lib.escapeShellArg inactive} --off \
+        xrandr --output ${nixpkgs-packages.lib.escapeShellArg active} --auto --primary \
+               --output ${nixpkgs-packages.lib.escapeShellArg inactive} --off \
                --dpi 100
         feh --bg-fill ${wallpapers}/home/me/.wallpaper
       '';
     };
-in rec {
+
+legacy =
+rec {
 
   nixphile = inputs.nixphile.packages.default;
 
   # TODO Move unstable packages to stable as soon as possible.
-  inherit (nixpkgs_unstable)
+  inherit (nixpkgs-unstable-packages)
     jabref # Awaiting OpenJDK update.
     mononoki # Awaiting version bump to fix recognition issue.
   ;
 
-  inherit (nixpkgs)
+  inherit (nixpkgs-packages)
     apache-jena black bup chromium ungoogled-chromium clang coq cowsay diffutils
     dig discord dnstracer dos2unix exiftool fd rargs sd feh fetchmail findutils
     fzf gimp gcal getconf gnugrep gnused hostname htmlq htop i3status
@@ -74,69 +59,69 @@ in rec {
     # minecraft # broken https://github.com/NixOS/nixpkgs/issues/179323
   ;
 
-  texlive = nixpkgs.texlive.combined.scheme-small;
+  texlive = nixpkgs-packages.texlive.combined.scheme-small;
 
-  inherit (nixpkgs.nodePackages) insect;
-  inherit (nixpkgs.python310Packages) grip weasyprint;
+  inherit (nixpkgs-packages.nodePackages) insect;
+  inherit (nixpkgs-packages.python310Packages) grip weasyprint;
 
-  ttdl = bundle "ttdl" [ nixpkgs.ttdl (mk_src "ttdl" { }) ];
+  ttdl = bundle "ttdl" [ nixpkgs-packages.ttdl (mk_src "ttdl" { }) ];
 
-  awk = nixpkgs.gawk;
+  awk = nixpkgs-packages.gawk;
 
-  telegram = nixpkgs_unstable.telegram-desktop;
+  telegram = nixpkgs-unstable-packages.telegram-desktop;
 
-  xorg-xbacklight = nixpkgs.xorg.xbacklight;
+  xorg-xbacklight = nixpkgs-packages.xorg.xbacklight;
 
   bat = bundle "bat" [
-    nixpkgs.bat
-    nixpkgs.bat-extras.batdiff
-    nixpkgs.bat-extras.batman
-    nixpkgs.bat-extras.batwatch
+    nixpkgs-packages.bat
+    nixpkgs-packages.bat-extras.batdiff
+    nixpkgs-packages.bat-extras.batman
+    nixpkgs-packages.bat-extras.batwatch
   ];
 
   bluetooth = bundle "bluetooth" [ (mk_src "bluetooth" { }) ];
 
-  curl = bundle "curl" [ nixpkgs.curl (mk_src "curl" { }) ];
+  curl = bundle "curl" [ nixpkgs-packages.curl (mk_src "curl" { }) ];
 
-  git = bundle "git" [ nixpkgs.git (mk_src "git" { }) ];
+  git = bundle "git" [ nixpkgs-packages.git (mk_src "git" { }) ];
 
-  udiskie = bundle "udiskie" [ nixpkgs.udiskie (mk_src "udiskie" { }) ];
+  udiskie = bundle "udiskie" [ nixpkgs-packages.udiskie (mk_src "udiskie" { }) ];
 
-  minecraft = nixpkgs.prismlauncher;
+  minecraft = nixpkgs-packages.prismlauncher;
 
   # TODO probably better to achive this with substituteAll instead
   nix_env_exports =
-    let locale_archive = "${nixpkgs.glibcLocales}/lib/locale/locale-archive";
-    in nixpkgs.writeTextFile rec {
+    let locale_archive = "${nixpkgs-packages.glibcLocales}/lib/locale/locale-archive";
+    in nixpkgs-packages.writeTextFile rec {
       name = "nix_env_exports";
       text = ''
-        export ${nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
+        export ${nixpkgs-packages.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
       '';
       destination = "/lib/${name}";
     };
 
   tmuxinator =
-    bundle "tmuxinator" [ nixpkgs.tmuxinator (mk_src "tmuxinator" { }) ];
+    bundle "tmuxinator" [ nixpkgs-packages.tmuxinator (mk_src "tmuxinator" { }) ];
 
   tmux = bundle "tmux" [
     fzf
     gcal
-    nixpkgs.tmux
+    nixpkgs-packages.tmux
     (mk_src "tmux" { })
     tmuxinator
     zsh # TODO rm this dep
   ];
 
-  zip = bundle "zip" [ nixpkgs.zip nixpkgs.unzip ];
+  zip = bundle "zip" [ nixpkgs-packages.zip nixpkgs-packages.unzip ];
 
-  vim-plug = store_text "${nixpkgs.vimPlugins.vim-plug}/plug.vim"
+  vim-plug = store_text "${nixpkgs-packages.vimPlugins.vim-plug}/plug.vim"
     "/home/me/.vim/autoload/plug.vim";
 
   # TODO mutable spellfile
   vim = bundle "vim" [
     curl
     fzf
-    nixpkgs.vimHugeX
+    nixpkgs-packages.vimHugeX
     (mk_src "vim" { excludes = [ "/home/me/.vim/spell/en.utf-8.add" ]; })
     vim-plug
     (make_nixphile_hook_pre ''
@@ -148,18 +133,18 @@ in rec {
     '')
   ];
 
-  visidata = bundle "visidata" [ nixpkgs.visidata (mk_src "visidata" { }) ];
+  visidata = bundle "visidata" [ nixpkgs-packages.visidata (mk_src "visidata" { }) ];
 
   ocaml = bundle "ocaml" [
-    nixpkgs.ocaml
-    nixpkgs.ocamlformat
-    nixpkgs.ocamlPackages.utop
+    nixpkgs-packages.ocaml
+    nixpkgs-packages.ocamlformat
+    nixpkgs-packages.ocamlPackages.utop
   ];
 
   qutebrowser = bundle "qutebrowser" [
-    (nixpkgs.qutebrowser.overrideAttrs (prev: {
+    (nixpkgs-packages.qutebrowser.overrideAttrs (prev: {
       preFixup = let
-        alsaPluginDir = (nixpkgs.lib.getLib nixpkgs.alsa-plugins)
+        alsaPluginDir = (nixpkgs-packages.lib.getLib nixpkgs-packages.alsa-plugins)
           + "/lib/alsa-lib";
         # I don't know much about the following workarounds and don't care to
         # learn because graphics suck. Unfortunately, the third workaround
@@ -184,29 +169,29 @@ in rec {
     '')
   ];
 
-  rofi = bundle "rofi" [ nixpkgs.rofi (mk_src "rofi" { }) ];
+  rofi = bundle "rofi" [ nixpkgs-packages.rofi (mk_src "rofi" { }) ];
 
-  spotify = bundle "spotify" [ nixpkgs.spotify spotify-cli-linux ];
+  spotify = bundle "spotify" [ nixpkgs-packages.spotify spotify-cli-linux ];
 
-  xflux = bundle "xflux" [ curl jq nixpkgs.xflux (mk_src "xflux" { }) ];
+  xflux = bundle "xflux" [ curl jq nixpkgs-packages.xflux (mk_src "xflux" { }) ];
 
-  zathura = bundle "zathura" [ nixpkgs.zathura (mk_src "zathura" { }) ];
+  zathura = bundle "zathura" [ nixpkgs-packages.zathura (mk_src "zathura" { }) ];
 
   # FIXME video issue
-  zoom = nixpkgs.zoom-us.overrideAttrs (prev: {
+  zoom = nixpkgs-packages.zoom-us.overrideAttrs (prev: {
     nativeBuildInputs = (prev.nativeBuildInputs or [ ])
-      ++ [ nixpkgs.makeWrapper ];
+      ++ [ nixpkgs-packages.makeWrapper ];
     postFixup = prev.postFixup + ''
       wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
     '';
   });
 
   zsh =
-    bundle "zsh" [ bat fd fzf nix_env_exports nixpkgs.zsh (mk_src "zsh" { }) ];
+    bundle "zsh" [ bat fd fzf nix_env_exports nixpkgs-packages.zsh (mk_src "zsh" { }) ];
 
-  i3wm = bundle "i3wm" [ nixpkgs.i3-rounded (mk_src "i3wm" { }) ];
+  i3wm = bundle "i3wm" [ nixpkgs-packages.i3-rounded (mk_src "i3wm" { }) ];
 
-  xsession = nixpkgs.writeTextFile {
+  xsession = nixpkgs-packages.writeTextFile {
     name = "xsession";
     text = ''
       exec "${i3wm}/bin/i3"
@@ -223,11 +208,11 @@ in rec {
   # bundle bc mk_src returns path not derivation
   passmenu = bundle "passmenu" [ (mk_src "pass" { }) ];
 
-  dunst = bundle "dunst" [ nixpkgs.dunst (mk_src "dunst" { }) ];
+  dunst = bundle "dunst" [ nixpkgs-packages.dunst (mk_src "dunst" { }) ];
 
   # TODO do we really want nix's pulse??
   pulseaudio = bundle "pulseaudio" [
-    nixpkgs.pulseaudio
+    nixpkgs-packages.pulseaudio
     (mk_src "pulseaudio" { })
     (make_nixphile_hook_pre ''
       mkdir -p "$HOME/.config/pulse"
@@ -235,7 +220,7 @@ in rec {
     '')
   ];
 
-  ssh = nixpkgs.openssh;
+  ssh = nixpkgs-packages.openssh;
 
   # TODO this is so hacky it's painful but no time
   # - should lock before hibernating
@@ -246,7 +231,8 @@ in rec {
   # - if i am going to move more things to systemd, then i need to improve the
   #   nix/systemd workflow
   battery_hook_setup = with (import ./src/battery_hook) {
-    inherit nixpkgs username;
+    inherit (config) username;
+    nixpkgs = nixpkgs-packages;
     battery_device = "BAT0";
     hibernate_command = "systemctl hibernate";
     # TODO We want the following, but it requires i3wm-helper-system be
@@ -260,7 +246,8 @@ in rec {
       systemctl start "$(basename ${service})"
     '';
 
-  captive-browser = (import ./src/captive-browser) { inherit nixpkgs bundle; };
+  captive-browser = (import ./src/captive-browser) { inherit bundle; nixpkgs =
+    nixpkgs-packages; };
 
   core_env = bundle "core_env" [
     (make_nixphile_hook_pre ''
@@ -349,9 +336,9 @@ in rec {
   nix-on-droid = bundle "nix-on-droid" [
     core_env
     termux
-    nixpkgs.coreutils
+    nixpkgs-packages.coreutils
     ssh
-    nixpkgs.procps
+    nixpkgs-packages.procps
   ];
 
   extras = bundle "extras" [
@@ -393,7 +380,7 @@ in rec {
   wm_env = bundle "wm_env" [
     gui_env
     i3wm
-    # nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
+    # nixpkgs-packages.i3lock # TODO due to PAM perm issue nix version fails
     i3status
     xsession
     jq
@@ -424,19 +411,29 @@ in rec {
     [
       ((import ./src/gnupg) {
         inherit bundle;
-        inherit (nixpkgs) writeTextFile;
+        inherit (nixpkgs-packages) writeTextFile;
         systemd-user-units-path = "/home/me/.config/systemd/user";
         dotfiles-out-path = "/home/me/.dotfiles.out";
       } {
-        inherit (nixpkgs) gnupg;
-        pinentry = nixpkgs.pinentry-qt;
+        inherit (nixpkgs-packages) gnupg;
+        pinentry = nixpkgs-packages.pinentry-qt;
       })
-      nixpkgs.pinentry-qt
+      nixpkgs-packages.pinentry-qt
     ];
 
 };
+in
 
 
-# TODO remove legacy
+let # TODO NEW BINDINGS everything should end up here eventually
+  upstreams = {
+    # TODO
+  };
+  ours = {
+    # TODO
+  };
+  bundles = {
+    # TODO
+  };
 in
   upstreams // ours // bundles // legacy
