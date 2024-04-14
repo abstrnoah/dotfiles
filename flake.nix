@@ -20,9 +20,9 @@
 
   inputs.nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
 
-  outputs =
-    inputs@{ ... }:
+  outputs = inputs@{ ... }:
     let
+
       # choose-system ["key" ...] input -> { key = input.key.system; ... }
       choose-system = system: keys: input:
         builtins.mapAttrs
@@ -36,6 +36,7 @@
         "packages"
         "apps"
       ];
+
       # outputs organised by system
       outputs-by-system = inputs.flake-utils.lib.eachDefaultSystem (system:
         let
@@ -52,6 +53,7 @@
           formatter = nix-formatter-pack.lib.mkFormatter
             self.config.nix-formatter-pack-args;
         });
+
       # outputs not organised by system
       outputs-any-system = {
         nixOnDroidConfigurations.default =
@@ -59,5 +61,6 @@
             modules = [ ./nix-on-droid.nix ];
           };
       };
+
     in outputs-by-system // outputs-any-system;
 }
