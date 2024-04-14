@@ -29,13 +29,8 @@
         (key: value: if builtins.elem key keys then value.${system} else value)
         input;
       # keys whose values are sets organised by system
-      keys-by-system = [
-        "config"
-        "nixpkgs-packages"
-        "nixpkgs-unstable-packages"
-        "packages"
-        "apps"
-      ];
+      keys-by-system =
+        [ "config" "our-nixpkgs" "our-nixpkgs-unstable" "packages" "apps" ];
 
       # outputs organised by system
       outputs-by-system = inputs.flake-utils.lib.eachDefaultSystem (system:
@@ -44,9 +39,8 @@
             (_: input: choose-system system keys-by-system input) inputs;
         in with inputs-for-system; {
           config = import ./config.nix { inherit self system; };
-          nixpkgs-packages = self.config.cons-nixpkgs-packages nixpkgs;
-          nixpkgs-unstable-packages =
-            self.config.cons-nixpkgs-packages nixpkgs-unstable;
+          our-nixpkgs = self.config.cons-nixpkgs nixpkgs;
+          our-nixpkgs-unstable = self.config.cons-nixpkgs nixpkgs-unstable;
           packages = import ./default.nix inputs-for-system;
           checks.nix-formatter-pack-check =
             nix-formatter-pack.lib.mkCheck self.config.nix-formatter-pack-args;

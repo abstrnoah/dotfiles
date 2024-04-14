@@ -2,14 +2,14 @@ config@{ self, system }:
 
 {
   # TODO deprecate
-  legacy = import ./lib.nix { nixpkgs = self.nixpkgs-packages; };
+  legacy = import ./lib.nix { nixpkgs = self.our-nixpkgs; };
 
   fold = builtins.foldl';
 
   get-attrs = keys: set: map (key: builtins.getAttr key set) keys;
   get-attrs' = set: keys: self.config.get-attrs keys set;
 
-  cons-nixpkgs-packages =
+  cons-nixpkgs =
     # the nixpkgs flake input
     nixpkgs:
     import nixpkgs {
@@ -32,7 +32,7 @@ config@{ self, system }:
 
   nix-formatter-pack-args = {
     inherit system;
-    pkgs = self.nixpkgs-packages;
+    pkgs = self.our-nixpkgs;
     checkFiles = [ ./. ];
     config.tools.nixfmt.enable = true;
   };

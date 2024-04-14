@@ -1,8 +1,6 @@
 inputs@{ ... }:
 
-let
-  inherit (inputs.self)
-    config packages nixpkgs-packages nixpkgs-unstable-packages;
+let inherit (inputs.self) config packages our-nixpkgs our-nixpkgs-unstable;
 
 in let # TODO LEGACY BINDINGS
   lib = inputs.self.config.legacy; # TODO remove this dependency
@@ -23,9 +21,9 @@ in let # TODO LEGACY BINDINGS
       name = "xrandr-switch-${name}";
       text = ''
         xrandr --output ${
-          nixpkgs-packages.lib.escapeShellArg active
+          our-nixpkgs.lib.escapeShellArg active
         } --auto --primary \
-               --output ${nixpkgs-packages.lib.escapeShellArg inactive} --off \
+               --output ${our-nixpkgs.lib.escapeShellArg inactive} --off \
                --dpi 100
         feh --bg-fill ${wallpapers}/home/me/.wallpaper
       '';
@@ -34,7 +32,7 @@ in let # TODO LEGACY BINDINGS
 in let
 
   upstreams = {
-    inherit (nixpkgs-packages)
+    inherit (our-nixpkgs)
       apache-jena black bup chromium clang coq cowsay curl diffutils dig discord
       dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf gcal
       getconf gimp git gnugrep gnupg gnused hostname htmlq htop hydra-check
@@ -45,35 +43,34 @@ in let
       thunderbird time tmux tmuxinator toilet tor-browser-bundle-bin tree ttdl
       tuptime udiskie ungoogled-chromium uni universal-ctags util-linux visidata
       wmctrl xclip xflux xournalpp xrandr-invert-colors zathura zbar zsh;
-    texlive = nixpkgs-packages.texlive.combined.scheme-small;
-    inherit (nixpkgs-packages.nodePackages) insect;
-    inherit (nixpkgs-packages.python310Packages) grip weasyprint;
-    inherit (nixpkgs-packages.xorg) xbacklight;
-    awk = nixpkgs-packages.gawk;
-    bat = with nixpkgs-packages;
+    texlive = our-nixpkgs.texlive.combined.scheme-small;
+    inherit (our-nixpkgs.nodePackages) insect;
+    inherit (our-nixpkgs.python310Packages) grip weasyprint;
+    inherit (our-nixpkgs.xorg) xbacklight;
+    awk = our-nixpkgs.gawk;
+    bat = with our-nixpkgs;
       bundle "bat" [
         bat
         bat-extras.batdiff
         bat-extras.batman
         bat-extras.batwatch
       ];
-    zip = with nixpkgs-packages; bundle "zip" [ zip unzip ];
-    ocaml = with nixpkgs-packages;
+    zip = with our-nixpkgs; bundle "zip" [ zip unzip ];
+    ocaml = with our-nixpkgs;
       bundle "ocaml" [ ocaml ocamlformat ocamlPackages.utop ];
-    ssh = nixpkgs-packages.openssh;
-    zoom = nixpkgs-packages.zoom-us;
-    i3wm = nixpkgs-packages.i3-rounded;
-    pinentry = nixpkgs-packages.pinentry-qt;
-    vim = nixpkgs-packages.vimHugeX;
+    ssh = our-nixpkgs.openssh;
+    zoom = our-nixpkgs.zoom-us;
+    i3wm = our-nixpkgs.i3-rounded;
+    pinentry = our-nixpkgs.pinentry-qt;
+    vim = our-nixpkgs.vimHugeX;
 
     # TODO Move unstable packages to stable as soon as possible.
-    inherit (nixpkgs-unstable-packages)
+    inherit (our-nixpkgs-unstable)
       jabref # Awaiting OpenJDK update.
       # TODO mononoki document fc riffraff
       mononoki # Awaiting version bump to fix recognition issue.
     ;
-    telegram =
-      nixpkgs-unstable-packages.telegram-desktop; # TODO why on unstable?
+    telegram = our-nixpkgs-unstable.telegram-desktop; # TODO why on unstable?
 
     inherit (inputs.nixphile.packages) nixphile;
 
@@ -93,14 +90,11 @@ in let
 
     # TODO probably should achieve this elsehow
     nix_env_exports = let
-      locale_archive =
-        "${nixpkgs-packages.glibcLocales}/lib/locale/locale-archive";
-    in nixpkgs-packages.writeTextFile rec {
+      locale_archive = "${our-nixpkgs.glibcLocales}/lib/locale/locale-archive";
+    in our-nixpkgs.writeTextFile rec {
       name = "nix_env_exports";
       text = ''
-        export ${
-          nixpkgs-packages.lib.toShellVar "LOCALE_ARCHIVE" locale_archive
-        }
+        export ${our-nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
       '';
       destination = "/lib/${name}";
     };
@@ -117,7 +111,7 @@ in let
       (mk_src "tmux" { })
     ];
 
-    vim-plug = store_text "${nixpkgs-packages.vimPlugins.vim-plug}/plug.vim"
+    vim-plug = store_text "${our-nixpkgs.vimPlugins.vim-plug}/plug.vim"
       "/home/me/.vim/autoload/plug.vim";
 
     # TODO mutable spellfile
@@ -141,8 +135,7 @@ in let
     qutebrowser = bundle "qutebrowser" [
       (upstreams.qutebrowser.overrideAttrs (prev: {
         preFixup = let
-          alsaPluginDir =
-            (nixpkgs-packages.lib.getLib nixpkgs-packages.alsa-plugins)
+          alsaPluginDir = (our-nixpkgs.lib.getLib our-nixpkgs.alsa-plugins)
             + "/lib/alsa-lib";
           # I don't know much about the following workarounds and don't care to
           # learn because graphics suck. Unfortunately, the third workaround
@@ -181,7 +174,7 @@ in let
     # FIXME video issue
     zoom = upstreams.zoom.overrideAttrs (prev: {
       nativeBuildInputs = (prev.nativeBuildInputs or [ ])
-        ++ [ nixpkgs-packages.makeWrapper ];
+        ++ [ our-nixpkgs.makeWrapper ];
       postFixup = prev.postFixup + ''
         wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
       '';
@@ -198,7 +191,7 @@ in let
 
     i3wm = bundle "i3wm" [ upstreams.i3wm (mk_src "i3wm" { }) ];
 
-    xsession = nixpkgs-packages.writeTextFile {
+    xsession = our-nixpkgs.writeTextFile {
       name = "xsession";
       text = ''
         exec "${packages.i3wm}/bin/i3"
@@ -238,7 +231,7 @@ in let
     #   nix/systemd workflow
     battery_hook_setup = with (import ./src/battery_hook) {
       inherit (config) username;
-      nixpkgs = nixpkgs-packages;
+      nixpkgs = our-nixpkgs;
       battery_device = "BAT0";
       hibernate_command = "systemctl hibernate";
       # TODO We want the following, but it requires i3wm-helper-system be
@@ -252,9 +245,9 @@ in let
         systemctl start "$(basename ${service})"
       '';
 
-    captive-browser = (import ./src/captive-browser) {
+    captive-browser = import ./src/captive-browser {
       inherit bundle;
-      nixpkgs = nixpkgs-packages;
+      nixpkgs = our-nixpkgs;
     };
 
     termux.nixphile_hook_pre = lib.write_script {
@@ -267,9 +260,9 @@ in let
       '';
     };
 
-    gnupg = (import ./src/gnupg) {
+    gnupg = import ./src/gnupg {
       inherit bundle;
-      inherit (nixpkgs-packages) writeTextFile;
+      inherit (our-nixpkgs) writeTextFile;
       systemd-user-units-path = "/home/me/.config/systemd/user";
       dotfiles-out-path = "/home/me/.dotfiles.out";
     } {
@@ -402,7 +395,7 @@ in let
       bundle "wm_env" [
         gui_env
         i3wm
-        # nixpkgs-packages.i3lock # TODO due to PAM perm issue nix version fails
+        # our-nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
         i3status
         xsession
         jq
