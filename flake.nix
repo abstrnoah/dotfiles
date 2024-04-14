@@ -21,7 +21,6 @@
   inputs.nix-formatter-pack.url = "github:Gerschtli/nix-formatter-pack";
 
   outputs =
-    # `...` to avoid shielding `with inputs-for-system` below
     inputs@{ ... }:
     let
       # choose-system ["key" ...] input -> { key = input.key.system; ... }

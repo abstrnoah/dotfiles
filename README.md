@@ -120,6 +120,8 @@ bundle = "name": [<derivations>]: <derivation>
 * [ ] more flake-zen way of loading nixpkgs with system and config than
       `import`?
 * [ ] names replace `_` with `-`
+* [ ] consider making `bundle` take an attrset instead of a list; then language
+      constructs like `inherit` could be used instead of pesky `with`s
 
 ---
 

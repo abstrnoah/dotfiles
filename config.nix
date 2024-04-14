@@ -1,10 +1,13 @@
-config@{ self, system, }:
+config@{ self, system }:
 
 {
   # TODO deprecate
   legacy = import ./lib.nix { nixpkgs = self.nixpkgs-packages; };
 
   fold = builtins.foldl';
+
+  get-attrs = keys: set: map (key: builtins.getAttr key set) keys;
+  get-attrs' = set: keys: self.config.get-attrs keys set;
 
   cons-nixpkgs-packages =
     # the nixpkgs flake input

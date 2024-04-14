@@ -1,16 +1,11 @@
-inputs@{
-  self,
-  nixphile,
-  wallpapers,
-  ...
-}:
+inputs@{ ... }:
 
 let
-  inherit (self) config packages nixpkgs-packages nixpkgs-unstable-packages;
+  inherit (inputs.self) config packages nixpkgs-packages nixpkgs-unstable-packages;
 in
 
 let # TODO LEGACY BINDINGS
-    lib = self.config.legacy; # TODO remove this dependency
+    lib = inputs.self.config.legacy; # TODO remove this dependency
   inherit (lib)
     store_text bundle make_source make_nixphile_hook_pre;
   src_path = ./src;
@@ -34,62 +29,72 @@ let # TODO LEGACY BINDINGS
         feh --bg-fill ${wallpapers}/home/me/.wallpaper
       '';
     };
+in
 
-legacy =
-rec {
+let
+  upstreams = {
 
-  nixphile = inputs.nixphile.packages.default;
+  inherit (nixpkgs-packages)
+    apache-jena black bup chromium clang coq cowsay curl diffutils dig discord
+    dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf gcal
+    getconf gimp git gnugrep gnupg gnused hostname htmlq htop hydra-check
+    i3status imagemagick img2pdf jdk jq libnotify libreoffice maildrop man mpv
+    mutt netcat-openbsd nettools nodejs pandoc par pdfgrep pdftk pfetch procps
+    pulseaudio qutebrowser ranger rargs rlwrap rofi sd signal-desktop
+    silver-searcher sl slack spotify spotify-cli-linux stow tectonic textql
+    thunderbird time tmux tmuxinator toilet tor-browser-bundle-bin tree ttdl
+    tuptime udiskie ungoogled-chromium uni universal-ctags util-linux visidata
+    wmctrl xclip xflux xournalpp xrandr-invert-colors zathura zbar zsh
+  ;
+  texlive = nixpkgs-packages.texlive.combined.scheme-small;
+  inherit (nixpkgs-packages.nodePackages) insect;
+  inherit (nixpkgs-packages.python310Packages) grip weasyprint;
+  inherit (nixpkgs-packages.xorg) xbacklight;
+  awk = nixpkgs-packages.gawk;
+  bat = with nixpkgs-packages; bundle "bat" [
+    bat
+    bat-extras.batdiff
+    bat-extras.batman
+    bat-extras.batwatch
+  ];
+  zip = with nixpkgs-packages; bundle "zip" [ zip unzip ];
+  ocaml = with nixpkgs-packages; bundle "ocaml" [
+    ocaml
+    ocamlformat
+    ocamlPackages.utop
+  ];
+  ssh = nixpkgs-packages.openssh;
+  zoom = nixpkgs-packages.zoom-us;
+  i3wm = nixpkgs-packages.i3-rounded;
+  pinentry = nixpkgs-packages.pinentry-qt;
+  vim = nixpkgs-packages.vimHugeX;
+
+
 
   # TODO Move unstable packages to stable as soon as possible.
   inherit (nixpkgs-unstable-packages)
     jabref # Awaiting OpenJDK update.
+    # TODO mononoki document fc riffraff
     mononoki # Awaiting version bump to fix recognition issue.
   ;
+  telegram = nixpkgs-unstable-packages.telegram-desktop; # TODO why on unstable?
 
-  inherit (nixpkgs-packages)
-    apache-jena black bup chromium ungoogled-chromium clang coq cowsay diffutils
-    dig discord dnstracer dos2unix exiftool fd rargs sd feh fetchmail findutils
-    fzf gimp gcal getconf gnugrep gnused hostname htmlq htop i3status
-    imagemagick img2pdf jdk jq libnotify libreoffice maildrop man mpv mutt fdm
-    netcat-openbsd nettools nodejs pandoc par pdfgrep pdftk pfetch procps ranger
-    rlwrap signal-desktop silver-searcher sl slack spotify-cli-linux stow
-    tectonic textql time toilet tor-browser-bundle-bin tree tuptime uni
-    universal-ctags util-linux wmctrl xclip xournalpp xrandr-invert-colors
-    thunderbird hydra-check zbar
-    # minecraft # broken https://github.com/NixOS/nixpkgs/issues/179323
-  ;
+  inherit (inputs.nixphile.packages) nixphile;
+  };
+  ours =
+    {
 
-  texlive = nixpkgs-packages.texlive.combined.scheme-small;
-
-  inherit (nixpkgs-packages.nodePackages) insect;
-  inherit (nixpkgs-packages.python310Packages) grip weasyprint;
-
-  ttdl = bundle "ttdl" [ nixpkgs-packages.ttdl (mk_src "ttdl" { }) ];
-
-  awk = nixpkgs-packages.gawk;
-
-  telegram = nixpkgs-unstable-packages.telegram-desktop;
-
-  xorg-xbacklight = nixpkgs-packages.xorg.xbacklight;
-
-  bat = bundle "bat" [
-    nixpkgs-packages.bat
-    nixpkgs-packages.bat-extras.batdiff
-    nixpkgs-packages.bat-extras.batman
-    nixpkgs-packages.bat-extras.batwatch
-  ];
+  ttdl = bundle "ttdl" [ upstreams.ttdl (mk_src "ttdl" { }) ];
 
   bluetooth = bundle "bluetooth" [ (mk_src "bluetooth" { }) ];
 
-  curl = bundle "curl" [ nixpkgs-packages.curl (mk_src "curl" { }) ];
+  curl = bundle "curl" [ upstreams.curl (mk_src "curl" { }) ];
 
-  git = bundle "git" [ nixpkgs-packages.git (mk_src "git" { }) ];
+  git = bundle "git" [ upstreams.git (mk_src "git" { }) ];
 
-  udiskie = bundle "udiskie" [ nixpkgs-packages.udiskie (mk_src "udiskie" { }) ];
+  udiskie = bundle "udiskie" [ upstreams.udiskie (mk_src "udiskie" { }) ];
 
-  minecraft = nixpkgs-packages.prismlauncher;
-
-  # TODO probably better to achive this with substituteAll instead
+  # TODO probably should achieve this elsehow
   nix_env_exports =
     let locale_archive = "${nixpkgs-packages.glibcLocales}/lib/locale/locale-archive";
     in nixpkgs-packages.writeTextFile rec {
@@ -101,29 +106,27 @@ rec {
     };
 
   tmuxinator =
-    bundle "tmuxinator" [ nixpkgs-packages.tmuxinator (mk_src "tmuxinator" { }) ];
+    bundle "tmuxinator" [ upstreams.tmuxinator (mk_src "tmuxinator" { }) ];
 
   tmux = bundle "tmux" [
-    fzf
-    gcal
-    nixpkgs-packages.tmux
+    packages.fzf
+    packages.gcal
+    packages.tmuxinator
+    packages.zsh # TODO rm this dep, it should really point the other direction
+    upstreams.tmux
     (mk_src "tmux" { })
-    tmuxinator
-    zsh # TODO rm this dep
   ];
-
-  zip = bundle "zip" [ nixpkgs-packages.zip nixpkgs-packages.unzip ];
 
   vim-plug = store_text "${nixpkgs-packages.vimPlugins.vim-plug}/plug.vim"
     "/home/me/.vim/autoload/plug.vim";
 
   # TODO mutable spellfile
   vim = bundle "vim" [
-    curl
-    fzf
-    nixpkgs-packages.vimHugeX
+    packages.curl
+    packages.fzf
+    packages.vim-plug
+    upstreams.vim
     (mk_src "vim" { excludes = [ "/home/me/.vim/spell/en.utf-8.add" ]; })
-    vim-plug
     (make_nixphile_hook_pre ''
       mkdir -p "$HOME/.vim/spell"
       test -h "$HOME/.vim/spell/en.utf-8.add" \
@@ -133,16 +136,10 @@ rec {
     '')
   ];
 
-  visidata = bundle "visidata" [ nixpkgs-packages.visidata (mk_src "visidata" { }) ];
-
-  ocaml = bundle "ocaml" [
-    nixpkgs-packages.ocaml
-    nixpkgs-packages.ocamlformat
-    nixpkgs-packages.ocamlPackages.utop
-  ];
+  visidata = bundle "visidata" [ upstreams.visidata (mk_src "visidata" { }) ];
 
   qutebrowser = bundle "qutebrowser" [
-    (nixpkgs-packages.qutebrowser.overrideAttrs (prev: {
+    (upstreams.qutebrowser.overrideAttrs (prev: {
       preFixup = let
         alsaPluginDir = (nixpkgs-packages.lib.getLib nixpkgs-packages.alsa-plugins)
           + "/lib/alsa-lib";
@@ -169,16 +166,18 @@ rec {
     '')
   ];
 
-  rofi = bundle "rofi" [ nixpkgs-packages.rofi (mk_src "rofi" { }) ];
+  rofi = bundle "rofi" [ upstreams.rofi (mk_src "rofi" { }) ];
 
-  spotify = bundle "spotify" [ nixpkgs-packages.spotify spotify-cli-linux ];
+  xflux = bundle "xflux"
+  [ packages.curl
+  packages.jq
+  upstreams.xflux
+  (mk_src "xflux" { }) ];
 
-  xflux = bundle "xflux" [ curl jq nixpkgs-packages.xflux (mk_src "xflux" { }) ];
-
-  zathura = bundle "zathura" [ nixpkgs-packages.zathura (mk_src "zathura" { }) ];
+  zathura = bundle "zathura" [ upstreams.zathura (mk_src "zathura" { }) ];
 
   # FIXME video issue
-  zoom = nixpkgs-packages.zoom-us.overrideAttrs (prev: {
+  zoom = upstreams.zoom.overrideAttrs (prev: {
     nativeBuildInputs = (prev.nativeBuildInputs or [ ])
       ++ [ nixpkgs-packages.makeWrapper ];
     postFixup = prev.postFixup + ''
@@ -187,14 +186,15 @@ rec {
   });
 
   zsh =
-    bundle "zsh" [ bat fd fzf nix_env_exports nixpkgs-packages.zsh (mk_src "zsh" { }) ];
+    bundle "zsh" [ packages.bat packages.fd packages.fzf
+    packages.nix_env_exports upstreams.zsh (mk_src "zsh" { }) ];
 
-  i3wm = bundle "i3wm" [ nixpkgs-packages.i3-rounded (mk_src "i3wm" { }) ];
+  i3wm = bundle "i3wm" [ upstreams.i3wm (mk_src "i3wm" { }) ];
 
   xsession = nixpkgs-packages.writeTextFile {
     name = "xsession";
     text = ''
-      exec "${i3wm}/bin/i3"
+      exec "${packages.i3wm}/bin/i3"
     '';
     destination = "/home/me/.xsession";
   };
@@ -208,19 +208,17 @@ rec {
   # bundle bc mk_src returns path not derivation
   passmenu = bundle "passmenu" [ (mk_src "pass" { }) ];
 
-  dunst = bundle "dunst" [ nixpkgs-packages.dunst (mk_src "dunst" { }) ];
+  dunst = bundle "dunst" [ upstreams.dunst (mk_src "dunst" { }) ];
 
   # TODO do we really want nix's pulse??
   pulseaudio = bundle "pulseaudio" [
-    nixpkgs-packages.pulseaudio
+    upstreams.pulseaudio
     (mk_src "pulseaudio" { })
     (make_nixphile_hook_pre ''
       mkdir -p "$HOME/.config/pulse"
       touch "$HOME/.config/pulse/.keep"
     '')
   ];
-
-  ssh = nixpkgs-packages.openssh;
 
   # TODO this is so hacky it's painful but no time
   # - should lock before hibernating
@@ -249,7 +247,33 @@ rec {
   captive-browser = (import ./src/captive-browser) { inherit bundle; nixpkgs =
     nixpkgs-packages; };
 
-  core_env = bundle "core_env" [
+  termux.nixphile_hook_pre = lib.write_script {
+    name = "setup-termux";
+    text = ''
+      mkdir -p ~/.termux
+      cp "${env_src_path}"/termux/home/me/.termux/* ~/.termux
+      cp "${packages.mononoki}/share/fonts/mononoki/mononoki-Regular.ttf" \
+          ~/.termux/font.ttf
+    '';
+  };
+
+
+  gnupg = (import ./src/gnupg) {
+        inherit bundle;
+        inherit (nixpkgs-packages) writeTextFile;
+        systemd-user-units-path = "/home/me/.config/systemd/user";
+        dotfiles-out-path = "/home/me/.dotfiles.out";
+      } {
+        inherit (upstreams) gnupg;
+        inherit (packages) pinentry;
+      };
+
+  spotify = bundle "spotify" [ upstreams.spotify packages.spotify-cli-linux ];
+  };
+  bundles = {
+
+
+  core_env = with packages; bundle "core_env" [
     (make_nixphile_hook_pre ''
       test -d "$HOME/.dotfiles" \
       || git clone -o github \
@@ -302,7 +326,7 @@ rec {
     par
   ];
 
-  default = bundle "default" [
+  default = with packages; bundle "default" [
     core_env
     black
     bup
@@ -323,25 +347,16 @@ rec {
     ttdl
   ];
 
-  termux.nixphile_hook_pre = lib.write_script {
-    name = "setup-termux";
-    text = ''
-      mkdir -p ~/.termux
-      cp "${env_src_path}"/termux/home/me/.termux/* ~/.termux
-      cp "${mononoki}/share/fonts/mononoki/mononoki-Regular.ttf" \
-          ~/.termux/font.ttf
-    '';
-  };
 
-  nix-on-droid = bundle "nix-on-droid" [
+  nix-on-droid = with packages; bundle "nix-on-droid" [
     core_env
     termux
-    nixpkgs-packages.coreutils
+    coreutils
     ssh
-    nixpkgs-packages.procps
+    procps
   ];
 
-  extras = bundle "extras" [
+  extras = with packages; bundle "extras" [
     insect # Requires x86_64-linux.
     uni
     texlive
@@ -352,9 +367,7 @@ rec {
     zbar
   ];
 
-  email = bundle "email" [ thunderbird ];
-
-  gui_env = bundle "gui_env" [
+  gui_env = with packages; bundle "gui_env" [
     captive-browser
     default
     grip
@@ -377,7 +390,7 @@ rec {
   ];
 
   # TODO relies on systemd... how to deal with this on non-systemd distros?
-  wm_env = bundle "wm_env" [
+  wm_env = with packages; bundle "wm_env" [
     gui_env
     i3wm
     # nixpkgs-packages.i3lock # TODO due to PAM perm issue nix version fails
@@ -391,49 +404,20 @@ rec {
     spotify-cli-linux
     xflux
     xrandr-invert-colors
-    xorg-xbacklight
+    xbacklight
     feh
     passmenu
     zoom
   ];
 
-  coyote = bundle "coyote" [
-    email
+  coyote = with packages; bundle "coyote" [
     extras
     wm_env
     (xrandr-switch-output "builtin" "LVDS1" "VGA1" wallpapers)
     (xrandr-switch-output "external" "VGA1" "LVDS1" wallpapers)
-    mononoki # TODO document fc riffraff
+    mononoki
     gnupg # TODO
   ];
-
-  gnupg = bundle "gnupg" # TODO
-    [
-      ((import ./src/gnupg) {
-        inherit bundle;
-        inherit (nixpkgs-packages) writeTextFile;
-        systemd-user-units-path = "/home/me/.config/systemd/user";
-        dotfiles-out-path = "/home/me/.dotfiles.out";
-      } {
-        inherit (nixpkgs-packages) gnupg;
-        pinentry = nixpkgs-packages.pinentry-qt;
-      })
-      nixpkgs-packages.pinentry-qt
-    ];
-
-};
-in
-
-
-let # TODO NEW BINDINGS everything should end up here eventually
-  upstreams = {
-    # TODO
-  };
-  ours = {
-    # TODO
-  };
-  bundles = {
-    # TODO
   };
 in
-  upstreams // ours // bundles // legacy
+  upstreams // ours // bundles

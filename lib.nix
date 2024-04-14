@@ -135,6 +135,8 @@ rec {
   # - Handle circular dependencies.
   # - When bundling packages with common hooks, deduplicate.
   # - Handle ordering?
+  # TODO Consider separating into a separate flake output entirely, rather that
+  # putting inside the associateed packages
   make_nixphile_hook_pre = text: {
     nixphile_hook_pre = write_script {
       name = "nixphile_hook_pre";
