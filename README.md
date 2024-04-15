@@ -68,60 +68,70 @@ time.
 # Nix flake design
 
 Here we describe an intended new flake design to replace the currently messy
-situation. This message will be removed once the design is actually implemented.
+situation. This message will be removed once the design is actually implemented
+(TODO).
 
 The flake is intended to produce packages that can be deployed via [nixphile].
 
-Top-level packages are defined in `default.nix`, which contains the
-following sections:
-* Package bundles, such as per-machine package sets.
-* Imports from [nixpkgs] and other inputs.
-* Custom package definitions, usually wrapping or bundling imported packages.
-  Some are constructed via package constructors of the following form.
+The flake produces the following outputs (see `flake.nix`):
+* `config.${system}` - All configuration and utility functions. These are
+  opinionated because they are specific to my dotfiles. Eventually I might
+  factor out some utilities into a separate library. But for now this output
+  should not be considered a usable library.
+* `our-nixpkgs{,-unstable}.${system}` - Instances of `nixpkgs` with my custom
+  configuration; see `config.${system}.cons-nixpkgs` for details.
+* `packages.${system}` - The main package set. These are all my packages, many
+  of them configured for my system with limited testing and probably unsuitable
+  for anybody other than me. But who knows maybe you'll find a gem amid the
+  muck. The set includes a number of "bundles" which are usually the things that
+  actually get deployed; e.g. I have a `packages.${system}.coyote` which is
+  deployed to my machine named `coyote`.
+* `...` - The flake contains several additional fellows, but the ones above are
+  the main characters.
 
+The `packages` output is constructed in `default.nix` as the merger
+```nix
+upstreams // ours // bundles
 ```
-<package> = config@{...}: package@{...}: <derivation>
+The set `upstreams` collects every upstream dependency. If, for example, you
+need to move an upstream package from `nixpkgs-unstable` to `nixpkgs`, then you
+would do so in `upstreams`. Some are overridden within `ours`. Finally, within
+`bundles`, packages are bundled into top-level environments via the function
+`config.${system}.bundle`.
+
+Note that every input passed to `default.nix` has been passed through the
+function `choose-system` defined in `flake.nix` which, for the given `system`,
+transforms a flake input `{ packages.${system} = <packages>; ... }` into `{
+packages = <packages>; ... }`. Thus, `system` is already selected by the time we
+get to `default.nix`.
+
+In general, packages in `ours` are formed via constructors of the form
 ```
-
-Top-level packages are then `bundle`d together via [nixpkgs]'
-`buildEnv`.
-
-Reserved names:
-* `config` - A set containing configuration data. In particular, values are
-  _not_ derivations; instead, they are paths, strings, etc.
-* `config.lib` - Utilities that I want to expose to clients of the flake via
-  `this-repository.lib`.
-* `packages` - A set containing packages, i.e. values are bona fide
-  _derivations_. (The _only_ time `packages` is separated by system is at the
-  top of the flake, where we delegate to [flake-utils].)
-
-In general, attribute keys should use global names. That is, both package
-constructors and the top-level flake should use the same namespace for `config`
-and `packages` attribute keys. The `name` field of objects is generally ignored;
-rather, things are addressed by attribute key.
-
-In contrast to previous versions, we defer utilities to [nixpkgs]' library and
-[flake-utils] as much as possible. In particular, we rely on [flake-utils] to
-handle the per-system output riffraff. And we try to _always_ use [nixpkgs]'
-library of builders (if at the expense of some boilerplate). An exception is the
-function `bundle`, which current `buildEnv` but maybe should be written from
-scratch for better robustness and stability under leaf changes.
-
+<package> = config@{...}: packages@{...}: <derivation>
 ```
-bundle = "name": [<derivations>]: <derivation>
-```
+where `config` and `packages` are inherited from the top level.
+
+
+## ROADMAP
+
+* [ ] Begin overhaul `bundle`.
+* [ ] Overhaul `mk_src` packages.
+* [ ] Deal with nixphile hooks.
+* [ ] Move any non-trivial packages into a constructor in a separate file.
+* [ ] Streamline calling package constructors from within `default.nix`.
+* [ ] Revisit `bundle` and other legacy library utils.
 
 # TODO
 
 * [ ] xclip? non-x-reliant clipboard manager?
 * [ ] speedup, namely rewrite `bundle` and reduce core_env
-* [ ] nixphile hooks
 * [ ] refactor inputs follow nixpkgs
 * [ ] more flake-zen way of loading nixpkgs with system and config than
       `import`?
 * [ ] names replace `_` with `-`
-* [ ] consider making `bundle` take an attrset instead of a list; then language
-      constructs like `inherit` could be used instead of pesky `with`s
+* [ ] bundle together all my common inputs like `flake-utils` and commonly-used
+      system-agnostic `nixpkgs` utilities into a separate flake.
+* [ ] make deploy to non-nix system actually work
 
 ---
 
