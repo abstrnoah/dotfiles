@@ -272,6 +272,7 @@ in let
       };
     };
 
+    # TODO fetch script directly from github
     passmenu = config.store-dotfiles "pass";
 
     dunst = config.bundle {
