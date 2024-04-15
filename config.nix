@@ -14,17 +14,18 @@ config@{ self, system, brumal-names }:
 
   is-bundled = self.config.has-constructor-id brumal-names.bundle;
 
-  bundle-get-packages = b:
+  bundle-get-package-list = b:
     assert self.config.is-bundled b;
-    b.${brumal-names.preimage}.packages;
+    builtins.attrValues b.${brumal-names.preimage}.packages;
 
+  # flatten-bundles :: [ Package | Bundle ] -> [ Package ]
+  # We operate on lists rather than sets to avoid overriding packages.
   flatten-bundles = ps:
-    self.our-nixpkgs.lib.concatMapAttrs (name: value:
-      if self.config.is-bundled value then
-        self.config.flatten-bundles (self.config.bundle-get-packages value)
-      else {
-        ${name} = value;
-      }) ps;
+    builtins.concatMap (p:
+      if self.config.is-bundled p then
+        self.config.flatten-bundles (self.config.bundle-get-package-list p)
+      else
+        [ p ]) ps;
 
   cons-function = id: f:
     let
@@ -41,10 +42,11 @@ config@{ self, system, brumal-names }:
 
   bundle = self.config.cons-function brumal-names.bundle
     ({ name, packages, args ? { } }:
-      let packages' = self.config.flatten-bundles packages;
+      let
+        packages' = self.config.flatten-bundles (builtins.attrValues packages);
       in self.our-nixpkgs.buildEnv ({
         inherit name;
-        paths = builtins.attrValues packages';
+        paths = packages';
         extraOutputsToInstall = [ "man" "doc" ];
       } // args));
 
