@@ -23,6 +23,20 @@
   outputs = inputs@{ ... }:
     let
 
+      # brumal-names - An RDF-style namespace for attribute keys which will
+      # eventually (TODO) be moved into a separate flake.
+      brumal-names = inputs.nixpkgs.lib.getAttrs [
+        # The argument that was passed to "constructor" to yield the object.
+        "preimage"
+        # The function which was applied to "preimage" to yield the object.
+        "constructor"
+        # The object's IRI, i.e. globally unique identifier.
+        # We need this in order to equality-check things like functions.
+        "id"
+        # The IRI of the bundle function provided by this flake.
+        "bundle"
+      ] (n: "http://names.brumal.net/nix#${n}");
+
       # choose-system ["key" ...] input -> { key = input.key.system; ... }
       choose-system = system: keys: input:
         builtins.mapAttrs
@@ -38,10 +52,11 @@
           inputs-for-system = builtins.mapAttrs
             (_: input: choose-system system keys-by-system input) inputs;
         in with inputs-for-system; {
-          config = import ./config.nix { inherit self system; };
+          config = import ./config.nix { inherit self system brumal-names; };
           our-nixpkgs = self.config.cons-nixpkgs nixpkgs;
           our-nixpkgs-unstable = self.config.cons-nixpkgs nixpkgs-unstable;
-          packages = import ./default.nix inputs-for-system;
+          packages = import ./default.nix
+            (inputs-for-system // { inherit brumal-names; });
           checks.nix-formatter-pack-check =
             nix-formatter-pack.lib.mkCheck self.config.nix-formatter-pack-args;
           formatter = nix-formatter-pack.lib.mkFormatter
