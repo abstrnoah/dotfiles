@@ -14,7 +14,7 @@ config@{ self, system, brumal-names }:
 
   is-bundled = self.config.has-constructor-id brumal-names.bundle;
 
-  bundle-get-package-list = b:
+  bundle-list-packages = b:
     assert self.config.is-bundled b;
     builtins.attrValues b.${brumal-names.preimage}.packages;
 
@@ -23,7 +23,7 @@ config@{ self, system, brumal-names }:
   flatten-bundles = ps:
     builtins.concatMap (p:
       if self.config.is-bundled p then
-        self.config.flatten-bundles (self.config.bundle-get-package-list p)
+        self.config.flatten-bundles (self.config.bundle-list-packages p)
       else
         [ p ]) ps;
 
