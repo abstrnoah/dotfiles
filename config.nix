@@ -10,7 +10,7 @@ config@{ self, system, brumal-names }:
   get-attrs' = set: keys: self.config.get-attrs keys set;
 
   has-constructor-id = id: x:
-    x.${brumal-names.constructor}.${brumal-names.id} == id;
+    x.${brumal-names.constructor}.${brumal-names.id} or null == id;
 
   is-bundled = self.config.has-constructor-id brumal-names.bundle;
 
@@ -28,7 +28,7 @@ config@{ self, system, brumal-names }:
 
   cons-function = id: f:
     let
-      __functor = x:
+      __functor = _: x:
         (f x) // {
           ${brumal-names.preimage} = x;
           ${brumal-names.constructor} = cons;
@@ -40,7 +40,7 @@ config@{ self, system, brumal-names }:
     in cons;
 
   bundle = self.config.cons-function brumal-names.bundle
-    ({ name, packages, args, }:
+    ({ name, packages, args ? { } }:
       let packages' = self.config.flatten-bundles packages;
       in self.our-nixpkgs.buildEnv ({
         inherit name;

@@ -4,7 +4,7 @@ let inherit (inputs.self) config packages our-nixpkgs our-nixpkgs-unstable;
 
 in let # TODO LEGACY BINDINGS
   lib = inputs.self.config.legacy; # TODO remove this dependency
-  inherit (lib) store_text bundle make_source make_nixphile_hook_pre;
+  inherit (lib) store_text make_source make_nixphile_hook_pre;
   src_path = ./src;
   env_src_path = "$HOME/.dotfiles/src";
   mk_src = name:
@@ -48,16 +48,24 @@ in let
     inherit (our-nixpkgs.python310Packages) grip weasyprint;
     inherit (our-nixpkgs.xorg) xbacklight;
     awk = our-nixpkgs.gawk;
-    bat = with our-nixpkgs;
-      bundle "bat" [
-        bat
-        bat-extras.batdiff
-        bat-extras.batman
-        bat-extras.batwatch
-      ];
-    zip = with our-nixpkgs; bundle "zip" [ zip unzip ];
-    ocaml = with our-nixpkgs;
-      bundle "ocaml" [ ocaml ocamlformat ocamlPackages.utop ];
+    bat = config.bundle {
+      name = "bat";
+      packages = {
+        inherit (our-nixpkgs) bat;
+        inherit (our-nixpkgs.bat-extras) batdiff batman batwatch;
+      };
+    };
+    zip = config.bundle {
+      name = "zip";
+      packages = { inherit (our-nixpkgs) zip unzip; };
+    };
+    ocaml = config.bundle {
+      name = "ocaml";
+      packages = {
+        inherit (our-nixpkgs) ocaml ocamlformat;
+        inherit (our-nixpkgs.ocamlPackages) utop;
+      };
+    };
     ssh = our-nixpkgs.openssh;
     zoom = our-nixpkgs.zoom-us;
     i3wm = our-nixpkgs.i3-rounded;
@@ -78,15 +86,39 @@ in let
 
   ours = {
 
-    ttdl = bundle "ttdl" [ upstreams.ttdl (mk_src "ttdl" { }) ];
+    ttdl = config.bundle {
+      name = "ttdl";
+      packages = {
+        inherit (upstreams) ttdl;
+        ttdl-rc = mk_src "ttdl" { };
+      };
+    };
 
-    bluetooth = bundle "bluetooth" [ (mk_src "bluetooth" { }) ];
+    bluetooth = mk_src "bluetooth" { };
 
-    curl = bundle "curl" [ upstreams.curl (mk_src "curl" { }) ];
+    curl = config.bundle {
+      name = "curl";
+      packages = {
+        inherit (upstreams) curl;
+        curl-rc = mk_src "curl" { };
+      };
+    };
 
-    git = bundle "git" [ upstreams.git (mk_src "git" { }) ];
+    git = config.bundle {
+      name = "git";
+      packages = {
+        inherit (upstreams) git;
+        git-rc = mk_src "git" { };
+      };
+    };
 
-    udiskie = bundle "udiskie" [ upstreams.udiskie (mk_src "udiskie" { }) ];
+    udiskie = config.bundle {
+      name = "udiskie";
+      packages = {
+        inherit (upstreams) udiskie;
+        udiskie-rc = mk_src "udiskie" { };
+      };
+    };
 
     # TODO probably should achieve this elsehow
     nix_env_exports = let
@@ -99,77 +131,110 @@ in let
       destination = "/lib/${name}";
     };
 
-    tmuxinator =
-      bundle "tmuxinator" [ upstreams.tmuxinator (mk_src "tmuxinator" { }) ];
+    tmuxinator = config.bundle {
+      name = "tmuxinator";
+      packages = {
+        inherit (upstreams) tmuxinator;
+        tmuxinator-rc = mk_src "tmuxinator" { };
+      };
+    };
 
-    tmux = bundle "tmux" [
-      packages.fzf
-      packages.gcal
-      packages.tmuxinator
-      packages.zsh # TODO rm this dep, it should really point the other direction
-      upstreams.tmux
-      (mk_src "tmux" { })
-    ];
+    tmux = config.bundle {
+      name = "tmux";
+      packages = {
+        inherit (packages)
+          fzf gcal tmuxinator
+          zsh # TODO rm this dep, it should really point the other direction
+        ;
+        inherit (upstreams) tmux;
+        tmux-rc = mk_src "tmux" { };
+      };
+    };
 
     vim-plug = store_text "${our-nixpkgs.vimPlugins.vim-plug}/plug.vim"
       "/home/me/.vim/autoload/plug.vim";
 
     # TODO mutable spellfile
-    vim = bundle "vim" [
-      packages.curl
-      packages.fzf
-      packages.vim-plug
-      upstreams.vim
-      (mk_src "vim" { excludes = [ "/home/me/.vim/spell/en.utf-8.add" ]; })
-      (make_nixphile_hook_pre ''
-        mkdir -p "$HOME/.vim/spell"
-        test -h "$HOME/.vim/spell/en.utf-8.add" \
-        || ln -Ts \
+    vim = config.bundle {
+      name = "vim";
+      packages = {
+        inherit (packages) curl fzf vim-plug;
+        inherit (upstreams) vim;
+        vim-rc =
+          mk_src "vim" { excludes = [ "/home/me/.vim/spell/en.utf-8.add" ]; };
+        vim-nixphile-hook = (make_nixphile_hook_pre ''
+          mkdir -p "$HOME/.vim/spell"
+          test -h "$HOME/.vim/spell/en.utf-8.add" \
+          || ln -Ts \
           "${env_src_path}/vim/home/me/.vim/spell/en.utf-8.add" \
           "$HOME/.vim/spell/en.utf-8.add"
-      '')
-    ];
+        '');
+      };
+    };
 
-    visidata = bundle "visidata" [ upstreams.visidata (mk_src "visidata" { }) ];
+    visidata = config.bundle {
+      name = "visidata";
+      packages = {
+        inherit (upstreams) visidata;
+        visidata-rc = mk_src "visidata" { };
+      };
+    };
 
-    qutebrowser = bundle "qutebrowser" [
-      (upstreams.qutebrowser.overrideAttrs (prev: {
-        preFixup = let
-          alsaPluginDir = (our-nixpkgs.lib.getLib our-nixpkgs.alsa-plugins)
-            + "/lib/alsa-lib";
-          # I don't know much about the following workarounds and don't care to
-          # learn because graphics suck. Unfortunately, the third workaround
-          # probably comes at a performance cost.
-          # (1) QT_XCB_GL_INTEGRATION is a workaround from a while back, idk see
-          # commit logs.
-          # (2) ALSA_PLUGIN_DIR makes audio work under nix.
-          # (3) QT_QUICK_BACKEND is a workaround for Qt6 issue where qutebrowser
-          # UI is literally nonexistent.
-        in prev.preFixup + ''
-          makeWrapperArgs+=(
-            --set QT_XCB_GL_INTEGRATION none
-            --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
-            --set QT_QUICK_BACKEND software
-          )
-        '';
-      }))
-      (mk_src "qutebrowser" { })
-      (make_nixphile_hook_pre ''
-        mkdir -p "$HOME/.config/qutebrowser"
-        touch "$HOME/.config/qutebrowser/.keep"
-      '')
-    ];
+    qutebrowser = config.bundle {
+      name = "qutebrowser";
+      packages = {
+        qutebrowser = (upstreams.qutebrowser.overrideAttrs (prev: {
+          preFixup = let
+            alsaPluginDir = (our-nixpkgs.lib.getLib our-nixpkgs.alsa-plugins)
+              + "/lib/alsa-lib";
+            # I don't know much about the following workarounds and don't care to
+            # learn because graphics suck. Unfortunately, the third workaround
+            # probably comes at a performance cost.
+            # (1) QT_XCB_GL_INTEGRATION is a workaround from a while back, idk see
+            # commit logs.
+            # (2) ALSA_PLUGIN_DIR makes audio work under nix.
+            # (3) QT_QUICK_BACKEND is a workaround for Qt6 issue where qutebrowser
+            # UI is literally nonexistent.
+          in prev.preFixup + ''
+            makeWrapperArgs+=(
+              --set QT_XCB_GL_INTEGRATION none
+              --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
+              --set QT_QUICK_BACKEND software
+              )
+          '';
+        }));
+        qutebrowser-rc = (mk_src "qutebrowser" { });
+        qutebrowser-nixphile-hook = (make_nixphile_hook_pre ''
+          mkdir -p "$HOME/.config/qutebrowser"
+          touch "$HOME/.config/qutebrowser/.keep"
+        '');
+      };
+    };
 
-    rofi = bundle "rofi" [ upstreams.rofi (mk_src "rofi" { }) ];
+    rofi = config.bundle {
+      name = "rofi";
+      packages = {
+        inherit (upstreams) rofi;
+        rofi-rc = (mk_src "rofi" { });
+      };
+    };
 
-    xflux = bundle "xflux" [
-      packages.curl
-      packages.jq
-      upstreams.xflux
-      (mk_src "xflux" { })
-    ];
+    xflux = config.bundle {
+      name = "xflux";
+      packages = {
+        inherit (packages) curl jq;
+        inherit (upstreams) xflux;
+        xflux-rc = (mk_src "xflux" { });
+      };
+    };
 
-    zathura = bundle "zathura" [ upstreams.zathura (mk_src "zathura" { }) ];
+    zathura = config.bundle {
+      name = "zathura";
+      packages = {
+        inherit (upstreams) zathura;
+        zathura-rc = (mk_src "zathura" { });
+      };
+    };
 
     # FIXME video issue
     zoom = upstreams.zoom.overrideAttrs (prev: {
@@ -180,16 +245,22 @@ in let
       '';
     });
 
-    zsh = bundle "zsh" [
-      packages.bat
-      packages.fd
-      packages.fzf
-      packages.nix_env_exports
-      upstreams.zsh
-      (mk_src "zsh" { })
-    ];
+    zsh = config.bundle {
+      name = "zsh";
+      packages = {
+        inherit (packages) bat fd fzf nix_env_exports;
+        inherit (upstreams) zsh;
+        zsh-rc = (mk_src "zsh" { });
+      };
+    };
 
-    i3wm = bundle "i3wm" [ upstreams.i3wm (mk_src "i3wm" { }) ];
+    i3wm = config.bundle {
+      name = "i3wm";
+      packages = {
+        inherit (upstreams) i3wm;
+        i3wm-rc = (mk_src "i3wm" { });
+      };
+    };
 
     xsession = our-nixpkgs.writeTextFile {
       name = "xsession";
@@ -199,27 +270,40 @@ in let
       destination = "/home/me/.xsession";
     };
 
-    wallpapers = bundle "wallpapers" [
-      (lib.store_file inputs.wallpapers.packages.mount_fuji_jpg
-        "/home/me/.wallpaper")
-      (lib.store_file inputs.wallpapers.packages.solarized-stars_png
-        "/home/me/.wallpaperlock")
-    ];
+    wallpapers = config.bundle {
+      name = "wallpapers";
+      packages = {
+        wallpaper-home =
+          (lib.store_file inputs.wallpapers.packages.mount_fuji_jpg
+            "/home/me/.wallpaper");
+        wallpaper-lock =
+          (lib.store_file inputs.wallpapers.packages.solarized-stars_png
+            "/home/me/.wallpaperlock");
+      };
+    };
 
-    # bundle bc mk_src returns path not derivation
-    passmenu = bundle "passmenu" [ (mk_src "pass" { }) ];
+    passmenu = mk_src "pass" { };
 
-    dunst = bundle "dunst" [ upstreams.dunst (mk_src "dunst" { }) ];
+    dunst = config.bundle {
+      name = "dunst";
+      packages = {
+        inherit (upstreams) dunst;
+        dunst-rc = (mk_src "dunst" { });
+      };
+    };
 
     # TODO do we really want nix's pulse??
-    pulseaudio = bundle "pulseaudio" [
-      upstreams.pulseaudio
-      (mk_src "pulseaudio" { })
-      (make_nixphile_hook_pre ''
-        mkdir -p "$HOME/.config/pulse"
-        touch "$HOME/.config/pulse/.keep"
-      '')
-    ];
+    pulseaudio = config.bundle {
+      name = "pulseaudio";
+      packages = {
+        inherit (upstreams) pulseaudio;
+        pulseaudio-rc = (mk_src "pulseaudio" { });
+        pulseaudio-nixphile-hook = (make_nixphile_hook_pre ''
+          mkdir -p "$HOME/.config/pulse"
+          touch "$HOME/.config/pulse/.keep"
+        '');
+      };
+    };
 
     # TODO this is so hacky it's painful but no time
     # - should lock before hibernating
@@ -246,7 +330,7 @@ in let
       '';
 
     captive-browser = import ./src/captive-browser {
-      inherit bundle;
+      inherit (lib) bundle;
       nixpkgs = our-nixpkgs;
     };
 
@@ -261,7 +345,7 @@ in let
     };
 
     gnupg = import ./src/gnupg {
-      inherit bundle;
+      inherit (lib) bundle;
       inherit (our-nixpkgs) writeTextFile;
       systemd-user-units-path = "/home/me/.config/systemd/user";
       dotfiles-out-path = "/home/me/.dotfiles.out";
@@ -270,157 +354,94 @@ in let
       inherit (packages) pinentry;
     };
 
-    spotify = bundle "spotify" [ upstreams.spotify packages.spotify-cli-linux ];
+    spotify = config.bundle {
+      name = "spotify";
+      packages = {
+        inherit (upstreams) spotify;
+        inherit (packages) spotify-cli-linux;
+      };
+    };
 
   };
 
   bundles = {
 
-    core_env = with packages;
-      bundle "core_env" [
-        (make_nixphile_hook_pre ''
+    core_env = config.bundle {
+      name = "core_env";
+      packages = {
+        core-env-nixphile-hook = (make_nixphile_hook_pre ''
           test -d "$HOME/.dotfiles" \
           || git clone -o github \
-            https://github.com/abstrnoah/dotfiles \
-            "$HOME/.dotfiles"
-        '')
-        (mk_src "core_env" { })
-        (mk_src "nix" { })
-        awk
-        nixphile
-        diffutils
-        dos2unix
-        findutils
-        getconf
-        gnugrep
-        gnused
-        hostname
-        man
-        bat
-        curl
-        dig
-        dnstracer
-        fd
-        sd
-        rargs
-        fzf
-        git
-        htop
-        jq
-        netcat-openbsd
-        nettools
-        nodejs
-        pandoc
-        pdfgrep
-        pfetch
-        ranger
-        silver-searcher
-        sl
-        textql
-        time
-        tmux
-        toilet
-        tree
-        tuptime
-        universal-ctags
-        zip
-        vim
-        visidata
-        rlwrap
-        par
-      ];
+          https://github.com/abstrnoah/dotfiles \
+          "$HOME/.dotfiles"
+        '');
+        core-rc = (mk_src "core_env" { });
+        nix-rc = (mk_src "nix" { });
+        inherit (packages)
+          awk nixphile diffutils dos2unix findutils getconf gnugrep gnused
+          hostname man bat curl dig dnstracer fd sd rargs fzf git htop jq
+          netcat-openbsd nettools nodejs pandoc pdfgrep pfetch ranger
+          silver-searcher sl textql time tmux toilet tree tuptime
+          universal-ctags zip vim visidata rlwrap par;
+      };
+    };
 
-    default = with packages;
-      bundle "default" [
-        core_env
-        black
-        bup
-        clang
-        cowsay
-        exiftool
-        gcal
-        imagemagick
-        img2pdf
-        ocaml
-        stow
-        pdftk
-        bluetooth
-        tectonic
-        hydra-check
-        apache-jena
-        util-linux
-        ttdl
-      ];
+    default = config.bundle {
+      name = "default";
+      packages = {
+        inherit (packages)
+          core_env black bup clang cowsay exiftool gcal imagemagick img2pdf
+          ocaml stow pdftk bluetooth tectonic hydra-check apache-jena util-linux
+          ttdl;
+      };
+    };
 
-    nix-on-droid = with packages;
-      bundle "nix-on-droid" [ core_env termux coreutils ssh procps ];
+    nix-on-droid = config.bundle {
+      name = "nix-on-droid";
+      packages = { inherit (packages) core_env termux coreutils ssh procps; };
+    };
 
-    extras = with packages;
-      bundle "extras" [
-        insect # Requires x86_64-linux.
-        uni
-        texlive
-        weasyprint
-        htmlq
-        ungoogled-chromium
-        gimp
-        zbar
-      ];
+    extras = config.bundle {
+      name = "extras";
+      packages = {
+        inherit (packages)
+          insect # TODO Requires x86_64-linux.
+          uni texlive weasyprint htmlq ungoogled-chromium gimp zbar;
+      };
+    };
 
-    gui_env = with packages;
-      bundle "gui_env" [
-        captive-browser
-        default
-        grip
-        libnotify
-        libreoffice
-        mpv
-        pulseaudio
-        qutebrowser
-        tor-browser-bundle-bin
-        signal-desktop
-        spotify
-        slack
-        telegram
-        discord
-        xclip
-        xournalpp
-        zathura
-        jabref
-        udiskie
-      ];
+    gui_env = config.bundle {
+      name = "gui_env";
+      packages = {
+        inherit (packages)
+          captive-browser default grip libnotify libreoffice mpv pulseaudio
+          qutebrowser tor-browser-bundle-bin signal-desktop spotify slack
+          telegram discord xclip xournalpp zathura jabref udiskie;
+      };
+    };
 
     # TODO relies on systemd... how to deal with this on non-systemd distros?
-    wm_env = with packages;
-      bundle "wm_env" [
-        gui_env
-        i3wm
-        # our-nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
-        i3status
-        xsession
-        jq
-        wallpapers
-        dunst
-        rofi
-        wmctrl
-        spotify-cli-linux
-        xflux
-        xrandr-invert-colors
-        xbacklight
-        feh
-        passmenu
-        zoom
-      ];
+    wm_env = config.bundle {
+      name = "wm_env";
+      packages = {
+        inherit (packages)
+          gui_env i3wm
+          # our-nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
+          i3status xsession jq wallpapers dunst rofi wmctrl spotify-cli-linux
+          xflux xrandr-invert-colors xbacklight feh passmenu zoom;
+      };
+    };
 
-    coyote = with packages;
-      bundle "coyote" [
-        extras
-        wm_env
-        (xrandr-switch-output "builtin" "LVDS1" "VGA1" wallpapers)
-        (xrandr-switch-output "external" "VGA1" "LVDS1" wallpapers)
-        mononoki
-        gnupg # TODO
-      ];
+    coyote = config.bundle {
+      name = "coyote";
+      packages = {
+        inherit (packages) extras wm_env mononoki gnupg; # TODO
+        xrandr-switch-builtin =
+          (xrandr-switch-output "builtin" "LVDS1" "VGA1" packages.wallpapers);
+        xrandr-switch-external =
+          (xrandr-switch-output "external" "VGA1" "LVDS1" packages.wallpapers);
+      };
+    };
 
   };
 

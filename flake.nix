@@ -25,7 +25,7 @@
 
       # brumal-names - An RDF-style namespace for attribute keys which will
       # eventually (TODO) be moved into a separate flake.
-      brumal-names = inputs.nixpkgs.lib.getAttrs [
+      brumal-names = inputs.nixpkgs.lib.genAttrs [
         # The argument that was passed to "constructor" to yield the object.
         "preimage"
         # The function which was applied to "preimage" to yield the object.
