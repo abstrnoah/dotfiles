@@ -7,15 +7,6 @@ in let # TODO LEGACY BINDINGS
   inherit (lib) store_text make_source make_nixphile_hook_pre;
   src_path = ./src;
   env_src_path = "$HOME/.dotfiles/src";
-  mk_src = name:
-    spec@{ excludes ? [ ], ... }:
-    let
-      # avoid infinite recursion
-      rel_excludes = excludes;
-    in lib.make_source (spec // rec {
-      source = src_path + "/${name}";
-      excludes = map (p: source + "/${p}") rel_excludes;
-    });
   xrandr-switch-output = name: active: inactive: wallpapers:
     lib.write_script {
       name = "xrandr-switch-${name}";
@@ -90,17 +81,17 @@ in let
       name = "ttdl";
       packages = {
         inherit (upstreams) ttdl;
-        ttdl-rc = mk_src "ttdl" { };
+        ttdl-rc = config.store-dotfiles "ttdl";
       };
     };
 
-    bluetooth = mk_src "bluetooth" { };
+    bluetooth = config.store-dotfiles "bluetooth";
 
     curl = config.bundle {
       name = "curl";
       packages = {
         inherit (upstreams) curl;
-        curl-rc = mk_src "curl" { };
+        curl-rc = config.store-dotfiles "curl";
       };
     };
 
@@ -108,7 +99,7 @@ in let
       name = "git";
       packages = {
         inherit (upstreams) git;
-        git-rc = mk_src "git" { };
+        git-rc = config.store-dotfiles "git";
       };
     };
 
@@ -116,7 +107,7 @@ in let
       name = "udiskie";
       packages = {
         inherit (upstreams) udiskie;
-        udiskie-rc = mk_src "udiskie" { };
+        udiskie-rc = config.store-dotfiles "udiskie";
       };
     };
 
@@ -135,7 +126,7 @@ in let
       name = "tmuxinator";
       packages = {
         inherit (upstreams) tmuxinator;
-        tmuxinator-rc = mk_src "tmuxinator" { };
+        tmuxinator-rc = config.store-dotfiles "tmuxinator";
       };
     };
 
@@ -147,7 +138,7 @@ in let
           zsh # TODO rm this dep, it should really point the other direction
         ;
         inherit (upstreams) tmux;
-        tmux-rc = mk_src "tmux" { };
+        tmux-rc = config.store-dotfiles "tmux";
       };
     };
 
@@ -160,8 +151,7 @@ in let
       packages = {
         inherit (packages) curl fzf vim-plug;
         inherit (upstreams) vim;
-        vim-rc =
-          mk_src "vim" { excludes = [ "/home/me/.vim/spell/en.utf-8.add" ]; };
+        vim-rc = config.store-dotfiles "vim";
         vim-nixphile-hook = (make_nixphile_hook_pre ''
           mkdir -p "$HOME/.vim/spell"
           test -h "$HOME/.vim/spell/en.utf-8.add" \
@@ -176,7 +166,7 @@ in let
       name = "visidata";
       packages = {
         inherit (upstreams) visidata;
-        visidata-rc = mk_src "visidata" { };
+        visidata-rc = config.store-dotfiles "visidata";
       };
     };
 
@@ -203,7 +193,7 @@ in let
               )
           '';
         }));
-        qutebrowser-rc = (mk_src "qutebrowser" { });
+        qutebrowser-rc = config.store-dotfiles "qutebrowser";
         qutebrowser-nixphile-hook = (make_nixphile_hook_pre ''
           mkdir -p "$HOME/.config/qutebrowser"
           touch "$HOME/.config/qutebrowser/.keep"
@@ -215,7 +205,7 @@ in let
       name = "rofi";
       packages = {
         inherit (upstreams) rofi;
-        rofi-rc = (mk_src "rofi" { });
+        rofi-rc = config.store-dotfiles "rofi";
       };
     };
 
@@ -224,7 +214,7 @@ in let
       packages = {
         inherit (packages) curl jq;
         inherit (upstreams) xflux;
-        xflux-rc = (mk_src "xflux" { });
+        xflux-rc = config.store-dotfiles "xflux";
       };
     };
 
@@ -232,7 +222,7 @@ in let
       name = "zathura";
       packages = {
         inherit (upstreams) zathura;
-        zathura-rc = (mk_src "zathura" { });
+        zathura-rc = config.store-dotfiles "zathura";
       };
     };
 
@@ -250,7 +240,7 @@ in let
       packages = {
         inherit (packages) bat fd fzf nix_env_exports;
         inherit (upstreams) zsh;
-        zsh-rc = (mk_src "zsh" { });
+        zsh-rc = config.store-dotfiles "zsh";
       };
     };
 
@@ -258,7 +248,7 @@ in let
       name = "i3wm";
       packages = {
         inherit (upstreams) i3wm;
-        i3wm-rc = (mk_src "i3wm" { });
+        i3wm-rc = config.store-dotfiles "i3wm";
       };
     };
 
@@ -282,13 +272,13 @@ in let
       };
     };
 
-    passmenu = mk_src "pass" { };
+    passmenu = config.store-dotfiles "pass";
 
     dunst = config.bundle {
       name = "dunst";
       packages = {
         inherit (upstreams) dunst;
-        dunst-rc = (mk_src "dunst" { });
+        dunst-rc = config.store-dotfiles "dunst";
       };
     };
 
@@ -297,7 +287,7 @@ in let
       name = "pulseaudio";
       packages = {
         inherit (upstreams) pulseaudio;
-        pulseaudio-rc = (mk_src "pulseaudio" { });
+        pulseaudio-rc = config.store-dotfiles "pulseaudio";
         pulseaudio-nixphile-hook = (make_nixphile_hook_pre ''
           mkdir -p "$HOME/.config/pulse"
           touch "$HOME/.config/pulse/.keep"
@@ -375,8 +365,8 @@ in let
           https://github.com/abstrnoah/dotfiles \
           "$HOME/.dotfiles"
         '');
-        core-rc = (mk_src "core_env" { });
-        nix-rc = (mk_src "nix" { });
+        core-rc = config.store-dotfiles "core_env";
+        nix-rc = config.store-dotfiles "nix";
         inherit (packages)
           awk nixphile diffutils dos2unix findutils getconf gnugrep gnused
           hostname man bat curl dig dnstracer fd sd rargs fzf git htop jq

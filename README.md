@@ -114,9 +114,8 @@ where `config` and `packages` are inherited from the top level.
 
 ## ROADMAP
 
-* [ ] Begin overhaul `bundle`.
-* [ ] Fix `mk_src` so it returns a derivation.
-* [ ] Overhaul `mk_src` packages.
+* [x] Begin overhaul `bundle`.
+* [x] Overhaul `mk_src` packages.
 * [ ] Deal with nixphile hooks.
 * [ ] Move any non-trivial packages into a constructor in a separate file.
 * [ ] Streamline calling package constructors from within `default.nix`.

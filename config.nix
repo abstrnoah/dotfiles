@@ -4,11 +4,6 @@ config@{ self, system, brumal-names }:
   # TODO deprecate
   legacy = import ./lib.nix { nixpkgs = self.our-nixpkgs; };
 
-  fold = builtins.foldl';
-
-  get-attrs = keys: set: map (key: builtins.getAttr key set) keys;
-  get-attrs' = set: keys: self.config.get-attrs keys set;
-
   has-constructor-id = id: x:
     x.${brumal-names.constructor}.${brumal-names.id} or null == id;
 
@@ -79,5 +74,20 @@ config@{ self, system, brumal-names }:
   };
 
   username = "abstrnoah";
+
+  store-source = {
+    # Absolute source path to store, must not be a store path.
+    source,
+    # List of absolute paths to exclude.
+    excludes ? [ ] }:
+    # To ensure correct equality testing.
+    assert builtins.all (p: builtins.typeOf p == "path") excludes;
+    let
+      name = baseNameOf source;
+      filter = path: type: !builtins.elem (/. + path) excludes;
+    in builtins.filterSource filter source;
+
+  store-dotfiles = name:
+    self.config.store-source { source = ./src + "/${name}"; };
 
 } // config
