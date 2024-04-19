@@ -95,4 +95,19 @@ config@{ self, system, brumal-names }:
   store-dotfiles = name:
     self.config.store-source { source = ./src + "/${name}"; };
 
+  machines.coyote = {
+    xrandr-outputs.builtin = "LVDS1";
+    xrandr-outputs.external = "VGA1";
+  };
+
+  call-with = args: f:
+    f (self.our-nixpkgs.lib.attrsets.getAttrs
+      (builtins.attrNames (builtins.functionArgs f)) args);
+
+  cons-package = config@{ ... }:
+    packages@{ ... }:
+    cons: args:
+    self.config.call-with packages
+    (self.config.call-with (config // args) cons);
+
 } // config

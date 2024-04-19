@@ -4,23 +4,11 @@ let inherit (inputs.self) config packages our-nixpkgs our-nixpkgs-unstable;
 
 in let # TODO LEGACY BINDINGS
   lib = inputs.self.config.legacy; # TODO remove this dependency
-  inherit (lib) store_text make_source;
-  src_path = ./src;
-  env_src_path = "$HOME/.dotfiles/src";
-  xrandr-switch-output = name: active: inactive: wallpapers:
-    lib.write_script {
-      name = "xrandr-switch-${name}";
-      text = ''
-        xrandr --output ${
-          our-nixpkgs.lib.escapeShellArg active
-        } --auto --primary \
-               --output ${our-nixpkgs.lib.escapeShellArg inactive} --off \
-               --dpi 100
-        feh --bg-fill ${wallpapers}/home/me/.wallpaper
-      '';
-    };
+  inherit (lib) store_text;
 
 in let
+
+  cons-package = config.cons-package config packages;
 
   upstreams = {
     inherit (our-nixpkgs)
@@ -37,7 +25,7 @@ in let
     texlive = our-nixpkgs.texlive.combined.scheme-small;
     inherit (our-nixpkgs.nodePackages) insect;
     inherit (our-nixpkgs.python310Packages) grip weasyprint;
-    inherit (our-nixpkgs.xorg) xbacklight;
+    inherit (our-nixpkgs.xorg) xbacklight xrandr;
     awk = our-nixpkgs.gawk;
     bat = config.bundle {
       name = "bat";
@@ -417,10 +405,9 @@ in let
       name = "coyote";
       packages = {
         inherit (packages) extras wm_env mononoki gnupg; # TODO
-        xrandr-switch-builtin =
-          (xrandr-switch-output "builtin" "LVDS1" "VGA1" packages.wallpapers);
-        xrandr-switch-external =
-          (xrandr-switch-output "external" "VGA1" "LVDS1" packages.wallpapers);
+        coyote-xrandr-switch = cons-package (import ./src/xrandr) {
+          machine = config.machines.coyote;
+        };
       };
     };
 
