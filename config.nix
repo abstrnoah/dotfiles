@@ -81,19 +81,22 @@ config@{ self, system, brumal-names }:
   dotfiles-destination = "$HOME/.dotfiles";
 
   store-source = {
-    # Absolute source path to store, must not be a store path.
+    # Absolute path to the source, must not be a store path.
     source,
-    # List of absolute paths to exclude.
+    # List of path strings to exclude, relative to source.
     excludes ? [ ] }:
-    # To ensure correct equality testing.
-    assert builtins.all (p: builtins.typeOf p == "path") excludes;
+    assert builtins.typeOf source == "path";
     let
       name = baseNameOf source;
-      filter = path: type: !builtins.elem (/. + path) excludes;
+      excludes' = map (p: self.our-nixpkgs.lib.path.append source p) excludes;
+      filter = path: type: !builtins.elem (/. + path) excludes';
     in builtins.filterSource filter source;
 
-  store-dotfiles = name:
-    self.config.store-source { source = ./src + "/${name}"; };
+  store-dotfiles = source:
+    self.config.store-source {
+      inherit source;
+      excludes = [ "README.md" "default.nix" ];
+    };
 
   machines.coyote = {
     xrandr-outputs.builtin = "LVDS1";
