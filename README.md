@@ -116,7 +116,7 @@ where `config` and `packages` are inherited from the top level.
 
 * [x] Begin overhaul `bundle`.
 * [x] Overhaul `mk_src` packages.
-* [ ] Deal with nixphile hooks.
+* [x] Deal with nixphile hooks.
 * [ ] Move any non-trivial packages into a constructor in a separate file.
 * [ ] Streamline calling package constructors from within `default.nix`.
 * [ ] Revisit `bundle` and other legacy library utils.
@@ -127,11 +127,13 @@ where `config` and `packages` are inherited from the top level.
 * [ ] speedup, namely rewrite `bundle` and reduce core_env
 * [ ] refactor inputs follow nixpkgs
 * [ ] more flake-zen way of loading nixpkgs with system and config than
-      `import`?
+  `import`?
 * [ ] names replace `_` with `-`
 * [ ] bundle together all my common inputs like `flake-utils` and commonly-used
-      system-agnostic `nixpkgs` utilities into a separate flake.
+  system-agnostic `nixpkgs` utilities into a separate flake.
 * [ ] make deploy to non-nix system actually work
+* [ ] Once nixphile supports both ln and cp trees, the cp trees can replace most
+  (all?) before-deploy hooks.
 
 ---
 

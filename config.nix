@@ -75,6 +75,11 @@ config@{ self, system, brumal-names }:
 
   username = "abstrnoah";
 
+  src-path = ./src;
+
+  dotfiles-source = "https://github.com/abstrnoah/dotfiles";
+  dotfiles-destination = "$HOME/.dotfiles";
+
   store-source = {
     # Absolute source path to store, must not be a store path.
     source,

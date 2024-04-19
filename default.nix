@@ -4,7 +4,7 @@ let inherit (inputs.self) config packages our-nixpkgs our-nixpkgs-unstable;
 
 in let # TODO LEGACY BINDINGS
   lib = inputs.self.config.legacy; # TODO remove this dependency
-  inherit (lib) store_text make_source make_nixphile_hook_pre;
+  inherit (lib) store_text make_source;
   src_path = ./src;
   env_src_path = "$HOME/.dotfiles/src";
   xrandr-switch-output = name: active: inactive: wallpapers:
@@ -152,13 +152,6 @@ in let
         inherit (packages) curl fzf vim-plug;
         inherit (upstreams) vim;
         vim-rc = config.store-dotfiles "vim";
-        vim-nixphile-hook = (make_nixphile_hook_pre ''
-          mkdir -p "$HOME/.vim/spell"
-          test -h "$HOME/.vim/spell/en.utf-8.add" \
-          || ln -Ts \
-          "${env_src_path}/vim/home/me/.vim/spell/en.utf-8.add" \
-          "$HOME/.vim/spell/en.utf-8.add"
-        '');
       };
     };
 
@@ -194,10 +187,6 @@ in let
           '';
         }));
         qutebrowser-rc = config.store-dotfiles "qutebrowser";
-        qutebrowser-nixphile-hook = (make_nixphile_hook_pre ''
-          mkdir -p "$HOME/.config/qutebrowser"
-          touch "$HOME/.config/qutebrowser/.keep"
-        '');
       };
     };
 
@@ -289,51 +278,49 @@ in let
       packages = {
         inherit (upstreams) pulseaudio;
         pulseaudio-rc = config.store-dotfiles "pulseaudio";
-        pulseaudio-nixphile-hook = (make_nixphile_hook_pre ''
-          mkdir -p "$HOME/.config/pulse"
-          touch "$HOME/.config/pulse/.keep"
-        '');
       };
     };
 
-    # TODO this is so hacky it's painful but no time
-    # - should lock before hibernating
-    # - locking first would require nixifying i3wm-helper-system
-    # - there are permission/environment issues: i3lock would probably need to run
-    #   under the current user and with DISPLAY set; hibernation needs to run as
-    #   root
-    # - if i am going to move more things to systemd, then i need to improve the
-    #   nix/systemd workflow
-    battery_hook_setup = with (import ./src/battery_hook) {
-      inherit (config) username;
-      nixpkgs = our-nixpkgs;
-      battery_device = "BAT0";
-      hibernate_command = "systemctl hibernate";
-      # TODO We want the following, but it requires i3wm-helper-system be
-      # nixified; currently it is too impure to run as a systemd service.
-      # hibernate_command = "${i3wm}/bin/i3wm-helper-system hibernate";
-    };
-      make_nixphile_hook_pre ''
-        systemctl reenable ${service}
-        systemctl reenable ${timer}
-        systemctl start "$(basename ${timer})"
-        systemctl start "$(basename ${service})"
-      '';
+    # TODO reimplement without hook, require manual installation of system files
+    # # TODO this is so hacky it's painful but no time
+    # # - should lock before hibernating
+    # # - locking first would require nixifying i3wm-helper-system
+    # # - there are permission/environment issues: i3lock would probably need to run
+    # #   under the current user and with DISPLAY set; hibernation needs to run as
+    # #   root
+    # # - if i am going to move more things to systemd, then i need to improve the
+    # #   nix/systemd workflow
+    # battery_hook_setup = with (import ./src/battery_hook) {
+    #   inherit (config) username;
+    #   nixpkgs = our-nixpkgs;
+    #   battery_device = "BAT0";
+    #   hibernate_command = "systemctl hibernate";
+    #   # TODO We want the following, but it requires i3wm-helper-system be
+    #   # nixified; currently it is too impure to run as a systemd service.
+    #   # hibernate_command = "${i3wm}/bin/i3wm-helper-system hibernate";
+    # };
+    #   make_nixphile_hook_pre ''
+    #     systemctl reenable ${service}
+    #     systemctl reenable ${timer}
+    #     systemctl start "$(basename ${timer})"
+    #     systemctl start "$(basename ${service})"
+    #   '';
 
     captive-browser = import ./src/captive-browser {
       inherit (lib) bundle;
       nixpkgs = our-nixpkgs;
     };
 
-    termux.nixphile_hook_pre = lib.write_script {
-      name = "setup-termux";
-      text = ''
-        mkdir -p ~/.termux
-        cp "${env_src_path}"/termux/home/me/.termux/* ~/.termux
-        cp "${packages.mononoki}/share/fonts/mononoki/mononoki-Regular.ttf" \
-            ~/.termux/font.ttf
-      '';
-    };
+    # TODO Reimplement using future nixphile cp tree feature.
+    # termux.passthru.before-deploy = our-nixpkgs.writeShellApplication {
+    #   name = "termux-before-deploy-hook";
+    #   text = ''
+    #     mkdir -p ~/.termux
+    #     cp -p=mode "${config.src-path}"/termux/home/me/.termux/* ~/.termux
+    #     cp "${packages.mononoki}/share/fonts/mononoki/mononoki-Regular.ttf" \
+    #         ~/.termux/font.ttf
+    #   '';
+    # };
 
     gnupg = import ./src/gnupg {
       inherit (lib) bundle;
@@ -353,6 +340,15 @@ in let
       };
     };
 
+    clone-dotfiles = our-nixpkgs.writeShellApplication {
+      name = "clone-dotfiles";
+      text = ''
+        test -d "${config.dotfiles-destination}" \
+        || git clone -o github \
+            "${config.dotfiles-source}" "${config.dotfiles-destination}"
+      '';
+    };
+
   };
 
   bundles = {
@@ -360,12 +356,6 @@ in let
     core_env = config.bundle {
       name = "core_env";
       packages = {
-        core-env-nixphile-hook = (make_nixphile_hook_pre ''
-          test -d "$HOME/.dotfiles" \
-          || git clone -o github \
-          https://github.com/abstrnoah/dotfiles \
-          "$HOME/.dotfiles"
-        '');
         core-rc = config.store-dotfiles "core_env";
         nix-rc = config.store-dotfiles "nix";
         inherit (packages)
