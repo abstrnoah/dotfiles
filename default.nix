@@ -237,17 +237,18 @@ in let
       destination = "/home/me/.xsession";
     };
 
-    wallpapers = config.bundle {
-      name = "wallpapers";
-      packages = {
-        wallpaper-home =
-          (lib.store_file inputs.wallpapers.packages.mount_fuji_jpg
-            "/home/me/.wallpaper");
-        wallpaper-lock =
-          (lib.store_file inputs.wallpapers.packages.solarized-stars_png
-            "/home/me/.wallpaperlock");
-      };
-    };
+    # TODO Replace with direct string interpolation of feh and i3lock commands
+    # with store paths.
+    wallpapers = config.store-symlinks "wallpapers" [
+      {
+        source = inputs.wallpapers.packages.mount_fuji_jpg;
+        destination = "/home/me/.wallpaper";
+      }
+      {
+        source = inputs.wallpapers.packages.solarized-stars_png;
+        destination = "/home/me/.wallpaperlock";
+      }
+    ];
 
     # TODO fetch script directly from github
     passmenu = config.store-dotfiles ./src/pass;

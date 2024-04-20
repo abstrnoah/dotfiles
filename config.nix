@@ -113,4 +113,21 @@ config@{ self, system, brumal-names }:
     self.config.call-with packages
     (self.config.call-with (config // args) cons);
 
+  store-symlink = name: source: destination:
+    self.config.store-symlinks name [{ inherit source destination; }];
+
+  store-symlinks = name: mapping:
+    let
+      symlink-command = { source, destination }: ''
+        destination="$out"/${self.our-nixpkgs.lib.escapeShellArg destination}
+        mkdir -p "$(dirname "$destination")"
+        ln -s ${self.our-nixpkgs.lib.escapeShellArg source} "$destination"
+      '';
+      commands = map symlink-command mapping;
+    in self.our-nixpkgs.runCommandLocal name { } ''
+      mkdir -p "$out"
+      cd "$out"
+      ${self.our-nixpkgs.lib.concatStrings commands}
+    '';
+
 } // config
