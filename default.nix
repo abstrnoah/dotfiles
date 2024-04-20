@@ -21,7 +21,7 @@ in let
       silver-searcher sl slack spotify spotify-cli-linux stow tectonic textql
       thunderbird time tmux tmuxinator toilet tor-browser-bundle-bin tree ttdl
       tuptime udiskie ungoogled-chromium uni universal-ctags util-linux visidata
-      wmctrl xclip xflux xournalpp xrandr-invert-colors zathura zbar zsh;
+      wmctrl xclip xflux xournalpp xrandr-invert-colors zathura zbar zsh pass;
     texlive = our-nixpkgs.texlive.combined.scheme-small;
     inherit (our-nixpkgs.nodePackages) insect;
     inherit (our-nixpkgs.python310Packages) grip weasyprint;
@@ -181,10 +181,22 @@ in let
     rofi = config.bundle {
       name = "rofi";
       packages = {
-        inherit (upstreams) rofi;
+        rofi = upstreams.rofi.override { symlink-dmenu = true; };
         rofi-rc = config.store-dotfiles ./src/rofi;
       };
     };
+
+    pass = let
+      pass' = upstreams.pass.override {
+        inherit (packages) dmenu;
+        inherit pass;
+      };
+      pass = pass'.overrideAttrs (final: prev: {
+        patches = prev.patches ++ [ ./src/pass/set-prompt.patch ];
+      });
+    in pass.withExtensions (es: [ es.pass-otp ]);
+
+    dmenu = packages.rofi;
 
     xflux = config.bundle {
       name = "xflux";
@@ -237,8 +249,7 @@ in let
       destination = "/home/me/.xsession";
     };
 
-    # TODO Replace with direct string interpolation of feh and i3lock commands
-    # with store paths.
+    # TODO Replace with direct string interpolation of feh and i3lock commands.
     wallpapers = config.store-symlinks "wallpapers" [
       {
         source = inputs.wallpapers.packages.mount_fuji_jpg;
@@ -249,9 +260,6 @@ in let
         destination = "/home/me/.wallpaperlock";
       }
     ];
-
-    # TODO fetch script directly from github
-    passmenu = config.store-dotfiles ./src/pass;
 
     dunst = config.bundle {
       name = "dunst";
@@ -399,14 +407,14 @@ in let
           gui_env i3wm
           # our-nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
           i3status xsession jq wallpapers dunst rofi wmctrl spotify-cli-linux
-          xflux xrandr-invert-colors xbacklight feh passmenu zoom;
+          xflux xrandr-invert-colors xbacklight feh zoom;
       };
     };
 
     coyote = config.bundle {
       name = "coyote";
       packages = {
-        inherit (packages) extras wm_env mononoki gnupg; # TODO
+        inherit (packages) extras wm_env mononoki gnupg pass; # TODO
         coyote-xrandr-switch = cons-package (import ./src/xrandr) {
           machine = config.machines.coyote;
         };
