@@ -130,7 +130,8 @@ in let
       };
     };
 
-    vim-plug = store_text "${our-nixpkgs.vimPlugins.vim-plug}/plug.vim"
+    vim-plug = config.store-symlink "vim-plug"
+      "${our-nixpkgs.vimPlugins.vim-plug}/plug.vim"
       "/home/me/.vim/autoload/plug.vim";
 
     # TODO mutable spellfile
