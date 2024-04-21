@@ -4,6 +4,8 @@ config@{ self, system, brumal-names }:
   # TODO deprecate
   legacy = import ./lib.nix { nixpkgs = self.our-nixpkgs; };
 
+  inherit (self.our-nixpkgs) writeTextDir;
+
   has-constructor-id = id: x:
     x.${brumal-names.constructor}.${brumal-names.id} or null == id;
 
@@ -109,9 +111,11 @@ config@{ self, system, brumal-names }:
 
   cons-package = config@{ ... }:
     packages@{ ... }:
-    cons: args:
-    self.config.call-with packages
-    (self.config.call-with (config // args) cons);
+    cons:
+    config'@{ ... }:
+    packages'@{ ... }:
+    self.config.call-with (packages // packages')
+    (self.config.call-with (config // config') cons);
 
   store-symlink = name: source: destination:
     self.config.store-symlinks {

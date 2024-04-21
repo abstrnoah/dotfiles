@@ -12,7 +12,7 @@ in let
 
   upstreams = {
     inherit (our-nixpkgs)
-      apache-jena black bup chromium clang coq cowsay curl diffutils dig discord
+      apache-jena black bup clang coq cowsay curl diffutils dig discord
       dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf gcal
       getconf gimp git gnugrep gnupg gnused hostname htmlq htop hydra-check
       i3status imagemagick img2pdf jdk jq libnotify libreoffice maildrop man mpv
@@ -21,7 +21,9 @@ in let
       silver-searcher sl slack spotify spotify-cli-linux stow tectonic textql
       thunderbird time tmux tmuxinator toilet tor-browser-bundle-bin tree ttdl
       tuptime udiskie ungoogled-chromium uni universal-ctags util-linux visidata
-      wmctrl xclip xflux xournalpp xrandr-invert-colors zathura zbar zsh pass;
+      wmctrl xclip xflux xournalpp xrandr-invert-colors zathura zbar zsh pass
+      captive-browser;
+    inherit (our-nixpkgs) chromium; # TODO Replace with ungoogled-chromium?
     texlive = our-nixpkgs.texlive.combined.scheme-small;
     inherit (our-nixpkgs.nodePackages) insect;
     inherit (our-nixpkgs.python310Packages) grip weasyprint;
@@ -307,9 +309,8 @@ in let
     #     systemctl start "$(basename ${service})"
     #   '';
 
-    captive-browser = import ./src/captive-browser {
-      inherit (lib) bundle;
-      nixpkgs = our-nixpkgs;
+    captive-browser = cons-package (import ./src/captive-browser) { } {
+      inherit (upstreams) captive-browser;
     };
 
     # TODO Reimplement using future nixphile cp tree feature.
@@ -421,7 +422,7 @@ in let
         inherit (packages) extras wm_env mononoki gnupg pass; # TODO
         coyote-xrandr-switch = cons-package (import ./src/xrandr) {
           machine = config.machines.coyote;
-        };
+        } { };
       };
     };
 
