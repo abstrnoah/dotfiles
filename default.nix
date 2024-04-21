@@ -3,6 +3,7 @@ inputs@{ ... }:
 let
   inherit (inputs.self) config packages our-nixpkgs our-nixpkgs-unstable;
 
+  bundle-dotfiles = config.bundle-dotfiles upstreams;
   cons-package = config.cons-package config packages;
 
   upstreams = {
@@ -63,39 +64,15 @@ let
 
   ours = {
 
-    ttdl = config.bundle {
-      name = "ttdl";
-      packages = {
-        inherit (upstreams) ttdl;
-        ttdl-rc = config.store-dotfiles ./src/ttdl;
-      };
-    };
+    ttdl = bundle-dotfiles "ttdl";
 
     bluetooth = config.store-dotfiles ./src/bluetooth;
 
-    curl = config.bundle {
-      name = "curl";
-      packages = {
-        inherit (upstreams) curl;
-        curl-rc = config.store-dotfiles ./src/curl;
-      };
-    };
+    curl = bundle-dotfiles "curl";
 
-    git = config.bundle {
-      name = "git";
-      packages = {
-        inherit (upstreams) git;
-        git-rc = config.store-dotfiles ./src/git;
-      };
-    };
+    git = bundle-dotfiles "git";
 
-    udiskie = config.bundle {
-      name = "udiskie";
-      packages = {
-        inherit (upstreams) udiskie;
-        udiskie-rc = config.store-dotfiles ./src/udiskie;
-      };
-    };
+    udiskie = bundle-dotfiles "udiskie";
 
     # TODO probably should achieve this elsehow
     nix_env_exports = let
@@ -108,13 +85,7 @@ let
       destination = "/lib/${name}";
     };
 
-    tmuxinator = config.bundle {
-      name = "tmuxinator";
-      packages = {
-        inherit (upstreams) tmuxinator;
-        tmuxinator-rc = config.store-dotfiles ./src/tmuxinator;
-      };
-    };
+    tmuxinator = bundle-dotfiles "tmuxinator";
 
     tmux = config.bundle {
       name = "tmux";
@@ -141,13 +112,7 @@ let
       };
     };
 
-    visidata = config.bundle {
-      name = "visidata";
-      packages = {
-        inherit (upstreams) visidata;
-        visidata-rc = config.store-dotfiles ./src/visidata;
-      };
-    };
+    visidata = bundle-dotfiles "visidata";
 
     qutebrowser = cons-package (import ./src/qutebrowser) { } {
       inherit (upstreams) qutebrowser;
@@ -182,13 +147,7 @@ let
       };
     };
 
-    zathura = config.bundle {
-      name = "zathura";
-      packages = {
-        inherit (upstreams) zathura;
-        zathura-rc = config.store-dotfiles ./src/zathura;
-      };
-    };
+    zathura = bundle-dotfiles "zathura";
 
     # FIXME video issue
     zoom = upstreams.zoom.overrideAttrs (prev: {
@@ -208,13 +167,7 @@ let
       };
     };
 
-    i3wm = config.bundle {
-      name = "i3wm";
-      packages = {
-        inherit (upstreams) i3wm;
-        i3wm-rc = config.store-dotfiles ./src/i3wm;
-      };
-    };
+    i3wm = bundle-dotfiles "i3wm";
 
     xsession = our-nixpkgs.writeTextFile {
       name = "xsession";
@@ -239,21 +192,9 @@ let
       ];
     };
 
-    dunst = config.bundle {
-      name = "dunst";
-      packages = {
-        inherit (upstreams) dunst;
-        dunst-rc = config.store-dotfiles ./src/dunst;
-      };
-    };
+    dunst = bundle-dotfiles "dunst";
 
-    pulseaudio = config.bundle {
-      name = "pulseaudio";
-      packages = {
-        inherit (upstreams) pulseaudio;
-        pulseaudio-rc = config.store-dotfiles ./src/pulseaudio;
-      };
-    };
+    pulseaudio = bundle-dotfiles "pulseaudio";
 
     # TODO reimplement without hook, require manual installation of system files
     # # TODO this is so hacky it's painful but no time

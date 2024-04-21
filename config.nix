@@ -1,8 +1,6 @@
 config@{ self, system, brumal-names }:
 
 {
-  # TODO deprecate
-  legacy = import ./lib.nix { nixpkgs = self.our-nixpkgs; };
 
   # TODO
   inherit (self.our-nixpkgs) writeTextDir;
@@ -118,6 +116,16 @@ config@{ self, system, brumal-names }:
     packages'@{ ... }:
     self.config.call-with (packages // packages')
     (self.config.call-with (config // config') cons);
+
+  bundle-dotfiles = upstreams: name:
+    self.config.bundle {
+      inherit name;
+      packages = {
+        package = upstreams.${name};
+        rc = self.config.store-dotfiles
+          (self.our-nixpkgs.lib.path.append self.config.src-path name);
+      };
+    };
 
   store-symlink = name: source: destination:
     self.config.store-symlinks {
