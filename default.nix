@@ -251,16 +251,19 @@ in let
     };
 
     # TODO Replace with direct string interpolation of feh and i3lock commands.
-    wallpapers = config.store-symlinks "wallpapers" [
-      {
-        source = inputs.wallpapers.packages.mount_fuji_jpg;
-        destination = "/home/me/.wallpaper";
-      }
-      {
-        source = inputs.wallpapers.packages.solarized-stars_png;
-        destination = "/home/me/.wallpaperlock";
-      }
-    ];
+    wallpapers = config.store-symlinks {
+      name = "wallpapers";
+      mapping = [
+        {
+          source = inputs.wallpapers.packages.mount_fuji_jpg;
+          destination = "/home/me/.wallpaper";
+        }
+        {
+          source = inputs.wallpapers.packages.solarized-stars_png;
+          destination = "/home/me/.wallpaperlock";
+        }
+      ];
+    };
 
     dunst = config.bundle {
       name = "dunst";

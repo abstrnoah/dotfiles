@@ -114,9 +114,12 @@ config@{ self, system, brumal-names }:
     (self.config.call-with (config // args) cons);
 
   store-symlink = name: source: destination:
-    self.config.store-symlinks name [{ inherit source destination; }];
+    self.config.store-symlinks {
+      inherit name;
+      mapping = [{ inherit source destination; }];
+    };
 
-  store-symlinks = name: mapping:
+  store-symlinks = { name, mapping }:
     let
       symlink-command = { source, destination }: ''
         destination="$out"/${self.our-nixpkgs.lib.escapeShellArg destination}
