@@ -20,7 +20,7 @@ let
       captive-browser alsa-plugins;
     chromium = our-nixpkgs.ungoogled-chromium;
     texlive = our-nixpkgs.texlive.combined.scheme-small;
-    inherit (our-nixpkgs.nodePackages) insect;
+    inherit (our-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
     inherit (our-nixpkgs.python310Packages) grip weasyprint;
     inherit (our-nixpkgs.xorg) xbacklight xrandr;
     awk = our-nixpkgs.gawk;
@@ -47,6 +47,7 @@ let
     i3wm = our-nixpkgs.i3-rounded;
     pinentry = our-nixpkgs.pinentry-qt;
     vim = our-nixpkgs.vimHugeX;
+    # i3lock # TODO nixpkgs version auth fails due to PAM instance mismatch
 
     # TODO Move unstable packages to stable as soon as possible.
     inherit (our-nixpkgs-unstable)
@@ -246,7 +247,6 @@ let
       };
     };
 
-    # TODO do we really want nix's pulse??
     pulseaudio = config.bundle {
       name = "pulseaudio";
       packages = {
@@ -360,8 +360,7 @@ let
       name = "extras";
       packages = {
         inherit (packages)
-          insect # TODO Requires x86_64-linux.
-          uni texlive weasyprint htmlq ungoogled-chromium gimp zbar;
+          insect uni texlive weasyprint htmlq ungoogled-chromium gimp zbar;
       };
     };
 
@@ -375,22 +374,19 @@ let
       };
     };
 
-    # TODO relies on systemd... how to deal with this on non-systemd distros?
     wm_env = config.bundle {
       name = "wm_env";
       packages = {
         inherit (packages)
-          gui_env i3wm
-          # our-nixpkgs.i3lock # TODO due to PAM perm issue nix version fails
-          i3status xsession jq wallpapers dunst rofi wmctrl spotify-cli-linux
-          xflux xrandr-invert-colors xbacklight feh zoom;
+          gui_env i3wm i3status xsession jq wallpapers dunst rofi wmctrl
+          spotify-cli-linux xflux xrandr-invert-colors xbacklight feh zoom;
       };
     };
 
     coyote = config.bundle {
       name = "coyote";
       packages = {
-        inherit (packages) extras wm_env mononoki gnupg pass; # TODO
+        inherit (packages) extras wm_env mononoki gnupg pass;
         coyote-xrandr-switch = cons-package (import ./src/xrandr) {
           machine = config.machines.coyote;
         } { };
