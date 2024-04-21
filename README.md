@@ -117,12 +117,19 @@ where `config` and `packages` are inherited from the top level.
 * [x] Begin overhaul `bundle`.
 * [x] Overhaul `mk_src` packages.
 * [x] Deal with nixphile hooks.
-* [ ] Move any non-trivial packages into a constructor in a separate file.
-* [ ] Streamline calling package constructors from within `default.nix`.
-* [ ] Revisit `bundle` and other legacy library utils.
+* [x] Move any non-trivial packages into a constructor in a separate file.
+* [x] Streamline calling package constructors from within `default.nix`.
+* [x] Revisit `bundle` and other legacy library utils.
+* [ ] Revisit flake organisation
+    * [ ] Deal with `lib` versus `config`
+    * [ ] Consider bringing `upstreams` etc into flake top-level
+* [ ] Finally write syncthing systemd unit
+* [ ] Clean up bundles
+* [ ] Revise README
 
 # TODO
 
+* [ ] Rewrite nixphile
 * [ ] xclip? non-x-reliant clipboard manager?
 * [ ] speedup, namely rewrite `bundle` and reduce core_env
 * [ ] refactor inputs follow nixpkgs
