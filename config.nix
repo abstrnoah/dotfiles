@@ -4,7 +4,9 @@ config@{ self, system, brumal-names }:
   # TODO deprecate
   legacy = import ./lib.nix { nixpkgs = self.our-nixpkgs; };
 
+  # TODO
   inherit (self.our-nixpkgs) writeTextDir;
+  inherit (self.our-nixpkgs.lib) getLib;
 
   has-constructor-id = id: x:
     x.${brumal-names.constructor}.${brumal-names.id} or null == id;

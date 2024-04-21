@@ -17,8 +17,8 @@ let
       thunderbird time tmux tmuxinator toilet tor-browser-bundle-bin tree ttdl
       tuptime udiskie ungoogled-chromium uni universal-ctags util-linux visidata
       wmctrl xclip xflux xournalpp xrandr-invert-colors zathura zbar zsh pass
-      captive-browser;
-    inherit (our-nixpkgs) chromium; # TODO Replace with ungoogled-chromium?
+      captive-browser alsa-plugins;
+    chromium = our-nixpkgs.ungoogled-chromium;
     texlive = our-nixpkgs.texlive.combined.scheme-small;
     inherit (our-nixpkgs.nodePackages) insect;
     inherit (our-nixpkgs.python310Packages) grip weasyprint;
@@ -148,31 +148,8 @@ let
       };
     };
 
-    qutebrowser = config.bundle {
-      name = "qutebrowser";
-      packages = {
-        qutebrowser = (upstreams.qutebrowser.overrideAttrs (prev: {
-          preFixup = let
-            alsaPluginDir = (our-nixpkgs.lib.getLib our-nixpkgs.alsa-plugins)
-              + "/lib/alsa-lib";
-            # I don't know much about the following workarounds and don't care to
-            # learn because graphics suck. Unfortunately, the third workaround
-            # probably comes at a performance cost.
-            # (1) QT_XCB_GL_INTEGRATION is a workaround from a while back, idk see
-            # commit logs.
-            # (2) ALSA_PLUGIN_DIR makes audio work under nix.
-            # (3) QT_QUICK_BACKEND is a workaround for Qt6 issue where qutebrowser
-            # UI is literally nonexistent.
-          in prev.preFixup + ''
-            makeWrapperArgs+=(
-              --set QT_XCB_GL_INTEGRATION none
-              --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
-              --set QT_QUICK_BACKEND software
-              )
-          '';
-        }));
-        qutebrowser-rc = config.store-dotfiles ./src/qutebrowser;
-      };
+    qutebrowser = cons-package (import ./src/qutebrowser) { } {
+      inherit (upstreams) qutebrowser;
     };
 
     rofi = config.bundle {
