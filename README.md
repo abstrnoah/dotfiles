@@ -141,6 +141,8 @@ where `config` and `packages` are inherited from the top level.
 * [ ] make deploy to non-nix system actually work
 * [ ] Once nixphile supports both ln and cp trees, the cp trees can replace most
   (all?) before-deploy hooks.
+* [ ] Deal with environment riffraff with zsh i3 etc
+* [ ] nix-ify i3wm so that execs there can refer to nix paths
 
 ---
 
