@@ -139,4 +139,6 @@ config@{ self, system, brumal-names }:
       ${self.our-nixpkgs.lib.concatStrings commands}
     '';
 
+  systemd-user-units-path = "/home/me/.config/systemd/user";
+
 } // config

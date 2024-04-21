@@ -295,15 +295,8 @@ let
     #   '';
     # };
 
-    gnupg = import ./src/gnupg {
-      inherit (config.legacy) bundle; # TODO
-      inherit (our-nixpkgs) writeTextFile;
-      systemd-user-units-path = "/home/me/.config/systemd/user";
-      dotfiles-out-path = "/home/me/.dotfiles.out";
-    } {
-      inherit (upstreams) gnupg;
-      inherit (packages) pinentry;
-    };
+    gnupg =
+      cons-package (import ./src/gnupg) { } { inherit (upstreams) gnupg; };
 
     spotify = config.bundle {
       name = "spotify";
