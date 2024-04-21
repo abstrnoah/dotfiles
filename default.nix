@@ -1,12 +1,7 @@
 inputs@{ ... }:
 
-let inherit (inputs.self) config packages our-nixpkgs our-nixpkgs-unstable;
-
-in let # TODO LEGACY BINDINGS
-  lib = inputs.self.config.legacy; # TODO remove this dependency
-  inherit (lib) store_text;
-
-in let
+let
+  inherit (inputs.self) config packages our-nixpkgs our-nixpkgs-unstable;
 
   cons-package = config.cons-package config packages;
 
@@ -59,7 +54,7 @@ in let
       # TODO mononoki document fc riffraff
       mononoki # Awaiting version bump to fix recognition issue.
     ;
-    telegram = our-nixpkgs-unstable.telegram-desktop; # TODO why on unstable?
+    telegram = our-nixpkgs-unstable.telegram-desktop; # Want latest features.
 
     inherit (inputs.nixphile.packages) nixphile;
 
@@ -136,7 +131,6 @@ in let
       "${our-nixpkgs.vimPlugins.vim-plug}/plug.vim"
       "/home/me/.vim/autoload/plug.vim";
 
-    # TODO mutable spellfile
     vim = config.bundle {
       name = "vim";
       packages = {
@@ -325,7 +319,7 @@ in let
     # };
 
     gnupg = import ./src/gnupg {
-      inherit (lib) bundle;
+      inherit (config.legacy) bundle; # TODO
       inherit (our-nixpkgs) writeTextFile;
       systemd-user-units-path = "/home/me/.config/systemd/user";
       dotfiles-out-path = "/home/me/.dotfiles.out";
