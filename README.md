@@ -51,6 +51,8 @@ and then continue as above from the `nixphile_hook_pre` step, with
 
 # minimal nixless
 
+TODO I think I got rid of this bad boy.
+
 To deploy a minimal set of dotfiles that doesn't depend on Nix (other than
 nix-portable for deployment), do
 
@@ -65,52 +67,40 @@ NIXPHILE_MODE=portable sh <(curl -L https://raw.githubusercontent.com/abstrnoah/
 Note that this feature is really poorly implemented for now until I have more
 time.
 
-# Nix flake design
+# Nix flake structure
 
-Here we describe an intended new flake design to replace the currently messy
-situation. This message will be removed once the design is actually implemented
-(TODO).
+The flake's "installables" (see nix(1)) are intended to produce packages that
+can be deployed via [nixphile].
 
-The flake is intended to produce packages that can be deployed via [nixphile].
+The flake produces the following outputs:
+* `upstreams.${system}` - All upstream packages used by other parts of the
+  flake.
+* `ours.${system}` - Where upstreams are overridden. Many of these are the
+  result of bundling upstreams with my own configuration. They have only been
+  tested insofar as they run on my specific machine, so probably unsuitable for
+  other folks. But who knows maybe you'll find a gem amid the muck.
+* `bundles.${system}` - Bundles of packages from the above two outputs. This is
+  where I organise the above packages into useful collections. For instance,
+  there is a `coyote` bundle that is deployed to the so-named machine.
+* `packages.${system}` - The main package set, obtained by merging `upstreams //
+  ours // bundles`.
+* `lib.any` - A library of utilities that do not depend on `system`. Many of
+  these come from `nixpkgs.lib`.
+* `lib.${system}` - A library of utilities that do depend on `system`, many of
+  which are build helpers coming from or wrapping around `nixpkgs` utilities. We
+  also merge the contents of `lib.any` into every `lib.${system}`. Note that
+  `lib` is using an instance of `nixpkgs` configured by
+  `config.any.nixpkgs-args`.
+* `config.any,config.${system}` - My own configuration parameters.
+* `...` - There are other fellows, but the above are the main characters.
 
-The flake produces the following outputs (see `flake.nix`):
-* `config.${system}` - All configuration and utility functions. These are
-  opinionated because they are specific to my dotfiles. Eventually I might
-  factor out some utilities into a separate library. But for now this output
-  should not be considered a usable library.
-* `our-nixpkgs{,-unstable}.${system}` - Instances of `nixpkgs` with my custom
-  configuration; see `config.${system}.cons-nixpkgs` for details.
-* `packages.${system}` - The main package set. These are all my packages, many
-  of them configured for my system with limited testing and probably unsuitable
-  for anybody other than me. But who knows maybe you'll find a gem amid the
-  muck. The set includes a number of "bundles" which are usually the things that
-  actually get deployed; e.g. I have a `packages.${system}.coyote` which is
-  deployed to my machine named `coyote`.
-* `...` - The flake contains several additional fellows, but the ones above are
-  the main characters.
-
-The `packages` output is constructed in `default.nix` as the merger
-```nix
-upstreams // ours // bundles
+All of our (downstream) packages are constructed by functions of the form
 ```
-The set `upstreams` collects every upstream dependency. If, for example, you
-need to move an upstream package from `nixpkgs-unstable` to `nixpkgs`, then you
-would do so in `upstreams`. Some are overridden within `ours`. Finally, within
-`bundles`, packages are bundled into top-level environments via the function
-`config.${system}.bundle`.
-
-Note that every input passed to `default.nix` has been passed through the
-function `choose-system` defined in `flake.nix` which, for the given `system`,
-transforms a flake input `{ packages.${system} = <packages>; ... }` into `{
-packages = <packages>; ... }`. Thus, `system` is already selected by the time we
-get to `default.nix`.
-
-In general, packages in `ours` are formed via constructors of the form
+package = lib@{...}: config@{...}: packages@{...}: <derivation>
 ```
-<package> = config@{...}: packages@{...}: <derivation>
-```
-where `config` and `packages` are inherited from the top level.
-
+These are called by `lib.${system}.cons-package` which
+passes in the necessary arguments and allows for overriding (a very simple
+version of [nixpkgs]' `callPackage`).
 
 ## ROADMAP
 
@@ -126,6 +116,7 @@ where `config` and `packages` are inherited from the top level.
 * [ ] Finally write syncthing systemd unit
 * [ ] Clean up bundles
 * [ ] Revise README
+* [ ] `default.nix` -> `packages.nix`
 
 # TODO
 
