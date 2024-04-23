@@ -1,6 +1,6 @@
 # `~abstrnoah/.dotfiles`
 
-My dotfiles use [nixphile] (also by me) for most deployment. Setup goes
+My dotfiles use [nixphile] for most deployment. Setup goes
 something like the following. Throughout, `PACKAGE` refers to the flake package
 to deploy, probably the new machine's hostname.
 
@@ -8,17 +8,22 @@ to deploy, probably the new machine's hostname.
 # Bootstrap Nix.
 sh <(curl -L https://raw.githubusercontent.com/abstrnoah/nixphile/main/nixphile)
 
-# Somewhat hacky solutions to outstanding deployment issues.
-# Among other things, clone dotfiles to ~/.dotfiles if not already present.
-# Note that if ~/.dotfiles is already cloned, then we may need to manually pull.
-nix run 'github:abstrnoah/dotfiles#PACKAGE.nixphile_hook_pre'
+# Clone dotfiles locally to "~/.dotfiles".
+# If ~/.dotfiles is already cloned, then you should manually pull.
+nix run 'github:abstrnoah/dotfiles#clone-dotfiles'
 
 # Deploy the environment.
-nix run 'github:abstrnoah/nixphile' 'github:abstrnoah/dotfiles#PACKAGE'
+nix run 'github:abstrnoah/dotfiles#nixphile' 'github:abstrnoah/dotfiles#PACKAGE'
 
 # Set login shell (requires `sudo` because nix's zsh is not in /etc/shells).
 # (If no root privileges, then probably use nix-portable for everything anyway.)
 sudo chsh -s $(which zsh) abstrnoah
+
+# Install root systemd units.
+# (TODO)
+
+# Reload systemd user daemon.
+systemctl --user daemon-reload
 
 # Create an ssh key, transfer public key to personal server via pastebin.
 ssh-keygen
@@ -39,15 +44,11 @@ flake][nix-on-droid-readme-flake].
 
 Install the app.
 
-In the nix-on-droid terminal, do
-
+As above with `PACKAGE=nix-on-droid`, except replace the first step with
 ```sh
 # Bootstrap nix-on-droid environment.
 nix-on-droid switch --flake 'github:abstrnoah/dotfiles#default'
 ```
-
-and then continue as above from the `nixphile_hook_pre` step, with
-`PACKAGE=nix-on-droid`.
 
 # Nix flake structure
 
@@ -62,7 +63,7 @@ The flake produces the following outputs:
   tested insofar as they run on my specific machine, so probably unsuitable for
   other folks. But who knows maybe you'll find a gem amid the muck.
 * `bundles.${system}` - Bundles of packages from the above two outputs. This is
-  where I organise the above packages into useful collections. For instance,
+  where I organise them into useful collections. For instance,
   there is a `coyote` bundle that is deployed to the so-named machine.
 * `packages.${system}` - The main package set, obtained by merging `upstreams //
   ours // bundles`.
@@ -83,35 +84,18 @@ necessary arguments and allows for overriding (a very simple version of
 
 P.S. If you don't like how the code is formatted, then blame [nixfmt].
 
-## ROADMAP
-
-* [x] Begin overhaul `bundle`.
-* [x] Overhaul `mk_src` packages.
-* [x] Deal with nixphile hooks.
-* [x] Move any non-trivial packages into a constructor in a separate file.
-* [x] Streamline calling package constructors from within `default.nix`.
-* [x] Revisit `bundle` and other legacy library utils.
-* [x] Revisit flake organisation
-    * [x] Deal with `lib` versus `config`
-    * [x] Consider bringing `upstreams` etc into flake top-level
-* [ ] Finally write syncthing systemd unit
-* [x] Clean up bundles
-* [x] Revise README
-* [x] `default.nix` -> `packages.nix`
-
 # TODO
 
-* [ ] Rewrite nixphile
+* [ ] rewrite nixphile
 * [ ] xclip? non-x-reliant clipboard manager?
-* [ ] speedup, namely rewrite `bundle` and reduce core_env
-* [ ] refactor inputs follow nixpkgs
-* [ ] bundle together all my common inputs like `flake-utils` and commonly-used
-  system-agnostic `nixpkgs` utilities into a separate flake.
+* [ ] speedup, namely `bundle`
+* [ ] inputs follow nixpkgs
+* [ ] separate utils into separate lib flake?
 * [ ] make deploy to non-nix system actually work
-* [ ] Once nixphile supports both ln and cp trees, the cp trees can replace most
-  (all?) before-deploy hooks.
 * [ ] Deal with environment riffraff with zsh i3 etc
 * [ ] nix-ify i3wm so that execs there can refer to nix paths
+* [ ] deal with root config like system systemd units
+* [ ] actually test deployment on completely fresh machine
 
 ---
 

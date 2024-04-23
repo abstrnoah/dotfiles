@@ -24,7 +24,7 @@ flake-utils.lib.eachDefaultSystem (system:
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt coreutils syncthing;
+        nixfmt coreutils coreutils-prefixed syncthing;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -254,14 +254,20 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      clone-dotfiles = this-config.write-shell-app {
-        name = "clone-dotfiles";
-        text = ''
-          test -d "${this-config.dotfiles-destination}" \
-          || git clone -o github \
-              "${this-config.dotfiles-source}" "${this-config.dotfiles-destination}"
-        '';
-      };
+      clone-dotfiles = let
+        clone-dotfiles-cons =
+          config@{ write-shell-app, dotfiles-source, dotfiles-destination }:
+          packages@{ git, coreutils-prefixed }:
+          write-shell-app {
+            name = "clone-dotfiles";
+            runtimeInputs = [ git coreutils-prefixed ];
+            text = ''
+              gtest -d "${dotfiles-destination}" \
+              || git clone -o github \
+                  "${dotfiles-source}" "${dotfiles-destination}"
+            '';
+          };
+      in cons-package clone-dotfiles-cons { } { };
 
       nix-rc = this-config.store-dotfiles "nix";
 
