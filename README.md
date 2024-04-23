@@ -81,6 +81,8 @@ These are called by `config.${system}.cons-package` which passes in the
 necessary arguments and allows for overriding (a very simple version of
 [nixpkgs]' `callPackage`).
 
+P.S. If you don't like how the code is formatted, then blame [nixfmt].
+
 ## ROADMAP
 
 * [x] Begin overhaul `bundle`.
@@ -119,3 +121,4 @@ necessary arguments and allows for overriding (a very simple version of
 [nix-on-droid-readme-flake]: https://github.com/t184256/nix-on-droid#nix-flakes
 [nixpkgs]: https://github.com/NixOS/nixpkgs/
 [flake-utils]: https://github.com/numtide/flake-utils/
+[nixfmt]: https://github.com/NixOS/nixfmt
