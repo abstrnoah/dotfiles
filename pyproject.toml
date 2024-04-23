@@ -1,6 +1,6 @@
 [tool.black]
 line-length=80
 include = '''
-    ^/package/visidata/visidatarc$
-    | ^/package/qutebrowser/config.py$
+    ^/src/visidata/home/me/.visidatarc$
+    | ^/src/qutebrowser/home/me/.config/qutebrowser/config.py$
 '''
