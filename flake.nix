@@ -37,7 +37,7 @@
         nixpkgs = our-nixpkgs;
         nixpkgs-unstable = our-nixpkgs-unstable;
       };
-      main = import ./default.nix our-inputs;
+      main = import ./packages.nix our-inputs;
       config = import ./config.nix our-inputs;
       nix-on-droid'.nixOnDroidConfigurations.default =
         nix-on-droid.lib.nixOnDroidConfiguration {
