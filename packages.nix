@@ -341,7 +341,7 @@ flake-utils.lib.eachDefaultSystem (system:
       coyote = this-config.bundle {
         name = "coyote";
         packages = {
-          inherit (packages) wm-env extras;
+          inherit (packages) wm-env extras syncthing;
           coyote-xrandr-switch = cons-package-named "xrandr" {
             machine = this-config.machines.coyote;
           } { };
