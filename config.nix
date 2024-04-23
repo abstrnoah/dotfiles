@@ -100,7 +100,7 @@ flake-utils.lib.eachDefaultSystem (system:
         cons:
         config'@{ ... }:
         packages'@{ ... }:
-        this.calls cons [(config // config') (packages // packages')];
+        this.calls cons [ (config // config') (packages // packages') ];
 
       cons-package-named = config: packages: name:
         this.cons-package config packages

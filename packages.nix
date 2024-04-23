@@ -138,7 +138,10 @@ flake-utils.lib.eachDefaultSystem (system:
           inherit pass;
         };
         pass = pass'.overrideAttrs (final: prev: {
-          patches = prev.patches ++ [ ./src/pass/set-prompt.patch ];
+          patches = prev.patches ++ [
+            (this-config.path-append this-config.src-path
+              "pass/set-prompt.patch")
+          ];
         });
       in pass.withExtensions (es: [ es.pass-otp ]);
 

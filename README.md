@@ -49,24 +49,6 @@ nix-on-droid switch --flake 'github:abstrnoah/dotfiles#default'
 and then continue as above from the `nixphile_hook_pre` step, with
 `PACKAGE=nix-on-droid`.
 
-# minimal nixless
-
-TODO I think I got rid of this bad boy.
-
-To deploy a minimal set of dotfiles that doesn't depend on Nix (other than
-nix-portable for deployment), do
-
-```sh
-# Fetch nix-portable.
-NIXPHILE_MODE=portable sh <(curl -L https://raw.githubusercontent.com/abstrnoah/nixphile/main/nixphile)
-
-# Deploy minimal dotfiles.
-~/.nixphile/bin/nix-portable nix run 'github:abstrnoah/dotfiles#minimal_nixless'
-```
-
-Note that this feature is really poorly implemented for now until I have more
-time.
-
 # Nix flake structure
 
 The flake's "installables" (see nix(1)) are intended to produce packages that
@@ -84,23 +66,20 @@ The flake produces the following outputs:
   there is a `coyote` bundle that is deployed to the so-named machine.
 * `packages.${system}` - The main package set, obtained by merging `upstreams //
   ours // bundles`.
-* `lib.any` - A library of utilities that do not depend on `system`. Many of
-  these come from `nixpkgs.lib`.
-* `lib.${system}` - A library of utilities that do depend on `system`, many of
-  which are build helpers coming from or wrapping around `nixpkgs` utilities. We
-  also merge the contents of `lib.any` into every `lib.${system}`. Note that
-  `lib` is using an instance of `nixpkgs` configured by
-  `config.any.nixpkgs-args`.
-* `config.any,config.${system}` - My own configuration parameters.
-* `...` - There are other fellows, but the above are the main characters.
+* `config.${system}` - My own utilities and configuration parameters. Note that
+  I collect "library" functions in this output, instead of separating them into
+  a separate `out` output. That's because this flake really shouldn't be used as
+  an upstream library; everything should be viewed as "the author's custom
+  configuration".
+* `...` - There might be others, but the above are the main characters.
 
 All of our (downstream) packages are constructed by functions of the form
 ```
-package = lib@{...}: config@{...}: packages@{...}: <derivation>
+package = config@{...}: packages@{...}: <derivation>
 ```
-These are called by `lib.${system}.cons-package` which
-passes in the necessary arguments and allows for overriding (a very simple
-version of [nixpkgs]' `callPackage`).
+These are called by `config.${system}.cons-package` which passes in the
+necessary arguments and allows for overriding (a very simple version of
+[nixpkgs]' `callPackage`).
 
 ## ROADMAP
 
@@ -110,13 +89,13 @@ version of [nixpkgs]' `callPackage`).
 * [x] Move any non-trivial packages into a constructor in a separate file.
 * [x] Streamline calling package constructors from within `default.nix`.
 * [x] Revisit `bundle` and other legacy library utils.
-* [ ] Revisit flake organisation
-    * [ ] Deal with `lib` versus `config`
-    * [ ] Consider bringing `upstreams` etc into flake top-level
+* [x] Revisit flake organisation
+    * [x] Deal with `lib` versus `config`
+    * [x] Consider bringing `upstreams` etc into flake top-level
 * [ ] Finally write syncthing systemd unit
 * [ ] Clean up bundles
-* [ ] Revise README
-* [ ] `default.nix` -> `packages.nix`
+* [x] Revise README
+* [x] `default.nix` -> `packages.nix`
 
 # TODO
 
@@ -124,8 +103,6 @@ version of [nixpkgs]' `callPackage`).
 * [ ] xclip? non-x-reliant clipboard manager?
 * [ ] speedup, namely rewrite `bundle` and reduce core_env
 * [ ] refactor inputs follow nixpkgs
-* [ ] more flake-zen way of loading nixpkgs with system and config than
-  `import`?
 * [ ] names replace `_` with `-`
 * [ ] bundle together all my common inputs like `flake-utils` and commonly-used
   system-agnostic `nixpkgs` utilities into a separate flake.
