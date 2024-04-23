@@ -7,8 +7,26 @@ flake-utils.lib.eachDefaultSystem (system:
       inherit (nixpkgs.nixpkgs.${system})
         writeTextDir writeShellApplication symlinkJoin runCommandLocal;
       inherit (nixpkgs.lib.attrsets) getLib genAttrs getAttrs;
-      inherit (nixpkgs.lib.strings) escapeShellArg concatStrings;
+      inherit (nixpkgs.lib.strings) escapeShellArg concatStrings getName;
       path-append = nixpkgs.lib.path.append;
+
+      nixpkgs-args = {
+        inherit system;
+        config = {
+          pulseaudio = true;
+          allowUnfreePredicate = p:
+          builtins.elem (config-system.getName p) [
+            "discord"
+            "spotify"
+            "spotify-unwrapped"
+            "vscode"
+            "xflux"
+            "zoom"
+            "slack"
+            "minecraft-launcher"
+          ];
+        };
+      };
 
       has-constructor-id = id: x:
         x.${config-system.brumal-names.constructor}.${config-system.brumal-names.id} or null

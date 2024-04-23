@@ -22,50 +22,27 @@
   outputs =
     inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, nix-on-droid, ... }:
     let
-
       cons-nixpkgs = nixpkgs:
         flake-utils.lib.eachDefaultSystem (system:
-          let
-            nixpkgs' = import nixpkgs {
-              inherit system;
-              config = {
-                pulseaudio = true;
-                allowUnfreePredicate = p:
-                  builtins.elem (nixpkgs.lib.getName p) [
-                    "discord"
-                    "spotify"
-                    "spotify-unwrapped"
-                    "vscode"
-                    "xflux"
-                    "zoom"
-                    "slack"
-                    "minecraft-launcher"
-                  ];
-              };
-            };
+          let nixpkgs' = import nixpkgs self.config.${system}.nixpkgs-args;
           in {
             nixpkgs = nixpkgs';
             legacyPackages = nixpkgs';
           }) // {
             inherit (nixpkgs) lib;
           };
-
       our-nixpkgs = cons-nixpkgs nixpkgs;
       our-nixpkgs-unstable = cons-nixpkgs nixpkgs-unstable;
-
       our-inputs = inputs // {
         nixpkgs = our-nixpkgs;
         nixpkgs-unstable = our-nixpkgs-unstable;
       };
-
       main = import ./default.nix our-inputs;
       config = import ./config.nix our-inputs;
-
       nix-on-droid'.nixOnDroidConfigurations.default =
         nix-on-droid.lib.nixOnDroidConfiguration {
           modules = [ ./nix-on-droid.nix ];
         };
-
     in main // config // nix-on-droid';
 
 }
