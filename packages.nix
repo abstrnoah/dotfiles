@@ -23,7 +23,7 @@ flake-utils.lib.eachDefaultSystem (system:
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt;
+        nixfmt coreutils;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -268,16 +268,17 @@ flake-utils.lib.eachDefaultSystem (system:
 
     bundles = {
 
-      core_env = this-config.bundle {
-        name = "core_env";
+      core-env = this-config.bundle {
+        name = "core-env";
         packages = {
-          core-rc = this-config.store-dotfiles "core_env";
+          core-rc = this-config.store-dotfiles "core-env";
           inherit (packages)
             awk nixphile diffutils dos2unix findutils getconf gnugrep gnused
             hostname man bat curl dig dnstracer fd sd rargs fzf git htop jq
             netcat-openbsd nettools nodejs pandoc pdfgrep pfetch ranger
             silver-searcher sl textql time tmux toilet tree tuptime
-            universal-ctags zip vim visidata rlwrap par nix-rc;
+            universal-ctags zip vim visidata rlwrap par nix-rc util-linux
+            coreutils;
         };
       };
 
@@ -285,15 +286,14 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "default";
         packages = {
           inherit (packages)
-            core_env black bup clang cowsay exiftool gcal imagemagick img2pdf
-            ocaml stow pdftk bluetooth tectonic hydra-check apache-jena
-            util-linux ttdl;
+            core-env black bup clang cowsay exiftool gcal imagemagick img2pdf
+            ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass nixfmt;
         };
       };
 
       nix-on-droid = this-config.bundle {
         name = "nix-on-droid";
-        packages = { inherit (packages) core_env termux coreutils ssh procps; };
+        packages = { inherit (packages) core-env termux ssh procps; };
       };
 
       extras = this-config.bundle {
@@ -304,29 +304,29 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      gui_env = this-config.bundle {
-        name = "gui_env";
+      gui-env = this-config.bundle {
+        name = "gui-env";
         packages = {
           inherit (packages)
-            captive-browser default grip libnotify libreoffice mpv pulseaudio
-            qutebrowser tor-browser-bundle-bin signal-desktop spotify slack
-            telegram discord xclip xournalpp zathura jabref udiskie;
+            captive-browser default grip libreoffice mpv pulseaudio qutebrowser
+            tor-browser-bundle-bin signal-desktop spotify slack telegram discord
+            xclip xournalpp zathura jabref udiskie zoom feh mononoki;
         };
       };
 
-      wm_env = this-config.bundle {
-        name = "wm_env";
+      wm-env = this-config.bundle {
+        name = "wm-env";
         packages = {
           inherit (packages)
-            gui_env i3wm i3status xsession jq wallpapers dunst rofi wmctrl
-            spotify-cli-linux xflux xrandr-invert-colors xbacklight feh zoom;
+            gui-env i3wm i3status xsession libnotify jq wallpapers dunst rofi
+            wmctrl xflux xrandr-invert-colors xbacklight;
         };
       };
 
       coyote = this-config.bundle {
         name = "coyote";
         packages = {
-          inherit (packages) extras wm_env mononoki gnupg pass nixfmt;
+          inherit (packages) wm-env extras;
           coyote-xrandr-switch = cons-package-named "xrandr" {
             machine = this-config.machines.coyote;
           } { };

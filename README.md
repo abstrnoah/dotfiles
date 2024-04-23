@@ -95,7 +95,7 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
     * [x] Deal with `lib` versus `config`
     * [x] Consider bringing `upstreams` etc into flake top-level
 * [ ] Finally write syncthing systemd unit
-* [ ] Clean up bundles
+* [x] Clean up bundles
 * [x] Revise README
 * [x] `default.nix` -> `packages.nix`
 
@@ -105,7 +105,6 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 * [ ] xclip? non-x-reliant clipboard manager?
 * [ ] speedup, namely rewrite `bundle` and reduce core_env
 * [ ] refactor inputs follow nixpkgs
-* [ ] names replace `_` with `-`
 * [ ] bundle together all my common inputs like `flake-utils` and commonly-used
   system-agnostic `nixpkgs` utilities into a separate flake.
 * [ ] make deploy to non-nix system actually work
