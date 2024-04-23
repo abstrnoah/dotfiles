@@ -1,11 +1,11 @@
-config@{ bundle, writeTextDir }:
+config@{ bundle, write-text }:
 packages@{ captive-browser, chromium }:
 
 bundle {
   name = "captive-browser";
   packages = {
     inherit captive-browser;
-    captive-browser-rc = writeTextDir "home/me/.config/captive-browser.toml" ''
+    captive-browser-rc = write-text "home/me/.config/captive-browser.toml" ''
       # Source: https://raw.githubusercontent.com/FiloSottile/captive-browser/main/captive-browser-ubuntu-chrome.toml
 
       # My changes: Replaced google-chrome with Nix's and changed startup page to

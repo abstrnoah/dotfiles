@@ -236,7 +236,7 @@ flake-utils.lib.eachDefaultSystem (system:
       };
 
       # TODO Reimplement using future nixphile cp tree feature.
-      # termux.passthru.before-deploy = nixpkgs-system.writeShellApplication {
+      # termux.passthru.before-deploy = nixpkgs-system.write-shell-app {
       #   name = "termux-before-deploy-hook";
       #   text = ''
       #     mkdir -p ~/.termux
@@ -257,7 +257,7 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      clone-dotfiles = nixpkgs-system.writeShellApplication {
+      clone-dotfiles = nixpkgs-system.write-shell-app {
         name = "clone-dotfiles";
         text = ''
           test -d "${config-system.dotfiles-destination}" \

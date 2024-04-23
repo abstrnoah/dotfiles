@@ -1,4 +1,4 @@
-config@{ bundle, store-dotfiles, getLib }:
+config@{ bundle, store-dotfiles, get-lib-output }:
 packages@{ qutebrowser, alsa-plugins }:
 
 # Some workarounds I seem to need on my Debian machine.
@@ -13,14 +13,15 @@ bundle {
   name = "qutebrowser";
   packages = {
     qutebrowser = qutebrowser.overrideAttrs (prev: {
-      preFixup = let alsaPluginDir = (getLib alsa-plugins) + "/lib/alsa-lib";
-      in prev.preFixup + ''
-        makeWrapperArgs+=(
-          --set QT_XCB_GL_INTEGRATION none
-          --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
-          --set QT_QUICK_BACKEND software
-          )
-      '';
+      preFixup =
+        let alsaPluginDir = (get-lib-output alsa-plugins) + "/lib/alsa-lib";
+        in prev.preFixup + ''
+          makeWrapperArgs+=(
+            --set QT_XCB_GL_INTEGRATION none
+            --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
+            --set QT_QUICK_BACKEND software
+            )
+        '';
     });
     qutebrowser-rc = store-dotfiles ./.;
   };

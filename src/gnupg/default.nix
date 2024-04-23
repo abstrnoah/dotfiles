@@ -1,4 +1,4 @@
-config@{ writeTextDir, systemd-user-units-path, bundle }:
+config@{ write-text, systemd-user-units-path, bundle }:
 packages@{ gnupg, pinentry }:
 
 bundle {
@@ -6,7 +6,7 @@ bundle {
   packages = {
     inherit gnupg;
     gpg-agent-service =
-      writeTextDir (systemd-user-units-path + "/gpg-agent.service") ''
+      write-text (systemd-user-units-path + "/gpg-agent.service") ''
         [Unit]
         Description=GnuPG cryptographic agent and passphrase cache
         Documentation=man:gpg-agent(1)

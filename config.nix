@@ -4,10 +4,16 @@ flake-utils.lib.eachDefaultSystem (system:
   let
     config-system = {
 
-      inherit (nixpkgs.nixpkgs.${system})
-        writeTextDir writeShellApplication symlinkJoin runCommandLocal;
-      inherit (nixpkgs.lib.attrsets) getLib genAttrs getAttrs;
-      inherit (nixpkgs.lib.strings) escapeShellArg concatStrings getName;
+      write-text = nixpkgs.nixpkgs.${system}.writeTextDir;
+      write-shell-app = nixpkgs.nixpkgs.${system}.writeShellApplication;
+      symlink-join = nixpkgs.nixpkgs.${system}.symlinkJoin;
+      run-command-local = nixpkgs.nixpkgs.${system}.runCommandLocal;
+      get-lib-output = nixpkgs.lib.attrsets.getLib;
+      gen-attrs = nixpkgs.lib.attrsets.genAttrs;
+      get-attrs = nixpkgs.lib.attrsets.getAttrs;
+      escape-shell-arg = nixpkgs.lib.strings.escapeShellArg;
+      concat-strings = nixpkgs.lib.strings.concatStrings;
+      get-name-substring = nixpkgs.lib.strings.getName;
       path-append = nixpkgs.lib.path.append;
 
       nixpkgs-args = {
@@ -15,16 +21,16 @@ flake-utils.lib.eachDefaultSystem (system:
         config = {
           pulseaudio = true;
           allowUnfreePredicate = p:
-          builtins.elem (config-system.getName p) [
-            "discord"
-            "spotify"
-            "spotify-unwrapped"
-            "vscode"
-            "xflux"
-            "zoom"
-            "slack"
-            "minecraft-launcher"
-          ];
+            builtins.elem (config-system.get-name-substring p) [
+              "discord"
+              "spotify"
+              "spotify-unwrapped"
+              "vscode"
+              "xflux"
+              "zoom"
+              "slack"
+              "minecraft-launcher"
+            ];
         };
       };
 
@@ -104,7 +110,8 @@ flake-utils.lib.eachDefaultSystem (system:
       };
 
       call-with = args: f:
-        f (config-system.getAttrs (builtins.attrNames (builtins.functionArgs f))
+        f
+        (config-system.get-attrs (builtins.attrNames (builtins.functionArgs f))
           args);
 
       cons-package = config@{ ... }:
@@ -134,22 +141,22 @@ flake-utils.lib.eachDefaultSystem (system:
       store-symlinks = { name, mapping }:
         let
           symlink-command = { source, destination }: ''
-            destination="$out"/${config-system.escapeShellArg destination}
+            destination="$out"/${config-system.escape-shell-arg destination}
             mkdir -p "$(dirname "$destination")"
-            ln -s ${config-system.escapeShellArg source} "$destination"
+            ln -s ${config-system.escape-shell-arg source} "$destination"
           '';
           commands = map symlink-command mapping;
-        in config-system.runCommandLocal name { } ''
+        in config-system.run-command-local name { } ''
           mkdir -p "$out"
           cd "$out"
-          ${config-system.concatStrings commands}
+          ${config-system.concat-strings commands}
         '';
 
       systemd-user-units-path = "/home/me/.config/systemd/user";
 
       # config-system.brumal-names - An RDF-style namespace for attribute keys which will
       # eventually (TODO) be moved into a separate flake.
-      brumal-names = config-system.genAttrs [
+      brumal-names = config-system.gen-attrs [
         # The argument that was passed to "constructor" to yield the object.
         "preimage"
         # The function which was applied to "preimage" to yield the object.
