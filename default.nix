@@ -83,7 +83,7 @@ flake-utils.lib.eachDefaultSystem (system:
       nix_env_exports = let
         locale_archive =
           "${this-nixpkgs.glibcLocales}/lib/locale/locale-archive";
-      in this-config.writeTextFile rec {
+      in this-config.write-text rec {
         name = "nix_env_exports";
         text = ''
           export ${this-nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
@@ -175,11 +175,9 @@ flake-utils.lib.eachDefaultSystem (system:
 
       i3wm = bundle-dotfiles "i3wm";
 
-      xsession = this-config.writeTextFile {
+      xsession = this-config.write-text {
         name = "xsession";
-        text = ''
-          exec "${packages.i3wm}/bin/i3"
-        '';
+        text = ''exec "${packages.i3wm}/bin/i3"'';
         destination = "/home/me/.xsession";
       };
 

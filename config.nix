@@ -32,10 +32,7 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      inherit (nixpkgs.nixpkgs.${system}) writeTextFile;
-      # TODO move to writeText
-      write-text = nixpkgs.nixpkgs.${system}.writeTextDir;
-
+      write-text = nixpkgs.nixpkgs.${system}.writeTextFile;
       write-shell-app = nixpkgs.nixpkgs.${system}.writeShellApplication;
       symlink-join = nixpkgs.nixpkgs.${system}.symlinkJoin;
       run-command-local = nixpkgs.nixpkgs.${system}.runCommandLocal;
