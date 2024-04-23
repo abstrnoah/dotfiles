@@ -83,10 +83,9 @@ flake-utils.lib.eachDefaultSystem (system:
           filter = path: type: !builtins.elem (/. + path) excludes';
         in builtins.filterSource filter source;
 
-      # TODO take name instead of source path
-      store-dotfiles = source:
+      store-dotfiles = name:
         this.store-source {
-          inherit source;
+          source = this.path-append this.src-path name;
           excludes = [ "README.md" "default.nix" ];
         };
 
@@ -109,7 +108,7 @@ flake-utils.lib.eachDefaultSystem (system:
           inherit name;
           packages = {
             package = upstreams.${name};
-            rc = this.store-dotfiles (this.path-append this.src-path name);
+            rc = this.store-dotfiles name;
           };
         };
 

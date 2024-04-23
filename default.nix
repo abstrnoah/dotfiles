@@ -71,7 +71,7 @@ flake-utils.lib.eachDefaultSystem (system:
 
       ttdl = bundle-dotfiles "ttdl";
 
-      bluetooth = this-config.store-dotfiles ./src/bluetooth;
+      bluetooth = this-config.store-dotfiles "bluetooth";
 
       curl = bundle-dotfiles "curl";
 
@@ -101,7 +101,7 @@ flake-utils.lib.eachDefaultSystem (system:
             zsh # TODO rm this dep, it should really point the other direction
           ;
           inherit (upstreams) tmux;
-          tmux-rc = this-config.store-dotfiles ./src/tmux;
+          tmux-rc = this-config.store-dotfiles "tmux";
         };
       };
 
@@ -114,7 +114,7 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages) curl fzf vim-plug;
           inherit (upstreams) vim;
-          vim-rc = this-config.store-dotfiles ./src/vim;
+          vim-rc = this-config.store-dotfiles "vim";
         };
       };
 
@@ -128,7 +128,7 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "rofi";
         packages = {
           rofi = upstreams.rofi.override { symlink-dmenu = true; };
-          rofi-rc = this-config.store-dotfiles ./src/rofi;
+          rofi-rc = this-config.store-dotfiles "rofi";
         };
       };
 
@@ -149,7 +149,7 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages) curl jq;
           inherit (upstreams) xflux;
-          xflux-rc = this-config.store-dotfiles ./src/xflux;
+          xflux-rc = this-config.store-dotfiles "xflux";
         };
       };
 
@@ -169,7 +169,7 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages) bat fd fzf nix_env_exports;
           inherit (upstreams) zsh;
-          zsh-rc = this-config.store-dotfiles ./src/zsh;
+          zsh-rc = this-config.store-dotfiles "zsh";
         };
       };
 
@@ -260,7 +260,7 @@ flake-utils.lib.eachDefaultSystem (system:
         '';
       };
 
-      nix-rc = this-config.store-dotfiles ./src/nix;
+      nix-rc = this-config.store-dotfiles "nix";
 
     };
 
@@ -269,7 +269,7 @@ flake-utils.lib.eachDefaultSystem (system:
       core_env = this-config.bundle {
         name = "core_env";
         packages = {
-          core-rc = this-config.store-dotfiles ./src/core_env;
+          core-rc = this-config.store-dotfiles "core_env";
           inherit (packages)
             awk nixphile diffutils dos2unix findutils getconf gnugrep gnused
             hostname man bat curl dig dnstracer fd sd rargs fzf git htop jq

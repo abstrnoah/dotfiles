@@ -23,6 +23,6 @@ bundle {
             )
         '';
     });
-    qutebrowser-rc = store-dotfiles ./.;
+    qutebrowser-rc = store-dotfiles "qutebrowser";
   };
 }
