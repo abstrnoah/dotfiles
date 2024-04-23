@@ -4,11 +4,11 @@ flake-utils.lib.eachDefaultSystem (system:
   let
     config-system = {
 
-      # TODO
       inherit (nixpkgs.nixpkgs.${system})
         writeTextDir writeShellApplication symlinkJoin runCommandLocal;
-      inherit (nixpkgs.lib) getLib;
-      inherit (nixpkgs.lib.strings) escapeShellArg;
+      inherit (nixpkgs.lib.attrsets) getLib genAttrs getAttrs;
+      inherit (nixpkgs.lib.strings) escapeShellArg concatStrings;
+      path-append = nixpkgs.lib.path.append;
 
       has-constructor-id = id: x:
         x.${config-system.brumal-names.constructor}.${config-system.brumal-names.id} or null
@@ -21,6 +21,7 @@ flake-utils.lib.eachDefaultSystem (system:
         assert config-system.is-bundled b;
         builtins.attrValues b.${config-system.brumal-names.preimage}.packages;
 
+      # TODO simplify lol
       # flatten-bundles :: [ Package | Bundle ] -> [ Package ]
       # We operate on lists rather than sets to avoid overriding packages.
       flatten-bundles = ps:
@@ -69,7 +70,7 @@ flake-utils.lib.eachDefaultSystem (system:
         assert builtins.typeOf source == "path";
         let
           name = baseNameOf source;
-          excludes' = map (p: nixpkgs.lib.path.append source p) excludes;
+          excludes' = map (p: config-system.path-append source p) excludes;
           filter = path: type: !builtins.elem (/. + path) excludes';
         in builtins.filterSource filter source;
 
@@ -85,8 +86,8 @@ flake-utils.lib.eachDefaultSystem (system:
       };
 
       call-with = args: f:
-        f (nixpkgs.lib.attrsets.getAttrs
-          (builtins.attrNames (builtins.functionArgs f)) args);
+        f (config-system.getAttrs (builtins.attrNames (builtins.functionArgs f))
+          args);
 
       cons-package = config@{ ... }:
         packages@{ ... }:
@@ -102,7 +103,7 @@ flake-utils.lib.eachDefaultSystem (system:
           packages = {
             package = upstreams.${name};
             rc = config-system.store-dotfiles
-              (nixpkgs.lib.path.append config-system.src-path name);
+              (config-system.path-append config-system.src-path name);
           };
         };
 
@@ -115,22 +116,22 @@ flake-utils.lib.eachDefaultSystem (system:
       store-symlinks = { name, mapping }:
         let
           symlink-command = { source, destination }: ''
-            destination="$out"/${nixpkgs.lib.escapeShellArg destination}
+            destination="$out"/${config-system.escapeShellArg destination}
             mkdir -p "$(dirname "$destination")"
-            ln -s ${nixpkgs.lib.escapeShellArg source} "$destination"
+            ln -s ${config-system.escapeShellArg source} "$destination"
           '';
           commands = map symlink-command mapping;
         in config-system.runCommandLocal name { } ''
           mkdir -p "$out"
           cd "$out"
-          ${nixpkgs.lib.concatStrings commands}
+          ${config-system.concatStrings commands}
         '';
 
       systemd-user-units-path = "/home/me/.config/systemd/user";
 
       # config-system.brumal-names - An RDF-style namespace for attribute keys which will
       # eventually (TODO) be moved into a separate flake.
-      brumal-names = inputs.nixpkgs.lib.genAttrs [
+      brumal-names = config-system.genAttrs [
         # The argument that was passed to "constructor" to yield the object.
         "preimage"
         # The function which was applied to "preimage" to yield the object.

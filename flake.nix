@@ -19,40 +19,39 @@
   inputs.nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.05";
   inputs.nix-on-droid.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, ... }:
+  outputs =
+    inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, nix-on-droid, ... }:
     let
 
-      boot = {
-        cons-nixpkgs = nixpkgs:
-          flake-utils.lib.eachDefaultSystem (system:
-            let
-              nixpkgs' = import nixpkgs {
-                inherit system;
-                config = {
-                  pulseaudio = true;
-                  allowUnfreePredicate = p:
-                    builtins.elem (nixpkgs.lib.getName p) [
-                      "discord"
-                      "spotify"
-                      "spotify-unwrapped"
-                      "vscode"
-                      "xflux"
-                      "zoom"
-                      "slack"
-                      "minecraft-launcher"
-                    ];
-                };
+      cons-nixpkgs = nixpkgs:
+        flake-utils.lib.eachDefaultSystem (system:
+          let
+            nixpkgs' = import nixpkgs {
+              inherit system;
+              config = {
+                pulseaudio = true;
+                allowUnfreePredicate = p:
+                  builtins.elem (nixpkgs.lib.getName p) [
+                    "discord"
+                    "spotify"
+                    "spotify-unwrapped"
+                    "vscode"
+                    "xflux"
+                    "zoom"
+                    "slack"
+                    "minecraft-launcher"
+                  ];
               };
-            in {
-              nixpkgs = nixpkgs';
-              legacyPackages = nixpkgs';
-            }) // {
-              inherit (nixpkgs) lib;
             };
-      };
+          in {
+            nixpkgs = nixpkgs';
+            legacyPackages = nixpkgs';
+          }) // {
+            inherit (nixpkgs) lib;
+          };
 
-      our-nixpkgs = boot.cons-nixpkgs nixpkgs;
-      our-nixpkgs-unstable = boot.cons-nixpkgs nixpkgs-unstable;
+      our-nixpkgs = cons-nixpkgs nixpkgs;
+      our-nixpkgs-unstable = cons-nixpkgs nixpkgs-unstable;
 
       our-inputs = inputs // {
         nixpkgs = our-nixpkgs;
@@ -62,13 +61,11 @@
       main = import ./default.nix our-inputs;
       config = import ./config.nix our-inputs;
 
-      nix-on-droid = {
-        nixOnDroidConfigurations.default =
-          inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-            modules = [ ./nix-on-droid.nix ];
-          };
-      };
+      nix-on-droid'.nixOnDroidConfigurations.default =
+        nix-on-droid.lib.nixOnDroidConfiguration {
+          modules = [ ./nix-on-droid.nix ];
+        };
 
-    in main // config // nix-on-droid;
+    in main // config // nix-on-droid';
 
 }
