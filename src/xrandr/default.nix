@@ -1,5 +1,5 @@
-config@{ escape-shell-arg, write-shell-app, symlink-join, machine, ... }:
-packages@{ xrandr, feh, wallpapers, ... }:
+config@{ escape-shell-arg, write-shell-app, symlink-join, machine }:
+packages@{ xrandr, feh, wallpapers }:
 
 let
   xrandr-switch-output = name: active: inactive:

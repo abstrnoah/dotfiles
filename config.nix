@@ -32,6 +32,7 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
+      fold = builtins.foldl';
       write-text = nixpkgs.nixpkgs.${system}.writeTextFile;
       write-shell-app = nixpkgs.nixpkgs.${system}.writeShellApplication;
       symlink-join = nixpkgs.nixpkgs.${system}.symlinkJoin;
@@ -89,18 +90,17 @@ flake-utils.lib.eachDefaultSystem (system:
           excludes = [ "README.md" "default.nix" ];
         };
 
-      call-with = args: f:
-        f (this.get-attrs (builtins.attrNames (builtins.functionArgs f)) args);
+      call = f: arg:
+        f (this.get-attrs (builtins.attrNames (builtins.functionArgs f)) arg);
 
-      # TODO call-with-many
+      calls = f: args: this.fold this.call f args;
 
       cons-package = config@{ ... }:
         packages@{ ... }:
         cons:
         config'@{ ... }:
         packages'@{ ... }:
-        this.call-with (packages // packages')
-        (this.call-with (config // config') cons);
+        this.calls cons [(config // config') (packages // packages')];
 
       cons-package-named = config: packages: name:
         this.cons-package config packages
