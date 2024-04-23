@@ -38,14 +38,12 @@ flake-utils.lib.eachDefaultSystem (system:
         x.${config-system.brumal-names.constructor}.${config-system.brumal-names.id} or null
         == id;
 
-      is-bundled =
-        config-system.has-constructor-id config-system.brumal-names.bundle;
+      is-bundled = b: b ? brumal.bundle-packages;
 
       bundle-list-packages = b:
         assert config-system.is-bundled b;
-        builtins.attrValues b.${config-system.brumal-names.preimage}.packages;
+        builtins.attrValues b.brumal.bundle-packages;
 
-      # TODO simplify lol
       # flatten-bundles :: [ Package | Bundle ] -> [ Package ]
       # We operate on lists rather than sets to avoid overriding packages.
       flatten-bundles = ps:
@@ -55,29 +53,17 @@ flake-utils.lib.eachDefaultSystem (system:
           else
             [ p ]) ps;
 
-      cons-function = id: f:
+      bundle = { name, packages, args ? { } }:
         let
-          __functor = _: x:
-            (f x) // {
-              ${config-system.brumal-names.preimage} = x;
-              ${config-system.brumal-names.constructor} = cons;
-            };
-          cons = {
-            inherit __functor;
-            ${config-system.brumal-names.id} = id;
-          };
-        in cons;
-
-      bundle = config-system.cons-function config-system.brumal-names.bundle
-        ({ name, packages, args ? { } }:
-          let
-            packages' =
-              config-system.flatten-bundles (builtins.attrValues packages);
-          in nixpkgs.nixpkgs.${system}.buildEnv ({
-            inherit name;
-            paths = packages';
-            extraOutputsToInstall = [ "man" "doc" ];
-          } // args));
+          packages' =
+            config-system.flatten-bundles (builtins.attrValues packages);
+        in nixpkgs.nixpkgs.${system}.buildEnv ({
+          inherit name;
+          paths = packages';
+          extraOutputsToInstall = [ "man" "doc" ];
+        } // args) // {
+          brumal.bundle-packages = packages;
+        };
 
       username = "abstrnoah";
 
@@ -153,20 +139,6 @@ flake-utils.lib.eachDefaultSystem (system:
         '';
 
       systemd-user-units-path = "/home/me/.config/systemd/user";
-
-      # config-system.brumal-names - An RDF-style namespace for attribute keys which will
-      # eventually (TODO) be moved into a separate flake.
-      brumal-names = config-system.gen-attrs [
-        # The argument that was passed to "constructor" to yield the object.
-        "preimage"
-        # The function which was applied to "preimage" to yield the object.
-        "constructor"
-        # The object's IRI, i.e. globally unique identifier.
-        # We need this in order to equality-check things like functions.
-        "id"
-        # The IRI of the bundle function provided by this flake.
-        "bundle"
-      ] (n: "http://names.brumal.net/nix#${n}");
 
     };
   in { config = config-system; })
