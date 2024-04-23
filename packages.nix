@@ -8,6 +8,7 @@ flake-utils.lib.eachDefaultSystem (system:
     this-nixpkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 
     bundle-dotfiles = this-config.bundle-dotfiles upstreams;
+    cons-package = this-config.cons-package this-config packages;
     cons-package-named = this-config.cons-package-named this-config packages;
 
     upstreams = {
@@ -23,7 +24,7 @@ flake-utils.lib.eachDefaultSystem (system:
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt coreutils;
+        nixfmt coreutils syncthing;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -263,6 +264,20 @@ flake-utils.lib.eachDefaultSystem (system:
       };
 
       nix-rc = this-config.store-dotfiles "nix";
+
+      syncthing = let
+        syncthing-cons = config@{ store-symlink, systemd-user-units-path }:
+          packages@{ syncthing }:
+          this-config.bundle {
+            name = "syncthing";
+            packages = {
+              inherit syncthing;
+              syncthing-service = this-config.store-symlink "syncthing-service"
+                "${syncthing}/share/systemd/user/syncthing.service"
+                "${systemd-user-units-path}/syncthing.service";
+            };
+          };
+      in cons-package syncthing-cons { } { inherit (upstreams) syncthing; };
 
     };
 
