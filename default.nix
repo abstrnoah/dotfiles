@@ -8,7 +8,7 @@ flake-utils.lib.eachDefaultSystem (system:
     this-nixpkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 
     bundle-dotfiles = this-config.bundle-dotfiles upstreams;
-    cons-package = this-config.cons-package this-config packages;
+    cons-package-named = this-config.cons-package-named this-config packages;
 
     upstreams = {
       inherit (this-nixpkgs)
@@ -120,7 +120,7 @@ flake-utils.lib.eachDefaultSystem (system:
 
       visidata = bundle-dotfiles "visidata";
 
-      qutebrowser = cons-package (import ./src/qutebrowser) { } {
+      qutebrowser = cons-package-named "qutebrowser" { } {
         inherit (upstreams) qutebrowser;
       };
 
@@ -225,7 +225,7 @@ flake-utils.lib.eachDefaultSystem (system:
       #     systemctl start "$(basename ${service})"
       #   '';
 
-      captive-browser = cons-package (import ./src/captive-browser) { } {
+      captive-browser = cons-package-named "captive-browser" { } {
         inherit (upstreams) captive-browser;
       };
 
@@ -240,8 +240,7 @@ flake-utils.lib.eachDefaultSystem (system:
       #   '';
       # };
 
-      gnupg =
-        cons-package (import ./src/gnupg) { } { inherit (upstreams) gnupg; };
+      gnupg = cons-package-named "gnupg" { } { inherit (upstreams) gnupg; };
 
       spotify = this-config.bundle {
         name = "spotify";
@@ -325,7 +324,7 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "coyote";
         packages = {
           inherit (packages) extras wm_env mononoki gnupg pass nixfmt;
-          coyote-xrandr-switch = cons-package (import ./src/xrandr) {
+          coyote-xrandr-switch = cons-package-named "xrandr" {
             machine = this-config.machines.coyote;
           } { };
         };

@@ -94,7 +94,6 @@ flake-utils.lib.eachDefaultSystem (system:
 
       # TODO call-with-many
 
-      # TODO cons -> name
       cons-package = config@{ ... }:
         packages@{ ... }:
         cons:
@@ -102,6 +101,10 @@ flake-utils.lib.eachDefaultSystem (system:
         packages'@{ ... }:
         this.call-with (packages // packages')
         (this.call-with (config // config') cons);
+
+      cons-package-named = config: packages: name:
+        this.cons-package config packages
+        (import (this.path-append this.src-path name));
 
       bundle-dotfiles = upstreams: name:
         this.bundle {
