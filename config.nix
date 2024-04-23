@@ -32,7 +32,10 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
+      inherit (nixpkgs.nixpkgs.${system}) writeTextFile;
+      # TODO move to writeText
       write-text = nixpkgs.nixpkgs.${system}.writeTextDir;
+
       write-shell-app = nixpkgs.nixpkgs.${system}.writeShellApplication;
       symlink-join = nixpkgs.nixpkgs.${system}.symlinkJoin;
       run-command-local = nixpkgs.nixpkgs.${system}.runCommandLocal;
@@ -95,6 +98,7 @@ flake-utils.lib.eachDefaultSystem (system:
 
       # TODO call-with-many
 
+      # TODO cons -> name
       cons-package = config@{ ... }:
         packages@{ ... }:
         cons:

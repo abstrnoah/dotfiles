@@ -3,15 +3,15 @@ inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, nixphile, wallpapers, ...
 
 flake-utils.lib.eachDefaultSystem (system:
   let
-    config-system = self.config.${system};
-    nixpkgs-system = nixpkgs.legacyPackages.${system};
-    nixpkgs-unstable-system = nixpkgs-unstable.legacyPackages.${system};
+    this-config = self.config.${system};
+    this-nixpkgs = nixpkgs.legacyPackages.${system};
+    this-nixpkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
 
-    bundle-dotfiles = config-system.bundle-dotfiles upstreams;
-    cons-package = config-system.cons-package config-system packages;
+    bundle-dotfiles = this-config.bundle-dotfiles upstreams;
+    cons-package = this-config.cons-package this-config packages;
 
     upstreams = {
-      inherit (nixpkgs-system)
+      inherit (this-nixpkgs)
         apache-jena black bup clang coq cowsay curl diffutils dig discord
         dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf
         gcal getconf gimp git gnugrep gnupg gnused hostname htmlq htop
@@ -24,46 +24,44 @@ flake-utils.lib.eachDefaultSystem (system:
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
         nixfmt;
-      chromium = nixpkgs-system.ungoogled-chromium;
-      texlive = nixpkgs-system.texlive.combined.scheme-small;
-      inherit (nixpkgs-system.nodePackages)
-        insect; # TODO Requires x86_64-linux.
-      inherit (nixpkgs-system.python310Packages) grip weasyprint;
-      inherit (nixpkgs-system.xorg) xbacklight xrandr;
-      awk = nixpkgs-system.gawk;
-      bat = config-system.bundle {
+      chromium = this-nixpkgs.ungoogled-chromium;
+      texlive = this-nixpkgs.texlive.combined.scheme-small;
+      inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
+      inherit (this-nixpkgs.python310Packages) grip weasyprint;
+      inherit (this-nixpkgs.xorg) xbacklight xrandr;
+      awk = this-nixpkgs.gawk;
+      bat = this-config.bundle {
         name = "bat";
         packages = {
-          inherit (nixpkgs-system) bat;
-          inherit (nixpkgs-system.bat-extras) batdiff batman batwatch;
+          inherit (this-nixpkgs) bat;
+          inherit (this-nixpkgs.bat-extras) batdiff batman batwatch;
         };
       };
-      zip = config-system.bundle {
+      zip = this-config.bundle {
         name = "zip";
-        packages = { inherit (nixpkgs-system) zip unzip; };
+        packages = { inherit (this-nixpkgs) zip unzip; };
       };
-      ocaml = config-system.bundle {
+      ocaml = this-config.bundle {
         name = "ocaml";
         packages = {
-          inherit (nixpkgs-system) ocaml ocamlformat;
-          inherit (nixpkgs-system.ocamlPackages) utop;
+          inherit (this-nixpkgs) ocaml ocamlformat;
+          inherit (this-nixpkgs.ocamlPackages) utop;
         };
       };
-      ssh = nixpkgs-system.openssh;
-      zoom = nixpkgs-system.zoom-us;
-      i3wm = nixpkgs-system.i3-rounded;
-      pinentry = nixpkgs-system.pinentry-qt;
-      vim = nixpkgs-system.vimHugeX;
+      ssh = this-nixpkgs.openssh;
+      zoom = this-nixpkgs.zoom-us;
+      i3wm = this-nixpkgs.i3-rounded;
+      pinentry = this-nixpkgs.pinentry-qt;
+      vim = this-nixpkgs.vimHugeX;
       # i3lock # TODO nixpkgs version auth fails due to PAM instance mismatch
 
       # TODO Move unstable packages to stable as soon as possible.
-      inherit (nixpkgs-unstable-system)
+      inherit (this-nixpkgs-unstable)
         jabref # Awaiting OpenJDK update.
         # TODO mononoki document fc riffraff
         mononoki # Awaiting version bump to fix recognition issue.
       ;
-      telegram =
-        nixpkgs-unstable-system.telegram-desktop; # Want latest features.
+      telegram = this-nixpkgs-unstable.telegram-desktop; # Want latest features.
 
       inherit (nixphile.packages.${system}) nixphile;
 
@@ -73,7 +71,7 @@ flake-utils.lib.eachDefaultSystem (system:
 
       ttdl = bundle-dotfiles "ttdl";
 
-      bluetooth = config-system.store-dotfiles ./src/bluetooth;
+      bluetooth = this-config.store-dotfiles ./src/bluetooth;
 
       curl = bundle-dotfiles "curl";
 
@@ -84,20 +82,18 @@ flake-utils.lib.eachDefaultSystem (system:
       # TODO probably should achieve this elsehow
       nix_env_exports = let
         locale_archive =
-          "${nixpkgs-system.glibcLocales}/lib/locale/locale-archive";
-      in nixpkgs-system.writeTextFile rec {
+          "${this-nixpkgs.glibcLocales}/lib/locale/locale-archive";
+      in this-config.writeTextFile rec {
         name = "nix_env_exports";
         text = ''
-          export ${
-            nixpkgs-system.lib.toShellVar "LOCALE_ARCHIVE" locale_archive
-          }
+          export ${this-nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
         '';
         destination = "/lib/${name}";
       };
 
       tmuxinator = bundle-dotfiles "tmuxinator";
 
-      tmux = config-system.bundle {
+      tmux = this-config.bundle {
         name = "tmux";
         packages = {
           inherit (packages)
@@ -105,20 +101,20 @@ flake-utils.lib.eachDefaultSystem (system:
             zsh # TODO rm this dep, it should really point the other direction
           ;
           inherit (upstreams) tmux;
-          tmux-rc = config-system.store-dotfiles ./src/tmux;
+          tmux-rc = this-config.store-dotfiles ./src/tmux;
         };
       };
 
-      vim-plug = config-system.store-symlink "vim-plug"
-        "${nixpkgs-system.vimPlugins.vim-plug}/plug.vim"
+      vim-plug = this-config.store-symlink "vim-plug"
+        "${this-nixpkgs.vimPlugins.vim-plug}/plug.vim"
         "/home/me/.vim/autoload/plug.vim";
 
-      vim = config-system.bundle {
+      vim = this-config.bundle {
         name = "vim";
         packages = {
           inherit (packages) curl fzf vim-plug;
           inherit (upstreams) vim;
-          vim-rc = config-system.store-dotfiles ./src/vim;
+          vim-rc = this-config.store-dotfiles ./src/vim;
         };
       };
 
@@ -128,11 +124,11 @@ flake-utils.lib.eachDefaultSystem (system:
         inherit (upstreams) qutebrowser;
       };
 
-      rofi = config-system.bundle {
+      rofi = this-config.bundle {
         name = "rofi";
         packages = {
           rofi = upstreams.rofi.override { symlink-dmenu = true; };
-          rofi-rc = config-system.store-dotfiles ./src/rofi;
+          rofi-rc = this-config.store-dotfiles ./src/rofi;
         };
       };
 
@@ -148,12 +144,12 @@ flake-utils.lib.eachDefaultSystem (system:
 
       dmenu = packages.rofi;
 
-      xflux = config-system.bundle {
+      xflux = this-config.bundle {
         name = "xflux";
         packages = {
           inherit (packages) curl jq;
           inherit (upstreams) xflux;
-          xflux-rc = config-system.store-dotfiles ./src/xflux;
+          xflux-rc = this-config.store-dotfiles ./src/xflux;
         };
       };
 
@@ -162,24 +158,24 @@ flake-utils.lib.eachDefaultSystem (system:
       # FIXME video issue
       zoom = upstreams.zoom.overrideAttrs (prev: {
         nativeBuildInputs = (prev.nativeBuildInputs or [ ])
-          ++ [ nixpkgs-system.makeWrapper ];
+          ++ [ this-nixpkgs.makeWrapper ];
         postFixup = prev.postFixup + ''
           wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
         '';
       });
 
-      zsh = config-system.bundle {
+      zsh = this-config.bundle {
         name = "zsh";
         packages = {
           inherit (packages) bat fd fzf nix_env_exports;
           inherit (upstreams) zsh;
-          zsh-rc = config-system.store-dotfiles ./src/zsh;
+          zsh-rc = this-config.store-dotfiles ./src/zsh;
         };
       };
 
       i3wm = bundle-dotfiles "i3wm";
 
-      xsession = nixpkgs-system.writeTextFile {
+      xsession = this-config.writeTextFile {
         name = "xsession";
         text = ''
           exec "${packages.i3wm}/bin/i3"
@@ -188,7 +184,7 @@ flake-utils.lib.eachDefaultSystem (system:
       };
 
       # TODO Replace with direct string interpolation of feh and i3lock commands.
-      wallpapers = config-system.store-symlinks {
+      wallpapers = this-config.store-symlinks {
         name = "wallpapers";
         mapping = [
           {
@@ -217,7 +213,7 @@ flake-utils.lib.eachDefaultSystem (system:
       # #   nix/systemd workflow
       # battery_hook_setup = with (import ./src/battery_hook) {
       #   inherit (config) username;
-      #   nixpkgs = nixpkgs-system;
+      #   nixpkgs = this-nixpkgs;
       #   battery_device = "BAT0";
       #   hibernate_command = "systemctl hibernate";
       #   # TODO We want the following, but it requires i3wm-helper-system be
@@ -236,7 +232,7 @@ flake-utils.lib.eachDefaultSystem (system:
       };
 
       # TODO Reimplement using future nixphile cp tree feature.
-      # termux.passthru.before-deploy = nixpkgs-system.write-shell-app {
+      # termux.passthru.before-deploy = this-nixpkgs.write-shell-app {
       #   name = "termux-before-deploy-hook";
       #   text = ''
       #     mkdir -p ~/.termux
@@ -249,7 +245,7 @@ flake-utils.lib.eachDefaultSystem (system:
       gnupg =
         cons-package (import ./src/gnupg) { } { inherit (upstreams) gnupg; };
 
-      spotify = config-system.bundle {
+      spotify = this-config.bundle {
         name = "spotify";
         packages = {
           inherit (upstreams) spotify;
@@ -257,25 +253,25 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      clone-dotfiles = nixpkgs-system.write-shell-app {
+      clone-dotfiles = this-config.write-shell-app {
         name = "clone-dotfiles";
         text = ''
-          test -d "${config-system.dotfiles-destination}" \
+          test -d "${this-config.dotfiles-destination}" \
           || git clone -o github \
-              "${config-system.dotfiles-source}" "${config-system.dotfiles-destination}"
+              "${this-config.dotfiles-source}" "${this-config.dotfiles-destination}"
         '';
       };
 
-      nix-rc = config-system.store-dotfiles ./src/nix;
+      nix-rc = this-config.store-dotfiles ./src/nix;
 
     };
 
     bundles = {
 
-      core_env = config-system.bundle {
+      core_env = this-config.bundle {
         name = "core_env";
         packages = {
-          core-rc = config-system.store-dotfiles ./src/core_env;
+          core-rc = this-config.store-dotfiles ./src/core_env;
           inherit (packages)
             awk nixphile diffutils dos2unix findutils getconf gnugrep gnused
             hostname man bat curl dig dnstracer fd sd rargs fzf git htop jq
@@ -285,7 +281,7 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      default = config-system.bundle {
+      default = this-config.bundle {
         name = "default";
         packages = {
           inherit (packages)
@@ -295,12 +291,12 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      nix-on-droid = config-system.bundle {
+      nix-on-droid = this-config.bundle {
         name = "nix-on-droid";
         packages = { inherit (packages) core_env termux coreutils ssh procps; };
       };
 
-      extras = config-system.bundle {
+      extras = this-config.bundle {
         name = "extras";
         packages = {
           inherit (packages)
@@ -308,7 +304,7 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      gui_env = config-system.bundle {
+      gui_env = this-config.bundle {
         name = "gui_env";
         packages = {
           inherit (packages)
@@ -318,7 +314,7 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      wm_env = config-system.bundle {
+      wm_env = this-config.bundle {
         name = "wm_env";
         packages = {
           inherit (packages)
@@ -327,12 +323,12 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      coyote = config-system.bundle {
+      coyote = this-config.bundle {
         name = "coyote";
         packages = {
           inherit (packages) extras wm_env mononoki gnupg pass nixfmt;
           coyote-xrandr-switch = cons-package (import ./src/xrandr) {
-            machine = config-system.machines.coyote;
+            machine = this-config.machines.coyote;
           } { };
         };
       };
