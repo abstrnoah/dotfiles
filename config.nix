@@ -11,9 +11,11 @@ flake-utils.lib.eachDefaultSystem (system:
       machines.coyote = {
         xrandr-outputs.builtin = "LVDS1";
         xrandr-outputs.external = "VGA1";
+        battery-device = "BAT0";
       };
       systemd-user-units-path = "/home/me/.config/systemd/user";
       shell = "${self.packages.${system}.zsh}/bin/zsh";
+      hibernator = "systemctl hibernate";
 
       nixpkgs-args = {
         inherit system;
@@ -43,6 +45,7 @@ flake-utils.lib.eachDefaultSystem (system:
       gen-attrs = nixpkgs.lib.attrsets.genAttrs;
       get-attrs = nixpkgs.lib.attrsets.getAttrs;
       escape-shell-arg = nixpkgs.lib.strings.escapeShellArg;
+      to-shell-var = nixpkgs.lib.strings.toShellVar;
       concat-strings = nixpkgs.lib.strings.concatStrings;
       get-name-substring = nixpkgs.lib.strings.getName;
       path-append = nixpkgs.lib.path.append;

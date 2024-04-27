@@ -206,31 +206,6 @@ flake-utils.lib.eachDefaultSystem (system:
 
       pulseaudio = bundle-dotfiles "pulseaudio";
 
-      # TODO reimplement without hook, require manual installation of system files
-      # # TODO this is so hacky it's painful but no time
-      # # - should lock before hibernating
-      # # - locking first would require nixifying i3wm-helper-system
-      # # - there are permission/environment issues: i3lock would probably need to run
-      # #   under the current user and with DISPLAY set; hibernation needs to run as
-      # #   root
-      # # - if i am going to move more things to systemd, then i need to improve the
-      # #   nix/systemd workflow
-      # battery_hook_setup = with (import ./src/battery_hook) {
-      #   inherit (config) username;
-      #   nixpkgs = this-nixpkgs;
-      #   battery_device = "BAT0";
-      #   hibernate_command = "systemctl hibernate";
-      #   # TODO We want the following, but it requires i3wm-helper-system be
-      #   # nixified; currently it is too impure to run as a systemd service.
-      #   # hibernate_command = "${i3wm}/bin/i3wm-helper-system hibernate";
-      # };
-      #   make_nixphile_hook_pre ''
-      #     systemctl reenable ${service}
-      #     systemctl reenable ${timer}
-      #     systemctl start "$(basename ${timer})"
-      #     systemctl start "$(basename ${service})"
-      #   '';
-
       captive-browser = cons-package-named "captive-browser" { } {
         inherit (upstreams) captive-browser;
       };
@@ -334,13 +309,15 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      coyote = this-config.bundle {
+      coyote = let machine = this-config.machines.coyote;
+      in this-config.bundle {
         name = "coyote";
         packages = {
           inherit (packages) wm-env extras syncthing;
-          coyote-xrandr-switch = cons-package-named "xrandr" {
-            machine = this-config.machines.coyote;
-          } { };
+          coyote-xrandr-switch =
+            cons-package-named "xrandr" { inherit machine; } { };
+          battery-hook =
+            cons-package-named "battery-hook" { inherit machine; } { };
         };
       };
 
