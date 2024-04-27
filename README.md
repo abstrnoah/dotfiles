@@ -15,9 +15,10 @@ nix run 'github:abstrnoah/dotfiles#clone-dotfiles'
 # Deploy the environment.
 nix run 'github:abstrnoah/dotfiles#nixphile' 'github:abstrnoah/dotfiles#PACKAGE'
 
-# Set login shell (requires `sudo` because nix's zsh is not in /etc/shells).
-# (If no root privileges, then probably use nix-portable for everything anyway.)
-sudo chsh -s $(which zsh) abstrnoah
+# Setup login shell.
+export SHELL=$(nix eval --raw 'github:abstrnoah/dotfiles#config.SYSTEM.shell')
+sudo cp ~/.nixphile/env/etc/shells /etc/shells
+sudo chsh -s $SHELL abstrnoah
 
 # Install root systemd units.
 # (TODO)
@@ -96,6 +97,7 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 * [ ] nix-ify i3wm so that execs there can refer to nix paths
 * [ ] deal with root config like system systemd units
 * [ ] actually test deployment on completely fresh machine
+* [ ] `QT_XCB_GL_INTEGRATION=none`
 
 ---
 

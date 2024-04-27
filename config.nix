@@ -1,4 +1,4 @@
-inputs@{ flake-utils, nixpkgs, ... }:
+inputs@{ self, flake-utils, nixpkgs, ... }:
 
 flake-utils.lib.eachDefaultSystem (system:
   let
@@ -13,6 +13,7 @@ flake-utils.lib.eachDefaultSystem (system:
         xrandr-outputs.external = "VGA1";
       };
       systemd-user-units-path = "/home/me/.config/systemd/user";
+      shell = "${self.packages.${system}.zsh}/bin/zsh";
 
       nixpkgs-args = {
         inherit system;
@@ -37,6 +38,7 @@ flake-utils.lib.eachDefaultSystem (system:
       write-shell-app = nixpkgs.nixpkgs.${system}.writeShellApplication;
       symlink-join = nixpkgs.nixpkgs.${system}.symlinkJoin;
       run-command-local = nixpkgs.nixpkgs.${system}.runCommandLocal;
+      substitute = nixpkgs.nixpkgs.${system}.substitute;
       get-lib-output = nixpkgs.lib.attrsets.getLib;
       gen-attrs = nixpkgs.lib.attrsets.genAttrs;
       get-attrs = nixpkgs.lib.attrsets.getAttrs;

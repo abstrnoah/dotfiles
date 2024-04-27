@@ -1,0 +1,15 @@
+# Pristine version from Debian 11
+# /etc/shells (mode 655): valid login shells
+/bin/sh
+/bin/bash
+/usr/bin/bash
+/bin/rbash
+/usr/bin/rbash
+/bin/dash
+/usr/bin/dash
+/usr/bin/tmux
+/bin/zsh
+/usr/bin/zsh
+
+# Nix substitution
+@shell@

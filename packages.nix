@@ -24,7 +24,7 @@ flake-utils.lib.eachDefaultSystem (system:
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt coreutils coreutils-prefixed syncthing;
+        nixfmt coreutils coreutils-prefixed syncthing riseup-vpn;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -88,6 +88,7 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "nix_env_exports";
         text = ''
           export ${this-nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
+          export QT_XCB_GL_INTEGRATION=none
         '';
         destination = "/lib/${name}";
       };
@@ -289,19 +290,7 @@ flake-utils.lib.eachDefaultSystem (system:
 
     bundles = {
 
-      core-env = this-config.bundle {
-        name = "core-env";
-        packages = {
-          core-rc = this-config.store-dotfiles "core-env";
-          inherit (packages)
-            awk nixphile diffutils dos2unix findutils getconf gnugrep gnused
-            hostname man bat curl dig dnstracer fd sd rargs fzf git htop jq
-            netcat-openbsd nettools nodejs pandoc pdfgrep pfetch ranger
-            silver-searcher sl textql time tmux toilet tree tuptime
-            universal-ctags zip vim visidata rlwrap par nix-rc util-linux
-            coreutils;
-        };
-      };
+      core-env = cons-package-named "core-env" { } { };
 
       default = this-config.bundle {
         name = "default";
@@ -340,7 +329,7 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages)
             gui-env i3wm i3status xsession libnotify jq wallpapers dunst rofi
-            wmctrl xflux xrandr-invert-colors xbacklight;
+            wmctrl xflux xrandr-invert-colors xbacklight riseup-vpn;
         };
       };
 
