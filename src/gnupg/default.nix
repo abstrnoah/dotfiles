@@ -7,7 +7,7 @@ bundle {
     inherit gnupg;
     gpg-agent-service = write-text {
       name = "gpg-agent-service";
-      destination = (systemd-user-units-path + "/gpg-agent.service");
+      destination = systemd-user-units-path + "/gpg-agent.service";
       text = ''
         [Unit]
         Description=GnuPG cryptographic agent and passphrase cache
