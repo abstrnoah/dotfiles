@@ -18,13 +18,14 @@ flake-utils.lib.eachDefaultSystem (system:
         gcal getconf gimp git gnugrep gnupg gnused hostname htmlq htop
         hydra-check i3status imagemagick img2pdf jdk jq libnotify libreoffice
         maildrop man mpv mutt netcat-openbsd nettools nodejs pandoc par pdfgrep
-        pdftk pfetch procps pulseaudio qutebrowser ranger rargs rlwrap rofi sd
-        signal-desktop silver-searcher sl slack spotify spotify-cli-linux stow
-        tectonic textql thunderbird time tmux tmuxinator toilet
-        tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
-        universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
-        xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt coreutils coreutils-prefixed syncthing riseup-vpn;
+        pdftk pfetch neofetch procps pulseaudio qutebrowser ranger rargs rlwrap
+        rofi sd signal-desktop silver-searcher sl slack spotify
+        spotify-cli-linux stow tectonic textql thunderbird time tmux tmuxinator
+        toilet tor-browser-bundle-bin tree ttdl tuptime udiskie
+        ungoogled-chromium uni universal-ctags util-linux visidata wmctrl xclip
+        xflux xournalpp xrandr-invert-colors zathura zbar zsh pass
+        captive-browser alsa-plugins nixfmt coreutils coreutils-prefixed
+        syncthing riseup-vpn;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
