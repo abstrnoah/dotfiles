@@ -27,10 +27,10 @@ c.url.start_pages = ["http://neverssl.com/"]
 _searchengines = {
     "!ddg": "https://duckduckgo.com/?q={}",
     "!ddt": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
-    "!marg": "https://search.marginalia.nu/search?query={}",
     "!g": "https://www.google.com/search?q={}",
     "!4get": "https://4get.ca/web?s={}",
     "!r": "https://old.reddit.com/search?q={}",
+    "!perpl": "https://www.perplexity.ai/search?s=o&q={}"
 }
 _searchengines["DEFAULT"] = _searchengines["!ddg"]
 c.url.searchengines = _searchengines
