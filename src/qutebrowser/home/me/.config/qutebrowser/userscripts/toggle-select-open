@@ -15,7 +15,7 @@ test -n "${qb_argument}" || smt_flag="-s"
 
 case "${qb_command}" in
     :tab-select)
-        send_cmd "set-cmd-text "${smt_flag}" :open -t ${qb_argument}"
+        send_cmd "cmd-set-text "${smt_flag}" :open -w ${qb_argument}"
         ;;
     # :open)
     #     send_cmd "set-cmd-text "${smt_flag}" :tab-select ${qb_argument}"

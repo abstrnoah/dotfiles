@@ -46,14 +46,18 @@ c.editor.command = ["gvim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
 c.tabs.position = "top"
 
 # Close tab even if it's the last tab.
-c.tabs.last_close = "close"
+c.tabs.last_close = "default-page"
+
+# Go to last open tab when closing focused.
+c.tabs.select_on_remove = "last-used"
 
 # Autoplay sucks.
 c.content.autoplay = False
 
 # Status.
 c.statusbar.show = "in-mode"
-c.tabs.show = "multiple"
+c.tabs.show = "never"
+c.statusbar.position = "top"
 
 # use both brave and hosts blocking
 c.content.blocking.method = "both"
@@ -80,8 +84,12 @@ config.unbind("<Ctrl-a>")
 # Don't forward any keys to page unless in an insert mode.
 c.input.forward_unbound_keys = "none"
 
+# Insert mode behaviour.
+c.input.insert_mode.auto_enter = False
+c.input.insert_mode.auto_leave = False
+
 # Resource config.
-config.bind(_leader + "C", "config-source")
+config.bind(_leader + "C", "config-clear ;; config-source")
 
 # Swap quickmark and mark for more vim-like experience.
 config.bind("m", "mode-enter set_mark")
@@ -125,7 +133,6 @@ config.bind("gH", "cmd-set-text -s :back")
 config.bind("gL", "cmd-set-text -s :forward")
 
 # Tab navigation.
-config.bind(_leader + "<space>", "cmd-set-text -s :tab-select")
 config.unbind("d")
 config.unbind("D")
 config.unbind("<Ctrl-w>")
@@ -141,6 +148,8 @@ config.bind(_leader_tab + "R", "reload -f")
 config.bind("gm", "tab-move -1")
 # Move (give) to window, prompt.
 config.bind("gD", "cmd-set-text -s :tab-give")
+config.bind("<Ctrl-o>", "tab-focus stack-prev")
+config.bind("<Ctrl-i>", "tab-focus stack-next")
 
 # Clear messages on the fly.
 config.bind("cm", "clear-messages")
