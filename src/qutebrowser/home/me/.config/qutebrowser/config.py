@@ -56,6 +56,7 @@ c.statusbar.show = "always"
 c.statusbar.position = "top"
 c.tabs.show = "never"
 c.tabs.position = "left"
+c.scrolling.bar = "never"
 
 # use both brave and hosts blocking
 c.content.blocking.method = "both"
@@ -155,6 +156,7 @@ config.bind("cm", "clear-messages")
 # Toggle status.
 config.bind(_leader + "f", "config-cycle -t statusbar.show in-mode always")
 config.bind(_leader + "t", "config-cycle -t tabs.show never always")
+config.bind(_leader + "s", "config-cycle -t scrolling.bar never always")
 
 # Command mode
 config.bind("<Ctrl-f>", "cmd-edit", mode="command")
