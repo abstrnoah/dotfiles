@@ -18,7 +18,7 @@ flake-utils.lib.eachDefaultSystem (system:
         gcal getconf gimp git gnugrep gnupg gnused hostname htmlq htop
         hydra-check i3status imagemagick img2pdf jdk jq libnotify libreoffice
         maildrop man mpv mutt netcat-openbsd nettools nodejs pandoc par pdfgrep
-        pdftk pfetch neofetch procps pulseaudio qutebrowser ranger rargs rlwrap
+        pdftk pfetch neofetch procps pulseaudio ranger rargs rlwrap
         rofi sd signal-desktop silver-searcher sl slack spotify
         spotify-cli-linux stow tectonic textql thunderbird time tmux tmuxinator
         toilet tor-browser-bundle-bin tree ttdl tuptime udiskie
@@ -62,6 +62,7 @@ flake-utils.lib.eachDefaultSystem (system:
         jabref # Awaiting OpenJDK update.
         # TODO mononoki document fc riffraff
         mononoki # Awaiting version bump to fix recognition issue.
+        qutebrowser # Want those cutting edge features :)
       ;
       telegram = this-nixpkgs-unstable.telegram-desktop; # Want latest features.
 
