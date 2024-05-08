@@ -110,8 +110,9 @@ exec_always auto-xflux
 
 exec udiskie
 
-# Focus follows mouse.
+# Focus
 focus_follows_mouse yes
+focus_on_window_activation focus
 
 # THEME {{{1
 
@@ -181,7 +182,8 @@ for_window [title="^Incanter Table$"] floating enable
 for_window [title="^QEMU$"] floating enable
 
 
-# for_window [class="(?i)^qutebrowser$"]     move window to workspace $ws_www
+# for_window [class="(?i)^qutebrowser$"] border normal
+
 # for_window [class="(?i)^firefox$"]         move window to workspace $ws_www
 # for_window [class="(?i)^telegramdesktop$"] move window to workspace $ws_comm
 # for_window [class="(?i)^discord$"]         move window to workspace $ws_comm
@@ -406,6 +408,7 @@ bindsym $mod+m exec i3-input -F 'mark --add %s' -l 1 -P 'mark: '
 bindsym $mod+$singlequote \
     exec i3-input -F '[con_mark="^%s$"] focus' -l 1 -P 'goto: '
 bindsym $mod+$shift+m unmark
+show_marks no
 
 # Go to window.
 bindsym $mod+d exec rofi -show window

@@ -42,8 +42,6 @@ config.load_autoconfig(False)
 # Editor (and arguments) to use for the `edit-*` commands.
 c.editor.command = ["gvim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
 
-# Position of the tab bar.
-c.tabs.position = "top"
 
 # Close tab even if it's the last tab.
 c.tabs.last_close = "default-page"
@@ -54,10 +52,10 @@ c.tabs.select_on_remove = "last-used"
 # Autoplay sucks.
 c.content.autoplay = False
 
-# Status.
-c.statusbar.show = "in-mode"
-c.tabs.show = "never"
+c.statusbar.show = "always"
 c.statusbar.position = "top"
+c.tabs.show = "never"
+c.tabs.position = "top"
 
 # use both brave and hosts blocking
 c.content.blocking.method = "both"
@@ -156,6 +154,7 @@ config.bind("cm", "clear-messages")
 
 # Toggle status.
 config.bind(_leader + "f", "config-cycle -t statusbar.show in-mode always")
+config.bind(_leader + "t", "config-cycle -t tabs.show never always")
 
 # Command mode
 config.bind("<Ctrl-f>", "cmd-edit", mode="command")
