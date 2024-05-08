@@ -55,7 +55,7 @@ c.content.autoplay = False
 c.statusbar.show = "always"
 c.statusbar.position = "top"
 c.tabs.show = "never"
-c.tabs.position = "top"
+c.tabs.position = "left"
 
 # use both brave and hosts blocking
 c.content.blocking.method = "both"
