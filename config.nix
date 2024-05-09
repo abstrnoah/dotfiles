@@ -16,6 +16,7 @@ flake-utils.lib.eachDefaultSystem (system:
       systemd-user-units-path = "/home/me/.config/systemd/user";
       shell = "${self.packages.${system}.zsh}/bin/zsh";
       hibernator = "systemctl hibernate";
+      wttrin-cache-path = "/tmp/latest-wttrin";
 
       nixpkgs-args = {
         inherit system;

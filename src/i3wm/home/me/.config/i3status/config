@@ -25,6 +25,7 @@ order += "cpu_usage"
 order += "cpu_temperature 0"
 order += "cpu_temperature 1"
 order += "tztime local"
+order += "read_file weather"
 order += "volume master"
 
 cpu_usage {
@@ -88,7 +89,7 @@ volume master {
         device = "pulse"
 }
 
-read_file timer {
-        path = "/tmp/timer.fifo"
-        format_bad = ""
+read_file weather {
+        path = "/tmp/latest-wttrin"
+        format_bad = "🌎❓"
 }
