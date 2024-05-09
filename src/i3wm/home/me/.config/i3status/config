@@ -28,7 +28,7 @@ order += "tztime local"
 order += "volume master"
 
 cpu_usage {
-	format = "%usage"
+        format = "%usage"
 }
 
 wireless _first_ {
@@ -43,7 +43,13 @@ ethernet _first_ {
 }
 
 battery 0 {
-        format = "%status %percentage %remaining"
+        format = "%status %percentage (%remaining %consumption)"
+        format_percentage = "%.01f%s"
+        last_full_capacity = true
+        status_bat = "🔋"
+        status_unk = "❓"
+        status_chr = "⚡"
+        status_full = "😎"
 }
 
 run_watch DHCP {
