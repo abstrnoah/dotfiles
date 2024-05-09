@@ -1,0 +1,48 @@
+#!/bin/sh
+
+if test -n "$DEBUG"; then
+    set -x
+fi
+
+has_prefix() { # string prefix
+    case "$1" in
+        "$2"*) true;;
+        *) false;;
+    esac
+}
+
+replace_prefix() { # string old_prefix new_prefix
+    echo "$3${1#"$2"}"
+}
+
+get_head() {
+    echo "$1"
+}
+
+cycle_prefixes() { # string prefixes...
+    if test "$#" -lt 2; then
+        return 2
+    fi
+
+    string="$1"
+    shift
+    first_prefix="$1"
+
+    while test "$#" -ge 1; do
+        old_prefix="$1"
+        shift
+        if has_prefix "$string" "$old_prefix"; then
+            new_prefix="$(get_head "$@" "$first_prefix")"
+            replace_prefix "$string" "$old_prefix" "$new_prefix"
+            return
+        fi
+    done
+
+    echo "$string"
+}
+
+qb_set_command() {
+    echo cmd-set-text -s "$@" >> "$QUTE_FIFO"
+}
+
+qb_set_command "$(cycle_prefixes "$QUTE_COMMANDLINE_TEXT" "$@")"

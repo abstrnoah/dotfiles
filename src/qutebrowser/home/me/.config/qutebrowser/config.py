@@ -163,7 +163,11 @@ config.bind(_leader + "s", "config-cycle -t scrolling.bar never always")
 
 # Command mode
 config.bind("<Ctrl-f>", "cmd-edit", mode="command")
-config.bind("<Ctrl-t>", "spawn --userscript toggle-select-open", mode="command")
+config.bind(
+    "<Ctrl-t>",
+    'spawn --userscript cycle-cmd-prefix :tab-select ":open -w" ":open -t"',
+    mode="command"
+)
 
 # javascript clipboard access
 config.bind("tsy", "config-cycle -p -t -u *://{url:host}/* content.javascript.clipboard none access ;; reload")
