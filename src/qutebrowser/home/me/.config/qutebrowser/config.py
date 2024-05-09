@@ -10,6 +10,7 @@ __author__ = "abstrnoah"
 
 # Leader keys by functionality.
 _leader = ","
+_leader_window = "<Ctrl-w>"
 _leader_tab = "<Ctrl-t>"
 _leader_hint = _leader + ";"
 
@@ -147,8 +148,10 @@ config.bind(_leader_tab + "R", "reload -f")
 config.bind("gm", "tab-move -1")
 # Move (give) to window, prompt.
 config.bind("gD", "cmd-set-text -s :tab-give")
+config.bind("T", "cmd-set-text -s :tab-select")
 config.bind("<Ctrl-o>", "tab-focus stack-prev")
 config.bind("<Ctrl-i>", "tab-focus stack-next")
+config.bind(_leader_window + "t", "cmd-set-text -s :tab-focus")
 
 # Clear messages on the fly.
 config.bind("cm", "clear-messages")
