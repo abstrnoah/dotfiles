@@ -192,11 +192,11 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "wallpapers";
         mapping = [
           {
-            source = wallpapers.packages.${system}.mount_fuji_jpg;
+            source = wallpapers.packages.${system}.pixel-city-at-night-png;
             destination = "/home/me/.wallpaper";
           }
           {
-            source = inputs.wallpapers.packages.${system}.solarized-stars_png;
+            source = inputs.wallpapers.packages.${system}.solarized-stars-png;
             destination = "/home/me/.wallpaperlock";
           }
         ];
