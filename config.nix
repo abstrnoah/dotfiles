@@ -130,14 +130,12 @@ flake-utils.lib.eachDefaultSystem (system:
       store-symlinks = { name, mapping }:
         let
           symlink-command = { source, destination }: ''
-            destination="$out"/${this.escape-shell-arg destination}
+            destination="$out"${this.escape-shell-arg destination}
             mkdir -p "$(dirname "$destination")"
             ln -s ${this.escape-shell-arg source} "$destination"
           '';
           commands = map symlink-command mapping;
         in this.run-command-local name { } ''
-          mkdir -p "$out"
-          cd "$out"
           ${this.concat-strings commands}
         '';
 
