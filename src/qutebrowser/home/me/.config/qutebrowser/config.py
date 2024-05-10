@@ -57,7 +57,7 @@ c.statusbar.show = "always"
 c.statusbar.position = "top"
 c.tabs.show = "never"
 c.tabs.position = "left"
-c.scrolling.bar = "never"
+c.scrolling.bar = "when-searching"
 
 # use both brave and hosts blocking
 c.content.blocking.method = "both"
