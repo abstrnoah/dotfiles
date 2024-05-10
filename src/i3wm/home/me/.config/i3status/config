@@ -33,18 +33,18 @@ cpu_usage {
 }
 
 wireless _first_ {
-        format_up = "W: (%quality %essid) %ip"
-        format_down = "W: down"
+        format_up = "🌐📡%quality %essid %ip"
+        format_down = "🌐📡❌"
 }
 
 ethernet _first_ {
         # if you use %speed, i3status requires root privileges
-        format_up = "E: %ip (%speed)"
-        format_down = "E: down"
+        format_up = "🌐🔌 %ip %speed"
+        format_down = "🌐🔌❌"
 }
 
 battery 0 {
-        format = "%status %percentage (%remaining %consumption)"
+        format = "%status%percentage (%remaining %consumption)"
         format_percentage = "%.01f%s"
         last_full_capacity = true
         status_bat = "🔋"

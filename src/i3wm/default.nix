@@ -35,7 +35,7 @@ let
     runtimeInputs = [ curl ];
     text = ''
       location="$(cat "$HOME/.default_location" || echo "")"
-      curl -s "https://wttr.in/$location?m&format=%c🌡%t+💧%h+🍃%w" \
+      curl -s "https://wttr.in/$location?m&format=%c🌡%t+💦%h+🍃%w" \
         > ${escape-shell-arg wttrin-cache-path}
     '';
   };
