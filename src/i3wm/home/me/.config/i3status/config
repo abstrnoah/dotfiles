@@ -24,9 +24,9 @@ order += "load"
 order += "cpu_usage"
 order += "cpu_temperature 0"
 order += "cpu_temperature 1"
-order += "tztime local"
-order += "read_file weather"
 order += "volume master"
+order += "read_file weather"
+order += "tztime local"
 
 cpu_usage {
         format = "%usage"
