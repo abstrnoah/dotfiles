@@ -62,9 +62,8 @@ c.scrolling.bar = "when-searching"
 # use both brave and hosts blocking
 c.content.blocking.method = "both"
 
-# Darkmode
+# # DARKMODE {{{1
 c.colors.webpage.preferred_color_scheme = "dark"
-c.colors.webpage.darkmode.enabled = True
 
 # PER-DOMAIN SETTINGS {{{1
 with config.pattern("https://mail.google.com/") as p:
