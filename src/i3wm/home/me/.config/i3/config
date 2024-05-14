@@ -43,6 +43,7 @@ set $mode_focus "parent/child focus: [h][j][k][l]parent [p]arent [c]hild"
 set $mode_notify "notify: [e]nable [d]isable"
 set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
 set $mode_system "system: [l]ock [e]xit [s]hutdown [S]reboot [h]suspend [H]ibernate [r]econfig [R]eload"
+# TODO xflux/invert bindings
 set $mode_invert "invert screen[0][1] x[fF]lux"
 set $mode_gaps "gaps [sS][vV][hH][jJ][kK][lL]outer[o] [iI]inner[f]"
 set $mode_output "output (move)[hl]left,right switch-[oO]utput"
@@ -280,7 +281,6 @@ mode $mode_audio {
     bindsym l exec spotifycli --next
 
     bindsym $esc mode "default"
-    bindsym Escape mode "default"
 }
 
 # Brightness.
@@ -301,7 +301,6 @@ mode $mode_brightness {
     bindsym Shift+j exec xbacklight -set 0
 
     bindsym $esc mode "default"
-    bindsym Escape mode "default"
 }
 
 # Invert.
