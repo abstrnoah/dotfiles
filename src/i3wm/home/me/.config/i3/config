@@ -45,7 +45,7 @@ set $mode_brightness "brightness: [j]down [k]up [J]min [K]max"
 set $mode_system "system: [l]ock [e]xit [s]hutdown [S]reboot [h]suspend [H]ibernate [r]econfig [R]eload"
 set $mode_invert "invert screen[0][1] x[fF]lux"
 set $mode_gaps "gaps [sS][vV][hH][jJ][kK][lL]outer[o] [iI]inner[f]"
-set $mode_output "output (move)[(alt)hl]left,right switch-[oO]utput"
+set $mode_output "output (move)[hl]left,right switch-[oO]utput"
 # TODO: Some modes are still hardcoded, factor them out.
 
 # Default resize increments.
@@ -427,12 +427,10 @@ bindsym $mod+o focus output right
 bindsym $mod+$alt+o move workspace to output right
 bindsym $mod+$shift+o mode $mode_output
 mode $mode_output {
-    bindsym h focus output left
-    bindsym l focus output right
-    bindsym $alt+h move workspace to output left; mode "default"
-    bindsym $alt+l move workspace to output right; mode "default"
-    bindsym o exec xrandr-switch-builtin
-    bindsym $shift+o exec xrandr-switch-external
+    bindsym h move workspace to output left; mode "default"
+    bindsym l move workspace to output right; mode "default"
+    bindsym o exec xrandr-switch-builtin; mode "default"
+    bindsym $shift+o exec xrandr-switch-external; mode "default"
     bindsym $esc mode "default"
 }
 
