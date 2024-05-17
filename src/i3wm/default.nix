@@ -1,6 +1,6 @@
 config@{ bundle, write-text, systemd-user-units-path, wttrin-cache-path
 , write-shell-app, escape-shell-arg, store-dotfiles }:
-packages@{ i3wm, curl }:
+packages@{ i3wm, curl, coreutils-prefixed }:
 
 let
   wttrin-service = write-text {
@@ -32,11 +32,12 @@ let
   };
   wttrin-script = write-shell-app {
     name = "fetch-wttrin";
-    runtimeInputs = [ curl ];
+    runtimeInputs = [ curl coreutils-prefixed ];
     text = ''
       location="$(cat "$HOME/.default_location" || echo "")"
-      curl -s "https://wttr.in/$location?m&format=%c🌡%t+💦%h+🍃%w" \
-        > ${escape-shell-arg wttrin-cache-path}
+      time="$(gdate +'%H:%M')"
+      wttr="$(curl -s "https://wttr.in/$location?m&format=%c🌡%t+💦%h+🍃%w")"
+      echo "$wttr ($time)" > ${escape-shell-arg wttrin-cache-path}
     '';
   };
 
