@@ -37,6 +37,9 @@ let
       location="$(cat "$HOME/.default_location" || echo "")"
       time="$(gdate +'%H:%M')"
       wttr="$(curl -s "https://wttr.in/$location?m&format=%c🌡%t+💦%h+🍃%w")"
+      case "$wttr" in Unknown*)
+          wttr="🌎❓" ;;
+      esac
       echo "$wttr ($time)" > ${escape-shell-arg wttrin-cache-path}
     '';
   };
