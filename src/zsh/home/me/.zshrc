@@ -67,7 +67,7 @@ NL=$'\n'
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=2000
-PROMPT_0="$(br_torified_prompt)%B${BR_PROMPTCHAR}%b "
+PROMPT_0="$(br_nix_prompt)%B${BR_PROMPTCHAR}%b "
 PROMPT_1="$(_br_join " " '%s%B%n' "$(br_host_prompt)" '%75<..<%~%b %? %#')"
 PROMPT="${PROMPT_1}${NL}${PROMPT_0}"
 
@@ -198,6 +198,10 @@ pastebin() {
     curl -X PUT -T - "https://transfer.sh/${1}"
     echo
 }
+
+if _br_command_exists nix; then
+    alias nix='IN_NIX=1 nix'
+fi
 
 # KEY BINDINGS {{{1
 
