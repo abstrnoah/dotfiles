@@ -31,6 +31,8 @@ export FZF_DEFAULT_OPTS=$(_br_join " " \
     "--bind change:first" \
     "--bind tab:replace-query" \
     "--bind alt-enter:print-query" \
+    "--bind ctrl-space:toggle" \
+    "--bind ctrl-a:toggle-all"
 )
 
 _br_command_exists bat && {
@@ -202,6 +204,17 @@ pastebin() {
 if _br_command_exists nix; then
     alias nix='IN_NIX=1 nix'
 fi
+
+# experiments TODO
+
+fzf-ttdl() {
+    local todotxt="$(bat ~/.config/ttdl/ttdl.toml | toml2json | jq -r '"\(.global.filename)/todo.txt"')"
+    bat "$todotxt" \
+    | rargs echo {LN} {0} \
+    | fzf -m \
+    | rargs echo {1} \
+    | paste -s -d ,
+}
 
 # KEY BINDINGS {{{1
 

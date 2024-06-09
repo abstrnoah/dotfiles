@@ -24,7 +24,7 @@ flake-utils.lib.eachDefaultSystem (system:
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt coreutils coreutils-prefixed syncthing riseup-vpn;
+        nixfmt coreutils coreutils-prefixed syncthing riseup-vpn toml2json;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -273,7 +273,8 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages)
             core-env black bup clang cowsay exiftool gcal imagemagick img2pdf
-            ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass nixfmt;
+            ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass nixfmt
+            jq toml2json;
         };
       };
 
