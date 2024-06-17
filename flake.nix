@@ -16,6 +16,10 @@
   inputs.nixphile.url = "github:abstrnoah/nixphile?ref=dev"; # TODO
   inputs.nixphile.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.emplacetree.url = "github:abstrnoah/emplacetree";
+  inputs.emplacetree.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.emplacetree.inputs.flake-utils.follows = "flake-utils";
+
   inputs.nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.05";
   inputs.nix-on-droid.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -4,7 +4,7 @@ packages@{ awk, nixphile, diffutils, dos2unix, findutils, getconf, gnugrep
 , htop, jq, netcat-openbsd, nettools, nodejs, pandoc, pdfgrep, neofetch, ranger
 , silver-searcher, sl, textql, time, tmux, toilet, tree, tuptime
 , universal-ctags, zip, vim, visidata, rlwrap, par, nix-rc, util-linux
-, coreutils }:
+, coreutils, emplacetree }:
 
 let
   core-rc = store-source {

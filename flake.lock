@@ -26,6 +26,29 @@
         "type": "github"
       }
     },
+    "emplacetree": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1713519201,
+        "narHash": "sha256-4LwNI9Bovz+IbeM+upr4R3RWRytdhVkaMAQqkNvRNaU=",
+        "owner": "abstrnoah",
+        "repo": "emplacetree",
+        "rev": "9915fa9ee035349bc1aa584643914165e9e91863",
+        "type": "github"
+      },
+      "original": {
+        "owner": "abstrnoah",
+        "repo": "emplacetree",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": [
@@ -452,6 +475,7 @@
     },
     "root": {
       "inputs": {
+        "emplacetree": "emplacetree",
         "flake-utils": "flake-utils",
         "nix-on-droid": "nix-on-droid",
         "nixphile": "nixphile",

@@ -1,5 +1,5 @@
-inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, nixphile, wallpapers, ...
-}:
+inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, nixphile, wallpapers
+, emplacetree, ... }:
 
 flake-utils.lib.eachDefaultSystem (system:
   let
@@ -66,6 +66,7 @@ flake-utils.lib.eachDefaultSystem (system:
       telegram = this-nixpkgs-unstable.telegram-desktop; # Want latest features.
 
       inherit (nixphile.packages.${system}) nixphile;
+      inherit (emplacetree.packages.${system}) emplacetree;
 
     };
 
