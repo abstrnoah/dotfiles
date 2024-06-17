@@ -273,8 +273,8 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages)
             core-env black bup clang cowsay exiftool gcal imagemagick img2pdf
-            ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass nixfmt
-            jq toml2json;
+            ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass nixfmt jq
+            toml2json pinentry;
         };
       };
 
