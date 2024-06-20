@@ -12,7 +12,7 @@ done = "0x58,0x6e,0x75"
 # todos that are due today
 today = "white"
 # todos that are due in and less in `ranges.soon` days
-soon = "white"
+# soon = "white"
 # todos that old (color for creation date)
 old = "0x58,0x6e,0x75"
 # the default text color
@@ -21,7 +21,7 @@ old = "0x58,0x6e,0x75"
 [ranges]
 # TTDL filter `soon` selects todos that are due in and less than in `soon` days
 # 0 - disable `soon` feature
-soon = 1
+soon = 0
 # todos that have priority equal or higher than `important` are displayed in
 #   in `colors.important` font color.
 # Priority is a character from 'a'(highest priority) through 'z'. Setting
@@ -42,7 +42,7 @@ creation_date_auto = true
 # fields = "pri,due,done"
 
 # default sorting
-sort = "due,pri"
+sort = "pri,due"
 
 # enables strict command-line mode
 strict_mode = true
