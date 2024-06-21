@@ -216,6 +216,21 @@ fzf-ttdl() {
     | paste -s -d ,
 }
 
+ttdl-edit() {
+    local todotxt="$(bat ~/.config/ttdl/ttdl.toml | toml2json | jq -r '"\(.global.filename)/todo.txt"')"
+    local id="$1"
+    shift
+    vim "$todotxt" "+$id" "$@"
+}
+
+ttdl-unsorted() {
+    ttdl list --all --completed none --pri none "$@"
+}
+
+ttdl-now() {
+    ttdl list --pri y+ "$@"
+}
+
 # KEY BINDINGS {{{1
 
 _br_command_exists fzf && {
