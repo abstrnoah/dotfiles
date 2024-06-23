@@ -24,7 +24,8 @@ flake-utils.lib.eachDefaultSystem (system:
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt coreutils coreutils-prefixed syncthing riseup-vpn toml2json;
+        nixfmt coreutils coreutils-prefixed syncthing riseup-vpn toml2json
+        whatsapp-for-linux;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -298,7 +299,8 @@ flake-utils.lib.eachDefaultSystem (system:
           inherit (packages)
             captive-browser default grip libreoffice mpv pulseaudio qutebrowser
             tor-browser-bundle-bin signal-desktop spotify slack telegram discord
-            xclip xournalpp zathura jabref udiskie zoom feh mononoki;
+            whatsapp-for-linux xclip xournalpp zathura jabref udiskie zoom feh
+            mononoki;
         };
       };
 
