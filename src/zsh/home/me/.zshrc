@@ -223,8 +223,12 @@ ttdl-edit() {
     vim "$todotxt" "+$id" "$@"
 }
 
+ttdl-all() {
+    ttdl list --all --completed none "$@"
+}
+
 ttdl-unsorted() {
-    ttdl list --all --completed none --pri none "$@"
+    ttdl-all --pri none "$@"
 }
 
 ttdl-now() {
