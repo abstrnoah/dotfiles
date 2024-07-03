@@ -32,7 +32,9 @@ export FZF_DEFAULT_OPTS=$(_br_join " " \
     "--bind tab:replace-query" \
     "--bind alt-enter:print-query" \
     "--bind ctrl-space:toggle" \
-    "--bind ctrl-a:toggle-all"
+    "--bind ctrl-t:toggle-all" \
+    "--bind ctrl-a:select-all" \
+    "--bind ctrl-d:accept"
 )
 
 _br_command_exists bat && {
@@ -207,7 +209,7 @@ fi
 
 # experiments TODO
 
-fzf-ttdl() {
+fzf-todotxt() {
     local todotxt="$(bat ~/.config/ttdl/ttdl.toml | toml2json | jq -r '"\(.global.filename)/todo.txt"')"
     bat "$todotxt" \
     | rargs echo {LN} {0} \
@@ -215,6 +217,14 @@ fzf-ttdl() {
     | rargs echo {1} \
     | paste -s -d ,
 }
+
+fzf-ttdl() {
+    tail -n+3 | head -n-2 \
+    | fzf -m \
+    | rargs -p '\s*(\d+)' echo {1} \
+    | paste -s -d ,
+}
+
 
 ttdl-edit() {
     local todotxt="$(bat ~/.config/ttdl/ttdl.toml | toml2json | jq -r '"\(.global.filename)/todo.txt"')"
