@@ -25,7 +25,7 @@ flake-utils.lib.eachDefaultSystem (system:
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
         nixfmt coreutils coreutils-prefixed syncthing riseup-vpn toml2json
-        whatsapp-for-linux;
+        whatsapp-for-linux oxigraph;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -289,7 +289,8 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "extras";
         packages = {
           inherit (packages)
-            insect uni texlive weasyprint htmlq ungoogled-chromium gimp zbar;
+            insect uni texlive weasyprint htmlq ungoogled-chromium gimp zbar
+            oxigraph;
         };
       };
 
