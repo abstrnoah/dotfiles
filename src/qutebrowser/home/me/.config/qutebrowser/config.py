@@ -31,7 +31,9 @@ _searchengines = {
     "!g": "https://www.google.com/search?q={}",
     "!4get": "https://4get.ca/web?s={}",
     "!r": "https://old.reddit.com/search?q={}",
-    "!perpl": "https://www.perplexity.ai/search?s=o&q={}"
+    "!perpl": "https://www.perplexity.ai/search?s=o&q={}",
+    "!lov": "https://lov.linkeddata.es/dataset/lov/terms?q={}",
+    "!lovv": "https://lov.linkeddata.es/dataset/lov/vocabssms:+16263147355?q={}",
 }
 _searchengines["DEFAULT"] = _searchengines["!ddg"]
 c.url.searchengines = _searchengines
