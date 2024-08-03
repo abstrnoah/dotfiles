@@ -84,6 +84,7 @@ setopt no_multios
 setopt notify
 setopt prompt_cr prompt_sp
 setopt hist_ignore_space
+setopt pipe_fail
 
 # COMPLETIONS {{{1
 # See zshcompsys(1).
@@ -209,6 +210,11 @@ fi
 
 # experiments TODO
 
+oops() {
+    echo "$@" >/dev/stderr
+    exit 1
+}
+
 fzf-todotxt() {
     local todotxt="$(bat ~/.config/ttdl/ttdl.toml | toml2json | jq -r '"\(.global.filename)/todo.txt"')"
     bat "$todotxt" \
@@ -218,11 +224,28 @@ fzf-todotxt() {
     | paste -s -d ,
 }
 
-fzf-ttdl() {
+ttdl-filter() {
+    if test "$#" -eq 0; then
+        oops "Missing argment"
+    fi
     tail -n+3 | head -n-2 \
-    | fzf -m \
+    | "$@" \
     | rargs -p '\s*(\d+)' echo {1} \
     | paste -s -d ,
+}
+
+ttdl-filter-list() {
+    ttdl-filter "$@" \
+    | rargs ttdl list --all {0}
+}
+
+ttdl-agf() {
+    if test "$#" -ne 1; then oops "Must have exactly one argument"; fi
+    ttdl-filter-list ag -F "$1"
+}
+
+fzf-ttdl() {
+    ttdl-filter fzf -m
 }
 
 
