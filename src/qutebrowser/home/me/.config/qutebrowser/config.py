@@ -8,11 +8,17 @@ __author__ = "abstrnoah"
 
 # GLOBALS {{{1
 
+# TODO: This is a hacky workaround to make `-T`-spawned instances get the same
+# userscripts; a better fix would be to intercept the Nix derivation, set
+# environment variables, or symlink to the temporary basedir.
+_userscripts_path = "~/.local/share/qutebrowser/userscripts"
+
 # Leader keys by functionality.
 _leader = ","
 _leader_window = "<Ctrl-w>"
 _leader_tab = "<Ctrl-t>"
 _leader_hint = _leader + ";"
+_leader_fork = _leader + "b"
 
 # SETUP {{{1
 
@@ -104,7 +110,11 @@ config.bind(_leader + "v", "spawn mpv {url}")
 config.bind(_leader_hint + "v", "hint all spawn mpv {hint-url}")
 
 # Open current page in firefox (I'm sorry).
-config.bind(_leader + "F", "spawn firefox {url}")
+config.bind(_leader_fork + "f", "spawn firefox {url}")
+
+# Open current page in qutebrowser-t.
+config.bind(_leader_fork + "t", "spawn qutebrowser-t {url}")
+config.bind(_leader_fork + "T", "spawn mullvad-exclude qutebrowser-t {url}")
 
 # Passthrough mode.
 # <Escape> always escapes to normal.
@@ -166,8 +176,12 @@ config.bind(_leader + "s", "config-cycle -t scrolling.bar never always")
 
 # Command mode
 config.bind("<Ctrl-f>", "cmd-edit", mode="command")
-config.bind("<Ctrl-t>", 'spawn --userscript cycle-cmd-prefix :tab-select ":open -t" ":open -w" :open', mode="command")
-config.bind("<Ctrl-Shift+t>", 'spawn --userscript cycle-cmd-prefix ":open -w" ":open -t" :tab-select :open', mode="command")
+config.bind("<Ctrl-t>",
+            'spawn --userscript {}/cycle-cmd-prefix :tab-select ":open -t" ":open -w" :open'.format(_userscripts_path),
+            mode="command")
+config.bind("<Ctrl-Shift+t>",
+            'spawn --userscript {}/cycle-cmd-prefix ":open -w" ":open -t" :tab-select :open'.format(_userscripts_path),
+            mode="command")
 
 # javascript clipboard access
 config.bind("tsy", "config-cycle -p -t -u *://{url:host}/* content.javascript.clipboard none access ;; reload")
