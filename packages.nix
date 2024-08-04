@@ -25,7 +25,7 @@ flake-utils.lib.eachDefaultSystem (system:
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
         nixfmt coreutils coreutils-prefixed syncthing riseup-vpn toml2json
-        whatsapp-for-linux oxigraph rclone restic;
+        whatsapp-for-linux oxigraph rclone restic wireguard-tools;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -276,7 +276,7 @@ flake-utils.lib.eachDefaultSystem (system:
           inherit (packages)
             core-env black restic rclone clang cowsay exiftool gcal imagemagick
             img2pdf ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass
-            nixfmt jq toml2json pinentry;
+            nixfmt jq toml2json pinentry wireguard-tools;
         };
       };
 
@@ -310,7 +310,7 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages)
             gui-env i3wm i3status xsession libnotify jq wallpapers dunst rofi
-            wmctrl xflux xrandr-invert-colors xbacklight riseup-vpn;
+            wmctrl xflux xrandr-invert-colors xbacklight;
         };
       };
 
