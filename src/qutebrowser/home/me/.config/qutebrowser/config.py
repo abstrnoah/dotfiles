@@ -40,6 +40,7 @@ _searchengines = {
     "!perpl": "https://www.perplexity.ai/search?s=o&q={}",
     "!lov": "https://lov.linkeddata.es/dataset/lov/terms?q={}",
     "!lovv": "https://lov.linkeddata.es/dataset/lov/vocabssms:+16263147355?q={}",
+    "!chatgpt": "https://chat.openai.com/?q={}",
 }
 _searchengines["DEFAULT"] = _searchengines["!ddg"]
 c.url.searchengines = _searchengines
