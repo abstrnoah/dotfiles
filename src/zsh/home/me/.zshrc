@@ -212,7 +212,7 @@ fi
 
 oops() {
     echo "$@" >/dev/stderr
-    exit 1
+    return 1
 }
 
 fzf-todotxt() {
