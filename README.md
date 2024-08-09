@@ -87,6 +87,9 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 
 # TODO
 
+* [ ] update nixpkgs to 24.05
+    * [ ] nixfmt name change
+
 * [ ] rewrite nixphile
 * [ ] xclip? non-x-reliant clipboard manager?
 * [ ] speedup, namely `bundle`
@@ -98,6 +101,8 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 * [ ] deal with root config like system systemd units
 * [ ] actually test deployment on completely fresh machine
 * [ ] `QT_XCB_GL_INTEGRATION=none`
+* [ ] migrate back to bash
+* [ ] fix `oops()` functions
 
 ---
 

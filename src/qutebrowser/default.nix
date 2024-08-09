@@ -23,8 +23,7 @@ let
           )
       '';
   });
-in
-bundle {
+in bundle {
   name = "qutebrowser";
   packages = {
     qutebrowser = this-qutebrowser;
