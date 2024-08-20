@@ -271,30 +271,11 @@ let g:wiki_journal= {'name': ''}
 
 let g:wiki_link_target_type = "md"
 let g:wiki_link_extension = "." . g:wiki_link_target_type
-let g:wiki_map_text_to_link = "BrWikiMapTextToLink"
-let g:wiki_map_create_page = "BrWikiMapCreatePage"
 
 let g:wiki_fzf_pages_opts = join([
     \ '--preview',
     \ '"bat --plain --color=always --line-range :500 {1}"',
 \ ])
-
-function BrWikiMapTextToLink(text) abort
-    return [substitute(tolower(a:text), '[^a-z0-9_/-]\|^\@<!/', '_', 'g'),
-          \ a:text]
-endfunction
-
-function BrWikiMapCreatePage(name) abort
-    if empty(a:name)
-        if exists("*strftime")
-            return strftime('%Y-%m-%d_%H-%M-%S_%z')
-        else
-            throw "Missing dependency: strftime()"
-        endif
-    else
-        return BrWikiMapTextToLink(a:name)[0]
-    endif
-endfunction
 
 " LISTS.VIM {{{2
 let g:lists_filetypes = ['md', 'markdown', 'wiki', 'vimwiki', 'gitcommit']
