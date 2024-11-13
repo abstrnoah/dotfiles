@@ -265,7 +265,7 @@ ttdl-unsorted() {
 }
 
 ttdl-now() {
-    ttdl list --pri y+ "$@"
+    ttdl list --pri x+ "$@"
 }
 
 export NNN_PLUG='y:-!readlink -f "$nnn" | xclip -selection clipboard*'
