@@ -46,7 +46,7 @@ set $mode_system "system: [l]ock [e]xit [s]hutdown [S]reboot [h]suspend [H]ibern
 # TODO xflux/invert bindings
 set $mode_invert "invert screen[0][1] x[fF]lux"
 set $mode_gaps "gaps [sS][vV][hH][jJ][kK][lL]outer[o] [iI]inner[f]"
-set $mode_output "output (move)[hl]left,right switch-[oO]utput"
+set $mode_output "output move[hl] switch[oO] extend[HL]"
 # TODO: Some modes are still hardcoded, factor them out.
 
 # Default resize increments.
@@ -431,6 +431,8 @@ mode $mode_output {
     bindsym l move workspace to output right; mode "default"
     bindsym o exec xrandr-switch-builtin; mode "default"
     bindsym $shift+o exec xrandr-switch-external; mode "default"
+    bindsym $shift+h exec xrandr-switch-builtin-external; mode "default"
+    bindsym $shift+l exec xrandr-switch-external-builtin; mode "default"
     bindsym $esc mode "default"
 }
 
