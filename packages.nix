@@ -55,6 +55,7 @@ flake-utils.lib.eachDefaultSystem (system:
       i3wm = this-nixpkgs.i3-rounded;
       pinentry = this-nixpkgs.pinentry-qt;
       vim = this-nixpkgs.vimHugeX;
+      neovim = this-nixpkgs.neovim; # TODO EXPERIMENTAL
       # i3lock # TODO nixpkgs version auth fails due to PAM instance mismatch
 
       # TODO Move unstable packages to stable as soon as possible.
