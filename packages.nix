@@ -13,13 +13,13 @@ flake-utils.lib.eachDefaultSystem (system:
 
     upstreams = {
       inherit (this-nixpkgs)
-        apache-jena black bup clang coq cowsay curl diffutils dig discord
+        apache-jena black bup clang coq cowsay curl diffutils dig
         dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf
         gcal getconf gimp git gnugrep gnupg gnused hostname htmlq htop
         hydra-check i3status imagemagick img2pdf jdk jq libnotify libreoffice
         maildrop man mpv mutt netcat-openbsd nettools nodejs pandoc par pdfgrep
         pdftk pfetch neofetch procps pulseaudio nnn rargs rlwrap rofi sd
-        signal-desktop silver-searcher sl slack spotify spotify-cli-linux stow
+        silver-searcher sl slack spotify spotify-cli-linux stow
         tectonic textql thunderbird time tmux tmuxinator toilet
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
@@ -65,6 +65,8 @@ flake-utils.lib.eachDefaultSystem (system:
         # TODO mononoki document fc riffraff
         mononoki # Awaiting version bump to fix recognition issue.
         qutebrowser # Want those cutting edge features :)
+        discord # Mainstream version crashes as of 2024-12-24
+        signal-desktop # Always seems out of date
       ;
       telegram = this-nixpkgs-unstable.telegram-desktop; # Want latest features.
 
