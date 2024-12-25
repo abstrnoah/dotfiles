@@ -103,6 +103,10 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 * [ ] `QT_XCB_GL_INTEGRATION=none`
 * [ ] migrate back to bash
 * [ ] fix `oops()` functions
+* [ ] add metadata to deployment for easy introspection
+
+* [ ] `substitutions` instead of `replacements`
+* [ ] qutebrowser runtime darkmode toggle
 
 ---
 

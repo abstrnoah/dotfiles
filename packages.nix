@@ -24,7 +24,7 @@ flake-utils.lib.eachDefaultSystem (system:
         tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        nixfmt coreutils coreutils-prefixed syncthing riseup-vpn toml2json
+        coreutils coreutils-prefixed syncthing riseup-vpn toml2json
         whatsapp-for-linux oxigraph rclone restic wireguard-tools;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
@@ -57,6 +57,7 @@ flake-utils.lib.eachDefaultSystem (system:
       vim = this-nixpkgs.vimHugeX;
       neovim = this-nixpkgs.neovim; # TODO EXPERIMENTAL
       # i3lock # TODO nixpkgs version auth fails due to PAM instance mismatch
+      nixfmt = this-nixpkgs.nixfmt-rfc-style;
 
       # TODO Move unstable packages to stable as soon as possible.
       inherit (this-nixpkgs-unstable)
