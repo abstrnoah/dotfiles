@@ -110,6 +110,12 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 
 ## neovim migration
 * [ ] see [1] re `notermguicolors`
+* [ ] colorscheme
+    * [ ] vim highlighting not as good as before
+    * [ ] maybe do away with solarized
+    * [ ] treesitter
+* [ ] gvim
+* [ ] completions
 
 ---
 
