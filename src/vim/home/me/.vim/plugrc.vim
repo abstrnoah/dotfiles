@@ -116,7 +116,6 @@ let g:br_plugs_active = [
     \ "preservim/tagbar",
     \ "tpope/vim-abolish",
     \ "chaoren/vim-wordmotion",
-    \ "neoclide/coc.nvim",
     \ "plasticboy/vim-markdown",
     \ "mboughaba/i3config.vim",
     \ "abstrnoah/vim-colors-solarized",

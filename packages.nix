@@ -55,7 +55,7 @@ flake-utils.lib.eachDefaultSystem (system:
       i3wm = this-nixpkgs.i3-rounded;
       pinentry = this-nixpkgs.pinentry-qt;
       vim = this-nixpkgs.vimHugeX;
-      neovim = this-nixpkgs.neovim; # TODO EXPERIMENTAL
+      neovim = this-nixpkgs.neovim;
       # i3lock # TODO nixpkgs version auth fails due to PAM instance mismatch
       nixfmt = this-nixpkgs.nixfmt-rfc-style;
 
@@ -118,13 +118,13 @@ flake-utils.lib.eachDefaultSystem (system:
         "${this-nixpkgs.vimPlugins.vim-plug}/plug.vim"
         "/home/me/.vim/autoload/plug.vim";
 
-      vim = this-config.bundle {
-        name = "vim";
-        packages = {
-          inherit (packages) curl fzf vim-plug;
-          inherit (upstreams) vim;
-          vim-rc = this-config.store-dotfiles "vim";
-        };
+      vim = cons-package-named "vim" { } { inherit (upstreams) vim; };
+
+      neovim = cons-package-named "vim" { } {
+          inherit (upstreams) neovim;
+          vim = this-config.store-symlink "nvim-as-vim"
+              "${upstreams.neovim}/bin/nvim"
+              "/bin/vim";
       };
 
       visidata = bundle-dotfiles "visidata";

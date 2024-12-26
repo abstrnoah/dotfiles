@@ -3,7 +3,7 @@ packages@{ awk, nixphile, diffutils, dos2unix, findutils, getconf, gnugrep
 , gnused, hostname, man, bat, curl, dig, dnstracer, fd, sd, rargs, fzf, git
 , htop, jq, netcat-openbsd, nettools, nodejs, pandoc, pdfgrep, neofetch, nnn
 , silver-searcher, sl, textql, time, tmux, toilet, tree, tuptime
-, universal-ctags, zip, vim, visidata, rlwrap, par, nix-rc, util-linux
+, universal-ctags, zip, neovim, visidata, rlwrap, par, nix-rc, util-linux
 , coreutils, emplacetree }:
 
 let
