@@ -87,8 +87,6 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 
 # TODO
 
-* [ ] update nixpkgs to 24.05
-    * [ ] nixfmt name change
 
 * [ ] rewrite nixphile
 * [ ] xclip? non-x-reliant clipboard manager?
@@ -105,8 +103,13 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 * [ ] fix `oops()` functions
 * [ ] add metadata to deployment for easy introspection
 
+## nixpkgs update to 24.11
+* [ ] nixfmt name change
 * [ ] `substitutions` instead of `replacements`
 * [ ] qutebrowser runtime darkmode toggle
+
+## neovim migration
+* [ ] see [1] re `notermguicolors`
 
 ---
 
@@ -116,3 +119,4 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 [nixpkgs]: https://github.com/NixOS/nixpkgs/
 [flake-utils]: https://github.com/numtide/flake-utils/
 [nixfmt]: https://github.com/NixOS/nixfmt
+[1]: https://stackoverflow.com/questions/78521945/neovim-0-10-colorscheme-changes-affecting-highlighting-in-terminal
