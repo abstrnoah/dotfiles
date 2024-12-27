@@ -87,6 +87,8 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 
 # TODO
 
+* [ ] batt idle status
+
 
 * [ ] rewrite nixphile
 * [ ] xclip? non-x-reliant clipboard manager?
