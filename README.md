@@ -109,6 +109,7 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 * [ ] nixfmt name change
 * [ ] `substitutions` instead of `replacements`
 * [ ] qutebrowser runtime darkmode toggle
+* [ ] systemctl path issue :skull:
 
 ## neovim migration
 * [ ] see [1] re `notermguicolors`
