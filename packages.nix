@@ -16,7 +16,7 @@ flake-utils.lib.eachDefaultSystem (system:
         apache-jena black bup clang coq cowsay curl diffutils dig
         dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf
         gcal getconf gimp git gnugrep gnupg gnused hostname htmlq htop
-        hydra-check i3status imagemagick img2pdf jdk jq libnotify libreoffice
+        hydra-check i3status imagemagick img2pdf jabref jdk jq libnotify libreoffice
         maildrop man mpv mutt netcat-openbsd nettools nodejs pandoc par pdfgrep
         pdftk pfetch neofetch procps pulseaudio nnn rargs rlwrap rofi sd
         silver-searcher sl slack spotify spotify-cli-linux stow
@@ -61,7 +61,6 @@ flake-utils.lib.eachDefaultSystem (system:
 
       # TODO Move unstable packages to stable as soon as possible.
       inherit (this-nixpkgs-unstable)
-        jabref # Awaiting OpenJDK update.
         # TODO mononoki document fc riffraff
         mononoki # Awaiting version bump to fix recognition issue.
         qutebrowser # Want those cutting edge features :)
