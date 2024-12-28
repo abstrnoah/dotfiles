@@ -1,5 +1,6 @@
 # ~/.config/zathura/zathurarc
 
+set database "sqlite"
 set window-title-home-tilde true
 set window-title-basename true
 set statusbar-home-tilde true
