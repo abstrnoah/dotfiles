@@ -97,6 +97,13 @@ let g:br_plugs = {
     \ "kana/vim-textobj-user": [],
     \ "machakann/vim-sandwich": [],
     \ "pianohacker/vim-textobj-indented-paragraph": [],
+    \ "Julian/lean.nvim": [],
+    \ "neovim/nvim-lspconfig": [],
+    \ "nvim-lua/plenary.nvim": [],
+    \ "hrsh7th/cmp-nvim-lsp": [],
+    \ "hrsh7th/cmp-buffer": [],
+    \ "hrsh7th/cmp-path": [],
+    \ "hrsh7th/nvim-cmp": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -137,6 +144,13 @@ let g:br_plugs_active = [
     \ "kana/vim-textobj-user",
     \ "pianohacker/vim-textobj-indented-paragraph",
     \ "tpope/vim-surround",
+    \ "Julian/lean.nvim",
+    \ "neovim/nvim-lspconfig",
+    \ "nvim-lua/plenary.nvim",
+    \ "hrsh7th/cmp-nvim-lsp",
+    \ "hrsh7th/cmp-buffer",
+    \ "hrsh7th/cmp-path",
+    \ "hrsh7th/nvim-cmp",
 \ ]
 
 " PLUGIN CONFIG {{{1
