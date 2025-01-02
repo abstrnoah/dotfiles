@@ -268,7 +268,7 @@ ttdl-now() {
     ttdl list --pri x+ "$@"
 }
 
-export NNN_PLUG='y:-!readlink -f "$nnn" | xclip -selection clipboard*'
+export NNN_PLUG='y:-!readlink -f "$nnn" | xclip -selection clipboard*;p:-!bat "$nnn"'
 export NNN_OPTS='A'
 export NNN_BMS="b:${XDG_CONFIG_HOME:-$HOME/.config}/nnn/bookmarks;s:$HOME/store;d:$HOME/Downloads"
 # From https://github.com/jarun/nnn/blob/master/misc/quitcd/quitcd.bash_sh_zsh
