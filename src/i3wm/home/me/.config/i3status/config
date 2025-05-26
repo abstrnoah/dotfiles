@@ -27,6 +27,7 @@ order += "cpu_temperature 1"
 order += "volume master"
 order += "read_file weather"
 order += "tztime local"
+order += "tztime utc"
 
 cpu_usage {
         format = "%usage"
@@ -63,6 +64,11 @@ run_watch VPN {
 
 tztime local {
         format = "%a %Y-%m-%d %H:%M:%S %Z"
+}
+
+tztime utc {
+        format = "(%H %Z)"
+        timezone = "UTC"
 }
 
 load {
