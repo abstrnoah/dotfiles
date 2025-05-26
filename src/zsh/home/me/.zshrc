@@ -303,6 +303,18 @@ n()
     }
 }
 
+dict() {
+    if test "$#" -eq 1; then
+        dict -d wn "$@"
+    else
+        command dict "$@" | bat -p
+    fi
+}
+
+thes() {
+    dict -d moby-thesaurus "$@"
+}
+
 
 # KEY BINDINGS {{{1
 
