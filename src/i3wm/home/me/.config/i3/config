@@ -356,6 +356,8 @@ bindsym $mod+f fullscreen toggle
 
 # Toggle floating.
 bindsym $mod+$shift+space floating toggle
+bindsym $mod+$alt+space move scratchpad
+bindsym $mod+$alt+comma scratchpad show
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
