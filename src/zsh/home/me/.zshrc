@@ -315,6 +315,13 @@ thes() {
     dict -d moby-thesaurus "$@"
 }
 
+withcd() {
+    local old_path="$PWD"
+    cd "$1"
+    shift
+    "$@"
+    cd "$old_path"
+}
 
 # KEY BINDINGS {{{1
 
