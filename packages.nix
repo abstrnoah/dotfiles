@@ -13,7 +13,7 @@ flake-utils.lib.eachDefaultSystem (system:
 
     upstreams = {
       inherit (this-nixpkgs)
-        apache-jena black bup clang coq cowsay curl diffutils dig
+        age apache-jena black bup clang coq cowsay curl dict diffutils dig
         dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf
         gcal getconf gimp git gnugrep gnupg gnused hostname htmlq htop
         hydra-check i3status imagemagick img2pdf jabref jdk jq lean4 libnotify libreoffice
@@ -25,7 +25,7 @@ flake-utils.lib.eachDefaultSystem (system:
         universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
         xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
         coreutils coreutils-prefixed syncthing riseup-vpn toml2json
-        whatsapp-for-linux oxigraph rclone restic wireguard-tools;
+        whatsapp-for-linux oxigraph rclone restic wireguard-tools rustup;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -75,6 +75,8 @@ flake-utils.lib.eachDefaultSystem (system:
     };
 
     ours = {
+
+      dict = bundle-dotfiles "dict";
 
       ttdl = bundle-dotfiles "ttdl";
 
@@ -277,7 +279,7 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "default";
         packages = {
           inherit (packages)
-            core-env black restic rclone clang cowsay exiftool gcal imagemagick
+            core-env black dict restic rclone clang cowsay exiftool gcal imagemagick
             img2pdf ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass
             nixfmt jq toml2json pinentry wireguard-tools;
         };
@@ -293,7 +295,7 @@ flake-utils.lib.eachDefaultSystem (system:
         packages = {
           inherit (packages)
             insect uni texlive weasyprint htmlq ungoogled-chromium gimp zbar
-            oxigraph bup lean4;
+            oxigraph bup lean4 age;
         };
       };
 
