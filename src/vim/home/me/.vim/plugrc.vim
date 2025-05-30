@@ -45,7 +45,7 @@ let g:br_plugs = {
     \ "preservim/nerdtree": [],
     \ "preservim/tagbar": [],
     \ "tpope/vim-abolish": [],
-    \ "chaoren/vim-wordmotion": [{"supported": {-> v:version >= 802}}],
+    \ "chaoren/vim-wordmotion": [{"supported": {-> v:version >= 802 || has('nvim')}}],
     \ "Yggdroot/indentLine": [],
     \ "neoclide/coc.nvim": [
         \ {
@@ -104,6 +104,9 @@ let g:br_plugs = {
     \ "hrsh7th/cmp-buffer": [],
     \ "hrsh7th/cmp-path": [],
     \ "hrsh7th/nvim-cmp": [],
+    \ "nvim-treesitter/nvim-treesitter": [],
+    \ "nvim-telescope/telescope.nvim": [{"spec": {"tag": "0.1.8"}}],
+    \ "kentookura/forester.nvim": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -151,6 +154,9 @@ let g:br_plugs_active = [
     \ "hrsh7th/cmp-buffer",
     \ "hrsh7th/cmp-path",
     \ "hrsh7th/nvim-cmp",
+    \ "nvim-treesitter/nvim-treesitter",
+    \ "nvim-telescope/telescope.nvim",
+    \ "kentookura/forester.nvim",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -275,7 +281,7 @@ let g:wordmotion_prefix = '<leader>'
 let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 
 " WIKI.VIM {{{2
-let g:wiki_root = "~/store/notes/wiki"
+let g:wiki_root = "~/store/notes/personal.wiki"
 let g:wiki_completion_case_sensitive = 0
 let g:wiki_mappings_prefix = g:br_leader_note
 let g:wiki_filetypes = ['md', 'wiki']
@@ -289,6 +295,11 @@ let g:wiki_fzf_pages_opts = join([
     \ '--preview',
     \ '"bat --plain --color=always --line-range :500 {1}"',
 \ ])
+
+let g:wiki_map_text_to_link = 'MyWikiTextToLink'
+function MyWikiTextToLink(text) abort
+    return [a:text, a:text]
+endfunction
 
 " LISTS.VIM {{{2
 let g:lists_filetypes = ['md', 'markdown', 'wiki', 'vimwiki', 'gitcommit']
