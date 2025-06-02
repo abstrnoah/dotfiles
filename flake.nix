@@ -4,8 +4,9 @@
 
   inputs.systems.url = "github:nix-systems/default-linux";
 
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.flake-utils.inputs.systems.follows = "systems";
+  inputs.flake-parts.url = "github:hercules-ci/flake-parts";
+
+  inputs.import-tree.url = "github:vic/import-tree";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
@@ -18,35 +19,17 @@
 
   inputs.emplacetree.url = "github:abstrnoah/emplacetree";
   inputs.emplacetree.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.emplacetree.inputs.flake-utils.follows = "flake-utils";
 
   inputs.nix-on-droid.url = "github:nix-community/nix-on-droid/release-23.05";
   inputs.nix-on-droid.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs =
-    inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, nix-on-droid, ... }:
-    let
-      cons-nixpkgs = nixpkgs:
-        flake-utils.lib.eachDefaultSystem (system:
-          let nixpkgs' = import nixpkgs self.config.${system}.nixpkgs-args;
-          in {
-            nixpkgs = nixpkgs';
-            legacyPackages = nixpkgs';
-          }) // {
-            inherit (nixpkgs) lib;
-          };
-      our-nixpkgs = cons-nixpkgs nixpkgs;
-      our-nixpkgs-unstable = cons-nixpkgs nixpkgs-unstable;
-      our-inputs = inputs // {
-        nixpkgs = our-nixpkgs;
-        nixpkgs-unstable = our-nixpkgs-unstable;
-      };
-      main = import ./packages.nix our-inputs;
-      config = import ./config.nix our-inputs;
-      nix-on-droid'.nixOnDroidConfigurations.default =
-        nix-on-droid.lib.nixOnDroidConfiguration {
-          modules = [ ./nix-on-droid.nix ];
-        };
-    in main // config // nix-on-droid';
+    inputs@{
+      self,
+      flake-parts,
+      import-tree,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } (import-tree ./config);
 
 }
