@@ -90,12 +90,6 @@ flake-utils.lib.eachDefaultSystem (system:
           filter = path: type: !builtins.elem (/. + path) excludes';
         in builtins.filterSource filter source;
 
-      store-dotfiles = name:
-        this.store-source {
-          source = this.path-append this.src-path name;
-          excludes = [ "README.md" "default.nix" ];
-        };
-
       call = f: arg:
         f (this.get-attrs (builtins.attrNames (builtins.functionArgs f)) arg);
 

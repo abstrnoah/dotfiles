@@ -25,7 +25,6 @@
 
   outputs =
     inputs@{
-      self,
       flake-parts,
       import-tree,
       ...
