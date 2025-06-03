@@ -1,4 +1,4 @@
-{ lib, flake-parts-lib, ... }:
+{ lib, flake-parts-lib, inputs, ... }:
 let
   inherit (lib)
     mkOption
@@ -7,13 +7,10 @@ let
   inherit (flake-parts-lib)
     mkTransposedPerSystemModule
     ;
-in
-let
   module = mkTransposedPerSystemModule {
     name = "library";
     option = mkOption {
       type = types.lazyAttrsOf types.anything;
-      default = { };
       default = { };
       description = ''
         A flake's per-system library output. Libraries are supposed to contain any reusable artefacts that aren't modules or apps.
@@ -27,7 +24,14 @@ let
   };
 in
 {
-  config.flake.modules.flake.library = module;
-  # TODO Annoyingly, if we want to import a library module, we have to do it here to avoid recursion. Look into avoiding this.
   imports = [ module ];
+
+  config.perSystem =
+    { config, system, ... }:
+    {
+      config.library = import ../library.nix {
+        inherit system;
+        inherit (inputs) nixpkgs;
+      };
+    };
 }

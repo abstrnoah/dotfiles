@@ -2,6 +2,8 @@
 
   description = "abstrnoah's dotfiles";
 
+  nixConfig.extra-experimental-features = [ "pipe-operators" ];
+
   inputs.systems.url = "github:nix-systems/default-linux";
 
   inputs.flake-parts.url = "github:hercules-ci/flake-parts";
@@ -29,6 +31,6 @@
       import-tree,
       ...
     }:
-    flake-parts.lib.mkFlake { inherit inputs; } (import-tree ./config);
+    flake-parts.lib.mkFlake { inherit inputs; } (import-tree ./modules);
 
 }
