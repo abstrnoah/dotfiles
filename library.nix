@@ -65,6 +65,8 @@ let
       in
       builtins.filterSource filter source;
 
+    storeLegacyDotfiles name = this.storeSource { source = pathAppend ./src name; };
+
     call = f: arg: f (this.getAttrs (builtins.attrNames (builtins.functionArgs f)) arg);
 
     calls = f: args: builtins.foldl' this.call f args;

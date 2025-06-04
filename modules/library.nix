@@ -1,4 +1,9 @@
-{ lib, flake-parts-lib, inputs, ... }:
+{
+  lib,
+  flake-parts-lib,
+  inputs,
+  ...
+}:
 let
   inherit (lib)
     mkOption
@@ -28,10 +33,14 @@ in
 
   config.perSystem =
     { config, system, ... }:
-    {
-      config.library = import ../library.nix {
+    let
+      library = import ../library.nix {
         inherit system;
         inherit (inputs) nixpkgs;
       };
+    in
+    {
+      config.library = library;
+      config._module.args.library = library;
     };
 }

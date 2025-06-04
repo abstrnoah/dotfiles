@@ -1,9 +1,17 @@
 { ... }:
 {
   config.perSystem =
-    { inputs', config, ... }:
+    {
+      inputs',
+      config,
+      library,
+      ...
+    }:
     let
-      inherit (config.library) mergePackages;
+      inherit (library)
+        mergePackages
+        storeSource
+        ;
       nixpkgs-packages = inputs'.nixpkgs.legacyPackages;
 
       packages = {
@@ -169,9 +177,14 @@
         # Flake inputs
         inherit (inputs'.nixphile.packages) nixphile;
         inherit (inputs'.emplacetree.packages) emplacetree;
+
+        # Ours TODO refactor
+        bluetoothctl-by-alias = storeSource "bluetooth";
+
       };
     in
     {
-      inherit packages;
+      config.packages = packages;
+      config._module.args.packages = packages;
     };
 }

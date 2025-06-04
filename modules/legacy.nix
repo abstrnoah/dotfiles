@@ -1,4 +1,9 @@
-{ lib, flake-parts-lib, pkgs, ... }:
+{
+  lib,
+  flake-parts-lib,
+  moduleWithSystem,
+  ...
+}:
 let
   inherit (lib)
     mkOption
@@ -18,37 +23,51 @@ let
     };
     file = ./legacy.nix;
   };
+  username = "abstrnoah"; # TODO move to meta
+  packagesWithSources = [
+    "dict"
+    "ttdl"
+    "curl"
+    "git"
+    "udiskie"
+    "tmuxinator"
+    "visidata"
+    "zathura"
+    "dunst"
+    "pulseaudio"
+    "tmux"
+  ];
+  collections = {
+    coyote = [ ];
+  };
 in
 {
   imports = [ transposeModule ];
 
-  config.perSystem =
-    { config, ... }:
+  perSystem =
+    { library, legacyDotfiles, ... }:
     let
-      username = "abstrnoah"; # TODO move to meta
-      inherit (config.library)
-        storeSource
-        mergePackages
-        ;
-      mkSource = name: storeSource { source = lib.path.append ../src name; };
-
-      packagesWithSources = [
-        "dict"
-        "ttdl"
-      ];
-      collections = {
-        coyote = [
-          "dict"
-          "ttdl"
-        ];
-      };
+      ps = lib.attrsets.genAttrs packagesWithSources (
+        name: library.storeSource { source = lib.path.append ../src name; }
+      );
+      cs = builtins.mapAttrs (
+        name: c:
+        library.mergePackages {
+          inherit name;
+          packages = lib.attrsets.genAttrs c (name: legacyDotfiles.${name});
+        }
+      ) collections;
     in
     {
-      config.legacyDotfiles = lib.attrsets.genAttrs packagesWithSources mkSource;
-      # config.flake.modules.nixos.base.users.users.${username}.packages = builtins.map (
-      #   name: config.packages.${name}
-      # ) packagesWithSources;
+      legacyDotfiles = ps // cs;
     };
-
-  config.flake.testout = pkgs.hello;
+  flake.modules.nixos = builtins.mapAttrs (
+    name: c:
+    moduleWithSystem (
+      { packages }:
+      {
+        users.users.${username}.packages = builtins.map (name: packages.${name}) c;
+      }
+    )
+  ) collections;
 }
