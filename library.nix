@@ -20,6 +20,7 @@ let
   };
   nixpkgs-lib = nixpkgs.lib;
 
+    inherit (nixpkgs-lib) evalModules mkOption types;
     inherit (nixpkgs-lib.attrsets) getAttrs;
     inherit (nixpkgs) buildEnv;
     pathAppend = nixpkgs-lib.path.append;
@@ -93,6 +94,35 @@ let
       this.run-command-local name { } ''
         ${this.concat-strings commands}
       '';
+
+    mkBrumalModule = 
+    let
+      baseModule = { system, packages, libary, config, ... }:
+      {
+        options = {
+          hostname = mkOption {
+            type = types.str;
+            description = ''
+              A machine hostname.
+              A module defines this option to communicate that it is describing a machine.
+            '';
+          };
+          system = mkOption {
+            type = types.str;
+            description = ''
+              A system string.
+              A module defines this to communicate that it is only compatible with such system.
+              It determines which `packages` and `library` appear as module arguments and is aliased to `system` module argument.
+            '';
+          };
+        };
+      };
+    in
+    { packages, library }: module:
+      evalModules {
+        specialArgs = {inherit system packages library;};
+        imports = [ baseModule module ];
+      };
   };
 in
 this

@@ -29,3 +29,4 @@
 * distro
 
 # TO DO LATER
+* Rename `library` to `brumal-lib` or some such
