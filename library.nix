@@ -20,10 +20,10 @@ let
   };
   nixpkgs-lib = nixpkgs.lib;
 
-    inherit (nixpkgs-lib) evalModules mkOption types;
-    inherit (nixpkgs-lib.attrsets) getAttrs;
-    inherit (nixpkgs) buildEnv;
-    pathAppend = nixpkgs-lib.path.append;
+  inherit (nixpkgs-lib) evalModules mkOption types;
+  inherit (nixpkgs-lib.attrsets) getAttrs;
+  inherit (nixpkgs) buildEnv;
+  pathAppend = nixpkgs-lib.path.append;
 
   this = {
 
@@ -66,7 +66,7 @@ let
       in
       builtins.filterSource filter source;
 
-    storeLegacyDotfiles name = this.storeSource { source = pathAppend ./src name; };
+    storeLegacyDotfiles = name: this.storeSource { source = pathAppend ./src name; };
 
     call = f: arg: f (this.getAttrs (builtins.attrNames (builtins.functionArgs f)) arg);
 
@@ -95,33 +95,86 @@ let
         ${this.concat-strings commands}
       '';
 
-    mkBrumalModule = 
-    let
-      baseModule = { system, packages, libary, config, ... }:
-      {
-        options = {
-          hostname = mkOption {
-            type = types.str;
-            description = ''
-              A machine hostname.
-              A module defines this option to communicate that it is describing a machine.
-            '';
+    evalBrumalModules =
+      let
+        baseModule =
+          top@{ packages, library, ... }:
+          { system, config, ... }:
+          {
+            options = {
+              hostname = mkOption {
+                type = types.str;
+                description = ''
+                  A machine hostname.
+                  A module defines this option to communicate that it is describing a machine.
+                '';
+              };
+              system = mkOption {
+                type = types.enum [
+                  "aarch64-linux"
+                  "x86_64-linux"
+                ];
+                description = ''
+                  A system string.
+                  A module defines this to communicate that it is only compatible with such system.
+                  It determines which `packages` and `library` appear as module arguments and is aliased to `system` module argument.
+                  TODO Maybe tie type into github:nix-systems.
+                '';
+              };
+              distro = mkOption {
+                type = types.enum [
+                  "debian"
+                  "nixos"
+                ];
+                description = ''
+                  A distribution string.
+                '';
+              };
+              owner = mkOption {
+                type = types.attrsOf types.anything;
+                description = ''
+                  The user who ownes this config.
+                  TODO Improve typing.
+                '';
+              };
+              users = mkOption {
+                type = types.attrsOf types.attrsOf;
+                description = ''
+                  Users in this config.
+                  TODO Tie to nixos users submodule.
+                '';
+                default = { };
+              };
+              legacyDotfiles = mkOption {
+                types = types.types.lazyAttrsOf types.packages;
+                description = ''
+                  A shim to continue using my old-style dotfiles whilst I slowly migrate to pure nixos.
+                '';
+                default = { };
+              };
+              nixos = mkOption {
+                types = types.types.lazyAttrsOf types.deferredModule;
+                description = ''
+                  Nixos modules.
+                  TODO Enforce module class.
+                '';
+                default = { };
+              };
+            };
+            config = {
+              # TODO Should I alias better?
+              _module.args.system = config.system;
+              _module.args.packages = top.packages.${system};
+              _module.args.library = top.library.${system};
+            };
           };
-          system = mkOption {
-            type = types.str;
-            description = ''
-              A system string.
-              A module defines this to communicate that it is only compatible with such system.
-              It determines which `packages` and `library` appear as module arguments and is aliased to `system` module argument.
-            '';
-          };
-        };
-      };
-    in
-    { packages, library }: module:
+      in
+      { packages, library }:
+      modules:
       evalModules {
-        specialArgs = {inherit system packages library;};
-        imports = [ baseModule module ];
+        modules = [
+          (baseModule { inherit packages library; })
+        ] ++ modules;
       };
   };
 in
