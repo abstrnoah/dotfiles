@@ -1,23 +1,5 @@
 args@{ system, nixpkgs, ... }:
 let
-  nixpkgs = import args.nixpkgs {
-    inherit system;
-    # TODO  This was from old dotfiles; how to handle this config now?
-    # config = {
-    #   pulseaudio = true;
-    #   allowUnfreePredicate = p:
-    #     builtins.elem (this.get-name-substring p) [
-    #       "discord"
-    #       "spotify"
-    #       "spotify-unwrapped"
-    #       "vscode"
-    #       "xflux"
-    #       "zoom"
-    #       "slack"
-    #       "minecraft-launcher"
-    #     ];
-    # };
-  };
   nixpkgs-lib = nixpkgs.lib;
 
   inherit (nixpkgs-lib) evalModules mkOption types;
@@ -29,7 +11,7 @@ let
   this = {
 
     inherit (nixpkgs-lib) mapAttrsToList mkIf mkMerge;
-    inherit (nixpkgs) writeTextFile;
+    inherit (nixpkgs) writeTextFile writeShellApplication;
 
     mergePackages =
       {

@@ -5,6 +5,7 @@
       inputs',
       config,
       library,
+      pkgs,
       ...
     }:
     let
@@ -13,7 +14,7 @@
         storeSource
         storeLegacyDotfiles
         ;
-      nixpkgs-packages = inputs'.nixpkgs.legacyPackages;
+      nixpkgs-packages = pkgs;
 
       packages = {
         # Inherit directly from nixpkgs
@@ -125,6 +126,8 @@
           zbar
           zsh
           numbat
+          firefox
+          glibcLocales
           ;
 
         # Aliases to nixpkgs

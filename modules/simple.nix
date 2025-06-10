@@ -11,6 +11,11 @@ let
         "visidata"
         "dict"
         "ttdl"
+        "udiskie"
+        "dunst"
+        "zathura"
+        "zsh"
+        "pulseaudio"
       ]
       (
         name:

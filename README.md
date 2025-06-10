@@ -153,7 +153,7 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 
 # TO DO LATER
 * Rename `library` to `brumal-lib` or some such
-* Maybe things like legacyDotfiles should be lists not attrs
+* Maybe things like legacyDotfiles nixos should be lists not attrs. Maybe nixos should just be a single module
 * Maybe instead of "per distro", just need "nixos", "nix on not nixos", "nixless"
 
 ---

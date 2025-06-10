@@ -78,18 +78,10 @@ let
           '';
           default = { };
         };
-        nix-settings = mkOption {
-          type = types.lazyAttrsOf types.anything;
-          description = ''
-            Nix settings like in nixos modules `nix.settings` or `nix.conf`.
-            We bring them out here to automatically generate both nixos module and conf file.
-          '';
-          default = { };
-        };
         nixos = mkOption {
-          type = types.lazyAttrsOf types.deferredModule;
+          type = types.deferredModule;
           description = ''
-            Nixos modules.
+            Nixos module.
             TODO Enforce module class.
           '';
           default = { };
@@ -106,10 +98,10 @@ let
           _file = "baseModule";
           options = brumalOpts;
           config = {
-            # TODO Should I alias better?
             _module.args.system = config.system;
             _module.args.packages = top.config.flake.packages.${system};
             _module.args.library = top.config.flake.library.${system};
+            _module.args.pkgs = top.config.flake.nixpkgs.${system};
           };
         };
 

@@ -32,11 +32,16 @@ in
   imports = [ module ];
 
   config.perSystem =
-    { config, system, ... }:
+    {
+      config,
+      system,
+      pkgs,
+      ...
+    }:
     let
       library = import ../library.nix {
         inherit system;
-        inherit (inputs) nixpkgs;
+        nixpkgs = pkgs;
       };
     in
     {

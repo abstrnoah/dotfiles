@@ -8,6 +8,15 @@
       ...
     }:
     {
+      options.nix-settings = lib.mkOption {
+        type = lib.types.lazyAttrsOf lib.types.anything;
+        description = ''
+          Nix settings like in nixos modules `nix.settings` or `nix.conf`.
+          We bring them out here to automatically generate both nixos module and conf file.
+        '';
+        default = { };
+      };
+
       config = mkCases config.distro {
         "*".nix-settings = {
           experimental-features = [
@@ -31,7 +40,7 @@
             inherit text;
           };
 
-        nixos.nixos.nix.settings = config.nix-settings;
+        nixos.nixos.settings = config.nix-settings;
       };
     };
 }
