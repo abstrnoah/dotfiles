@@ -42,5 +42,6 @@ let
 
 in
 {
-  flake.modules.brumal = withConfig /*// justSrc*/;
+  flake.modules.brumal = withConfig # // justSrc
+  ;
 }

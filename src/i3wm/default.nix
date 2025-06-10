@@ -1,6 +1,17 @@
-config@{ bundle, write-text, systemd-user-units-path, wttrin-cache-path
-, write-shell-app, escape-shell-arg, store-dotfiles }:
-packages@{ i3wm, curl, coreutils-prefixed }:
+config@{
+  bundle,
+  write-text,
+  systemd-user-units-path,
+  wttrin-cache-path,
+  write-shell-app,
+  escape-shell-arg,
+  store-dotfiles,
+}:
+packages@{
+  i3wm,
+  curl,
+  coreutils-prefixed,
+}:
 
 let
   wttrin-service = write-text {
@@ -32,7 +43,10 @@ let
   };
   wttrin-script = write-shell-app {
     name = "fetch-wttrin";
-    runtimeInputs = [ curl coreutils-prefixed ];
+    runtimeInputs = [
+      curl
+      coreutils-prefixed
+    ];
     text = ''
       location="$(cat "$HOME/.default_location" || echo "")"
       time="$(gdate +'%H:%M')"
@@ -44,7 +58,8 @@ let
     '';
   };
 
-in bundle {
+in
+bundle {
   name = "i3wm";
   packages = {
     inherit i3wm wttrin-service wttrin-timer;

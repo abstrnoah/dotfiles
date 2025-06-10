@@ -4,12 +4,13 @@
       packages,
       config,
       mkCases,
-    library,
+      library,
       ...
     }:
     let
       syncthing-service =
-        library.storeSymlink "syncthing-service" "${packages.syncthing}/share/systemd/user/syncthing.service"
+        library.storeSymlink "syncthing-service"
+          "${packages.syncthing}/share/systemd/user/syncthing.service"
           "/home/me/.config/systemd/user/syncthing.service";
     in
     {

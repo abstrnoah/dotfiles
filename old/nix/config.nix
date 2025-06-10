@@ -1,6 +1,6 @@
 let
-  corePackagePaths = pkgs:
-    with pkgs; [
+  corePackagePaths =
+    pkgs: with pkgs; [
       bat
       bat-extras.batdiff
       bat-extras.batman
@@ -40,9 +40,11 @@ let
       visidata
       zip
     ];
-in {
+in
+{
   pulseaudio = true;
-  allowUnfreePredicate = pkg:
+  allowUnfreePredicate =
+    pkg:
     with (import <an_nixpkgs>) { };
     builtins.elem (lib.getName pkg) [
       "discord"
@@ -55,8 +57,10 @@ in {
   packageOverrides = pkgs: {
     clientPackages = pkgs.buildEnv {
       name = "clientPackages";
-      paths = with pkgs;
-        corePackagePaths pkgs ++ [
+      paths =
+        with pkgs;
+        corePackagePaths pkgs
+        ++ [
           # anki (needs QT_XCB_GL_INTEGRATION=none workaround)
           black
           bup
@@ -93,8 +97,15 @@ in {
           yq-go
           # zsh
         ];
-      pathsToLink = [ "/share" "/bin" "/lib" ];
-      extraOutputsToInstall = [ "man" "doc" ];
+      pathsToLink = [
+        "/share"
+        "/bin"
+        "/lib"
+      ];
+      extraOutputsToInstall = [
+        "man"
+        "doc"
+      ];
     };
     clientPackagesGui = pkgs.buildEnv {
       name = "clientPackagesGui";
@@ -119,8 +130,15 @@ in {
         xrandr-invert-colors
         zathura
       ];
-      pathsToLink = [ "/share" "/bin" "/lib" ];
-      extraOutputsToInstall = [ "man" "doc" ];
+      pathsToLink = [
+        "/share"
+        "/bin"
+        "/lib"
+      ];
+      extraOutputsToInstall = [
+        "man"
+        "doc"
+      ];
     };
     # serverPackages = pkgs.buildEnv {
     #   name = "serverPackages";
@@ -132,22 +150,26 @@ in {
     #   extraOutputsToInstall = [ "man" "doc" ];
     # };
   };
-  nix-on-droid = { pkgs, ... }: {
-    environment.packages = (corePackagePaths pkgs) ++ (with pkgs; [
-      diffutils
-      findutils
-      getconf
-      gnugrep
-      gnused
-      hostname
-      man
-      openssh
-      procps
-      utillinux
-      zsh
-    ]);
-    environment.etcBackupExtension = ".bak";
-    system.stateVersion = "22.05";
-    user.shell = "${pkgs.zsh}/bin/zsh";
-  };
+  nix-on-droid =
+    { pkgs, ... }:
+    {
+      environment.packages =
+        (corePackagePaths pkgs)
+        ++ (with pkgs; [
+          diffutils
+          findutils
+          getconf
+          gnugrep
+          gnused
+          hostname
+          man
+          openssh
+          procps
+          utillinux
+          zsh
+        ]);
+      environment.etcBackupExtension = ".bak";
+      system.stateVersion = "22.05";
+      user.shell = "${pkgs.zsh}/bin/zsh";
+    };
 }

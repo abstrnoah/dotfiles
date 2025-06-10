@@ -1,7 +1,16 @@
-inputs@{ self, flake-utils, nixpkgs, nixpkgs-unstable, nixphile, wallpapers
-, emplacetree, ... }:
+inputs@{
+  self,
+  flake-utils,
+  nixpkgs,
+  nixpkgs-unstable,
+  nixphile,
+  wallpapers,
+  emplacetree,
+  ...
+}:
 
-flake-utils.lib.eachDefaultSystem (system:
+flake-utils.lib.eachDefaultSystem (
+  system:
   let
     this-config = self.config.${system};
     this-nixpkgs = nixpkgs.legacyPackages.${system};
@@ -13,19 +22,113 @@ flake-utils.lib.eachDefaultSystem (system:
 
     upstreams = {
       inherit (this-nixpkgs)
-        age apache-jena black bup clang coq cowsay curl dict diffutils dig
-        dnstracer dos2unix dunst exiftool fd fdm feh fetchmail findutils fzf
-        gcal getconf gimp git gnugrep gnupg gnused hostname htmlq htop
-        hydra-check i3status imagemagick img2pdf jabref jdk jq lean4 libnotify libreoffice
-        maildrop man mpv mutt netcat-openbsd nettools nodejs pandoc par pdfgrep
-        pdftk pfetch neofetch procps pulseaudio nnn rargs rlwrap rofi sd
-        silver-searcher sl slack spotify spotify-cli-linux stow
-        tectonic textql thunderbird time tmux tmuxinator toilet
-        tor-browser-bundle-bin tree ttdl tuptime udiskie ungoogled-chromium uni
-        universal-ctags util-linux visidata wmctrl xclip xflux xournalpp
-        xrandr-invert-colors zathura zbar zsh pass captive-browser alsa-plugins
-        coreutils coreutils-prefixed syncthing riseup-vpn toml2json
-        whatsapp-for-linux oxigraph rclone restic wireguard-tools rustup;
+        age
+        apache-jena
+        black
+        bup
+        clang
+        coq
+        cowsay
+        curl
+        dict
+        diffutils
+        dig
+        dnstracer
+        dos2unix
+        dunst
+        exiftool
+        fd
+        fdm
+        feh
+        fetchmail
+        findutils
+        fzf
+        gcal
+        getconf
+        gimp
+        git
+        gnugrep
+        gnupg
+        gnused
+        hostname
+        htmlq
+        htop
+        hydra-check
+        i3status
+        imagemagick
+        img2pdf
+        jabref
+        jdk
+        jq
+        lean4
+        libnotify
+        libreoffice
+        maildrop
+        man
+        mpv
+        mutt
+        netcat-openbsd
+        nettools
+        nodejs
+        pandoc
+        par
+        pdfgrep
+        pdftk
+        pfetch
+        neofetch
+        procps
+        pulseaudio
+        nnn
+        rargs
+        rlwrap
+        rofi
+        sd
+        silver-searcher
+        sl
+        slack
+        spotify
+        spotify-cli-linux
+        stow
+        tectonic
+        textql
+        thunderbird
+        time
+        tmux
+        tmuxinator
+        toilet
+        tor-browser-bundle-bin
+        tree
+        ttdl
+        tuptime
+        udiskie
+        ungoogled-chromium
+        uni
+        universal-ctags
+        util-linux
+        visidata
+        wmctrl
+        xclip
+        xflux
+        xournalpp
+        xrandr-invert-colors
+        zathura
+        zbar
+        zsh
+        pass
+        captive-browser
+        alsa-plugins
+        coreutils
+        coreutils-prefixed
+        syncthing
+        riseup-vpn
+        toml2json
+        whatsapp-for-linux
+        oxigraph
+        rclone
+        restic
+        wireguard-tools
+        rustup
+        ;
       chromium = this-nixpkgs.ungoogled-chromium;
       texlive = this-nixpkgs.texlive.combined.scheme-small;
       inherit (this-nixpkgs.nodePackages) insect; # TODO Requires x86_64-linux.
@@ -66,7 +169,7 @@ flake-utils.lib.eachDefaultSystem (system:
         qutebrowser # Want those cutting edge features :)
         discord # Mainstream version crashes as of 2024-12-24
         signal-desktop # Always seems out of date
-      ;
+        ;
       telegram = this-nixpkgs-unstable.telegram-desktop; # Want latest features.
 
       inherit (nixphile.packages.${system}) nixphile;
@@ -89,17 +192,18 @@ flake-utils.lib.eachDefaultSystem (system:
       udiskie = bundle-dotfiles "udiskie";
 
       # TODO probably should achieve this elsehow
-      nix_env_exports = let
-        locale_archive =
-          "${this-nixpkgs.glibcLocales}/lib/locale/locale-archive";
-      in this-config.write-text rec {
-        name = "nix_env_exports";
-        text = ''
-          export ${this-nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
-          export QT_XCB_GL_INTEGRATION=none
-        '';
-        destination = "/lib/${name}";
-      };
+      nix_env_exports =
+        let
+          locale_archive = "${this-nixpkgs.glibcLocales}/lib/locale/locale-archive";
+        in
+        this-config.write-text rec {
+          name = "nix_env_exports";
+          text = ''
+            export ${this-nixpkgs.lib.toShellVar "LOCALE_ARCHIVE" locale_archive}
+            export QT_XCB_GL_INTEGRATION=none
+          '';
+          destination = "/lib/${name}";
+        };
 
       tmuxinator = bundle-dotfiles "tmuxinator";
 
@@ -107,25 +211,25 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "tmux";
         packages = {
           inherit (packages)
-            fzf gcal tmuxinator
+            fzf
+            gcal
+            tmuxinator
             zsh # TODO rm this dep, it should really point the other direction
-          ;
+            ;
           inherit (upstreams) tmux;
           tmux-rc = this-config.store-dotfiles "tmux";
         };
       };
 
-      vim-plug = this-config.store-symlink "vim-plug"
-        "${this-nixpkgs.vimPlugins.vim-plug}/plug.vim"
-        "/home/me/.vim/autoload/plug.vim";
+      vim-plug =
+        this-config.store-symlink "vim-plug" "${this-nixpkgs.vimPlugins.vim-plug}/plug.vim"
+          "/home/me/.vim/autoload/plug.vim";
 
       vim = cons-package-named "vim" { } { inherit (upstreams) vim; };
 
       neovim = cons-package-named "vim" { } {
-          inherit (upstreams) neovim;
-          vim = this-config.store-symlink "nvim-as-vim"
-              "${upstreams.neovim}/bin/nvim"
-              "/bin/vim";
+        inherit (upstreams) neovim;
+        vim = this-config.store-symlink "nvim-as-vim" "${upstreams.neovim}/bin/nvim" "/bin/vim";
       };
 
       visidata = bundle-dotfiles "visidata";
@@ -142,18 +246,21 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      pass = let
-        pass' = upstreams.pass.override {
-          inherit (packages) dmenu;
-          inherit pass;
-        };
-        pass = pass'.overrideAttrs (final: prev: {
-          patches = prev.patches ++ [
-            (this-config.path-append this-config.src-path
-              "pass/set-prompt.patch")
-          ];
-        });
-      in pass.withExtensions (es: [ es.pass-otp ]);
+      pass =
+        let
+          pass' = upstreams.pass.override {
+            inherit (packages) dmenu;
+            inherit pass;
+          };
+          pass = pass'.overrideAttrs (
+            final: prev: {
+              patches = prev.patches ++ [
+                (this-config.path-append this-config.src-path "pass/set-prompt.patch")
+              ];
+            }
+          );
+        in
+        pass.withExtensions (es: [ es.pass-otp ]);
 
       dmenu = packages.rofi;
 
@@ -170,17 +277,23 @@ flake-utils.lib.eachDefaultSystem (system:
 
       # FIXME video issue
       zoom = upstreams.zoom.overrideAttrs (prev: {
-        nativeBuildInputs = (prev.nativeBuildInputs or [ ])
-          ++ [ this-nixpkgs.makeWrapper ];
-        postFixup = prev.postFixup + ''
-          wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
-        '';
+        nativeBuildInputs = (prev.nativeBuildInputs or [ ]) ++ [ this-nixpkgs.makeWrapper ];
+        postFixup =
+          prev.postFixup
+          + ''
+            wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
+          '';
       });
 
       zsh = this-config.bundle {
         name = "zsh";
         packages = {
-          inherit (packages) bat fd fzf nix_env_exports;
+          inherit (packages)
+            bat
+            fd
+            fzf
+            nix_env_exports
+            ;
           inherit (upstreams) zsh;
           zsh-rc = this-config.store-dotfiles "zsh";
         };
@@ -238,36 +351,48 @@ flake-utils.lib.eachDefaultSystem (system:
         };
       };
 
-      clone-dotfiles = let
-        clone-dotfiles-cons =
-          config@{ write-shell-app, dotfiles-source, dotfiles-destination }:
-          packages@{ git, coreutils-prefixed }:
-          write-shell-app {
-            name = "clone-dotfiles";
-            runtimeInputs = [ git coreutils-prefixed ];
-            text = ''
-              gtest -d "${dotfiles-destination}" \
-              || git clone -o github \
-                  "${dotfiles-source}" "${dotfiles-destination}"
-            '';
-          };
-      in cons-package clone-dotfiles-cons { } { };
+      clone-dotfiles =
+        let
+          clone-dotfiles-cons =
+            config@{
+              write-shell-app,
+              dotfiles-source,
+              dotfiles-destination,
+            }:
+            packages@{ git, coreutils-prefixed }:
+            write-shell-app {
+              name = "clone-dotfiles";
+              runtimeInputs = [
+                git
+                coreutils-prefixed
+              ];
+              text = ''
+                gtest -d "${dotfiles-destination}" \
+                || git clone -o github \
+                    "${dotfiles-source}" "${dotfiles-destination}"
+              '';
+            };
+        in
+        cons-package clone-dotfiles-cons { } { };
 
       nix-rc = this-config.store-dotfiles "nix";
 
-      syncthing = let
-        syncthing-cons = config@{ store-symlink, systemd-user-units-path }:
-          packages@{ syncthing }:
-          this-config.bundle {
-            name = "syncthing";
-            packages = {
-              inherit syncthing;
-              syncthing-service = this-config.store-symlink "syncthing-service"
-                "${syncthing}/share/systemd/user/syncthing.service"
-                "${systemd-user-units-path}/syncthing.service";
+      syncthing =
+        let
+          syncthing-cons =
+            config@{ store-symlink, systemd-user-units-path }:
+            packages@{ syncthing }:
+            this-config.bundle {
+              name = "syncthing";
+              packages = {
+                inherit syncthing;
+                syncthing-service =
+                  this-config.store-symlink "syncthing-service" "${syncthing}/share/systemd/user/syncthing.service"
+                    "${systemd-user-units-path}/syncthing.service";
+              };
             };
-          };
-      in cons-package syncthing-cons { } { inherit (upstreams) syncthing; };
+        in
+        cons-package syncthing-cons { } { inherit (upstreams) syncthing; };
 
     };
 
@@ -279,23 +404,63 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "default";
         packages = {
           inherit (packages)
-            core-env black dict restic rclone clang cowsay exiftool gcal imagemagick
-            img2pdf ocaml pdftk bluetooth tectonic hydra-check ttdl gnupg pass
-            nixfmt jq toml2json pinentry wireguard-tools;
+            core-env
+            black
+            dict
+            restic
+            rclone
+            clang
+            cowsay
+            exiftool
+            gcal
+            imagemagick
+            img2pdf
+            ocaml
+            pdftk
+            bluetooth
+            tectonic
+            hydra-check
+            ttdl
+            gnupg
+            pass
+            nixfmt
+            jq
+            toml2json
+            pinentry
+            wireguard-tools
+            ;
         };
       };
 
       nix-on-droid = this-config.bundle {
         name = "nix-on-droid";
-        packages = { inherit (packages) core-env termux ssh procps; };
+        packages = {
+          inherit (packages)
+            core-env
+            termux
+            ssh
+            procps
+            ;
+        };
       };
 
       extras = this-config.bundle {
         name = "extras";
         packages = {
           inherit (packages)
-            insect uni texlive weasyprint htmlq ungoogled-chromium gimp zbar
-            oxigraph bup lean4 age;
+            insect
+            uni
+            texlive
+            weasyprint
+            htmlq
+            ungoogled-chromium
+            gimp
+            zbar
+            oxigraph
+            bup
+            lean4
+            age
+            ;
         };
       };
 
@@ -303,10 +468,29 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "gui-env";
         packages = {
           inherit (packages)
-            captive-browser default grip libreoffice mpv pulseaudio qutebrowser
-            tor-browser-bundle-bin signal-desktop spotify slack telegram discord
-            whatsapp-for-linux xclip xournalpp zathura jabref udiskie zoom feh
-            mononoki;
+            captive-browser
+            default
+            grip
+            libreoffice
+            mpv
+            pulseaudio
+            qutebrowser
+            tor-browser-bundle-bin
+            signal-desktop
+            spotify
+            slack
+            telegram
+            discord
+            whatsapp-for-linux
+            xclip
+            xournalpp
+            zathura
+            jabref
+            udiskie
+            zoom
+            feh
+            mononoki
+            ;
         };
       };
 
@@ -314,25 +498,47 @@ flake-utils.lib.eachDefaultSystem (system:
         name = "wm-env";
         packages = {
           inherit (packages)
-            gui-env i3wm i3status xsession libnotify jq wallpapers dunst rofi
-            wmctrl xflux xrandr-invert-colors xbacklight;
+            gui-env
+            i3wm
+            i3status
+            xsession
+            libnotify
+            jq
+            wallpapers
+            dunst
+            rofi
+            wmctrl
+            xflux
+            xrandr-invert-colors
+            xbacklight
+            ;
         };
       };
 
-      coyote = let machine = this-config.machines.coyote;
-      in this-config.bundle {
-        name = "coyote";
-        packages = {
-          inherit (packages) wm-env extras syncthing;
-          coyote-xrandr-switch =
-            cons-package-named "xrandr" { inherit machine; } { };
-          battery-hook =
-            cons-package-named "battery-hook" { inherit machine; } { };
+      coyote =
+        let
+          machine = this-config.machines.coyote;
+        in
+        this-config.bundle {
+          name = "coyote";
+          packages = {
+            inherit (packages) wm-env extras syncthing;
+            coyote-xrandr-switch = cons-package-named "xrandr" { inherit machine; } { };
+            battery-hook = cons-package-named "battery-hook" { inherit machine; } { };
+          };
         };
-      };
 
     };
 
     packages = upstreams // ours // bundles;
 
-  in { inherit upstreams ours bundles packages; })
+  in
+  {
+    inherit
+      upstreams
+      ours
+      bundles
+      packages
+      ;
+  }
+)

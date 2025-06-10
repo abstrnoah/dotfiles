@@ -1,4 +1,5 @@
-top@{config, ...}: {
+top@{ config, ... }:
+{
   flake.modules.brumal.wm =
     {
       packages,
@@ -10,7 +11,8 @@ top@{config, ...}: {
       imports = builtins.attrValues {
         inherit (top.config.flake.modules.brumal)
           dunst
-          rofi;
+          rofi
+          ;
       };
 
       legacyDotfiles = {

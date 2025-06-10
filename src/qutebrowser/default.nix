@@ -1,4 +1,9 @@
-config@{ bundle, store-dotfiles, get-lib-output, write-shell-app }:
+config@{
+  bundle,
+  store-dotfiles,
+  get-lib-output,
+  write-shell-app,
+}:
 packages@{ qutebrowser, alsa-plugins }:
 
 # Some workarounds I seem to need on my Debian machine.
@@ -14,8 +19,11 @@ let
   config-py = "${rc}/home/me/.config/qutebrowser/config.py";
   this-qutebrowser = qutebrowser.overrideAttrs (prev: {
     preFixup =
-      let alsaPluginDir = (get-lib-output alsa-plugins) + "/lib/alsa-lib";
-      in prev.preFixup + ''
+      let
+        alsaPluginDir = (get-lib-output alsa-plugins) + "/lib/alsa-lib";
+      in
+      prev.preFixup
+      + ''
         makeWrapperArgs+=(
           --set QT_XCB_GL_INTEGRATION none
           --set ALSA_PLUGIN_DIR "${alsaPluginDir}"
@@ -23,7 +31,8 @@ let
           )
       '';
   });
-in bundle {
+in
+bundle {
   name = "qutebrowser";
   packages = {
     qutebrowser = this-qutebrowser;

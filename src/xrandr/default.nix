@@ -1,11 +1,24 @@
-config@{ escape-shell-arg, write-shell-app, symlink-join, machine }:
-packages@{ xrandr, feh, wallpapers }:
+config@{
+  escape-shell-arg,
+  write-shell-app,
+  symlink-join,
+  machine,
+}:
+packages@{
+  xrandr,
+  feh,
+  wallpapers,
+}:
 
 let
-  xrandr-switch-output = name: active: inactive:
+  xrandr-switch-output =
+    name: active: inactive:
     write-shell-app {
       name = "xrandr-switch-${name}";
-      runtimeInputs = [ xrandr feh ];
+      runtimeInputs = [
+        xrandr
+        feh
+      ];
       text = ''
         xrandr \
           --output ${escape-shell-arg active} \
@@ -15,10 +28,14 @@ let
         feh --bg-fill ${wallpapers}/home/me/.wallpaper
       '';
     };
-  xrandr-switch-primary-left = name: primary: secondary:
+  xrandr-switch-primary-left =
+    name: primary: secondary:
     write-shell-app {
       name = "xrandr-switch-${name}";
-      runtimeInputs = [ xrandr feh ];
+      runtimeInputs = [
+        xrandr
+        feh
+      ];
       text = ''
         xrandr \
           --output ${escape-shell-arg primary} \
@@ -28,10 +45,14 @@ let
         feh --bg-fill ${wallpapers}/home/me/.wallpaper
       '';
     };
-  xrandr-switch-primary-right = name: primary: secondary:
+  xrandr-switch-primary-right =
+    name: primary: secondary:
     write-shell-app {
       name = "xrandr-switch-${name}";
-      runtimeInputs = [ xrandr feh ];
+      runtimeInputs = [
+        xrandr
+        feh
+      ];
       text = ''
         xrandr \
           --output ${escape-shell-arg primary} \
@@ -43,7 +64,8 @@ let
     };
   builtin = machine.xrandr-outputs.builtin;
   external = machine.xrandr-outputs.external;
-in symlink-join {
+in
+symlink-join {
   name = "xrandr-switch";
   paths = [
     (xrandr-switch-output "builtin" builtin external)

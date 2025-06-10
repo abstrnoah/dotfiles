@@ -1,8 +1,16 @@
 # TODO Hibernator should be nixified and also do the same thing as
 # i3wm-helper-system.
 
-config@{ machine, username, hibernator, write-text, write-shell-app
-, to-shell-var, systemd-user-units-path, bundle }:
+config@{
+  machine,
+  username,
+  hibernator,
+  write-text,
+  write-shell-app,
+  to-shell-var,
+  systemd-user-units-path,
+  bundle,
+}:
 packages@{ }:
 
 bundle {

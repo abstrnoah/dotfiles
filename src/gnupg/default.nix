@@ -1,4 +1,8 @@
-config@{ write-text, systemd-user-units-path, bundle }:
+config@{
+  write-text,
+  systemd-user-units-path,
+  bundle,
+}:
 packages@{ gnupg, pinentry }:
 
 bundle {

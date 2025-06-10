@@ -1,6 +1,12 @@
-inputs@{ self, flake-utils, nixpkgs, ... }:
+inputs@{
+  self,
+  flake-utils,
+  nixpkgs,
+  ...
+}:
 
-flake-utils.lib.eachDefaultSystem (system:
+flake-utils.lib.eachDefaultSystem (
+  system:
   let
     this = {
 
@@ -22,7 +28,8 @@ flake-utils.lib.eachDefaultSystem (system:
         inherit system;
         config = {
           pulseaudio = true;
-          allowUnfreePredicate = p:
+          allowUnfreePredicate =
+            p:
             builtins.elem (this.get-name-substring p) [
               "discord"
               "spotify"
@@ -53,60 +60,81 @@ flake-utils.lib.eachDefaultSystem (system:
 
       is-bundled = b: b ? brumal.bundle-packages;
 
-      bundle-list-packages = b:
+      bundle-list-packages =
+        b:
         assert this.is-bundled b;
         builtins.attrValues b.brumal.bundle-packages;
 
       # flatten-bundles :: [ Package | Bundle ] -> [ Package ]
       # We operate on lists rather than sets to avoid overriding packages.
-      flatten-bundles = ps:
-        builtins.concatMap (p:
-          if this.is-bundled p then
-            this.flatten-bundles (this.bundle-list-packages p)
-          else
-            [ p ]) ps;
+      flatten-bundles =
+        ps:
+        builtins.concatMap (
+          p: if this.is-bundled p then this.flatten-bundles (this.bundle-list-packages p) else [ p ]
+        ) ps;
 
-      bundle = { name, packages, args ? { } }:
-        let packages' = this.flatten-bundles (builtins.attrValues packages);
-        in nixpkgs.nixpkgs.${system}.buildEnv ({
-          inherit name;
-          paths = packages';
-          extraOutputsToInstall = [ "man" "doc" ];
-        } // args) // {
+      bundle =
+        {
+          name,
+          packages,
+          args ? { },
+        }:
+        let
+          packages' = this.flatten-bundles (builtins.attrValues packages);
+        in
+        nixpkgs.nixpkgs.${system}.buildEnv (
+          {
+            inherit name;
+            paths = packages';
+            extraOutputsToInstall = [
+              "man"
+              "doc"
+            ];
+          }
+          // args
+        )
+        // {
           brumal.bundle-packages = packages;
         };
 
       # TODO `nix flake show` complains that this does not produce a derivation,
       # although `nix flake build`ing works fine.
-      store-source = {
-        # Absolute path to the source, must not be a store path.
-        source,
-        # List of path strings to exclude, relative to source.
-        excludes ? [ ] }:
+      store-source =
+        {
+          # Absolute path to the source, must not be a store path.
+          source,
+          # List of path strings to exclude, relative to source.
+          excludes ? [ ],
+        }:
         assert builtins.typeOf source == "path";
         let
           name = baseNameOf source;
           excludes' = map (p: this.path-append source p) excludes;
           filter = path: type: !builtins.elem (/. + path) excludes';
-        in builtins.filterSource filter source;
+        in
+        builtins.filterSource filter source;
 
-      call = f: arg:
-        f (this.get-attrs (builtins.attrNames (builtins.functionArgs f)) arg);
+      call = f: arg: f (this.get-attrs (builtins.attrNames (builtins.functionArgs f)) arg);
 
       calls = f: args: this.fold this.call f args;
 
-      cons-package = config@{ ... }:
+      cons-package =
+        config@{ ... }:
         packages@{ ... }:
         cons:
         config'@{ ... }:
         packages'@{ ... }:
-        this.calls cons [ (config // config') (packages // packages') ];
+        this.calls cons [
+          (config // config')
+          (packages // packages')
+        ];
 
-      cons-package-named = config: packages: name:
-        this.cons-package config packages
-        (import (this.path-append this.src-path name));
+      cons-package-named =
+        config: packages: name:
+        this.cons-package config packages (import (this.path-append this.src-path name));
 
-      bundle-dotfiles = upstreams: name:
+      bundle-dotfiles =
+        upstreams: name:
         this.bundle {
           inherit name;
           packages = {
@@ -115,23 +143,32 @@ flake-utils.lib.eachDefaultSystem (system:
           };
         };
 
-      store-symlink = name: source: destination:
+      store-symlink =
+        name: source: destination:
         this.store-symlinks {
           inherit name;
-          mapping = [{ inherit source destination; }];
+          mapping = [ { inherit source destination; } ];
         };
 
-      store-symlinks = { name, mapping }:
+      store-symlinks =
+        { name, mapping }:
         let
-          symlink-command = { source, destination }: ''
-            destination="$out"${this.escape-shell-arg destination}
-            mkdir -p "$(dirname "$destination")"
-            ln -s ${this.escape-shell-arg source} "$destination"
-          '';
+          symlink-command =
+            { source, destination }:
+            ''
+              destination="$out"${this.escape-shell-arg destination}
+              mkdir -p "$(dirname "$destination")"
+              ln -s ${this.escape-shell-arg source} "$destination"
+            '';
           commands = map symlink-command mapping;
-        in this.run-command-local name { } ''
+        in
+        this.run-command-local name { } ''
           ${this.concat-strings commands}
         '';
 
     };
-  in { config = this; })
+  in
+  {
+    config = this;
+  }
+)
