@@ -11,6 +11,7 @@
       inherit (library)
         mergePackages
         storeSource
+        storeLegacyDotfiles
         ;
       nixpkgs-packages = inputs'.nixpkgs.legacyPackages;
 
@@ -123,6 +124,7 @@
           zathura
           zbar
           zsh
+          numbat
           ;
 
         # Aliases to nixpkgs
@@ -140,9 +142,9 @@
         telegram = nixpkgs-packages.telegram-desktop;
 
         # Inherit from nixpkgs collections
-        inherit (nixpkgs-packages.nodePackages) insect; # TODO Replaced by something better?
         inherit (nixpkgs-packages.python310Packages) grip weasyprint;
         inherit (nixpkgs-packages.xorg) xbacklight xrandr;
+        inherit (nixpkgs-packages.vimPlugins) vim-plug;
 
         # Mergers of upstreams
         # TODO Mergers really should be downstream though
@@ -177,10 +179,6 @@
         # Flake inputs
         inherit (inputs'.nixphile.packages) nixphile;
         inherit (inputs'.emplacetree.packages) emplacetree;
-
-        # Ours TODO refactor
-        bluetoothctl-by-alias = storeSource "bluetooth";
-
       };
     in
     {

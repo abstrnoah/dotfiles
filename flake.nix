@@ -2,7 +2,8 @@
 
   description = "abstrnoah's dotfiles";
 
-  nixConfig.extra-experimental-features = [ "pipe-operators" ];
+  # TODO
+  # nixConfig.extra-experimental-features = [ "pipe-operators" ];
 
   inputs.systems.url = "github:nix-systems/default-linux";
 

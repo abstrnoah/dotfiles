@@ -22,10 +22,14 @@ let
 
   inherit (nixpkgs-lib) evalModules mkOption types;
   inherit (nixpkgs-lib.attrsets) getAttrs;
-  inherit (nixpkgs) buildEnv;
+  inherit (nixpkgs-lib.strings) concatStrings escapeShellArg;
+  inherit (nixpkgs) buildEnv runCommandLocal;
   pathAppend = nixpkgs-lib.path.append;
 
   this = {
+
+    inherit (nixpkgs-lib) mapAttrsToList mkIf mkMerge;
+    inherit (nixpkgs) writeTextFile;
 
     mergePackages =
       {
@@ -85,97 +89,28 @@ let
         symlink-command =
           { source, destination }:
           ''
-            destination="$out"${this.escape-shell-arg destination}
+            destination="$out"${escapeShellArg destination}
             mkdir -p "$(dirname "$destination")"
-            ln -s ${this.escape-shell-arg source} "$destination"
+            ln -s ${escapeShellArg source} "$destination"
           '';
         commands = map symlink-command mapping;
       in
-      this.run-command-local name { } ''
-        ${this.concat-strings commands}
+      runCommandLocal name { } ''
+        ${concatStrings commands}
       '';
 
-    evalBrumalModules =
-      let
-        baseModule =
-          top@{ packages, library, ... }:
-          { system, config, ... }:
-          {
-            options = {
-              hostname = mkOption {
-                type = types.str;
-                description = ''
-                  A machine hostname.
-                  A module defines this option to communicate that it is describing a machine.
-                '';
-              };
-              system = mkOption {
-                type = types.enum [
-                  "aarch64-linux"
-                  "x86_64-linux"
-                ];
-                description = ''
-                  A system string.
-                  A module defines this to communicate that it is only compatible with such system.
-                  It determines which `packages` and `library` appear as module arguments and is aliased to `system` module argument.
-                  TODO Maybe tie type into github:nix-systems.
-                '';
-              };
-              distro = mkOption {
-                type = types.enum [
-                  "debian"
-                  "nixos"
-                ];
-                description = ''
-                  A distribution string.
-                '';
-              };
-              owner = mkOption {
-                type = types.attrsOf types.anything;
-                description = ''
-                  The user who ownes this config.
-                  TODO Improve typing.
-                '';
-              };
-              users = mkOption {
-                type = types.attrsOf types.attrsOf;
-                description = ''
-                  Users in this config.
-                  TODO Tie to nixos users submodule.
-                '';
-                default = { };
-              };
-              legacyDotfiles = mkOption {
-                types = types.types.lazyAttrsOf types.packages;
-                description = ''
-                  A shim to continue using my old-style dotfiles whilst I slowly migrate to pure nixos.
-                '';
-                default = { };
-              };
-              nixos = mkOption {
-                types = types.types.lazyAttrsOf types.deferredModule;
-                description = ''
-                  Nixos modules.
-                  TODO Enforce module class.
-                '';
-                default = { };
-              };
-            };
-            config = {
-              # TODO Should I alias better?
-              _module.args.system = config.system;
-              _module.args.packages = top.packages.${system};
-              _module.args.library = top.library.${system};
-            };
-          };
-      in
-      { packages, library }:
-      modules:
-      evalModules {
-        modules = [
-          (baseModule { inherit packages library; })
-        ] ++ modules;
-      };
   };
+
+  # Key `"*"` gets merged in all cases.
+  mkCases =
+    value: cases:
+    let
+      f = case: branch: this.mkIf (value == case) branch;
+      ifs = this.mapAttrsToList f cases;
+      always = cases."*" or { };
+      merge = this.mkMerge (ifs ++ [ always ]);
+    in
+    merge;
+
 in
 this
