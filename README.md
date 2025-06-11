@@ -156,6 +156,13 @@ P.S. If you don't like how the code is formatted, then blame [nixfmt].
 * Maybe things like legacyDotfiles nixos should be lists not attrs. Maybe nixos should just be a single module
 * Maybe instead of "per distro", just need "nixos", "nix on not nixos", "nixless"
 
+* `default.nix`s
+* wallpapers
+* nix profiles
+* library
+* README
+* fixpoint packages
+
 ---
 
 [nixphile]: https://github.com/abstrnoah/nixphile
