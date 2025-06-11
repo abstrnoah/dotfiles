@@ -1,7 +1,13 @@
 top@{ config, ... }:
 {
   flake.modules.brumal.gui =
-    { packages, library, ... }:
+    {
+      packages,
+      library,
+      mkCases,
+      config,
+      ...
+    }:
     {
       imports = builtins.attrValues {
         inherit (top.config.flake.modules.brumal)
@@ -12,20 +18,24 @@ top@{ config, ... }:
           ;
       };
 
-      userPackages = {
-        inherit (packages)
-          signal-desktop
-          spotify
-          spotify-cli-linux
-          telegram
-          discord
-          xclip
-          xournalpp
-          jabref
-          feh
-          mononoki
-          zbar
-          ;
+      userPackages = mkCases config.distro {
+        "*" = {
+          inherit (packages)
+            signal-desktop
+            spotify
+            spotify-cli-linux
+            discord
+            xclip
+            xournalpp
+            jabref
+            feh
+            mononoki
+            zbar
+            ;
+        };
+
+        # TODO Telegram seems to pull in systemctl into bin which is bad for debian
+        nixos = { inherit (packages) telegram; };
       };
     };
 }
