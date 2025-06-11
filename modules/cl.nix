@@ -18,6 +18,7 @@ top@{ config, ... }:
           curl
           git
           tmux
+          tmuxinator
           vim
           visidata
           nix
@@ -35,7 +36,6 @@ top@{ config, ... }:
           inherit (packages)
             awk
             nixphile
-            tmuxinator
             diffutils
             dos2unix
             findutils

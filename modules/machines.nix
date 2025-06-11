@@ -12,6 +12,8 @@ let
     filterAttrs
     nixosSystem
     mapAttrs
+    mapAttrs'
+    nameValuePair
     ;
   machinesEvaluated = mapAttrs (_: evalBrumalModule) config.flake.machines;
   machinesByDistro = genAttrs [
@@ -42,10 +44,14 @@ in
 
     nixphileConfigurations = mapAttrs (
       name: v:
+      let
+        legacyDotfiles-suffixed = mapAttrs' (name: rc: nameValuePair (name + "-rc") rc) v.legacyDotfiles;
+      in
       config.flake.library.${v.system}.mergePackages {
         inherit name;
         packages =
-          v.legacyDotfiles // (if v.distro != "nixos" then (v.userPackages // v.systemPackages) else { });
+          legacyDotfiles-suffixed
+          // (if v.distro != "nixos" then (v.userPackages // v.systemPackages) else { });
       }
     ) machinesEvaluated;
   };
