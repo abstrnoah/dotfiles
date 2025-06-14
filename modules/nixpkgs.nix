@@ -6,7 +6,7 @@ top@{
   ...
 }:
 let
-  perSystemOutputModule = flake-parts-library.mkTransposedPerSystemModule {
+  perSystemOutputModule = flake-parts-lib.mkTransposedPerSystemModule {
     name = "nixpkgs";
     option = library.mkOption {
       type = library.types.pkgs;

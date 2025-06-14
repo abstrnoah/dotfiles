@@ -21,7 +21,7 @@ in
     type = library.types.lazyAttrsOf library.types.raw;
     default = { };
   };
-  config.flake.machines = library.mapAttrs (_: evalMachine) config.flake.modules.machine;
+  config.flake.machines = library.mapAttrs (_: evalMachine) config.flake.modules.machine or { };
   config.flake.nixosConfigurations = library.filterAttrs (
     _: value: value.brumal.distro == "nixos"
   ) config.flake.machines;

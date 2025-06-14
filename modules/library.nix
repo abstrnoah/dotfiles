@@ -15,6 +15,6 @@ in
   config = {
     inherit library;
     flake.modules.flake.library = libraryModule;
-    flake.modules.brumal.library = libraryModule;
+    # flake.modules.brumal.library = libraryModule; # Instead, this is injected directly in /library.nix.
   };
 }

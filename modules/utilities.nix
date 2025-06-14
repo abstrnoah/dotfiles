@@ -1,4 +1,5 @@
-{
+top@{
+  config,
   library,
   flake-parts-lib,
   ...
@@ -31,6 +32,6 @@ in
   flake.modules.brumal.utilities =
     { system, ... }:
     {
-      _module.args.utilities = flake.utilities.${system};
+      _module.args.utilities = top.config.flake.utilities.${system};
     };
 }
