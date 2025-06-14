@@ -15,7 +15,7 @@ let
   };
 in
 {
-  config.perSystem =
+  perSystem =
     { pkgs, ... }:
     let
       utilities = import ../utilities.nix {
@@ -26,5 +26,11 @@ in
     {
       inherit utilities;
       _module.args.utilities = utilities;
+    };
+
+  flake.modules.brumal.utilities =
+    { system, ... }:
+    {
+      _module.args.utilities = flake.utilities.${system};
     };
 }
