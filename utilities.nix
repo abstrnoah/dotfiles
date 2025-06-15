@@ -2,7 +2,7 @@
 rec {
   inherit (nixpkgs)
     buildEnv
-    runCommandLOcal
+    runCommandLocal
     writeTextFile
     writeShellApplication
     ;

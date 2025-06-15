@@ -47,4 +47,10 @@ in
       # Flake parts perSystem gets pkgs from inputs by default, but we override here.
       _module.args.pkgs = config.nixpkgs;
     };
+
+  config.flake.modules.brumal.nixpkgs =
+    { system, ... }:
+    {
+      _module.args.pkgs = top.config.flake.nixpkgs.${system};
+    };
 }

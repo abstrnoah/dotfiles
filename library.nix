@@ -12,6 +12,7 @@ let
       mkMerge
       mapAttrs
       mapAttrsToList
+      filterAttrs
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs

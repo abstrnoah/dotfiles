@@ -16,6 +16,8 @@ let
   };
 in
 {
+  imports = [ perSystemOutputModule ];
+
   perSystem =
     { pkgs, ... }:
     let

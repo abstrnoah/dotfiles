@@ -6,5 +6,6 @@
     config.flake.modules.brumal.profile
     config.flake.modules.brumal.system
     config.flake.modules.brumal.utilities
+    config.flake.modules.brumal.nixpkgs
   ];
 }

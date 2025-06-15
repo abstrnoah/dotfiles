@@ -7,14 +7,14 @@ let
 in
 {
   imports = [ libraryModule ];
-  options.library = lib.mkOption {
+  options.flake.library = lib.mkOption {
     type = lib.types.lazyAttrsOf lib.types.anything;
     default = { };
     description = "Libraries are system-agnostic!";
   };
-  config = {
+  config.flake = {
     inherit library;
-    flake.modules.flake.library = libraryModule;
-    # flake.modules.brumal.library = libraryModule; # Instead, this is injected directly in /library.nix.
+    modules.flake.library = libraryModule;
+    # modules.brumal.library = libraryModule; # Instead, this is injected directly in /library.nix.
   };
 }
