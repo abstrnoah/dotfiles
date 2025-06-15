@@ -22,7 +22,6 @@
           experimental-features = [
             "nix-command"
             "flakes"
-            "repl-flake"
             "pipe-operators"
           ];
           allow-import-from-derivation = true;
@@ -40,7 +39,7 @@
             inherit text;
           };
 
-        nixos.nixos.settings = config.nix-settings;
+        nixos.nixos.nix.settings = config.nix-settings;
       };
     };
 }

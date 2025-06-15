@@ -2,6 +2,7 @@
   lib,
   evalBrumalModule,
   config,
+inputs,
   ...
 }:
 let
@@ -10,7 +11,6 @@ let
     types
     genAttrs
     filterAttrs
-    nixosSystem
     mapAttrs
     mapAttrs'
     nameValuePair
@@ -39,7 +39,7 @@ in
 
   config.flake = {
     nixosConfigurations = mapAttrs (
-      _: v: nixosSystem { modules = [ v.nixos ]; }
+      _: v: inputs.nixpkgs.lib.nixosSystem { inherit (v) system; modules = [ v.nixos ]; }
     ) machinesByDistro.nixos;
 
     nixphileConfigurations = mapAttrs (
