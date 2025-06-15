@@ -6,7 +6,7 @@ let
       e = library.evalBrumalModule {
         modules = [
           module
-          config.flake.modules.brumal.base
+          config.flake.modules.nixos.base
         ];
       };
     in
@@ -17,12 +17,23 @@ let
     };
 in
 {
-  options.flake.machines = library.mkOption {
-    type = library.types.lazyAttrsOf library.types.raw;
-    default = { };
+  options.flake = {
+    machineModules = library.mkOption {
+      type = library.types.lazyAttrsOf library.types.deferredModule;
+      default = { };
+    };
+    machines = library.mkOption {
+      type = library.types.lazyAttrsOf library.types.raw;
+      default = { };
+      # TODO wrap with class and moduleLocation
+    };
   };
-  config.flake.machines = library.mapAttrs (_: evalMachine) config.flake.modules.machine or { };
-  config.flake.nixosConfigurations = library.filterAttrs (
-    _: value: value.brumal.distro == "nixos"
-  ) config.flake.machines;
+  config.flake = {
+    modules.nixos = config.flake.machineModules;
+    machines = library.mapAttrs (_: evalMachine) config.flake.machineModules or { };
+    nixosConfigurations = library.filterAttrs (
+      _: value: value.brumal.distro == "nixos"
+    ) config.flake.machines;
+  };
+
 }

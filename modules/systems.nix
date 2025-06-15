@@ -3,9 +3,9 @@
   # TODO Generate from machine configurations
   systems = [ "x86_64-linux" ];
 
-  flake.modules.brumal.system =
-    { config, ... }:
+  flake.modules.nixos.system =
+    { config, system, ... }:
     {
-      _module.args.system = config.nixpkgs.hostPlatform;
+      _module.args.system = config.nixpkgs.hostPlatform.system;
     };
 }

@@ -1,11 +1,11 @@
 { config, ... }:
 {
-  flake.modules.brumal.base.imports = [
-    config.flake.modules.brumal.distro
-    config.flake.modules.brumal.owner
-    config.flake.modules.brumal.profile
-    config.flake.modules.brumal.system
-    config.flake.modules.brumal.utilities
-    config.flake.modules.brumal.nixpkgs
+  flake.modules.nixos.base.imports = [
+    config.flake.modules.nixos.distro
+    config.flake.modules.nixos.owner
+    config.flake.modules.nixos.profile
+    config.flake.modules.nixos.system
+    config.flake.modules.nixos.utilities
+    config.flake.modules.nixos.nixpkgs
   ];
 }

@@ -1,20 +1,23 @@
-{ lib, ... }:
+{ inputs, ... }:
 let
-  library = import ../library.nix { nixpkgs-lib = lib; };
+  library = import ../library.nix {
+    # For flake version of lib which is different from non-flake version :skull:
+    nixpkgs-lib = inputs.nixpkgs.lib;
+  };
   libraryModule = {
     _module.args.library = library;
   };
 in
 {
   imports = [ libraryModule ];
-  options.flake.library = lib.mkOption {
-    type = lib.types.lazyAttrsOf lib.types.anything;
+  options.flake.library = library.mkOption {
+    type = library.types.lazyAttrsOf library.types.anything;
     default = { };
     description = "Libraries are system-agnostic!";
   };
   config.flake = {
     inherit library;
     modules.flake.library = libraryModule;
-    # modules.brumal.library = libraryModule; # Instead, this is injected directly in /library.nix.
+    # modules.nixos.library = libraryModule; # Instead, this is injected directly in /library.nix.
   };
 }

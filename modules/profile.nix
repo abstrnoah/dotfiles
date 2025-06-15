@@ -1,6 +1,6 @@
 # Inspired by https://github.com/lf-/flakey-profile
 {
-  flake.modules.brumal.profile =
+  flake.modules.nixos.profile =
     { library, utilities, config, ... }:
     let
       inherit (library)

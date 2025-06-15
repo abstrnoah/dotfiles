@@ -1,5 +1,5 @@
 {
-  flake.modules.brumal.distro =
+  flake.modules.nixos.distro =
     { library, config, ... }:
     {
       options.brumal.distro = library.mkOption {

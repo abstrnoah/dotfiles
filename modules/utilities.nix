@@ -31,7 +31,7 @@ in
       _module.args.utilities = utilities;
     };
 
-  flake.modules.brumal.utilities =
+  flake.modules.nixos.utilities =
     { system, ... }:
     {
       _module.args.utilities = top.config.flake.utilities.${system};

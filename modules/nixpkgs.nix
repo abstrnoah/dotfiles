@@ -48,9 +48,9 @@ in
       _module.args.pkgs = config.nixpkgs;
     };
 
-  config.flake.modules.brumal.nixpkgs =
+  config.flake.modules.nixos.nixpkgs =
     { system, ... }:
     {
-      _module.args.pkgs = top.config.flake.nixpkgs.${system};
+      # _module.args.pkgs = top.config.flake.nixpkgs.${system}; # TODO
     };
 }

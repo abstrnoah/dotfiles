@@ -13,6 +13,7 @@ let
       mapAttrs
       mapAttrsToList
       filterAttrs
+      nixosSystem
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs
@@ -42,7 +43,7 @@ let
       { modules }:
       let
         base.config._module.args.library = library;
-        e = evalModules {
+        e = nixosSystem {
           modules = [ base ] ++ modules;
         };
       in
