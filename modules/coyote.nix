@@ -1,4 +1,3 @@
-{ config, ... }:
 {
   flake.machineModules.coyote = {
     networking.hostName = "coyote";

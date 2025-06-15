@@ -31,6 +31,7 @@ let
   };
 in
 {
+
   imports = [ perSystemOutputModule ];
 
   config.perSystem =
@@ -48,9 +49,11 @@ in
       _module.args.pkgs = config.nixpkgs;
     };
 
-  config.flake.modules.nixos.nixpkgs =
-    { system, ... }:
-    {
-      # _module.args.pkgs = top.config.flake.nixpkgs.${system}; # TODO
-    };
+  # TODO overriding pkgs here is nontrivial
+  # config.flake.modules.nixos.base =
+  #   { system, ... }:
+  #   {
+  #     # _module.args.pkgs = top.config.flake.nixpkgs.${system};
+  #   };
+
 }

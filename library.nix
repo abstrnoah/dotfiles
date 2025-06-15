@@ -10,6 +10,7 @@ let
       types
       mkIf
       mkMerge
+      mkDefault
       mapAttrs
       mapAttrsToList
       filterAttrs
@@ -34,7 +35,7 @@ let
       let
         f = case: branch: mkIf (value == case) branch;
         ifs = mapAttrsToList f cases;
-        always = cases."*" or { };
+        always = mkIf (cases ? "*") cases."*";
         merge = mkMerge (ifs ++ [ always ]);
       in
       merge;
@@ -42,9 +43,9 @@ let
     evalBrumalModule =
       { modules }:
       let
-        base.config._module.args.library = library;
         e = nixosSystem {
-          modules = [ base ] ++ modules;
+          inherit modules;
+          specialArgs = { inherit library; };
         };
       in
       e.config;

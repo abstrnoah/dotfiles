@@ -7,6 +7,7 @@ let
         modules = [
           module
           config.flake.modules.nixos.base
+          # config.flake.modules.nixos.machine
         ];
       };
     in
@@ -29,7 +30,7 @@ in
     };
   };
   config.flake = {
-    modules.nixos = config.flake.machineModules;
+    # modules.nixos = config.flake.machineModules;
     machines = library.mapAttrs (_: evalMachine) config.flake.machineModules or { };
     nixosConfigurations = library.filterAttrs (
       _: value: value.brumal.distro == "nixos"

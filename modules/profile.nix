@@ -1,6 +1,6 @@
 # Inspired by https://github.com/lf-/flakey-profile
 {
-  flake.modules.nixos.profile =
+  flake.modules.nixos.base =
     { library, utilities, config, ... }:
     let
       inherit (library)
