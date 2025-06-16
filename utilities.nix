@@ -5,6 +5,7 @@ rec {
     runCommandLocal
     writeTextFile
     writeShellApplication
+    writeShellScript
     ;
 
   mergePackages =

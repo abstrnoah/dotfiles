@@ -1,6 +1,0 @@
-program_options:
-  automount: false
-  notify_command: "udiskie-event-handler '{event}' '{id_uuid}'"
-device_config:
-  - id_uuid: C8FE-2EF0
-    automount: true

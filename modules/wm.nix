@@ -3,7 +3,12 @@
 {
 
   flake.modules.nixos.wm =
-    { config, library, utilities, ... }:
+    {
+      config,
+      library,
+      utilities,
+      ...
+    }:
     let
 
       inherit (library)
@@ -30,8 +35,14 @@
               default = { };
             };
             directives = mkOption { type = types.listOf types.str; };
-            blocks = mkOption { type = types.attrsOf (types.submodule i3wmBlockModule); default = {};};
-            modes = mkOption { type = types.attrsOf (types.submodule i3wmModeModule);default = {}; };
+            blocks = mkOption {
+              type = types.attrsOf (types.submodule i3wmBlockModule);
+              default = { };
+            };
+            modes = mkOption {
+              type = types.attrsOf (types.submodule i3wmModeModule);
+              default = { };
+            };
             text = mkOption { type = types.str; };
           };
           config = {
@@ -94,6 +105,7 @@
             # TODO Escape address
             block.head = "mode \"${config.address}\"";
             block.body.directives = [
+              # TODO factor out keys?
               ''bindsym Escape mode "default"''
               ''bindsym ctrl+bracketleft mode "default"''
             ];
@@ -103,7 +115,13 @@
     in
     {
 
-      options.brumal.cfg.i3wm = mkOption { type = types.submodule i3wmBodyModule; };
+      options.brumal.cfg.i3wm = {
+        keys = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
+        };
+        body = mkOption { type = types.submodule i3wmBodyModule; };
+      };
 
       config = library.mkCases config.brumal.distro {
         nixos = {
@@ -121,8 +139,8 @@
           ];
           brumal.rcs.i3wm = writeTextFile {
             name = "i3wm-rc";
-            destination = "${config.brumal.env.XDG_CONFIG_HOME}/.config";
-            text = config.brumal.cfg.i3wm.text;
+            destination = "${config.brumal.env.XDG_CONFIG_HOME}/i3/config";
+            text = config.brumal.cfg.i3wm.body.text;
           };
 
         };

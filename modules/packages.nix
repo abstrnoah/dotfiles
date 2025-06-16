@@ -14,6 +14,7 @@
         mkDefault
         mkOption
         types
+        mapAttrs
         ;
       inherit (utilities) mergePackages;
       nixpkgs-packages = pkgs; # TODO
@@ -27,7 +28,7 @@
 
       config._module.args.packages = config.brumal.packages;
 
-      config.brumal.packages = mkDefault {
+      config.brumal.packages = {
 
         # Inherit directly from nixpkgs
         inherit (nixpkgs-packages)
@@ -121,7 +122,6 @@
           tree
           ttdl
           tuptime
-          udiskie
           ungoogled-chromium
           uni
           universal-ctags
