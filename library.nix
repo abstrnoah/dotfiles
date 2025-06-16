@@ -16,6 +16,8 @@ let
       filterAttrs
       nixosSystem
       getName
+      pathExists
+      concatStringsSep
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs
@@ -36,7 +38,7 @@ let
       let
         f = case: branch: mkIf (value == case) branch;
         ifs = mapAttrsToList f cases;
-        always = mkIf (cases ? "*") cases."*";
+        always = mkIf (cases ? "*") (cases."*" or { });
         merge = mkMerge (ifs ++ [ always ]);
       in
       merge;

@@ -1,8 +1,9 @@
 # TODO Multi-user wm setup??
+# This is for general declaration and setup for wm. See `i3wm-config.nix` for actual i3wm config.
 {
 
   flake.modules.nixos.wm =
-    { config, library, ... }:
+    { config, library, utilities, ... }:
     let
 
       inherit (library)
@@ -14,6 +15,9 @@
         mkMerge
         mkIf
         mkDefault
+        ;
+
+      inherit (utilities)
         writeTextFile
         ;
 
@@ -26,9 +30,9 @@
               default = { };
             };
             directives = mkOption { type = types.listOf types.str; };
-            blocks = mkOption { type = types.attrsOf (types.submodule i3wmBlockModule); };
-            modes = mkOption { type = types.attrsOf (types.submodule i3wmModeModule); };
-            text = types.str;
+            blocks = mkOption { type = types.attrsOf (types.submodule i3wmBlockModule); default = {};};
+            modes = mkOption { type = types.attrsOf (types.submodule i3wmModeModule);default = {}; };
+            text = mkOption { type = types.str; };
           };
           config = {
             text =
@@ -58,7 +62,7 @@
               default = name;
             };
             body = mkOption { type = types.submodule i3wmBodyModule; };
-            text = types.str;
+            text = mkOption { type = types.str; };
           };
           config = {
             text = ''
@@ -87,7 +91,7 @@
               (mkIf options.tips.isDefined "${name}: ${config.tips}")
               (mkDefault name)
             ];
-            # TODO Escape
+            # TODO Escape address
             block.head = "mode \"${config.address}\"";
             block.body.directives = [
               ''bindsym Escape mode "default"''

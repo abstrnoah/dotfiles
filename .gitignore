@@ -5,4 +5,5 @@ tags
 *.apk
 .gdb_history
 result
+repl-result-out
 nix-portable
