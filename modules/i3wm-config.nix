@@ -1,7 +1,12 @@
-# This is just for defining i3 config. See `wm.nix` for declarations and setup.
+# This is just for defining i3 config.
+# See `wm.nix` for declarations and setup.
+# Also note that i3 directives are defined across different modules.
 {
   flake.modules.nixos.wm =
-    ctx@{ packages, config, ... }:
+    { packages, config, ... }:
+    let
+      cfg = config.brumal.cfg.i3wm;
+    in
     {
       brumal.cfg.i3wm = {
 
@@ -24,18 +29,20 @@
           singlequote = "apostrophe";
           mod = config.keys.super;
         };
+        dimensions = {
+          default_border = 1;
+          base_gap_inner = 7;
+          base_gap_outer = 0;
+        };
+        brightness_interval = 5;
 
-        body =
-          { config, ... }:
-          {
-
-            directives = [
-
-              "font pango:mononoki regular 7"
-
-            ];
-
-          };
+        body = {
+          directives = [
+            ''for_window [class=".*"] border pixel ${builtins.toString cfg.dimensions.default_border}''
+            ''gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}''
+            ''border_radius 2''
+          ];
+        };
 
       };
     };

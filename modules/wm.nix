@@ -54,13 +54,14 @@
                 );
                 directivesText = concatStringsSep "\n" config.directives;
                 blocksText = concatStringsSep "\n" (mapAttrsToList (_: block: block.text) config.blocks);
+                modesText = concatStringsSep "\n" (mapAttrsToList (_: mode: mode.text) config.modes);
               in
               ''
                 ${setDirectivesText}
                 ${directivesText}
                 ${blocksText}
+                ${modesText}
               '';
-            blocks = mapAttrs (_: mode: mode.block) config.modes;
           };
         };
 
@@ -96,6 +97,8 @@
             block = mkOption { type = types.submodule i3wmBodyModule; };
             tips = mkOption { type = types.str; };
             address = mkOption { type = types.str; };
+            key = mkOption { type = types.str; };
+            text = mkOption { type = types.str; };
           };
           config = {
             address = mkMerge [
@@ -109,6 +112,10 @@
               ''bindsym Escape mode "default"''
               ''bindsym ctrl+bracketleft mode "default"''
             ];
+            text = ''
+              bindsym ${config.key} mode ${config.address}
+              ${config.block.text}
+            '';
           };
         };
 
@@ -120,6 +127,11 @@
           type = types.attrsOf types.str;
           default = { };
         };
+        dimensions = mkOption {
+          type = types.attrsOf types.numbers.nonnegative;
+          default = { };
+        };
+        brightness_interval = mkOption { type = types.numbers.positive; };
         body = mkOption { type = types.submodule i3wmBodyModule; };
       };
 
