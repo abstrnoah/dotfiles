@@ -15,6 +15,7 @@ let
       mapAttrsToList
       filterAttrs
       nixosSystem
+      getName
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs

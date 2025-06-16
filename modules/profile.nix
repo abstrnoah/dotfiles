@@ -1,7 +1,12 @@
 # Inspired by https://github.com/lf-/flakey-profile
 {
   flake.modules.nixos.base =
-    { library, utilities, config, ... }:
+    {
+      library,
+      utilities,
+      config,
+      ...
+    }:
     let
       inherit (library)
         mkOption
@@ -16,35 +21,25 @@
     in
     {
       options.brumal = {
-        packages = mkOption {
-          type = types.lazyAttrsOf types.package;
-          default = { };
+        profile.packages = mkOption {
+          type = types.listOf types.package;
+          default = [ ];
         };
-        rcs = mkOption {
-          type = types.lazyAttrsOf types.package;
-          default = { };
-        };
-        profile.package = mkOption {
-          type = types.package;
-        };
-        profile.switch = mkOption {
-          type = types.package;
-        };
-        profile.rollback = mkOption {
-          type = types.package;
-        };
+        profile.package = mkOption { type = types.package; };
+        profile.switch = mkOption { type = types.package; };
+        profile.rollback = mkOption { type = types.package; };
       };
       config.brumal = {
         profile.package = buildEnv {
           name = profileBaseName;
-          paths = (attrValues config.brumal.packages) ++ (attrValues config.brumal.rcs);
+          paths = config.brumal.profile.packages;
           extraOutputsToInstall = [
             "man"
             "doc"
           ];
         };
         profile.switch = writeShellApplication {
-          name = profileBaseName + "-swtich";
+          name = profileBaseName + "-switch";
           text = ''
             nix-env --set ${config.brumal.profile.package} "$@"
             # TODO emplacetree

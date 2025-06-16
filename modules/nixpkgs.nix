@@ -49,11 +49,11 @@ in
       _module.args.pkgs = config.nixpkgs;
     };
 
-  # TODO overriding pkgs here is nontrivial
-  # config.flake.modules.nixos.base =
-  #   { system, ... }:
-  #   {
-  #     # _module.args.pkgs = top.config.flake.nixpkgs.${system};
-  #   };
+  # TODO Reconsider this, remember "Use this option with care" :clown:
+  config.flake.modules.nixos.base =
+    { system, ... }:
+    {
+      nixpkgs.pkgs = top.config.flake.nixpkgs.${system};
+    };
 
 }

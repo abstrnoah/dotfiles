@@ -1,22 +1,34 @@
-{ ... }:
+{ moduleWithSystem, ... }:
 {
-  config.perSystem =
+  flake.modules.nixos.base = moduleWithSystem (
+    perSystem@{ inputs' }:
     {
-      inputs',
       config,
-      library,
       pkgs,
+      utilities,
+      library,
       ...
     }:
     let
       inherit (library)
-        mergePackages
-        storeSource
-        storeLegacyDotfiles
+        mkDefault
+        mkOption
+        types
         ;
-      nixpkgs-packages = pkgs;
+      inherit (utilities) mergePackages;
+      nixpkgs-packages = pkgs; # TODO
+    in
+    {
 
-      packages = {
+      options.brumal.packages = mkOption {
+        type = types.lazyAttrsOf types.package;
+        default = { };
+      };
+
+      config._module.args.packages = config.brumal.packages;
+
+      config.brumal.packages = mkDefault {
+
         # Inherit directly from nixpkgs
         inherit (nixpkgs-packages)
           age
@@ -82,7 +94,7 @@
           pfetch
           procps
           pulseaudio
-          rargs
+          # rargs # TODO R.I.P. "'rargs' has been removed due to lack of upstream maintenance"
           rclone
           restic
           riseup-vpn
@@ -128,12 +140,16 @@
           numbat
           firefox
           glibcLocales
+          qutebrowser
+          mononoki
+          discord
+          signal-desktop
+          i3lock # TODO nixpkgs version auth fails on debian due to PAM instance mismatch
           ;
 
         # Aliases to nixpkgs
         awk = nixpkgs-packages.gawk;
         chromium = nixpkgs-packages.ungoogled-chromium;
-        # i3lock # TODO nixpkgs version auth fails on debian due to PAM instance mismatch
         i3wm = nixpkgs-packages.i3-rounded;
         neovim = nixpkgs-packages.neovim;
         nixfmt = nixpkgs-packages.nixfmt-rfc-style; # TODO treefmt or whatever?
@@ -145,12 +161,10 @@
         telegram = nixpkgs-packages.telegram-desktop;
 
         # Inherit from nixpkgs collections
-        inherit (nixpkgs-packages.python310Packages) grip weasyprint;
         inherit (nixpkgs-packages.xorg) xbacklight xrandr;
         inherit (nixpkgs-packages.vimPlugins) vim-plug;
 
         # Mergers of upstreams
-        # TODO Mergers really should be downstream though
         bat = mergePackages {
           name = "bat";
           packages = {
@@ -170,22 +184,12 @@
           };
         };
 
-        # TODO These were from nixpkgs-unstable; we're gonna try to use just one nixpkgs now
-        inherit (nixpkgs-packages)
-          # TODO fonts, fc riffraff
-          mononoki # Awaiting version bump to fix recognition issue.
-          qutebrowser # Want those cutting edge features :)
-          discord # Mainstream version crashes as of 2024-12-24
-          signal-desktop # Always seems out of date
-          ;
-
         # Flake inputs
         inherit (inputs'.nixphile.packages) nixphile;
         inherit (inputs'.emplacetree.packages) emplacetree;
+
       };
-    in
-    {
-      config.packages = packages;
-      config._module.args.packages = packages;
-    };
+
+    }
+  );
 }
