@@ -18,6 +18,8 @@ let
       getName
       pathExists
       concatStringsSep
+      collect
+      isString
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs
