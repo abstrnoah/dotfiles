@@ -107,6 +107,7 @@ let g:br_plugs = {
     \ "nvim-treesitter/nvim-treesitter": [],
     \ "nvim-telescope/telescope.nvim": [{"spec": {"tag": "0.1.8"}}],
     \ "kentookura/forester.nvim": [],
+    \ "/home/abstrnoah/store/forester.nvim": [],
 \ }
 
 " A list of keys to 'g:br_plugs'.
@@ -156,7 +157,7 @@ let g:br_plugs_active = [
     \ "hrsh7th/nvim-cmp",
     \ "nvim-treesitter/nvim-treesitter",
     \ "nvim-telescope/telescope.nvim",
-    \ "kentookura/forester.nvim",
+    \ "/home/abstrnoah/store/forester.nvim",
 \ ]
 
 " PLUGIN CONFIG {{{1
@@ -281,15 +282,14 @@ let g:wordmotion_prefix = '<leader>'
 let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 
 " WIKI.VIM {{{2
-let g:wiki_root = "~/store/notes/personal.wiki"
+let g:wiki_root = "~/store/private-forest/trees"
 let g:wiki_completion_case_sensitive = 0
 let g:wiki_mappings_prefix = g:br_leader_note
-let g:wiki_filetypes = ['md', 'wiki']
+let g:wiki_filetypes = ['md', 'wiki', 'tree']
 " TODO is this sketchy???
 let g:wiki_journal= {'name': ''}
 
-let g:wiki_link_target_type = "md"
-let g:wiki_link_extension = "." . g:wiki_link_target_type
+let g:wiki_link_extension = ""
 
 let g:wiki_fzf_pages_opts = join([
     \ '--preview',
