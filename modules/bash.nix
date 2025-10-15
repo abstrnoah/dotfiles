@@ -48,11 +48,11 @@ top@{ ... }:
         brumal.programs.bash = {
           # enable = true;
           package = pkgs.bash;
-          inputrc = [
-            "set bell-style none"
-            "set editing-mode vi"
-            "set keymap vi"
-          ];
+          inputrc = ''
+            set bell-style none
+            set editing-mode vi
+            set keymap vi
+          '';
         };
         users.users.${config.brumal.owner}.shell = cfg.package;
         environment.systemPackages = [ cfg.package ];
