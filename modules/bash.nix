@@ -11,7 +11,6 @@ top@{ ... }:
     let
       inherit (library)
         mkEnableOption
-        mkPackageOption
         types
         mkIf
         mkOption
@@ -19,7 +18,7 @@ top@{ ... }:
       cfg = config.brumal.programs.bash;
       opts = {
         # enable = mkEnableOption "bash";
-        package = mkPackageOption "bash";
+        package = mkOption { type = types.package; };
         rc = mkOption {
           type = types.str;
           default = "";

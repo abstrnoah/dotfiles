@@ -3,7 +3,7 @@
   # TODO Generate from machine configurations
   systems = [ "x86_64-linux" ];
 
-  flake.modules.nixos.base =
+  flake.nixosModules.base =
     { config, system, ... }:
     {
       _module.args.system = config.nixpkgs.hostPlatform.system;
