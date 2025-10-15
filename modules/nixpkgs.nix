@@ -50,7 +50,7 @@ in
     };
 
   # TODO Reconsider this, remember "Use this option with care" :clown:
-  config.flake.modules.nixos.base =
+  config.flake.nixosModules.base =
     { system, ... }:
     {
       nixpkgs.pkgs = top.config.flake.nixpkgs.${system};

@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.base =
+  flake.nixosModules.base =
     { library, config, ... }:
     {
       options.brumal.owner = library.mkOption {

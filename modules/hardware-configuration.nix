@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.machine =
+  flake.machineModules.porcupine =
     { library, ... }:
     {
       imports =
