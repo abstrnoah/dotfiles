@@ -12,8 +12,8 @@ let
     in
     e
     // {
-      inherit (e.brumal.profile) switch rollback;
-      profile = e.brumal.profile.package;
+      inherit (e.config.brumal.profile) switch rollback;
+      profile = e.config.brumal.profile.package;
     };
 in
 {
@@ -31,7 +31,7 @@ in
   config.flake = {
     machines = library.mapAttrs (_: evalMachine) config.flake.machineModules or { };
     nixosConfigurations = library.filterAttrs (
-      _: value: value.brumal.distro == "nixos"
+      _: value: value.config.brumal.distro == "nixos"
     ) config.flake.machines;
   };
 

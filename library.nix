@@ -45,13 +45,10 @@ let
 
     evalBrumalModule =
       { modules }:
-      let
-        e = nixosSystem {
-          inherit modules;
-          specialArgs = { inherit library; };
-        };
-      in
-      e.config;
+      nixosSystem {
+        inherit modules;
+        specialArgs = { inherit library; };
+      };
 
   };
 in
