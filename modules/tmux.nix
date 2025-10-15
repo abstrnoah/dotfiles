@@ -1,10 +1,11 @@
 # TODO
+{}
 # top@{ config, ... }:
 # {
 #   flake.nixosModules.base =
 #     { config, library, ... }:
 #     let
-#       (library) mkOption mkEnableOption mkPackageOption types mkIf;
+#       inherit  (library) mkOption mkEnableOption mkPackageOption types mkIf;
 #       cfg = config.brumal.programs.tmux;
 #       opts =
 #         {

@@ -4,6 +4,7 @@ top@{ ... }:
     {
       config,
       library,
+      utilities,
       pkgs,
       ...
     }:
@@ -13,6 +14,7 @@ top@{ ... }:
         mkPackageOption
         types
         mkIf
+        mkOption
         ;
       cfg = config.brumal.programs.bash;
       opts = {
