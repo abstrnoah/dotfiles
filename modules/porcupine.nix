@@ -37,6 +37,7 @@ top@{ config, ... }:
       ];
       networking.useDHCP = library.mkDefault true;
       hardware.cpu.intel.updateMicrocode = library.mkDefault config.hardware.enableRedistributableFirmware;
+      hardware.enableRedistributableFirmware = library.mkDefault true;
 
     };
 }
