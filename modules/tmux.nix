@@ -1,5 +1,6 @@
 # TODO
-{}
+{
+}
 # top@{ config, ... }:
 # {
 #   flake.nixosModules.base =
@@ -18,7 +19,7 @@
 #       options.brumal.programs.tmux = opts;
 #       config = mkIf cfg.enable
 #         {
-#           environment.systemPackages = [ 
+#           environment.systemPackages = [
 #         };
 #     };
 # }
