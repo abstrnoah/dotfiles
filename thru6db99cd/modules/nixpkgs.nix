@@ -1,3 +1,5 @@
+# NOTICE: I deprecated this in favour of just configuring nixpkgs within the module system as intended. This has the downside of my configured nixpkgs is not accessible outside of the module system but that's a problem for older me.
+
 top@{
   library,
   inputs,
