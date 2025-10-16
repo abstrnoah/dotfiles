@@ -1,7 +1,24 @@
 {
   flake.nixosModules.base =
-    { config, pkgs, ... }:
+    {
+      library,
+      utilities,
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      inherit (utilities) storeSymlink storeLegacyDotfiles;
+      nvimAsVimP = storeSymlink "nvim-as-vim" "${pkgs.neovim}/bin/nvim" "/bin/vim";
+      vimPlugP = storeSymlink "vim-plug" "${pkgs.vim-plug}/plug.vim";
+      vimRcP = storeLegacyDotfiles "vim";
+    in
     {
       environment.systemPackages = [ pkgs.vim ];
+      brumal.profile.packages = [
+        # nvimAsVimP
+        vimPlugP
+        # vimRcP
+      ];
     };
 }
