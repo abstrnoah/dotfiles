@@ -28,6 +28,7 @@ let
       escapeShellArg
       ;
     pathAppend = nixpkgs-lib.path.append;
+    attrsToGitINI = nixpkgs-lib.generators.toGitINI;
 
     call = f: arg: f (getAttrs (builtins.attrNames (builtins.functionArgs f)) arg);
 
