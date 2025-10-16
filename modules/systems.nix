@@ -4,7 +4,7 @@
   systems = [ "x86_64-linux" ];
 
   flake.nixosModules.base =
-    { config, system, ... }:
+    { config, ... }:
     {
       _module.args.system = config.nixpkgs.hostPlatform.system;
     };
