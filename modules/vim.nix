@@ -10,15 +10,17 @@
     let
       inherit (utilities) storeSymlink storeLegacyDotfiles;
       nvimAsVimP = storeSymlink "nvim-as-vim" "${pkgs.neovim}/bin/nvim" "/bin/vim";
-      vimPlugP = storeSymlink "vim-plug" "${pkgs.vim-plug}/plug.vim";
+      vimPlugP =
+        storeSymlink "vim-plug" "${pkgs.vimPlugins.vim-plug}/plug.vim"
+          "/home/me/.vim/autoload/plug.vim";
       vimRcP = storeLegacyDotfiles "vim";
     in
     {
       environment.systemPackages = [ pkgs.vim ];
       brumal.profile.packages = [
-        # nvimAsVimP
+        nvimAsVimP
         vimPlugP
-        # vimRcP
+        vimRcP
       ];
     };
 }

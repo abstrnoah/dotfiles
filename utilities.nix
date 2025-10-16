@@ -45,11 +45,7 @@ rec {
       excludes' = map (p: library.pathAppend source p) excludes;
       filter = path: type: !builtins.elem (/. + path) excludes';
     in
-    # Wrap in buildEnv to convince module system it's a package.
-    buildEnv {
-      inherit name;
-      paths = [ (builtins.filterSource filter source) ];
-    };
+    builtins.filterSource filter source;
 
   storeLegacyDotfiles = name: storeSource { source = library.pathAppend ./src name; };
 
