@@ -17,7 +17,7 @@
       vimRcP = storeLegacyDotfiles "vim";
     in
     {
-      environment.systemPackages = [ pkgs.vim ];
+      environment.systemPackages = [ pkgs.neovim ];
       brumal.profile.packages = [
         nvimAsVimP
         vimPlugP
