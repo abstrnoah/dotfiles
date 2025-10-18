@@ -8,11 +8,10 @@
       ...
     }:
     let
+      env = config.brumal.env;
       inherit (utilities) storeSymlink storeLegacyDotfiles;
       nvimAsVimP = storeSymlink "nvim-as-vim" "${pkgs.neovim}/bin/nvim" "/bin/vim";
-      vimPlugP =
-        storeSymlink "vim-plug" "${pkgs.vimPlugins.vim-plug}/plug.vim"
-          "/home/me/.vim/autoload/plug.vim";
+      vimPlugP = storeSymlink "vim-plug" "${pkgs.vimPlugins.vim-plug}/plug.vim" "${env.HOME}/.vim/autoload/plug.vim";
       vimRcP = storeLegacyDotfiles "vim";
     in
     {
