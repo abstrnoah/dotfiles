@@ -3,6 +3,9 @@
   inputs.import-tree.url = "github:vic/import-tree";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+  inputs.emplacetree.url = "github:abstrnoah/emplacetree";
+  inputs.emplacetree.inputs.nixpkgs.follows = "nixpkgs";
+
   outputs =
     inputs@{
       flake-parts,
