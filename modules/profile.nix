@@ -44,15 +44,15 @@
           name = profileBaseName + "-switch";
           # TODO make atomic!
           text = ''
-            nix-env --set "${config.brumal.profile.package}" "$@"
-            ${pkgs.emplacetree}/bin/emplacetree ln "${env.NIX_PROFILE}/home/abstrnoah" "${env.HOME}"
+            nix-env --set "${config.brumal.profile.package}" "$@" \
+            && ${pkgs.emplacetree}/bin/emplacetree ln "${env.NIX_PROFILE}/home/abstrnoah" "${env.HOME}"
           '';
         };
         rollback = writeShellApplication {
           name = profileBaseName + "-rollback";
           text = ''
-            nix-env --rollback "$@"
-            ${pkgs.emplacetree}/bin/emplacetree ln "${env.NIX_PROFILE}/home/abstrnoah" "${env.HOME}"
+            nix-env --rollback "$@" \
+            && ${pkgs.emplacetree}/bin/emplacetree ln "${env.NIX_PROFILE}/home/abstrnoah" "${env.HOME}"
           '';
         };
       };

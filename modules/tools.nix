@@ -1,4 +1,6 @@
 {
+  moduleWithSystem,
+  ...
 }:
 {
   flake.nixosModules.base = moduleWithSystem (
