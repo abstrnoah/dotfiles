@@ -14,6 +14,11 @@
       ];
       brumal.profile.packages = [
         pkgs.emplacetree
+        pkgs.bat
+        pkgs.bat-extras.batdiff
+        pkgs.bat-extras.batman
+        pkgs.bat-extras.batwatch
+        pkgs.silver-searcher
       ];
       environment.systemPackages = [
         pkgs.htop
