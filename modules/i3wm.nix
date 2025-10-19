@@ -4,6 +4,7 @@
       config,
       library,
       utilities,
+      pkgs,
       ...
     }:
     let
@@ -182,11 +183,11 @@
 
       config.services.xserver.windowManager.i3 = {
         enable = true;
-        package = config.brumal.packages.i3wm;
+        package = pkgs.i3-rounded;
         extraPackages = [
-          config.brumal.packages.i3status
-          config.brumal.packages.i3lock
-          config.brumal.packages.rofi
+          pkgs.i3status
+          pkgs.i3lock
+          pkgs.rofi
         ];
       };
 

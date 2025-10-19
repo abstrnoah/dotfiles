@@ -1,6 +1,6 @@
 {
-  flake.nixosModules.gui.services.xserver = {
-    enable = true;
+  flake.nixosModules.gui.services = {
+    xserver.enable = true;
     displayManager.gdm.enable = true;
   };
 }

@@ -3,6 +3,8 @@ top@{ config, ... }:
   flake.machineModules.porcupine =
     { library, config, ... }:
     {
+      imports = [ top.config.flake.nixosModules.gui ];
+
       networking.hostName = "porcupine";
       brumal.distro = "nixos";
       system.stateVersion = "25.05"; # "Do not change this value..."
