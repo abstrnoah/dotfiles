@@ -1,142 +1,150 @@
 {
-  flake.nixosModules.base = 
-  {pkgs, config, library, utilities, ...}:
-  let
-    inherit (library) mkOption types mapAttrsToList;
-    inherit (utilities) writeTextFile buildEnv;
-    cfg = config.brumal.programs.tmux;
-    env = config.brumal.env;
-    opts = {
-      conf = mkOption { type = types.lines; };
-      tmuxinator = mkOption { type = types.attrsOf types.lines; };
-    };
-    tmuxRcP = writeTextFile {
-      name = "tmux-conf";
-      text = cfg.conf;
-      destination = "${env.HOME}/.tmux.conf";
-    };
-    makeTmuxinatorProfile = name: value: writeTextFile {
-      name = "${name}.tmuxinator";
-      text = value;
-      destination = "${env.HOME}/.tmuxinator/${name}.yml";
-    };
-    tmuxinatorRcP = buildEnv {
-      name = "tmuxinators";
-      paths = mapAttrsToList makeTmuxinatorProfile cfg.tmuxinator;
-    };
-  in
-  {
-    options.brumal.programs.tmux = opts;
-    config = {
-      environment.systemPackages = [ pkgs.tmux ];
-      brumal.profile.packages = [
-        pkgs.tmuxinator
-        tmuxinatorRcP
-        tmuxRcP
-      ];
-      brumal.programs.tmux.tmuxinator = {
-        main = ''
-          name: main
-          root: ~/<%= @args[0] %>
+  flake.nixosModules.base =
+    {
+      pkgs,
+      config,
+      library,
+      utilities,
+      ...
+    }:
+    let
+      inherit (library) mkOption types mapAttrsToList;
+      inherit (utilities) writeTextFile buildEnv;
+      cfg = config.brumal.programs.tmux;
+      env = config.brumal.env;
+      opts = {
+        conf = mkOption { type = types.lines; };
+        tmuxinator = mkOption { type = types.attrsOf types.lines; };
+      };
+      tmuxRcP = writeTextFile {
+        name = "tmux-conf";
+        text = cfg.conf;
+        destination = "${env.HOME}/.tmux.conf";
+      };
+      makeTmuxinatorProfile =
+        name: value:
+        writeTextFile {
+          name = "${name}.tmuxinator";
+          text = value;
+          destination = "${env.HOME}/.tmuxinator/${name}.yml";
+        };
+      tmuxinatorRcP = buildEnv {
+        name = "tmuxinators";
+        paths = mapAttrsToList makeTmuxinatorProfile cfg.tmuxinator;
+      };
+    in
+    {
+      options.brumal.programs.tmux = opts;
+      config = {
+        environment.systemPackages = [ pkgs.tmux ];
+        brumal.profile.packages = [
+          pkgs.tmuxinator
+          tmuxinatorRcP
+          tmuxRcP
+        ];
+        brumal.programs.tmux.tmuxinator = {
+          main = ''
+            name: main
+            root: ~/<%= @args[0] %>
 
-          windows:
-            - null:
-        '';
-        monitor = ''
-          name: monitor
+            windows:
+              - null:
+          '';
+          monitor = ''
+            name: monitor
 
-          windows:
-            - htop: htop
-            - temp: watch -n 300 cat /sys/class/thermal/thermal_zone*/temp
-            - log: journalctl -f
+            windows:
+              - htop: htop
+              - temp: watch -n 300 cat /sys/class/thermal/thermal_zone*/temp
+              - log: journalctl -f
+          '';
+        };
+        brumal.programs.tmux.conf = ''
+          # CONSTANTS
+          BR_TMUX_PROMPT_LEFT="❱"
+          BR_TMUX_PROMPT_RIGHT="❰"
+
+          # SETUP
+          set    -g default-terminal tmux-256color
+
+          set -w -g main-pane-width 87
+          # Debug layout: narrow pane on bottom for debug server, large main pane above.
+          bind M-6 select-layout a530,194x56,0,0[194x42,0,0,5,194x13,0,43,9]
+
+          # STATUS
+          set    -g set-titles on
+          set    -g set-titles-string "#S [#h]"
+          set -g status-interval 10
+          set    -g status-position top
+          set    -g status-style 'bg=colour0,fg=colour14,bold'
+          set    -g status-left "#S$BR_TMUX_PROMPT_LEFT "
+          set    -g status-left-length 50
+          set    -g window-status-current-style 'bg=colour8,fg=colour15'
+          set    -g window-status-current-format ' #W#{?window_zoomed_flag,+z,} '
+          set    -g window-status-last-style 'fg=colour14'
+          set    -g window-status-style 'fg=colour10'
+          set    -g window-status-format ' #W#{?window_zoomed_flag,+z,} '
+          set -g status-right ""
+          set -ga status-right \
+              "#{?TMUX_TIMER,⏲ #{TMUX_TIMER} ,}"
+          set    -ga status-right "$BR_TMUX_PROMPT_RIGHT"
+          set    -ga status-right '#{?session_many_attached,x#{session_attached} ,}'
+          set    -ga status-right \
+              '#{?session_grouped,#{session_group_attached}/#{session_group_size} ,}'
+          set    -ga status-right '#H'
+          set    -g status-right-length 50
+          set    -g window-status-activity-style 'italics'
+          set    -g window-status-bell-style 'reverse'
+
+          # BINDINGS
+          set -s -g escape-time 10
+          set -w -g mode-keys vi
+          set    -g status-keys vi
+
+          # Select session in tree view.
+          bind s run 'tmux-choose-session || tmux choose-tree -sG'
+
+          # TODO incorporate into fzf interface
+          # Create new session in-group.
+          # bind g run 'tmux switch -t "$(tmux new-session -Pdt "#{session_name}")"'
+
+          # Focus panes.
+          bind h select-pane -L
+          bind j select-pane -D
+          bind k select-pane -U
+          bind l select-pane -R
+
+          # Resize panes.
+          bind C-h resize-pane -L 5
+          bind C-j resize-pane -D 5
+          bind C-k resize-pane -U 5
+          bind C-l resize-pane -R 5
+
+          # Move (swap) panes.
+          bind M-h swap-pane -s '{left-of}'
+          bind M-j swap-pane -s '{down-of}'
+          bind M-k swap-pane -s '{up-of}'
+          bind M-l swap-pane -s '{right-of}'
+
+          # Go last window.
+          bind P last-window
+
+          # Copy mode and related.
+          bind -T copy-mode-vi v send-keys -X begin-selection
+          bind -T copy-mode-vi y send-keys -X copy-pipe "xclip -selection clipboard"
+          bind C-p paste-buffer -p
+
+          # Quick sessions.
+          bind T run-shell "tmuxinator main"
+          bind N run-shell "gomux ~/store/notes"
+          bind F run-shell "gomux ~/store/private-forest"
+
+          # Reload config.
+          bind R source-file ~/.tmux.conf
+
+          # time popup
+          bind t popup -w 24 -h 13 -EE "date '+%H:%M:%S' && gcal && read _"
         '';
       };
-      brumal.programs.tmux.conf = ''
-        # CONSTANTS
-        BR_TMUX_PROMPT_LEFT="❱"
-        BR_TMUX_PROMPT_RIGHT="❰"
-
-        # SETUP
-        set    -g default-terminal tmux-256color
-
-        set -w -g main-pane-width 87
-        # Debug layout: narrow pane on bottom for debug server, large main pane above.
-        bind M-6 select-layout a530,194x56,0,0[194x42,0,0,5,194x13,0,43,9]
-
-        # STATUS
-        set    -g set-titles on
-        set    -g set-titles-string "#S [#h]"
-        set -g status-interval 10
-        set    -g status-position top
-        set    -g status-style 'bg=colour0,fg=colour14,bold'
-        set    -g status-left "#S$BR_TMUX_PROMPT_LEFT "
-        set    -g status-left-length 50
-        set    -g window-status-current-style 'bg=colour8,fg=colour15'
-        set    -g window-status-current-format ' #W#{?window_zoomed_flag,+z,} '
-        set    -g window-status-last-style 'fg=colour14'
-        set    -g window-status-style 'fg=colour10'
-        set    -g window-status-format ' #W#{?window_zoomed_flag,+z,} '
-        set -g status-right ""
-        set -ga status-right \
-            "#{?TMUX_TIMER,⏲ #{TMUX_TIMER} ,}"
-        set    -ga status-right "$BR_TMUX_PROMPT_RIGHT"
-        set    -ga status-right '#{?session_many_attached,x#{session_attached} ,}'
-        set    -ga status-right \
-            '#{?session_grouped,#{session_group_attached}/#{session_group_size} ,}'
-        set    -ga status-right '#H'
-        set    -g status-right-length 50
-        set    -g window-status-activity-style 'italics'
-        set    -g window-status-bell-style 'reverse'
-
-        # BINDINGS
-        set -s -g escape-time 10
-        set -w -g mode-keys vi
-        set    -g status-keys vi
-
-        # Select session in tree view.
-        bind s run 'tmux-choose-session || tmux choose-tree -sG'
-
-        # TODO incorporate into fzf interface
-        # Create new session in-group.
-        # bind g run 'tmux switch -t "$(tmux new-session -Pdt "#{session_name}")"'
-
-        # Focus panes.
-        bind h select-pane -L
-        bind j select-pane -D
-        bind k select-pane -U
-        bind l select-pane -R
-
-        # Resize panes.
-        bind C-h resize-pane -L 5
-        bind C-j resize-pane -D 5
-        bind C-k resize-pane -U 5
-        bind C-l resize-pane -R 5
-
-        # Move (swap) panes.
-        bind M-h swap-pane -s '{left-of}'
-        bind M-j swap-pane -s '{down-of}'
-        bind M-k swap-pane -s '{up-of}'
-        bind M-l swap-pane -s '{right-of}'
-
-        # Go last window.
-        bind P last-window
-
-        # Copy mode and related.
-        bind -T copy-mode-vi v send-keys -X begin-selection
-        bind -T copy-mode-vi y send-keys -X copy-pipe "xclip -selection clipboard"
-        bind C-p paste-buffer -p
-
-        # Quick sessions.
-        bind T run-shell "tmuxinator main"
-        bind N run-shell "gomux ~/store/notes"
-        bind F run-shell "gomux ~/store/private-forest"
-
-        # Reload config.
-        bind R source-file ~/.tmux.conf
-
-        # time popup
-        bind t popup -w 24 -h 13 -EE "date '+%H:%M:%S' && gcal && read _"
-      '';
     };
-  };
 }
