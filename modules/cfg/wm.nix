@@ -15,7 +15,7 @@ top@{ config, ... }:
     in
     {
 
-      imports = [ config.flake.nixosModules.brumal-wm ];
+      imports = [ top.config.flake.nixosModules.brumal-wm ];
 
       config.services = {
         xserver.windowManager.i3 = {
@@ -30,7 +30,7 @@ top@{ config, ... }:
 
       config.brumal.programs.i3wm = {
 
-        keys = {
+        keys = rec {
           escringe = "Escape";
           esc = "ctrl+bracketleft";
           ctrl = "ctrl";
@@ -47,7 +47,7 @@ top@{ config, ... }:
           grave = "grave";
           tilde = "shift+grave";
           singlequote = "apostrophe";
-          mod = k.super;
+          mod = super;
         };
         dimensions = {
           default_border = 1;
