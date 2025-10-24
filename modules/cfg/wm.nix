@@ -62,7 +62,7 @@ top@{ config, ... }:
             ''gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}''
             ''border_radius 2''
 
-            ''bindsym ${k.mod}+${k.enter} i3-sensible-terminal''
+            ''bindsym ${k.mod}+${k.enter} exec i3-sensible-terminal''
           ];
         };
 
