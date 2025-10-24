@@ -1,8 +1,8 @@
 {
-  flake.nixosModules.base =
+  flake.nixosModules.brumal =
     { pkgs, library, ... }:
     {
-      _module.args.utilities = import ../utilities.nix {
+      _module.args.utilities = import ../../utilities.nix {
         inherit library;
         nixpkgs = pkgs;
       };

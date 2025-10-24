@@ -1,9 +1,8 @@
 {
   flake.nixosModules.base =
-    { library, config, ... }:
+    { config, ... }:
     {
-      options.brumal.env = library.mkOption { type = library.types.attrsOf library.types.str; };
-      config.brumal.env = rec {
+      brumal.env = rec {
         HOME = "/home/${config.brumal.owner}";
         XDG_CONFIG_HOME = "${HOME}/.config";
         NIX_PROFILE = "${HOME}/.nix-profile";

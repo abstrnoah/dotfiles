@@ -1,6 +1,6 @@
 # Inspired by https://github.com/lf-/flakey-profile
 {
-  flake.nixosModules.base =
+  flake.nixosModules.brumal =
     {
       library,
       utilities,

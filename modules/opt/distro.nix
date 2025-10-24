@@ -1,6 +1,6 @@
 {
-  flake.nixosModules.base =
-    { library, config, ... }:
+  flake.nixosModules.brumal =
+    { library, ... }:
     {
       options.brumal.distro = library.mkOption {
         type = library.types.str;

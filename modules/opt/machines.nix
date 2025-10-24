@@ -1,12 +1,20 @@
 { library, config, ... }:
 let
+  inherit (library)
+    evalBrumalModule
+    mkOption
+    types
+    mapAttrs
+    filterAttrs
+    ;
   evalMachine =
     module:
     let
-      e = library.evalBrumalModule {
+      e = evalBrumalModule {
         modules = [
           module
           config.flake.nixosModules.base
+          config.flake.nixosModules.brumal
         ];
       };
     in
@@ -18,21 +26,21 @@ let
 in
 {
   options.flake = {
-    machineModules = library.mkOption {
-      type = library.types.lazyAttrsOf library.types.deferredModule;
+    machineModules = mkOption {
+      type = types.lazyAttrsOf types.deferredModule;
       default = { };
     };
-    machines = library.mkOption {
-      type = library.types.lazyAttrsOf library.types.raw;
+    machines = mkOption {
+      type = types.lazyAttrsOf types.raw;
       default = { };
       # TODO wrap with class and moduleLocation
     };
   };
   config.flake = {
-    machines = library.mapAttrs (_: evalMachine) config.flake.machineModules or { };
-    nixosConfigurations = library.filterAttrs (
+    machines = mapAttrs (_: evalMachine) config.flake.machineModules or { };
+    nixosConfigurations = filterAttrs (
       _: value: value.config.brumal.distro == "nixos"
     ) config.flake.machines;
   };
-
+  # TODO Export in flakeModules?
 }

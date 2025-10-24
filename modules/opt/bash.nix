@@ -1,6 +1,5 @@
-top@{ ... }:
 {
-  flake.nixosModules.base =
+  flake.nixosModules.brumal =
     {
       config,
       library,
@@ -10,15 +9,11 @@ top@{ ... }:
     }:
     let
       inherit (library)
-        mkEnableOption
         types
-        mkIf
         mkOption
         ;
       cfg = config.brumal.programs.bash;
       opts = {
-        # enable = mkEnableOption "bash";
-        package = mkOption { type = types.package; };
         rc = mkOption {
           type = types.str;
           default = "";
@@ -41,21 +36,13 @@ top@{ ... }:
       rcP = writeRc ".bashrc" cfg.rc;
       profileP = writeRc ".bash_profile" cfg.profile;
       inputrcP = writeRc ".inputrc" cfg.inputrc;
+      shell = pkgs.bash;
     in
     {
       options.brumal.programs.bash = opts;
       config = {
-        brumal.programs.bash = {
-          # enable = true;
-          package = pkgs.bash;
-          inputrc = ''
-            set bell-style none
-            set editing-mode vi
-            set keymap vi
-          '';
-        };
-        users.users.${config.brumal.owner}.shell = cfg.package;
-        environment.systemPackages = [ cfg.package ];
+        users.users.${config.brumal.owner}.shell = shell;
+        environment.systemPackages = [ shell ];
         brumal.profile.packages = [
           rcP
           profileP

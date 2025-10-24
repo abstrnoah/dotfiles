@@ -1,0 +1,9 @@
+{
+  flake.nixosModules.base.brumal.programs.bash = {
+    inputrc = ''
+      set bell-style none
+      set editing-mode vi
+      set keymap vi
+    '';
+  };
+}
