@@ -70,6 +70,17 @@ top@{ config, ... }:
           "${k.mod}+${k.enter}" = "exec i3-sensible-terminal";
         };
 
+        body.modes.system = {
+          key = "${k.mod}+${k.tilde}";
+          block.body.bindsym = {
+            e = "i3-nagbar -t warning -m 'Exit i3wm?' -b 'Yeah.' 'i3-msg exit'";
+            s = "i3-nagbar -t warning -m 'Shutdown?' -b 'Yeah.' 'shutdown now'";
+            "${k.shift}+s" = "i3-nagbar -t warning -m 'Reboot?' -b 'Yeah.' 'shutdown -r now'";
+            r = "i3-msg reload";
+            "${k.shift}+r" = "i3-msg restart";
+          };
+        };
+
       };
 
     };

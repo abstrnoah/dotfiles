@@ -103,23 +103,25 @@
         }:
         {
           options = {
-            block = mkOption { type = types.submodule i3wmBodyModule; };
+            block = mkOption { type = types.submodule i3wmBlockModule; };
             tips = mkOption { type = types.str; };
-            address = mkOption { type = types.str; };
+            address = mkOption {
+              type = types.str;
+              default = name;
+            };
             key = mkOption { type = types.str; };
             text = mkOption { type = types.str; };
           };
           config = {
-            address = mkMerge [
-              (mkIf options.tips.isDefined "${name}: ${config.tips}")
-              (mkDefault name)
-            ];
+            address = mkIf options.tips.isDefined "${name}: ${config.tips}";
             # TODO Escape address
             block.head = "mode \"${config.address}\"";
             block.body.directives = [
               ''bindsym ${k.escringe} mode "default"''
               ''bindsym ${k.esc} mode "default"''
             ];
+            # TODO This shortcircuits the parent-level bindsym option,
+            # meaning bindsym does not actually represent the true key mapping table.
             text = ''
               bindsym ${config.key} mode ${config.address}
               ${config.block.text}
