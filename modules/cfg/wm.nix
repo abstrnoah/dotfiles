@@ -62,7 +62,7 @@ top@{ config, ... }:
 
         body.directives = [
           ''border_radius 2''
-          ''for_window [class=".*"] border pixel ${builtins.toString cfg.dimensions.default_border}''
+          ''default_border pixel ${builtins.toString cfg.dimensions.default_border}''
           ''gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}''
         ];
 
@@ -71,15 +71,17 @@ top@{ config, ... }:
         };
 
         body.modes.system = {
-          key = "${k.mod}+${k.tilde}";
+          key = "${k.mod}+${k.grave}";
           block.body.bindsym = {
-            e = "i3-nagbar -t warning -m 'Exit i3wm?' -b 'Yeah.' 'i3-msg exit'";
-            s = "i3-nagbar -t warning -m 'Shutdown?' -b 'Yeah.' 'shutdown now'";
-            "${k.shift}+s" = "i3-nagbar -t warning -m 'Reboot?' -b 'Yeah.' 'shutdown -r now'";
-            r = "i3-msg reload";
-            "${k.shift}+r" = "i3-msg restart";
+            e = "exec i3-nagbar -t warning -m 'Exit i3wm?' -b 'Yeah.' 'i3-msg exit'";
+            s = "exec i3-nagbar -t warning -m 'Shutdown?' -b 'Yeah.' 'shutdown now'";
+            "${k.shift}+s" = "exec i3-nagbar -t warning -m 'Reboot?' -b 'Yeah.' 'shutdown -r now'";
+            r = "reload";
+            "${k.shift}+r" = "restart";
           };
         };
+
+        body.blocks.bar.body.directives = [ ''status_command i3status'' ];
 
       };
 

@@ -57,7 +57,7 @@
               let
                 execDs = map (x: ''exec ${x}'') config.exec;
                 execAlwaysDs = map (x: ''exec_always ${x}'') config.exec_always;
-                bindsymDs = mapAttrsToList (key: cmd: ''bind ${key} ${cmd}'') config.bindsym;
+                bindsymDs = mapAttrsToList (key: cmd: ''bindsym ${key} ${cmd}'') config.bindsym;
               in
               execDs ++ execAlwaysDs ++ bindsymDs;
             text =
@@ -117,8 +117,8 @@
             # TODO Escape address
             block.head = "mode \"${config.address}\"";
             block.body.directives = [
-              ''bindsym ${k.escringe} mode "default"''
-              ''bindsym ${k.esc} mode "default"''
+              ''bindsym ${k.escringe} mode default''
+              ''bindsym ${k.esc} mode default''
             ];
             # TODO This shortcircuits the parent-level bindsym option,
             # meaning bindsym does not actually represent the true key mapping table.
@@ -146,7 +146,10 @@
       i3wmRcP = writeTextFile {
         name = "i3wm-rc";
         destination = "${env.XDG_CONFIG_HOME}/i3/config";
-        text = cfg.body.text;
+        text = ''
+          # i3 config file (v4)
+          ${cfg.body.text}
+        '';
       };
 
     in
@@ -155,7 +158,7 @@
       options.brumal.programs.i3wm = opts;
 
       config.brumal.programs.i3wm.body.directives = [
-        ''set ${cfg.font}''
+        ''font ${cfg.font}''
       ];
 
       config.services = {
@@ -166,7 +169,7 @@
         };
       };
 
-      config.brumal.profile.packages = [ i3wmRcP ];
+      config.brumal.profile.packages = [ i3wmRcP ]; # TODO move to separate file
 
     };
 }
