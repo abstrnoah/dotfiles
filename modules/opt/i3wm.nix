@@ -26,7 +26,7 @@
       env = config.brumal.env;
 
       i3wmBodyModule =
-        { config, ... }:
+        { options, config, ... }:
         {
           options = {
             directives = mkOption { type = types.listOf types.str; };
@@ -46,6 +46,7 @@
               type = types.listOf types.str;
               default = [ ];
             };
+            leader = mkOption { type = types.str; };
             bindsym = mkOption {
               type = types.attrsOf types.str;
               default = { };
@@ -57,7 +58,8 @@
               let
                 execDs = map (x: ''exec ${x}'') config.exec;
                 execAlwaysDs = map (x: ''exec_always ${x}'') config.exec_always;
-                bindsymDs = mapAttrsToList (key: cmd: ''bindsym ${key} ${cmd}'') config.bindsym;
+                makeKey = if options.leader.isDefined then (key: "${config.leader}+${key}") else (key: key);
+                bindsymDs = mapAttrsToList (key: cmd: ''bindsym ${makeKey key} ${cmd}'') config.bindsym;
               in
               execDs ++ execAlwaysDs ++ bindsymDs;
             text =

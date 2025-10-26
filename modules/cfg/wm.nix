@@ -64,10 +64,41 @@ top@{ config, ... }:
           ''border_radius 2''
           ''default_border pixel ${builtins.toString cfg.dimensions.default_border}''
           ''gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}''
+          # Use Mouse+$mod to drag floating windows to their wanted position
+          ''floating_modifier ${k.mod}''
         ];
 
+        body.leader = k.mod;
+
         body.bindsym = {
-          "${k.mod}+${k.enter}" = "exec i3-sensible-terminal";
+          "${k.enter}" = "exec i3-sensible-terminal";
+
+          # Change focus
+          h = "focus left";
+          j = "focus down";
+          k = "focus up";
+          l = "focus right";
+
+          # Move focused window
+          "${k.alt}+h" = "move left";
+          "${k.alt}+j" = "move down";
+          "${k.alt}+k" = "move up";
+          "${k.alt}+l" = "move right";
+
+          # Split with vim-like mneumonics
+          v = "split h";
+          s = "split v";
+
+          # Change container layout
+          t = "layout toggle tabbed stacking";
+          e = "layout toggle tabbed stacking";
+
+          # Kill focused window
+          "${k.shift}+q" = "kill";
+
+          # Fullscreen focused container
+          f = "fullscreen toggle";
+
         };
 
         body.modes.system = {
