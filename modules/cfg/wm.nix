@@ -49,21 +49,25 @@ top@{ config, ... }:
           singlequote = "apostrophe";
           mod = super;
         };
+
+        font = "pango:mononoki regular 7";
+
         dimensions = {
           default_border = 1;
           base_gap_inner = 7;
           base_gap_outer = 0;
         };
+
         brightness_interval = 5;
 
-        body = {
-          directives = [
-            ''for_window [class=".*"] border pixel ${builtins.toString cfg.dimensions.default_border}''
-            ''gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}''
-            ''border_radius 2''
+        body.directives = [
+          ''border_radius 2''
+          ''for_window [class=".*"] border pixel ${builtins.toString cfg.dimensions.default_border}''
+          ''gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}''
+        ];
 
-            ''bindsym ${k.mod}+${k.enter} exec i3-sensible-terminal''
-          ];
+        body.bindsym = {
+          "${k.mod}+${k.enter}" = "exec i3-sensible-terminal";
         };
 
       };

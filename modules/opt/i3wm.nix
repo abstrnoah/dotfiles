@@ -29,10 +29,6 @@
         { config, ... }:
         {
           options = {
-            variables = mkOption {
-              type = types.attrsOf types.str;
-              default = { };
-            };
             directives = mkOption { type = types.listOf types.str; };
             blocks = mkOption {
               type = types.attrsOf (types.submodule i3wmBlockModule);
@@ -42,21 +38,35 @@
               type = types.attrsOf (types.submodule i3wmModeModule);
               default = { };
             };
+            exec = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
+            exec_always = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
+            bindsym = mkOption {
+              type = types.attrsOf types.str;
+              default = { };
+            };
             text = mkOption { type = types.str; };
           };
           config = {
+            directives =
+              let
+                execDs = map (x: ''exec ${x}'') config.exec;
+                execAlwaysDs = map (x: ''exec_always ${x}'') config.exec_always;
+                bindsymDs = mapAttrsToList (key: cmd: ''bind ${key} ${cmd}'') config.bindsym;
+              in
+              execDs ++ execAlwaysDs ++ bindsymDs;
             text =
               let
-                setDirectivesText = concatStringsSep "\n" (
-                  # TODO Properly escape value
-                  mapAttrsToList (name: value: "set \$${name} \"${value}\"") config.variables
-                );
                 directivesText = concatStringsSep "\n" config.directives;
                 blocksText = concatStringsSep "\n" (mapAttrsToList (_: block: block.text) config.blocks);
                 modesText = concatStringsSep "\n" (mapAttrsToList (_: mode: mode.text) config.modes);
               in
               ''
-                ${setDirectivesText}
                 ${directivesText}
                 ${blocksText}
                 ${modesText}
@@ -126,7 +136,8 @@
           type = types.attrsOf types.numbers.nonnegative;
           default = { };
         };
-        brightness_interval = mkOption { type = types.numbers.positive; };
+        brightness_interval = mkOption { type = types.numbers.positive; }; # TODO maybe shouldn't be here
+        font = mkOption { type = types.str; };
         body = mkOption { type = types.submodule i3wmBodyModule; };
       };
 
@@ -140,6 +151,10 @@
     {
 
       options.brumal.programs.i3wm = opts;
+
+      config.brumal.programs.i3wm.body.directives = [
+        ''set ${cfg.font}''
+      ];
 
       config.services = {
         xserver.enable = true;
