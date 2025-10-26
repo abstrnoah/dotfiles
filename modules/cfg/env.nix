@@ -1,9 +1,9 @@
 {
   flake.nixosModules.base =
-    { config, ... }:
+    { config, ownerName, ... }:
     {
       brumal.env = rec {
-        HOME = "/home/${config.brumal.owner}";
+        HOME = "/home/${ownerName}";
         XDG_CONFIG_HOME = "${HOME}/.config";
         NIX_PROFILE = "${HOME}/.nix-profile";
       };

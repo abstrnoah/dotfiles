@@ -1,8 +1,8 @@
 {
   flake.nixosModules.base =
-    { config, ... }:
+    { config, ownerName, ... }:
     {
       networking.networkmanager.enable = true;
-      users.users.${config.brumal.owner}.extraGroups = [ "networkmanager" ];
+      users.users.${ownerName}.extraGroups = [ "networkmanager" ];
     };
 }

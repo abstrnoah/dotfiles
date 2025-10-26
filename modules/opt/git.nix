@@ -11,6 +11,7 @@
       inherit (library)
         types
         mkOption
+        mkDefault
         attrsToGitINI
         ;
       cfg = config.brumal.programs.git;
@@ -34,7 +35,9 @@
       };
 
       config.brumal.programs.git.config = {
-        user.name = config.brumal.owner;
+        user.name = mkDefault config.brumal.owner.name;
+        user.email = mkDefault config.brumal.owner.email;
+        user.signingkey = mkDefault config.brumal.owner.pgpkey;
       };
     };
 }

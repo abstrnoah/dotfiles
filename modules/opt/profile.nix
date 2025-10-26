@@ -6,6 +6,7 @@
       utilities,
       config,
       pkgs,
+      ownerName,
       ...
     }:
     let
@@ -18,7 +19,7 @@
         buildEnv
         writeShellApplication
         ;
-      profileBaseName = config.networking.hostName + "-" + config.brumal.owner;
+      profileBaseName = config.networking.hostName + "-" + ownerName;
       env = config.brumal.env;
     in
     {

@@ -1,8 +1,6 @@
 {
   flake.nixosModules.base.brumal.programs.git.config = {
     # TODO refactor user into owner
-    user.email = "abstrnoah@brumal.net";
-    user.signingKey = "A99804C0F82B99C88DAF2CFD39436096D08807E8";
     merge.conflict = "diff3";
     push.default = "simple";
     pull.ff = "only";

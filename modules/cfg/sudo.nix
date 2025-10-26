@@ -1,7 +1,7 @@
 {
   flake.nixosModules.base =
-    { config, ... }:
+    { config, ownerName, ... }:
     {
-      users.users.${config.brumal.owner}.extraGroups = [ "wheel" ];
+      users.users.${ownerName}.extraGroups = [ "wheel" ];
     };
 }

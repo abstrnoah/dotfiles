@@ -5,6 +5,7 @@
       library,
       utilities,
       pkgs,
+      ownerName,
       ...
     }:
     let
@@ -41,7 +42,7 @@
     {
       options.brumal.programs.bash = opts;
       config = {
-        users.users.${config.brumal.owner}.shell = shell;
+        users.users.${ownerName}.shell = shell;
         environment.systemPackages = [ shell ];
         brumal.profile.packages = [
           rcP
