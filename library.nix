@@ -20,6 +20,7 @@ let
       concatStringsSep
       collect
       isString
+      genAttrs
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs
