@@ -27,6 +27,7 @@
       cfg = config.brumal.programs.i3wm;
       k = cfg.keys;
       env = config.brumal.env;
+      i3wmP = config.services.xserver.windowManager.i3.package;
 
       i3wmBodyModule =
         { options, config, ... }:
@@ -170,7 +171,10 @@
         };
       };
 
-      config.brumal.profile.packages = [ i3wmRcP ]; # TODO move to separate file
+      config.brumal.profile = {
+        packages = [ i3wmRcP ];
+        postSwitch = [ ''${i3wmP}/bin/i3-msg reload || echo "Warning: i3 not reloadable"'' ];
+      };
 
     };
 }

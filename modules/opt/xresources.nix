@@ -4,6 +4,7 @@
       library,
       config,
       utilities,
+      pkgs,
       ...
     }:
     let
@@ -15,7 +16,7 @@
         ;
 
       inherit (utilities)
-        writeTextFile
+        writeText
         ;
 
       cfg = config.brumal.programs.xresources;
@@ -26,14 +27,14 @@
         default = { };
       };
 
-      xresourcesP = writeTextFile {
-        name = "Xresources";
-        destination = "${env.HOME}/.Xresources";
-        text = concatStringsSep "\n" (mapAttrsToList (resource: value: ''${resource}: ${value}'') cfg) + "\n";
-      };
+      xresourcesP = writeText "Xresources" (
+        concatStringsSep "\n" (mapAttrsToList (resource: value: ''${resource}: ${value}'') cfg) + "\n"
+      );
     in
     {
       options.brumal.programs.xresources = opts;
-      config.brumal.profile.packages = [ xresourcesP ];
+      config.brumal.profile.postSwitch = [
+        ''${pkgs.xorg.xrdb}/bin/xrdb -merge ${xresourcesP} || echo "Warning: xrdb cannot connect"''
+      ];
     };
 }

@@ -3,9 +3,11 @@ rec {
   inherit (nixpkgs)
     buildEnv
     runCommandLocal
+    writeText
     writeTextFile
     writeShellApplication
     writeShellScript
+    concatScript
     ;
 
   mergePackages =
