@@ -12,6 +12,8 @@
         mkOption
         types
         concatStringsSep
+        mapAttrs'
+        nameValuePair
         mapAttrsToList
         mkMerge
         mkIf
@@ -54,6 +56,7 @@
             text = mkOption { type = types.str; };
           };
           config = {
+            bindsym = mapAttrs' (name: value: nameValuePair value.key ''mode ${value.address}'') config.modes;
             directives =
               let
                 execDs = map (x: ''exec ${x}'') config.exec;
@@ -118,16 +121,11 @@
             address = mkIf options.tips.isDefined "${name}: ${config.tips}";
             # TODO Escape address
             block.head = "mode \"${config.address}\"";
-            block.body.directives = [
-              ''bindsym ${k.escringe} mode default''
-              ''bindsym ${k.esc} mode default''
-            ];
-            # TODO This shortcircuits the parent-level bindsym option,
-            # meaning bindsym does not actually represent the true key mapping table.
-            text = ''
-              bindsym ${config.key} mode ${config.address}
-              ${config.block.text}
-            '';
+            block.body.bindsym = {
+              ${k.escringe} = " mode default";
+              ${k.esc} = "mode default";
+            };
+            text = config.block.text;
           };
         };
 

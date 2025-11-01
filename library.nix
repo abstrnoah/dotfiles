@@ -10,6 +10,8 @@ let
       mkMerge
       mkDefault
       mapAttrs
+      mapAttrs'
+      nameValuePair
       mapAttrsToList
       filterAttrs
       nixosSystem
