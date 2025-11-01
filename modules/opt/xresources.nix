@@ -29,7 +29,7 @@
       xresourcesP = writeTextFile {
         name = "Xresources";
         destination = "${env.HOME}/.Xresources";
-        text = concatStringsSep "\n" (mapAttrsToList (resource: value: ''${resource}: ${value}'') cfg);
+        text = concatStringsSep "\n" (mapAttrsToList (resource: value: ''${resource}: ${value}'') cfg) + "\n";
       };
     in
     {

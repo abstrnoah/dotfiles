@@ -18,6 +18,7 @@
     in
     {
       environment.systemPackages = [ pkgs.neovim ];
+      environment.variables.EDITOR = "vim";
       brumal.profile.packages = [
         nvimAsVimP
         vimPlugP

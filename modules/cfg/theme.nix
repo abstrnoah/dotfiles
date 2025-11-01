@@ -3,7 +3,7 @@
     brumal.colourscheme.colours = {
       foreground = "93a1a1";
       background = "002b36";
-      cursor = "002b36";
+      cursor = "93a1a1";
       black0 = "002b36";
       black8 = "657b83";
       red1 = "dc322f";
@@ -23,6 +23,11 @@
     };
 
     fonts.packages = [ pkgs.mononoki pkgs.nerd-fonts.mononoki ];
-    # fonts.fontconfig.default
+    fonts.fontconfig.defaultFonts.monospace = "Mononoki Nerd Font Mono:style=Regular";
+    brumal.programs.i3wm.font = "pango:Mononoki Nerd Font Mono Regular 9";
+    brumal.programs.xresources."URxvt.font" = "xft:Mononoki Nerd Font Mono:style=Regular:size=10";
+    brumal.programs.xresources."URxvt.boldFont" = "xft:Mononoki Nerd Font Mono:style=Bold:size=10";
+    brumal.programs.xresources."URxvt.italicFont" = "xft:Mononoki Nerd Font Mono:style=Italic:size=10";
+    brumal.programs.xresources."URxvt.boldItalicFont" = "xft:Mononoki Nerd Font Mono:style=Bold Italic:size=10";
   };
 }

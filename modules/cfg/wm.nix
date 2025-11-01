@@ -50,8 +50,6 @@ top@{ config, ... }:
           mod = super;
         };
 
-        font = "pango:mononoki regular 7";
-
         dimensions = {
           default_border = 1;
           base_gap_inner = 7;

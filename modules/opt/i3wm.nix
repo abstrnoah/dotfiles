@@ -5,6 +5,7 @@
       library,
       utilities,
       pkgs,
+      options,
       ...
     }:
     let
@@ -157,7 +158,7 @@
 
       options.brumal.programs.i3wm = opts;
 
-      config.brumal.programs.i3wm.body.directives = [
+      config.brumal.programs.i3wm.body.directives = mkIf options.brumal.programs.i3wm.font.isDefined [
         ''font ${cfg.font}''
       ];
 

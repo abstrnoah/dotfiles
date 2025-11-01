@@ -7,7 +7,7 @@
         types
         getName
         ;
-      opts.allowUnfree = mkOption { type = types.listOf types.package; };
+      opts.allowUnfree = mkOption { type = types.listOf types.str; };
       cfg = config.brumal.programs.nixpkgs;
     in
     {
