@@ -129,7 +129,6 @@ let g:br_plugs_active = [
     \ "chaoren/vim-wordmotion",
     \ "plasticboy/vim-markdown",
     \ "mboughaba/i3config.vim",
-    \ "abstrnoah/vim-colors-solarized",
     \ "abstrnoah/wiki.vim",
     \ "junegunn/vim-plug",
     \ "abstrnoah/vim-fireplace",

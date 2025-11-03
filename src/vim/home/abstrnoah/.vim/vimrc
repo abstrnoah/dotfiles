@@ -212,23 +212,15 @@ else
 endif
 
 " LOOK [DEPRECATED] {{{1
-" Section is deprecated, needs to be moved to colorscheme fork or elsewhere.
 
 " TODO: Move to a fork of solarized.
 if &loadplugins
-    let g:solarized_contrast = "high"
-    set background=dark
-    colorscheme solarized
+    colorscheme habamax
 endif
 
-hi Folded cterm=none
-
-hi CursorLine ctermbg=black cterm=bold
-hi CursorLineNr cterm=bold ctermbg=none
+hi CursorLine cterm=bold
+hi CursorLineNr ctermbg=none cterm=bold
 hi CursorLineSign cterm=none ctermbg=none
-hi CursorLineFold cterm=none
-hi SignColumn ctermbg=black
-hi ColorColumn ctermbg=black
 hi CursorColumn cterm=bold ctermbg=none
 hi Cursor cterm=bold
 
