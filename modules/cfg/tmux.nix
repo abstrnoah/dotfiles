@@ -92,11 +92,6 @@
       # Go last window.
       bind P last-window
 
-      # Copy mode and related.
-      bind -T copy-mode-vi v send-keys -X begin-selection
-      bind -T copy-mode-vi y send-keys -X copy-pipe "xclip -selection clipboard"
-      bind C-p paste-buffer -p
-
       # Quick sessions.
       bind T run-shell "tmuxinator main"
       bind N run-shell "gomux ~/store/notes"
