@@ -18,6 +18,7 @@ let
       getName
       pathExists
       concatStringsSep
+      concatMapAttrsStringSep
       collect
       isString
       genAttrs

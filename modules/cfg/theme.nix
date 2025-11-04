@@ -1,6 +1,9 @@
 {
   flake.nixosModules.base =
     { pkgs, ... }:
+    let
+      pangoFont = "Mononoki Nerd Font Mono Regular";
+    in
     {
       brumal.colourscheme.colours = {
         foreground = "93a1a1";
@@ -24,12 +27,16 @@
         white15 = "93a1a1";
       };
 
+      brumal.programs.rofi = {
+        theme = "solarized";
+        config.configuration.font = ''"${pangoFont} 10"'';
+      };
+
       fonts.packages = [
-        pkgs.mononoki
         pkgs.nerd-fonts.mononoki
       ];
       fonts.fontconfig.defaultFonts.monospace = [ "Mononoki Nerd Font Mono:style=Regular" ];
-      brumal.programs.i3wm.font = "pango:Mononoki Nerd Font Mono Regular 9";
+      brumal.programs.i3wm.font = "pango:${pangoFont} 9";
       brumal.programs.xresources."URxvt.font" = "xft:Mononoki Nerd Font Mono:style=Regular:size=10";
       brumal.programs.xresources."URxvt.boldFont" = "xft:Mononoki Nerd Font Mono:style=Bold:size=10";
       brumal.programs.xresources."URxvt.italicFont" = "xft:Mononoki Nerd Font Mono:style=Italic:size=10";
