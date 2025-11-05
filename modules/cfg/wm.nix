@@ -9,10 +9,66 @@ top@{ config, ... }:
       ...
     }:
     let
+      inherit (library) mapAttrs;
+      inherit (utilities) writeShellApplication;
+
       cfg = config.brumal.programs.i3wm;
       k = cfg.keys;
       env = config.brumal.env;
       dims = library.mapAttrs (_: builtins.toString) cfg.dimensions;
+      i3 = config.services.xserver.windowManager.i3.package;
+
+      emptyWsScript = writeShellApplication {
+        name = "i3-empty-ws";
+        runtimeInputs = [
+          pkgs.jq
+          i3
+        ];
+        text = ''
+          _jq_query=$(cat <<'EOF'
+          # Compute last consecutive number in list, plus one.
+          def first_missing: . as [$first, $second]
+              | if ($first + 1 == $second)
+                  then (.[1:] | first_missing)
+                  else ($first + 1)
+                  end;
+          # Max with 0 so that ws num will always be non-negative.
+          # Merge [-1] so that we start looking for numbers at zero.
+          map(.num) + [-1] | unique | first_missing | [., 0] | max
+          EOF
+          )
+
+          i3-msg -t get_workspaces | jq "$_jq_query"
+        '';
+      };
+
+      switchWsScript = writeShellApplication {
+        name = "i3-switch-ws";
+        runtimeInputs = [
+          i3
+          pkgs.rofi
+          emptyWsScript
+        ];
+        text = ''
+          gen_workspaces()
+          {
+              i3-msg -t get_workspaces | tr ',' '\n' | grep "name" | sed 's/"name":"\(.*\)"/\1/g' | sort -n
+          }
+
+
+          WORKSPACE=$( (echo "-"; gen_workspaces)  | rofi -dmenu -p "workspace")
+
+          if [ "-" = "$WORKSPACE" ]
+          then
+              WORKSPACE=$(i3-empty-ws)
+          fi
+          if [ -n "$WORKSPACE" ]
+          then
+              i3-msg workspace "$WORKSPACE"
+          fi
+        '';
+      };
+
     in
     {
 
@@ -124,6 +180,7 @@ top@{ config, ... }:
           p = "workspace prev_on_output";
           comma = "workspace back_and_forth";
           "${k.alt}+r" = "exec i3-input -F 'rename workspace to \"%s\"' -P 'rename ws: '";
+          g = "exec ${switchWsScript}/bin/i3-switch-ws";
         };
 
         body.modes.system = {
