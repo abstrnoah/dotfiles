@@ -18,14 +18,18 @@ top@{ config, ... }:
       dims = library.mapAttrs (_: builtins.toString) cfg.dimensions;
       i3 = config.services.xserver.windowManager.i3.package;
 
-      emptyWsScript = writeShellApplication {
-        name = "i3-empty-ws";
+      with-rofi-ws-script = writeShellApplication {
+        name = "with-rofi-ws";
         runtimeInputs = [
-          pkgs.jq
           i3
+          pkgs.rofi
         ];
         text = ''
-          _jq_query=$(cat <<'EOF'
+          gen_workspaces() {
+              i3-msg -t get_workspaces | tr ',' '\n' | grep "name" | sed 's/"name":"\(.*\)"/\1/g' | sort -n
+          }
+
+          jq_query=$(cat <<'EOF'
           # Compute last consecutive number in list, plus one.
           def first_missing: . as [$first, $second]
               | if ($first + 1 == $second)
@@ -38,36 +42,24 @@ top@{ config, ... }:
           EOF
           )
 
-          i3-msg -t get_workspaces | jq "$_jq_query"
-        '';
-      };
-
-      switchWsScript = writeShellApplication {
-        name = "i3-switch-ws";
-        runtimeInputs = [
-          i3
-          pkgs.rofi
-          emptyWsScript
-        ];
-        text = ''
-          gen_workspaces()
-          {
-              i3-msg -t get_workspaces | tr ',' '\n' | grep "name" | sed 's/"name":"\(.*\)"/\1/g' | sort -n
+          empty_ws() {
+            i3-msg -t get_workspaces | jq "$jq_query"
           }
 
-
-          WORKSPACE=$( (echo "-"; gen_workspaces)  | rofi -dmenu -p "workspace")
+          WORKSPACE=$( (echo "-"; gen_workspaces)  | rofi -dmenu -p "$1")
+          shift
 
           if [ "-" = "$WORKSPACE" ]
           then
-              WORKSPACE=$(i3-empty-ws)
+              WORKSPACE=$(empty_ws)
           fi
           if [ -n "$WORKSPACE" ]
           then
-              i3-msg workspace "$WORKSPACE"
+              "$@" "$WORKSPACE"
           fi
         '';
       };
+      with-rofi-ws-bin = "${with-rofi-ws-script}/bin/with-rofi-ws";
 
     in
     {
@@ -180,7 +172,8 @@ top@{ config, ... }:
           p = "workspace prev_on_output";
           comma = "workspace back_and_forth";
           "${k.alt}+r" = "exec i3-input -F 'rename workspace to \"%s\"' -P 'rename ws: '";
-          g = "exec ${switchWsScript}/bin/i3-switch-ws";
+          g = ''exec ${with-rofi-ws-bin} "go to" i3-msg workspace'';
+          "${k.alt}+d" = ''exec ${with-rofi-ws-bin} "move to" i3-msg "move window to workspace"'';
         };
 
         body.modes.system = {
