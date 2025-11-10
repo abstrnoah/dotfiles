@@ -23,6 +23,7 @@ top@{ config, ... }:
         runtimeInputs = [
           i3
           pkgs.rofi
+          pkgs.jq
         ];
         text = ''
           gen_workspaces() {
