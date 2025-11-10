@@ -1,7 +1,12 @@
 top@{ config, ... }:
 {
   flake.machineModules.porcupine =
-    { library, config, ... }:
+    {
+      library,
+      config,
+      pkgs,
+      ...
+    }:
     {
       imports = [ top.config.flake.nixosModules.gui ];
 
@@ -41,5 +46,18 @@ top@{ config, ... }:
       hardware.cpu.intel.updateMicrocode = library.mkDefault config.hardware.enableRedistributableFirmware;
       hardware.enableRedistributableFirmware = library.mkDefault true;
 
+      # Prevent systemd from blocking for 10 seconds after resume (probably a hardware bug).
+      services.fwupd.enable = true;
+      systemd.globalEnvironment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+      systemd.managerEnvironment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+      # HACK
+      systemd.services."systemd-suspend" = {
+        requires = [ "sleep.target" ];
+        after = [ "sleep.target" ];
+        serviceConfig.Type = "simple";
+      };
+
     };
 }
+
+
