@@ -163,13 +163,7 @@
         ''font ${cfg.font}''
       ];
 
-      config.services = {
-        xserver.enable = true;
-        displayManager.gdm.enable = true;
-        xserver.windowManager.i3 = {
-          enable = true;
-        };
-      };
+      config.services.xserver.windowManager.i3.enable = true;
 
       config.brumal.profile = {
         packages = [ i3wmRcP ];

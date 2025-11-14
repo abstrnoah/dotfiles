@@ -68,6 +68,8 @@ top@{ config, ... }:
       imports = [ top.config.flake.nixosModules.brumal-wm ];
 
       config.services = {
+        xserver.displayManager.lightdm.enable = true;
+        xserver.enable = true;
         xserver.windowManager.i3 = {
           package = pkgs.i3-rounded;
           extraPackages = [
