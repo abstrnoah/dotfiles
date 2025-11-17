@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.base.brumal.programs.bash = {
+  flake.nixosModules.base.brumal.bash = {
     inputrc = ''
       set bell-style none
       set editing-mode vi

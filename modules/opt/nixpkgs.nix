@@ -8,10 +8,10 @@
         getName
         ;
       opts.allowUnfree = mkOption { type = types.listOf types.str; };
-      cfg = config.brumal.programs.nixpkgs;
+      cfg = config.brumal.nixpkgs;
     in
     {
-      options.brumal.programs.nixpkgs = opts;
+      options.brumal.nixpkgs = opts;
       config.nixpkgs.config = {
         allowUnfreePredicate = pkg: builtins.elem (getName pkg) cfg.allowUnfree;
       };

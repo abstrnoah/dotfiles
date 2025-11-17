@@ -1,6 +1,6 @@
 {
   flake.nixosModules.gui = {
-    brumal.programs.rofi = {
+    brumal.rofi = {
       config.configuration = {
         modi = ''"window,run,combi,filebrowser"'';
         matching = ''"fuzzy"'';

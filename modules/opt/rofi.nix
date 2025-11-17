@@ -14,7 +14,7 @@
         theme = mkOption { type = types.str; };
         config = mkOption { type = types.attrsOf (types.attrsOf types.str); };
       };
-      cfg = config.brumal.programs.rofi;
+      cfg = config.brumal.rofi;
       env = config.brumal.env;
       rc = writeTextFile {
         name = "config.rasi";
@@ -32,7 +32,7 @@
       };
     in
     {
-      options.brumal.programs.rofi = opts;
+      options.brumal.rofi = opts;
       config.brumal.profile.packages = [
         pkgs.rofi
         rc

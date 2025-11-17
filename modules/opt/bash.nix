@@ -13,7 +13,7 @@
         types
         mkOption
         ;
-      cfg = config.brumal.programs.bash;
+      cfg = config.brumal.bash;
       opts = {
         rc = mkOption {
           type = types.str;
@@ -40,7 +40,7 @@
       shell = pkgs.bash;
     in
     {
-      options.brumal.programs.bash = opts;
+      options.brumal.bash = opts;
       config = {
         users.users.${ownerName}.shell = shell;
         environment.systemPackages = [ shell ];

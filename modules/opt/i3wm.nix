@@ -24,7 +24,7 @@
         writeTextFile
         ;
 
-      cfg = config.brumal.programs.i3wm;
+      cfg = config.brumal.i3wm;
       k = cfg.keys;
       env = config.brumal.env;
       i3wmP = config.services.xserver.windowManager.i3.package;
@@ -157,9 +157,9 @@
     in
     {
 
-      options.brumal.programs.i3wm = opts;
+      options.brumal.i3wm = opts;
 
-      config.brumal.programs.i3wm.body.directives = mkIf options.brumal.programs.i3wm.font.isDefined [
+      config.brumal.i3wm.body.directives = mkIf options.brumal.i3wm.font.isDefined [
         ''font ${cfg.font}''
       ];
 

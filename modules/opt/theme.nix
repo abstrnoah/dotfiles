@@ -47,7 +47,7 @@
     in
     {
       options.brumal.colourscheme = opts;
-      config.brumal.programs.xresources = mapAttrs (_: v: "#${v}") {
+      config.brumal.xresources = mapAttrs (_: v: "#${v}") {
         "*.background" = cfg.colours.background;
         "*.foreground" = cfg.colours.foreground;
         "*.cursorColor" = cfg.colours.cursor;

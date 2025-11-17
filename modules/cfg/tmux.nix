@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.base.brumal.programs.tmux = {
+  flake.nixosModules.base.brumal.tmux = {
 
     tmuxinator = {
 

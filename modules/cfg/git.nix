@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.base.brumal.programs.git.config = {
+  flake.nixosModules.base.brumal.git.config = {
     # TODO refactor user into owner
     merge.conflict = "diff3";
     push.default = "simple";

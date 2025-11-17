@@ -14,7 +14,7 @@
         mkDefault
         attrsToGitINI
         ;
-      cfg = config.brumal.programs.git;
+      cfg = config.brumal.git;
       opts = {
         config = mkOption {
           description = "Git config, to be written via nixpkgs' toGitINI.";
@@ -28,13 +28,13 @@
       };
     in
     {
-      options.brumal.programs.git = opts;
+      options.brumal.git = opts;
       config = {
         environment.systemPackages = [ pkgs.git ];
         brumal.profile.packages = [ configPkg ];
       };
 
-      config.brumal.programs.git.config = {
+      config.brumal.git.config = {
         user.name = mkDefault config.brumal.owner.name;
         user.email = mkDefault config.brumal.owner.email;
         user.signingkey = mkDefault config.brumal.owner.pgpkey;

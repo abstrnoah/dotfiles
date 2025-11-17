@@ -10,7 +10,7 @@
     let
       inherit (library) mkOption types mapAttrsToList;
       inherit (utilities) writeTextFile buildEnv;
-      cfg = config.brumal.programs.tmux;
+      cfg = config.brumal.tmux;
       env = config.brumal.env;
       opts = {
         conf = mkOption { type = types.lines; };
@@ -35,7 +35,7 @@
       };
     in
     {
-      options.brumal.programs.tmux = opts;
+      options.brumal.tmux = opts;
       config = {
         environment.systemPackages = [ pkgs.tmux ];
         brumal.profile.packages = [

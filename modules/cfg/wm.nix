@@ -12,7 +12,7 @@ top@{ config, ... }:
       inherit (library) mapAttrs;
       inherit (utilities) writeShellApplication;
 
-      cfg = config.brumal.programs.i3wm;
+      cfg = config.brumal.i3wm;
       k = cfg.keys;
       env = config.brumal.env;
       dims = library.mapAttrs (_: builtins.toString) cfg.dimensions;
@@ -80,7 +80,7 @@ top@{ config, ... }:
         };
       };
 
-      config.brumal.programs.i3wm = {
+      config.brumal.i3wm = {
 
         keys = rec {
           escringe = "Escape";

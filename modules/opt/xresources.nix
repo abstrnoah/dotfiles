@@ -19,7 +19,7 @@
         writeTextFile
         ;
 
-      cfg = config.brumal.programs.xresources;
+      cfg = config.brumal.xresources;
       env = config.brumal.env;
 
       opts = mkOption {
@@ -35,7 +35,7 @@
       };
     in
     {
-      options.brumal.programs.xresources = opts;
+      options.brumal.xresources = opts;
       config.brumal.profile.packages = [ xresourcesP ];
       config.brumal.profile.postSwitch = [
         ''
