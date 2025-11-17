@@ -1,10 +1,19 @@
 {
   flake.nixosModules.base =
-    { pkgs, ... }:
+    {
+      pkgs,
+      library,
+      config,
+      ...
+    }:
     let
+      inherit (library) mapAttrs;
+
       pangoFont = "Mononoki Nerd Font Mono Regular";
+
     in
     {
+
       brumal.colourscheme.colours = {
         foreground = "93a1a1";
         background = "002b36";
@@ -26,11 +35,7 @@
         white7 = "93a1a1";
         white15 = "93a1a1";
       };
-
-      brumal.rofi = {
-        theme = "solarized";
-        config.configuration.font = ''"${pangoFont} 10"'';
-      };
+      brumal.rofi.theme = "solarized";
 
       fonts.packages = [
         pkgs.nerd-fonts.mononoki
@@ -40,7 +45,25 @@
       brumal.xresources."URxvt.font" = "xft:Mononoki Nerd Font Mono:style=Regular:size=10";
       brumal.xresources."URxvt.boldFont" = "xft:Mononoki Nerd Font Mono:style=Bold:size=10";
       brumal.xresources."URxvt.italicFont" = "xft:Mononoki Nerd Font Mono:style=Italic:size=10";
-      brumal.xresources."URxvt.boldItalicFont" =
-        "xft:Mononoki Nerd Font Mono:style=Bold Italic:size=10";
+      brumal.xresources."URxvt.boldItalicFont" = "xft:Mononoki Nerd Font Mono:style=Bold Italic:size=10";
+      brumal.rofi.config.configuration.font = ''"${pangoFont} 10"'';
+
+      brumal.i3wm.dimensions = {
+        default_border = 1;
+        base_gap_inner = 7;
+        base_gap_outer = 0;
+        resize_sm = 2;
+        resize_lg = 50;
+      };
+      brumal.i3wm.body.directives =
+        let
+          dims = library.mapAttrs (_: builtins.toString) config.brumal.i3wm.dimensions;
+        in
+        [
+          ''border_radius 2''
+          ''default_border pixel ${dims.default_border}''
+          ''gaps inner ${dims.base_gap_inner}''
+        ];
+
     };
 }
