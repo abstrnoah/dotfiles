@@ -140,6 +140,9 @@
           type = types.attrsOf types.numbers.nonnegative;
           default = { };
         };
+        dimstrs = mkOption {
+          type = types.attrsOf types.str;
+        };
         brightness_interval = mkOption { type = types.numbers.positive; }; # TODO maybe shouldn't be here
         font = mkOption { type = types.str; };
         body = mkOption { type = types.submodule i3wmBodyModule; };
@@ -162,6 +165,8 @@
       config.brumal.i3wm.body.directives = mkIf options.brumal.i3wm.font.isDefined [
         ''font ${cfg.font}''
       ];
+
+      config.brumal.i3wm.dimstrs = library.mapAttrs (_: builtins.toString) cfg.dimensions;
 
       config.services.xserver.windowManager.i3.enable = true;
 

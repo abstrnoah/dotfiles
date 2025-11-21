@@ -8,6 +8,7 @@
       ...
     }:
     let
+
       inherit (library) mapAttrs;
       inherit (utilities) writeShellApplication;
       cfg = config.brumal.i3wm;
@@ -15,6 +16,7 @@
       env = config.brumal.env;
       dims = library.mapAttrs (_: builtins.toString) cfg.dimensions;
       i3 = config.services.xserver.windowManager.i3.package;
+
       with-rofi-ws-script = writeShellApplication {
         name = "with-rofi-ws";
         runtimeInputs = [
@@ -58,15 +60,13 @@
         '';
       };
       with-rofi-ws-bin = "${with-rofi-ws-script}/bin/with-rofi-ws";
+
     in
     {
 
-      body.directives = [
-        # Use Mouse+$mod to drag floating windows to their wanted position
-        ''floating_modifier ${k.mod}''
-      ];
+      services.xserver.windowManager.i3.extraPackages = [ pkgs.rofi ];
 
-      body.bindsym = {
+      brumal.i3wm.body.bindsym = {
 
         # Run
         ${k.colon} = "exec rofi -show run";
@@ -108,6 +108,10 @@
         # Fullscreen focused container
         f = "fullscreen toggle";
 
+        # Kill focused window
+        "${k.shift}+q" = "kill";
+
       };
+
     };
 }
