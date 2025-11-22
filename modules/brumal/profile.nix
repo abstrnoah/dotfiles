@@ -50,6 +50,7 @@
             "doc"
           ];
         };
+        # TODO Also nixos-rebuild?
         switch = writeShellApplication {
           name = profileBaseName + "-switch";
           # TODO make atomic!

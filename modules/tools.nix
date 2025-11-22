@@ -19,6 +19,7 @@
         pkgs.bat-extras.batman
         pkgs.bat-extras.batwatch
         pkgs.silver-searcher
+        pkgs.nnn
       ];
       environment.systemPackages = [
         pkgs.htop
