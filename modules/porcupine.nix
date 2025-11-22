@@ -52,8 +52,9 @@ top@{ config, ... }:
       systemd.managerEnvironment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
       # HACK
       systemd.services."systemd-suspend" = {
-        requires = [ "sleep.target" ];
-        after = [ "sleep.target" ];
+        serviceConfig.Type = "simple";
+      };
+      systemd.services."systemd-suspend-then-hibernate" = {
         serviceConfig.Type = "simple";
       };
 
