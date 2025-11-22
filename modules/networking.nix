@@ -1,6 +1,11 @@
 {
   flake.nixosModules.base =
-    { config, ownerName, pkgs, ... }:
+    {
+      config,
+      ownerName,
+      pkgs,
+      ...
+    }:
     {
       environment.systemPackages = [ pkgs.dig ];
       networking.networkmanager.enable = true;
