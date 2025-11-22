@@ -21,7 +21,6 @@
         pkgs.silver-searcher
         pkgs.nnn
         pkgs.zathura # TODO config
-        pkgs.ttdl # TODO config
         pkgs.jabref
         pkgs.fd
         pkgs.discord
