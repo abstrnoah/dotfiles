@@ -20,6 +20,17 @@
         pkgs.bat-extras.batwatch
         pkgs.silver-searcher
         pkgs.nnn
+        pkgs.zathura # TODO config
+        pkgs.ttdl # TODO config
+        pkgs.jabref
+        pkgs.fd
+        pkgs.discord
+        pkgs.tectonic
+        pkgs.tree
+        pkgs.uni
+      ];
+      brumal.nixpkgs.allowUnfree = [
+        "discord"
       ];
       environment.systemPackages = [
         pkgs.htop
