@@ -22,6 +22,7 @@ let
       collect
       isString
       genAttrs
+      readFile
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs
