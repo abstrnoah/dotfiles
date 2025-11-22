@@ -23,6 +23,7 @@
         nvimAsVimP
         vimPlugP
         vimRcP
+        pkgs.universal-ctags
       ];
     };
 }
