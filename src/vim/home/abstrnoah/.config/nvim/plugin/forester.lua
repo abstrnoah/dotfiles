@@ -1,4 +1,4 @@
--- require("forester").setup()
+require("forester").setup()
 
 -- -- optionally, configure the cmp source:
 -- local foresterCompletionSource = require("forester.completion")
