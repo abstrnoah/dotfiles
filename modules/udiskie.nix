@@ -1,5 +1,5 @@
 {
-  flake.nixoxModules.gui =
+  flake.nixosModules.gui =
     {
       config,
       pkgs,
