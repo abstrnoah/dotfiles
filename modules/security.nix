@@ -9,7 +9,6 @@
       brumal.profile.packages = [
         pkgs.tomb
         pkgs.gnupg
-        pkgs.pass
       ];
       security.sudo.extraRules = [
         {
