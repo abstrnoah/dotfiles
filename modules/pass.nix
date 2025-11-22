@@ -1,6 +1,14 @@
 {
   flake.nixosModules.base =
     {
+      pkgs,
+      ...
+    }:
+    {
+      brumal.profile.packages = [ pkgs.pass ];
+    };
+  flake.nixosModules.gui =
+    {
       config,
       pkgs,
       ...
@@ -9,9 +17,6 @@
       k = config.brumal.i3wm.keys;
     in
     {
-      brumal.profile.packages = [
-        pkgs.pass
-      ];
       brumal.i3wm.body.bindsym."${k.alt}+p" = "exec ${pkgs.pass}/bin/passmenu";
       nixpkgs.overlays = [
         (final: prev: {
