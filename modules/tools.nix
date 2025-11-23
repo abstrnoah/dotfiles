@@ -24,6 +24,7 @@
         pkgs.jabref
         pkgs.fd
         pkgs.discord
+        pkgs.signal-desktop
         pkgs.tectonic
         pkgs.tree
         pkgs.uni
