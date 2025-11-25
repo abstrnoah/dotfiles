@@ -1,7 +1,12 @@
 {
   flake.nixosModules.base =
-    { pkgs, ... }:
+    { pkgs, library, ... }:
+    let
+      inherit (library) mkDefault;
+    in
     {
+      services.openssh.enable = true;
+      services.openssh.openFirewall = mkDefault false;
       programs.ssh.startAgent = true;
       programs.ssh.extraConfig = ''
         Host tipu
