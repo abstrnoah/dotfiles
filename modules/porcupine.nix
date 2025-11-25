@@ -42,7 +42,6 @@ top@{ config, ... }:
       swapDevices = [
         { device = "/dev/disk/by-uuid/7c6b59c0-dedd-42d3-b174-e4a13231a3a8"; }
       ];
-      networking.useDHCP = library.mkDefault true;
       hardware.cpu.intel.updateMicrocode = library.mkDefault config.hardware.enableRedistributableFirmware;
       hardware.enableRedistributableFirmware = library.mkDefault true;
 
