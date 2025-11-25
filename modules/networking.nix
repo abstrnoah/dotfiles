@@ -4,6 +4,7 @@
       config,
       ownerName,
       pkgs,
+      library,
       ...
     }:
     {
