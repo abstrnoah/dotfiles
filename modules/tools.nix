@@ -21,13 +21,16 @@
         pkgs.silver-searcher
         pkgs.nnn
         pkgs.zathura # TODO config
-        pkgs.jabref
+        pkgs.jabref # TODO config
         pkgs.fd
         pkgs.discord
         pkgs.signal-desktop
         pkgs.tectonic
         pkgs.tree
         pkgs.uni
+        pkgs.curl # TODO config
+        pkgs.zip
+        pkgs.unzip
       ];
       brumal.nixpkgs.allowUnfree = [
         "discord"
