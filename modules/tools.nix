@@ -31,6 +31,7 @@
         pkgs.curl # TODO config
         pkgs.zip
         pkgs.unzip
+        pkgs.numbat
       ];
       brumal.nixpkgs.allowUnfree = [
         "discord"
