@@ -9,7 +9,8 @@
     let
       inherit (library) mapAttrs;
 
-      pangoFont = "Mononoki Nerd Font Mono Regular";
+      fontName = "DejaVu Sans Mono";
+      fontSize = builtins.toString 11;
 
     in
     {
@@ -39,14 +40,17 @@
 
       fonts.packages = [
         pkgs.nerd-fonts.mononoki
+        pkgs.noto-fonts
+        pkgs.cm_unicode
+        pkgs.bakoma_ttf
       ];
-      fonts.fontconfig.defaultFonts.monospace = [ "Mononoki Nerd Font Mono:style=Regular" ];
-      brumal.i3wm.font = "pango:${pangoFont} 9";
-      brumal.xresources."URxvt.font" = "xft:Mononoki Nerd Font Mono:style=Regular:size=10";
-      brumal.xresources."URxvt.boldFont" = "xft:Mononoki Nerd Font Mono:style=Bold:size=10";
-      brumal.xresources."URxvt.italicFont" = "xft:Mononoki Nerd Font Mono:style=Italic:size=10";
-      brumal.xresources."URxvt.boldItalicFont" = "xft:Mononoki Nerd Font Mono:style=Bold Italic:size=10";
-      brumal.rofi.config.configuration.font = ''"${pangoFont} 10"'';
+      fonts.fontconfig.defaultFonts.monospace = [ "${fontName}" ];
+      brumal.i3wm.font = "pango:Mononoki Nerd Font Mono 9";
+      brumal.xresources."URxvt.font" = "xft:${fontName}:size=${fontSize}";
+      brumal.xresources."URxvt.boldFont" = "xft:${fontName}:style=Bold:size=${fontSize}";
+      brumal.xresources."URxvt.italicFont" = "xft:${fontName}:style=Italic:size=${fontSize}";
+      brumal.xresources."URxvt.boldItalicFont" = "xft:${fontName}:style=Bold Italic:size=${fontSize}";
+      brumal.rofi.config.configuration.font = ''"${fontName} ${fontSize}"'';
 
       brumal.i3wm.dimensions = {
         default_border = 1;
