@@ -8,18 +8,19 @@
     }:
     let
       inherit (utilities) storeLegacyDotfiles writeShellApplication;
-      pkg = pkgs.qutebrowser;
-      pkg-t = pkgs.qutebrowser-t;
+      qb = pkgs.qutebrowser;
+      qb-t = pkgs.qutebrowser-t;
       env = config.brumal.env;
       py-path = "${env.XDG_CONFIG_HOME}/qutebrowser/config.py";
-      rc = storeLegacyDotfiles "qutebrowser";
-      rc-py = "${rc}/${py-path}";
+      qbrc = storeLegacyDotfiles "qutebrowser";
+      qbrc-py = "${qbrc}/${py-path}";
     in
     {
       brumal.profile.packages = [
-        pkg
-        pkg-t
-        rc
+        qb
+        qb-t
+        qbrc
+        pkgs.firefox
       ];
       nixpkgs.overlays = [
         (final: prev: {
@@ -27,7 +28,7 @@
             name = "qutebrowser-t";
             runtimeInputs = [ final.qutebrowser ];
             text = ''
-              qutebrowser --temp-basedir --config-py ${rc-py} "$@"
+              qutebrowser --temp-basedir --config-py ${qbrc-py} "$@"
             '';
           };
         })
