@@ -1,6 +1,7 @@
 {
   flake.nixosModules.base = {
-    time.timeZone = "America/New_York";
+    # Set imperatively via timedatectl (TODO setup better persistent-but-noncommited locale system)
+    time.timeZone = null;
     i18n.defaultLocale = "en_US.UTF-8";
   };
   # TODO
