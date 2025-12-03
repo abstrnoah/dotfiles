@@ -1,6 +1,6 @@
 {
   flake.nixosModules.gui =
-    { config, ... }:
+    { config, pkgs, ... }:
     let
       cfg = config.brumal.i3wm;
       k = cfg.keys;
@@ -17,8 +17,11 @@
       services.logind.settings.Login.IdleActionSec = "5min";
 
       systemd.services.no-wakeup-on-lid = {
-        # TODO This is a toggle so we should really verify first that it's enabled.
-        script = ''echo LID > /proc/acpi/wakeup'';
+        script = ''
+          if ${pkgs.silver-searcher}/bin/ag -c 'LID.*\*enabled' </proc/acpi/wakeup >/dev/null; then
+            echo LID > /proc/acpi/wakeup
+          fi
+        '';
         wantedBy = [ "multi-user.target" ];
       };
 
