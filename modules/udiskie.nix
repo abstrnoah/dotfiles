@@ -30,7 +30,7 @@
       };
     in
     {
-      brumal.i3wm.body.directives = [ ''exec_always ${pkgs.udiskie}/bin/udiskie'' ];
+      brumal.i3wm.body.directives = [ ''exec ${pkgs.udiskie}/bin/udiskie'' ];
       brumal.udiskie.config = {
         program_options = {
           automount = false;
