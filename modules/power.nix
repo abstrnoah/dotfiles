@@ -25,8 +25,9 @@
         wantedBy = [ "multi-user.target" ];
       };
 
-      # Unneeded because HandlePowerKey
-      # brumal.i3wm.body.bindsym.${k.tilde} = "exec systemctl suspend-then-hibernate";
+      services.tlp.enable = true;
+
+
       brumal.i3wm.body.modes.system = {
         key = "${k.grave}";
         block.body.bindsym = {
