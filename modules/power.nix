@@ -27,7 +27,6 @@
 
       services.tlp.enable = true;
 
-
       brumal.i3wm.body.modes.system = {
         key = "${k.grave}";
         block.body.bindsym = {

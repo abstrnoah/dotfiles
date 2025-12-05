@@ -34,8 +34,8 @@ let
       ;
     pathAppend = nixpkgs-lib.path.append;
     attrsToGitINI = nixpkgs-lib.generators.toGitINI;
-    attrsToYAML = nixpkgs-lib.generators.toYAML {};
-    attrsToJSON = nixpkgs-lib.generators.toJSON {};
+    attrsToYAML = nixpkgs-lib.generators.toYAML { };
+    attrsToJSON = nixpkgs-lib.generators.toJSON { };
 
     call = f: arg: f (getAttrs (builtins.attrNames (builtins.functionArgs f)) arg);
 
