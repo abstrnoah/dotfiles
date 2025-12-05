@@ -45,7 +45,7 @@
         pkgs.bakoma_ttf
       ];
       fonts.fontconfig.defaultFonts.monospace = [ "${fontName}" ];
-      brumal.i3wm.font = "pango:Mononoki Nerd Font Mono 9";
+      brumal.i3wm.font = "pango:${fontName} 9";
       brumal.xresources."URxvt.font" = "xft:${fontName}:size=${fontSize}";
       brumal.xresources."URxvt.boldFont" = "xft:${fontName}:style=Bold:size=${fontSize}";
       brumal.xresources."URxvt.italicFont" = "xft:${fontName}:style=Italic:size=${fontSize}";
