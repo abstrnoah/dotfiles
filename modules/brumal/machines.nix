@@ -20,8 +20,7 @@ let
     in
     e
     // {
-      inherit (e.config.brumal.profile) switch rollback;
-      profile = e.config.brumal.profile.package;
+      inherit (e.config.brumal.profile) switch package;
     };
 in
 {

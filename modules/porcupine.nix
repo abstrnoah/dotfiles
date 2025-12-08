@@ -1,4 +1,4 @@
-top@{ config, ... }:
+top@{ self, config, ... }:
 {
   flake.machineModules.porcupine =
     {
@@ -56,6 +56,10 @@ top@{ config, ... }:
       systemd.services."systemd-suspend-then-hibernate" = {
         serviceConfig.Type = "simple";
       };
+
+      brumal.profile.preSwitch = [
+        ''sudo nixos-rebuild --flake ${self}'#'${config.networking.hostName} switch''
+      ];
 
     };
 }

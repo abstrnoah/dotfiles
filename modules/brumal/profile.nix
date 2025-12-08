@@ -23,6 +23,9 @@
         ;
       profileBaseName = config.networking.hostName + "-" + ownerName;
       env = config.brumal.env;
+      preSwitchScript = concatScript "preSwitchScript" (
+        map (s: writeText "script" (s + "\n")) config.brumal.profile.preSwitch
+      );
       postSwitchScript = concatScript "postSwitchScript" (
         map (s: writeText "script" (s + "\n")) config.brumal.profile.postSwitch
       );
@@ -35,7 +38,10 @@
         };
         package = mkOption { type = types.package; };
         switch = mkOption { type = types.package; };
-        rollback = mkOption { type = types.package; };
+        preSwitch = mkOption {
+          type = types.listOf types.str;
+          default = [ ];
+        };
         postSwitch = mkOption {
           type = types.listOf types.str;
           default = [ ];
@@ -50,12 +56,12 @@
             "doc"
           ];
         };
-        # TODO Also nixos-rebuild?
         switch = writeShellApplication {
           name = profileBaseName + "-switch";
           # TODO make atomic!
           text = ''
-            nix-env --set "${config.brumal.profile.package}" "$@" \
+            ${preSwitchScript} \
+            && nix-env --set "${config.brumal.profile.package}" "$@" \
             && ${pkgs.emplacetree}/bin/emplacetree ln "${env.NIX_PROFILE}/home/abstrnoah" "${env.HOME}" \
             && ${postSwitchScript}
           '';
