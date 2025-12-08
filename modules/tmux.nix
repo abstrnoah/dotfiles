@@ -4,6 +4,7 @@
     {
       brumal.tmux = {
 
+        # TODO finish deprecating tmuxinator and just use gomux instead, it is now out of date with tmux
         tmuxinator = {
 
           main = ''

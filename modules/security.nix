@@ -11,7 +11,7 @@
         pkgs.tomb
         pkgs.gnupg
         pkgs.cryptsetup
-        pkgs.pinentry
+        pkgs.pinentry-all # TODO TEST
       ];
       programs.gnupg.agent.enable = true;
       security.sudo.extraRules = [
