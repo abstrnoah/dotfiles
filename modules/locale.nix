@@ -1,9 +1,13 @@
 {
-  flake.nixosModules.base = {
-    # Set imperatively via timedatectl (TODO setup better persistent-but-noncommited locale system)
-    time.timeZone = null;
-    i18n.defaultLocale = "en_US.UTF-8";
-  };
+  flake.nixosModules.base =
+    { pkgs, ... }:
+    {
+      i18n.defaultLocale = "en_US.UTF-8";
+      time.timeZone = null;
+      brumal.local.hooks = [
+        ''${pkgs.systemd}/bin/timedatectl set-timezone "$TIMEZONE"''
+      ];
+    };
   # TODO
   # flake.modules.nixos.wm.brumal.cfg.i3status.blocks.tztime = {
   #   local.format = "%a %Y-%m-%d %H:%M:%S %Z";
