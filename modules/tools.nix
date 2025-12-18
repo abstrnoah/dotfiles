@@ -32,6 +32,7 @@
         pkgs.zip
         pkgs.unzip
         pkgs.numbat
+        pkgs.jq
       ];
       brumal.nixpkgs.allowUnfree = [
         "discord"
