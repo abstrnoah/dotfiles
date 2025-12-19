@@ -9,6 +9,7 @@
       inherit (library) readFile;
     in
     {
+      # FIXME failing to start at boot due to reported port conflict
       # TODO make syncthing config declarative
       systemd.user.units."syncthing.service" = {
         text = readFile "${pkgs.syncthing}/share/systemd/user/syncthing.service";

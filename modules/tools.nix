@@ -21,7 +21,7 @@
         pkgs.silver-searcher
         pkgs.nnn
         pkgs.zathura # TODO config
-        pkgs.jabref # TODO config
+        pkgs.jabref # TODO config # FIXME fails to compile at 2025-12-18 nixpkgs unstable
         pkgs.fd
         pkgs.discord
         pkgs.signal-desktop
