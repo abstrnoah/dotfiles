@@ -12,6 +12,9 @@
         ;
       handler = writeShellApplication {
         name = "udiskie-event-handler";
+        runtimeInputs = [
+          pkgs.libnotify
+        ];
         text = ''
           test "$#" -eq 2 || exit 1
           event="$1:$2"
@@ -19,9 +22,8 @@
               ~/store/orange/open
           }
           handle_with() {
-              # TODO
-              # notify-send "udiskie $event" "running [$*]"
-              "$@" # || notify-send "udiskie $event" "handler failed: [$*]"
+              notify-send "udiskie $event" "running [$*]"
+              "$@" || notify-send "udiskie $event" "handler failed: [$*]"
           }
           case "$event" in
               device_mounted:C8FE-2EF0) handle_with open_orange ;;
