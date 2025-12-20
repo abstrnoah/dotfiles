@@ -33,6 +33,7 @@ let
       escapeShellArg
       ;
     pathAppend = nixpkgs-lib.path.append;
+    attrsToINI = nixpkgs-lib.generators.toINI;
     attrsToGitINI = nixpkgs-lib.generators.toGitINI;
     attrsToYAML = nixpkgs-lib.generators.toYAML { };
     attrsToJSON = nixpkgs-lib.generators.toJSON { };

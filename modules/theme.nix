@@ -11,7 +11,10 @@
 
       fontName = "DejaVu Sans Mono";
       fontSize = builtins.toString 11;
+      fontSizeSmall = builtins.toString 10;
+      fontSizeTiny = builtins.toString 9;
 
+      c = config.brumal.colourscheme.colours;
     in
     {
 
@@ -45,7 +48,7 @@
         pkgs.bakoma_ttf
       ];
       fonts.fontconfig.defaultFonts.monospace = [ "${fontName}" ];
-      brumal.i3wm.font = "pango:${fontName} 9";
+      brumal.i3wm.font = "pango:${fontName} ${fontSizeTiny}";
       brumal.xresources."URxvt.font" = "xft:${fontName}:size=${fontSize}";
       brumal.xresources."URxvt.boldFont" = "xft:${fontName}:style=Bold:size=${fontSize}";
       brumal.xresources."URxvt.italicFont" = "xft:${fontName}:style=Italic:size=${fontSize}";
@@ -69,5 +72,12 @@
           ''gaps inner ${dims.base_gap_inner}''
         ];
 
+      brumal.dunst.config.global.frame_color = ''"#${c.green2}"'';
+      brumal.dunst.config.global.background = ''"#${c.background}"'';
+      brumal.dunst.config.global.foreground = ''"#${c.foreground}"'';
+      brumal.dunst.config.global.font = "${fontName} ${fontSizeSmall}";
+      brumal.dunst.config.global.corner_radius = 3;
+
     };
+
 }

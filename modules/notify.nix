@@ -22,18 +22,17 @@
           test "$(dunstctl is-paused)" = false || notify-send "notifying"
         '';
       };
+      dunstctl = "${pkgs.dunst}/bin/dunstctl";
     in
     {
-      services.dbus.packages = [
-        pkgs.dunst
-      ];
-      systemd.packages = [
-        pkgs.dunst
-      ];
-      environment.systemPackages = [
-        pkgs.libnotify
-        pkgs.dunst
-      ];
-      brumal.i3wm.body.bindsym."${k.alt}+n" = "exec ${notifyToggleScript}/bin/notify-toggle-script";
+      brumal.i3wm.body.modes.notify = {
+        key = "${k.alt}+n";
+        block.body.bindsym = {
+          n = "exec ${notifyToggleScript}/bin/notify-toggle-script";
+          f = "exec ${dunstctl} history-pop";
+          "${k.shift}+f" = "exec ${dunstctl} close";
+          "${k.shift}+c" = "exec ${dunstctl} close-all";
+        };
+      };
     };
 }
