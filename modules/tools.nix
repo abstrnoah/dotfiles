@@ -21,7 +21,6 @@
         pkgs.silver-searcher
         pkgs.nnn
         pkgs.zathura # TODO config
-        pkgs.jabref # TODO config # FIXME fails to compile at 2025-12-18 nixpkgs unstable
         pkgs.fd
         pkgs.discord
         pkgs.signal-desktop
@@ -33,6 +32,8 @@
         pkgs.unzip
         pkgs.numbat
         pkgs.jq
+        # TODO FIXME Packages held back because they break on current nixpkgs
+        inputs'.nixpkgs-heldback.legacyPackages.jabref # TODO config
       ];
       brumal.nixpkgs.allowUnfree = [
         "discord"

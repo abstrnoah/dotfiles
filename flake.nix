@@ -1,7 +1,8 @@
 {
   inputs.flake-parts.url = "github:hercules-ci/flake-parts";
   inputs.import-tree.url = "github:vic/import-tree";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs-heldback.url = "github:NixOS/nixpkgs/nixos-25.11";
 
   inputs.emplacetree.url = "github:abstrnoah/emplacetree";
   inputs.emplacetree.inputs.nixpkgs.follows = "nixpkgs";
