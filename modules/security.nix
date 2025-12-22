@@ -17,9 +17,9 @@
       security.sudo.extraRules = [
         {
           commands = [
-            # TODO doesn't seem to be working hence the askpsas below
             {
-              command = "${pkgs.tomb}/bin/tomb";
+              # Necessary that we use run instead of store path for unqualified command to be recognised.
+              command = "/run/current-system/sw/bin/tomb";
               options = [ "NOPASSWD" ];
             }
           ];
