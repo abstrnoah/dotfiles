@@ -16,6 +16,7 @@
       qbrc-py = "${qbrc}/${py-path}";
     in
     {
+      # TODO This is an example where it really doesn't make sense to separate profile packages from system-wide packages because below I'm setting mime defaults system-wide.
       brumal.profile.packages = [
         qb
         qb-t
@@ -33,5 +34,9 @@
           };
         })
       ];
+      xdg.mime.defaultApplications = {
+        "x-scheme-handler/http" = "org.qutebrowser.qutebrowser.desktop";
+        "x-scheme-handler/https" = "org.qutebrowser.qutebrowser.desktop";
+      };
     };
 }
