@@ -20,7 +20,8 @@ let
     in
     e
     // {
-      inherit (e.config.brumal.profile) switch package;
+      inherit (e.config.brumal.profile) switch;
+      profile = e.config.brumal.profile.package;
     };
 in
 {
