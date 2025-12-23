@@ -32,6 +32,7 @@
         pkgs.unzip
         pkgs.numbat
         pkgs.jq
+        pkgs.lsof
         # TODO FIXME Packages held back because they break on current nixpkgs
         inputs'.nixpkgs-heldback.legacyPackages.jabref # TODO config
       ];
