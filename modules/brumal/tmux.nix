@@ -8,31 +8,27 @@
       ...
     }:
     let
-      inherit (library) mkOption types mapAttrsToList;
-      inherit (utilities) writeTextFile buildEnv;
+      inherit (library)
+        mkOption
+        types
+        mapAttrsToList
+        nameValuePair
+        mapAttrs'
+        ;
       cfg = config.brumal.tmux;
       env = config.brumal.env;
       opts = {
         conf = mkOption { type = types.lines; };
         tmuxinator = mkOption { type = types.attrsOf types.lines; };
       };
-      tmuxRcP = writeTextFile {
-        name = "tmux-conf";
-        text = cfg.conf;
-        destination = "${env.HOME}/.tmux.conf";
-      };
       makeTmuxinatorProfile =
-        name: value:
-        writeTextFile {
-          name = "${name}.tmuxinator";
-          text = value;
-          destination = "${env.HOME}/.tmuxinator/${name}.yml";
+        profile: text:
+        nameValuePair "${profile}.tmuxinator" {
+          inherit text;
+          target = ".tmuxinator/${profile}.yml";
         };
       # TODO Nixify yaml or do away with tmuxinator entirely
-      tmuxinatorRcP = buildEnv {
-        name = "tmuxinators";
-        paths = mapAttrsToList makeTmuxinatorProfile cfg.tmuxinator;
-      };
+      tmuxinatorProfiles = mapAttrs' makeTmuxinatorProfile cfg.tmuxinator;
     in
     {
       options.brumal.tmux = opts;
@@ -40,9 +36,11 @@
         environment.systemPackages = [ pkgs.tmux ];
         brumal.profile.packages = [
           pkgs.tmuxinator
-          tmuxinatorRcP
-          tmuxRcP
         ];
+        brumal.files.home = {
+          ".tmux.conf".text = cfg.conf;
+        }
+        // tmuxinatorProfiles;
       };
     };
 }

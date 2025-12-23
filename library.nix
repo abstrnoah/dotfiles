@@ -13,6 +13,7 @@ let
       mapAttrs'
       nameValuePair
       mapAttrsToList
+      filter
       filterAttrs
       nixosSystem
       getName
@@ -23,6 +24,8 @@ let
       isString
       genAttrs
       readFile
+      replaceStrings
+      mkDerivedConfig
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs

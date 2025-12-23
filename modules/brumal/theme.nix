@@ -14,10 +14,6 @@
         genAttrs
         ;
 
-      inherit (utilities)
-        writeTextFile
-        ;
-
       cfg = config.brumal.colourscheme;
 
       opts = {

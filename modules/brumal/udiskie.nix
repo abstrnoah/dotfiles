@@ -13,16 +13,7 @@
         types
         attrsToYAML
         ;
-      inherit (utilities)
-        writeTextFile
-        ;
       cfg = config.brumal.udiskie;
-      env = config.brumal.env;
-      rc = writeTextFile {
-        name = "config.yml";
-        destination = "${env.XDG_CONFIG_HOME}/udiskie/config.yml";
-        text = attrsToYAML cfg.config;
-      };
     in
     {
       options.brumal.udiskie.config = mkOption {
@@ -31,7 +22,7 @@
       };
       config.brumal.profile.packages = [
         pkgs.udiskie
-        rc
       ];
+      config.brumal.files.xdgConfig."udiskie/config.yml".text = attrsToYAML cfg.config;
     };
 }

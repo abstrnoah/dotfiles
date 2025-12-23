@@ -15,33 +15,24 @@
         concatStringsSep
         ;
 
-      inherit (utilities)
-        writeTextFile
-        ;
-
       cfg = config.brumal.xresources;
       env = config.brumal.env;
+      out = config.brumal.files.home.".Xresources".source;
 
       opts = mkOption {
         type = types.attrsOf types.str;
         default = { };
       };
-
-      xresourcesP = writeTextFile {
-        name = "Xresources";
-        destination = "${env.HOME}/.Xresources";
-        text =
-          concatStringsSep "\n" (mapAttrsToList (resource: value: ''${resource}: ${value}'') cfg) + "\n";
-      };
     in
     {
       options.brumal.xresources = opts;
-      config.brumal.profile.packages = [ xresourcesP ];
       config.brumal.profile.postSwitch = [
         ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge ${xresourcesP}/${env.HOME}/.Xresources \
+          ${pkgs.xorg.xrdb}/bin/xrdb -merge ${out} \
           || echo "Warning: xrdb cannot connect"
         ''
       ];
+      config.brumal.files.home.".Xresources".text =
+        concatStringsSep "\n" (mapAttrsToList (resource: value: ''${resource}: ${value}'') cfg) + "\n";
     };
 }

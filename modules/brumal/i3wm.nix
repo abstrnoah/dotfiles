@@ -20,9 +20,6 @@
         mkIf
         mkDefault
         ;
-      inherit (utilities)
-        writeTextFile
-        ;
 
       cfg = config.brumal.i3wm;
       k = cfg.keys;
@@ -148,15 +145,6 @@
         body = mkOption { type = types.submodule i3wmBodyModule; };
       };
 
-      i3wmRcP = writeTextFile {
-        name = "i3wm-rc";
-        destination = "${env.XDG_CONFIG_HOME}/i3/config";
-        text = ''
-          # i3 config file (v4)
-          ${cfg.body.text}
-        '';
-      };
-
     in
     {
 
@@ -170,10 +158,14 @@
 
       config.services.xserver.windowManager.i3.enable = true;
 
-      config.brumal.profile = {
-        packages = [ i3wmRcP ];
-        postSwitch = [ ''${i3wmP}/bin/i3-msg reload || echo "Warning: i3 not reloadable"'' ];
-      };
+      config.brumal.profile.postSwitch = [
+        ''${i3wmP}/bin/i3-msg reload || echo "Warning: i3 not reloadable"''
+      ];
+
+      config.brumal.files.xdgConfig."i3/config".text = ''
+        # i3 config file (v4)
+        ${cfg.body.text}
+      '';
 
     };
 }

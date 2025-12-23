@@ -28,15 +28,6 @@
           default = "";
         };
       };
-      writeRc =
-        name: text:
-        utilities.writeTextFile {
-          inherit name text;
-          destination = "${config.brumal.env.HOME}/${name}";
-        };
-      rcP = writeRc ".bashrc" cfg.rc;
-      profileP = writeRc ".bash_profile" cfg.profile;
-      inputrcP = writeRc ".inputrc" cfg.inputrc;
       shell = pkgs.bash;
     in
     {
@@ -44,11 +35,11 @@
       config = {
         users.users.${ownerName}.shell = shell;
         environment.systemPackages = [ shell ];
-        brumal.profile.packages = [
-          rcP
-          profileP
-          inputrcP
-        ];
+        brumal.files.home = {
+          ".bashrc".text = cfg.rc;
+          ".bash_profile".text = cfg.profile;
+          ".inputrc".text = cfg.inputrc;
+        };
       };
     };
 }

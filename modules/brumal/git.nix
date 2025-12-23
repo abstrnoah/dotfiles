@@ -21,17 +21,12 @@
           type = types.attrsOf (types.attrsOf types.anything);
         };
       };
-      configPkg = utilities.writeTextFile {
-        name = ".gitconfig";
-        destination = "${config.brumal.env.HOME}/.gitconfig";
-        text = attrsToGitINI cfg.config;
-      };
     in
     {
       options.brumal.git = opts;
       config = {
         environment.systemPackages = [ pkgs.git ];
-        brumal.profile.packages = [ configPkg ];
+        brumal.files.home.".gitconfig".text = attrsToGitINI cfg.config;
       };
 
       config.brumal.git.config = {

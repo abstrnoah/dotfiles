@@ -52,25 +52,29 @@ rec {
   storeLegacyDotfiles = name: storeSource { source = library.pathAppend ./src name; };
 
   storeSymlink =
-    name: source: destination:
+    name: source: target:
     storeSymlinks {
       inherit name;
-      mapping = [ { inherit source destination; } ];
+      mapping = [ { inherit source target; } ];
     };
 
   storeSymlinks =
-    { name, mapping }:
+    {
+      name,
+      destination ? "/",
+      mapping,
+    }:
     let
       symlinkCommand =
-        { source, destination }:
+        { source, target }:
         ''
-          destination="$out"${library.escapeShellArg destination}
-          mkdir -p "$(dirname "$destination")"
-          ln -s ${library.escapeShellArg source} "$destination"
+          dest="$out/$destination/"${library.escapeShellArg target}
+          mkdir -p "$(dirname "$dest")"
+          ln -s ${library.escapeShellArg source} "$dest"
         '';
       commands = map symlinkCommand mapping;
     in
-    runCommandLocal name { } ''
+    runCommandLocal name { inherit destination; } ''
       ${library.concatStrings commands}
     '';
 
