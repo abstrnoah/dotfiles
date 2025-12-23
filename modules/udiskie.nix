@@ -32,6 +32,7 @@
       };
     in
     {
+      # TODO Run as a systemd service or displayManager.sessionCommands
       brumal.i3wm.body.directives = [ ''exec ${pkgs.udiskie}/bin/udiskie'' ];
       brumal.udiskie.config = {
         program_options = {
