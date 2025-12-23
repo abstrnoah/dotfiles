@@ -41,6 +41,7 @@ _searchengines = {
     "!lov": "https://lov.linkeddata.es/dataset/lov/terms?q={}",
     "!lovv": "https://lov.linkeddata.es/dataset/lov/vocabssms:+16263147355?q={}",
     "!chatgpt": "https://chat.openai.com/?q={}",
+    "!nixopts": "https://search.nixos.org/options?query={}",
 }
 _searchengines["DEFAULT"] = _searchengines["!ddg"]
 c.url.searchengines = _searchengines
