@@ -59,10 +59,11 @@
         switch = writeShellApplication {
           name = profileBaseName + "-switch";
           # TODO make atomic!
+          # TODO emplacetree rm old profile first!!!
           text = ''
             ${preSwitchScript} \
             && nix-env --set "${config.brumal.profile.package}" "$@" \
-            && ${pkgs.emplacetree}/bin/emplacetree ln "${env.NIX_PROFILE}/home/abstrnoah" "${env.HOME}" \
+            && ${pkgs.emplacetree}/bin/emplacetree ln "${env.NIX_PROFILE}/${env.HOME}" "${env.HOME}" \
             && ${postSwitchScript}
           '';
         };
