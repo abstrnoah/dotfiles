@@ -22,8 +22,6 @@
         pkgs.nnn
         pkgs.zathura # TODO config
         pkgs.fd
-        pkgs.discord
-        pkgs.signal-desktop
         pkgs.tectonic
         pkgs.tree
         pkgs.uni
@@ -35,9 +33,6 @@
         pkgs.lsof
         # TODO FIXME Packages held back because they break on current nixpkgs
         inputs'.nixpkgs-heldback.legacyPackages.jabref # TODO config
-      ];
-      brumal.nixpkgs.allowUnfree = [
-        "discord"
       ];
       environment.systemPackages = [
         pkgs.htop
