@@ -45,15 +45,17 @@ top@{ self, config, ... }:
       hardware.cpu.intel.updateMicrocode = library.mkDefault config.hardware.enableRedistributableFirmware;
       hardware.enableRedistributableFirmware = library.mkDefault true;
 
-      # Prevent systemd from blocking for 10 seconds after resume (probably a hardware bug).
+      # HACK Prevent systemd from blocking for 10 seconds after resume (probably a hardware bug).
       services.fwupd.enable = true;
       systemd.globalEnvironment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
       systemd.managerEnvironment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
-      # HACK
       systemd.services."systemd-suspend" = {
         serviceConfig.Type = "simple";
       };
       systemd.services."systemd-suspend-then-hibernate" = {
+        serviceConfig.Type = "simple";
+      };
+      systemd.services."systemd-hibernate" = {
         serviceConfig.Type = "simple";
       };
 
