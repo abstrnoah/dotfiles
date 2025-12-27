@@ -38,4 +38,15 @@
         };
       };
     };
+
+  flake.machineModules.porcupine = {
+    services.tlp.settings = {
+      # Internal battery
+      START_CHARGE_THRESH_BAT0 = 45;
+      STOP_CHARGE_THRESH_BAT0 = 55;
+      # Removable battery
+      START_CHARGE_THRESH_BAT1 = 70;
+      STOP_CHARGE_THRESH_BAT1 = 80;
+    };
+  };
 }
