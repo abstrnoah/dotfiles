@@ -30,7 +30,7 @@
             At runtime, the local config is sourced, making its variables available.
             These should be fast and idempotent.
           '';
-          type = types.listOf types.str;
+          type = types.listOf types.lines;
           default = [ ];
         };
         path = mkOption {

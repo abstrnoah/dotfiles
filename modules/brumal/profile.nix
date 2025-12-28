@@ -39,11 +39,11 @@
         package = mkOption { type = types.package; };
         switch = mkOption { type = types.package; };
         preSwitch = mkOption {
-          type = types.listOf types.str;
+          type = types.listOf types.lines;
           default = [ ];
         };
         postSwitch = mkOption {
-          type = types.listOf types.str;
+          type = types.listOf types.lines;
           default = [ ];
         };
       };
