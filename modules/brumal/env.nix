@@ -1,3 +1,4 @@
+# TODO Reconcile with `environment.variables`.
 {
   flake.nixosModules.brumal =
     { library, ... }:
