@@ -21,30 +21,30 @@
       colourType = types.strMatching "#[[:xdigit:]]{6}";
 
       colourNumberName = {
-          "0" = "black";
-          "8" = "black";
-          "1" = "red";
-          "9" = "red";
-          "2" = "green";
-          "10" = "green";
-          "3" = "yellow";
-          "11" = "yellow";
-          "4" = "blue";
-          "12" = "blue";
-          "5" = "magenta";
-          "13" = "magenta";
-          "6" = "cyan";
-          "14" = "cyan";
-          "7" = "white";
-          "15" = "white";
+        "0" = "black";
+        "8" = "black";
+        "1" = "red";
+        "9" = "red";
+        "2" = "green";
+        "10" = "green";
+        "3" = "yellow";
+        "11" = "yellow";
+        "4" = "blue";
+        "12" = "blue";
+        "5" = "magenta";
+        "13" = "magenta";
+        "6" = "cyan";
+        "14" = "cyan";
+        "7" = "white";
+        "15" = "white";
       };
 
       opts = {
-        special = genAttrs [
-          "background"
-          "foreground"
-          "cursor"
-        ] (name: mkOption { type = colourType; });
+        special.background = mkOption { type = colourType; };
+        special.foreground = mkOption { type = colourType; };
+        special.cursor = mkOption { type = colourType; };
+        special.selection.background = mkOption { type = colourType; };
+        special.selection.foreground = mkOption { type = colourType; };
         table = genAttrs (attrNames colourNumberName) (name: mkOption { type = colourType; });
       };
 

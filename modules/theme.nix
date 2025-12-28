@@ -19,25 +19,28 @@
     {
 
       brumal.colourscheme = {
-        special.foreground = "#93a1a1";
-        special.background = "#002b36";
-        special.cursor = "#93a1a1";
-        table."0" = "#002b36";
-        table."8" = "#657b83";
-        table."1" = "#dc322f";
-        table."9" = "#dc322f";
-        table."2" = "#859900";
-        table."10" = "#859900";
-        table."3" = "#b58900";
-        table."11" = "#b58900";
-        table."4" = "#268bd2";
-        table."12" = "#268bd2";
-        table."5" = "#6c71c4";
-        table."13" = "#6c71c4";
-        table."6" = "#2aa198";
-        table."14" = "#2aa198";
-        table."7" = "#93a1a1";
-        table."15" = "#93a1a1";
+        # From Kitty's "Solarized Dark - Patched" theme
+        special.background = "#001e26";
+        special.foreground = "#708183";
+        special.selection.background = "#002731";
+        special.selection.foreground = "#001e26";
+        special.cursor = c.table."12";
+        table."0" = "#002731";
+        table."8" = "#465a61";
+        table."1" = "#d01b24";
+        table."9" = "#bd3612";
+        table."2" = "#728905";
+        table."10" = "#465a61";
+        table."3" = "#a57705";
+        table."11" = "#52676f";
+        table."4" = "#2075c7";
+        table."12" = "#708183";
+        table."5" = "#c61b6e";
+        table."13" = "#5856b9";
+        table."6" = "#259185";
+        table."14" = "#81908f";
+        table."7" = "#e9e2cb";
+        table."15" = "#fcf4dc";
       };
       brumal.rofi.theme = "solarized";
 
