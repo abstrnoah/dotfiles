@@ -18,6 +18,8 @@
 
       cfg = config.brumal.colourscheme;
 
+      colourType = types.strMatching "#[[:xdigit:]]{6}";
+
       colourNumberName = {
           "0" = "black";
           "8" = "black";
@@ -42,15 +44,15 @@
           "background"
           "foreground"
           "cursor"
-        ] (name: mkOption { type = types.strMatching "[[:xdigit:]]{6}"; });
-        table = genAttrs (attrNames colourNumberName) (name: mkOption { type = types.strMatching "[[:xdigit:]]{6}"; });
+        ] (name: mkOption { type = colourType; });
+        table = genAttrs (attrNames colourNumberName) (name: mkOption { type = colourType; });
       };
 
     in
     {
       options.brumal.colourscheme = opts;
 
-      config.brumal.xresources = mapAttrs (_: v: "#${v}") {
+      config.brumal.xresources = {
         "*.background" = cfg.special.background;
         "*.foreground" = cfg.special.foreground;
         "*.cursorColor" = cfg.special.cursor;

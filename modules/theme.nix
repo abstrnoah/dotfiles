@@ -19,25 +19,25 @@
     {
 
       brumal.colourscheme = {
-        special.foreground = "93a1a1";
-        special.background = "002b36";
-        special.cursor = "93a1a1";
-        table."0" = "002b36";
-        table."8" = "657b83";
-        table."1" = "dc322f";
-        table."9" = "dc322f";
-        table."2" = "859900";
-        table."10" = "859900";
-        table."3" = "b58900";
-        table."11" = "b58900";
-        table."4" = "268bd2";
-        table."12" = "268bd2";
-        table."5" = "6c71c4";
-        table."13" = "6c71c4";
-        table."6" = "2aa198";
-        table."14" = "2aa198";
-        table."7" = "93a1a1";
-        table."15" = "93a1a1";
+        special.foreground = "#93a1a1";
+        special.background = "#002b36";
+        special.cursor = "#93a1a1";
+        table."0" = "#002b36";
+        table."8" = "#657b83";
+        table."1" = "#dc322f";
+        table."9" = "#dc322f";
+        table."2" = "#859900";
+        table."10" = "#859900";
+        table."3" = "#b58900";
+        table."11" = "#b58900";
+        table."4" = "#268bd2";
+        table."12" = "#268bd2";
+        table."5" = "#6c71c4";
+        table."13" = "#6c71c4";
+        table."6" = "#2aa198";
+        table."14" = "#2aa198";
+        table."7" = "#93a1a1";
+        table."15" = "#93a1a1";
       };
       brumal.rofi.theme = "solarized";
 
@@ -68,9 +68,9 @@
           ''gaps inner ${dims.base_gap_inner}''
         ];
 
-      brumal.dunst.config.global.frame_color = ''"#${c.table."2"}"'';
-      brumal.dunst.config.global.background = ''"#${c.special.background}"'';
-      brumal.dunst.config.global.foreground = ''"#${c.special.foreground}"'';
+      brumal.dunst.config.global.frame_color = ''"${c.table."2"}"'';
+      brumal.dunst.config.global.background = ''"${c.special.background}"'';
+      brumal.dunst.config.global.foreground = ''"${c.special.foreground}"'';
       brumal.dunst.config.global.font = "${fontName} ${fontSizeSmall}";
       brumal.dunst.config.global.corner_radius = 3;
 
