@@ -31,6 +31,7 @@
         pkgs.numbat
         pkgs.jq
         pkgs.lsof
+        pkgs.hydra-check
         # TODO FIXME Packages held back because they break on current nixpkgs
         inputs'.nixpkgs-heldback.legacyPackages.jabref # TODO config
       ];
