@@ -22,6 +22,7 @@
         qb-t
         qbrc
         pkgs.firefox
+        pkgs.ungoogled-chromium
       ];
       nixpkgs.overlays = [
         (final: prev: {
