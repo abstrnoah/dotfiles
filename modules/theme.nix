@@ -14,30 +14,30 @@
       fontSizeSmall = builtins.toString 10;
       fontSizeTiny = builtins.toString 9;
 
-      c = config.brumal.colourscheme.colours;
+      c = config.brumal.colourscheme;
     in
     {
 
-      brumal.colourscheme.colours = {
-        foreground = "93a1a1";
-        background = "002b36";
-        cursor = "93a1a1";
-        black0 = "002b36";
-        black8 = "657b83";
-        red1 = "dc322f";
-        red9 = "dc322f";
-        green2 = "859900";
-        green10 = "859900";
-        yellow3 = "b58900";
-        yellow11 = "b58900";
-        blue4 = "268bd2";
-        blue12 = "268bd2";
-        magenta5 = "6c71c4";
-        magenta13 = "6c71c4";
-        cyan6 = "2aa198";
-        cyan14 = "2aa198";
-        white7 = "93a1a1";
-        white15 = "93a1a1";
+      brumal.colourscheme = {
+        special.foreground = "93a1a1";
+        special.background = "002b36";
+        special.cursor = "93a1a1";
+        table."0" = "002b36";
+        table."8" = "657b83";
+        table."1" = "dc322f";
+        table."9" = "dc322f";
+        table."2" = "859900";
+        table."10" = "859900";
+        table."3" = "b58900";
+        table."11" = "b58900";
+        table."4" = "268bd2";
+        table."12" = "268bd2";
+        table."5" = "6c71c4";
+        table."13" = "6c71c4";
+        table."6" = "2aa198";
+        table."14" = "2aa198";
+        table."7" = "93a1a1";
+        table."15" = "93a1a1";
       };
       brumal.rofi.theme = "solarized";
 
@@ -49,10 +49,6 @@
       ];
       fonts.fontconfig.defaultFonts.monospace = [ "${fontName}" ];
       brumal.i3wm.font = "pango:${fontName} ${fontSizeTiny}";
-      brumal.xresources."URxvt.font" = "xft:${fontName}:size=${fontSize}";
-      brumal.xresources."URxvt.boldFont" = "xft:${fontName}:style=Bold:size=${fontSize}";
-      brumal.xresources."URxvt.italicFont" = "xft:${fontName}:style=Italic:size=${fontSize}";
-      brumal.xresources."URxvt.boldItalicFont" = "xft:${fontName}:style=Bold Italic:size=${fontSize}";
       brumal.rofi.config.configuration.font = ''"${fontName} ${fontSize}"'';
 
       brumal.i3wm.dimensions = {
@@ -72,9 +68,9 @@
           ''gaps inner ${dims.base_gap_inner}''
         ];
 
-      brumal.dunst.config.global.frame_color = ''"#${c.green2}"'';
-      brumal.dunst.config.global.background = ''"#${c.background}"'';
-      brumal.dunst.config.global.foreground = ''"#${c.foreground}"'';
+      brumal.dunst.config.global.frame_color = ''"#${c.table."2"}"'';
+      brumal.dunst.config.global.background = ''"#${c.special.background}"'';
+      brumal.dunst.config.global.foreground = ''"#${c.special.foreground}"'';
       brumal.dunst.config.global.font = "${fontName} ${fontSizeSmall}";
       brumal.dunst.config.global.corner_radius = 3;
 

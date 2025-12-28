@@ -11,58 +11,65 @@
         mkOption
         types
         mapAttrs
+        mapAttrs'
         genAttrs
+        attrNames
         ;
 
       cfg = config.brumal.colourscheme;
 
+      colourNumberName = {
+          "0" = "black";
+          "8" = "black";
+          "1" = "red";
+          "9" = "red";
+          "2" = "green";
+          "10" = "green";
+          "3" = "yellow";
+          "11" = "yellow";
+          "4" = "blue";
+          "12" = "blue";
+          "5" = "magenta";
+          "13" = "magenta";
+          "6" = "cyan";
+          "14" = "cyan";
+          "7" = "white";
+          "15" = "white";
+      };
+
       opts = {
-        colours = genAttrs [
+        special = genAttrs [
           "background"
           "foreground"
           "cursor"
-          "black0"
-          "black8"
-          "red1"
-          "red9"
-          "green2"
-          "green10"
-          "yellow3"
-          "yellow11"
-          "blue4"
-          "blue12"
-          "magenta5"
-          "magenta13"
-          "cyan6"
-          "cyan14"
-          "white7"
-          "white15"
         ] (name: mkOption { type = types.strMatching "[[:xdigit:]]{6}"; });
+        table = genAttrs (attrNames colourNumberName) (name: mkOption { type = types.strMatching "[[:xdigit:]]{6}"; });
       };
 
     in
     {
       options.brumal.colourscheme = opts;
+
       config.brumal.xresources = mapAttrs (_: v: "#${v}") {
-        "*.background" = cfg.colours.background;
-        "*.foreground" = cfg.colours.foreground;
-        "*.cursorColor" = cfg.colours.cursor;
-        "*.color0" = cfg.colours.black0;
-        "*.color8" = cfg.colours.black8;
-        "*.color1" = cfg.colours.red1;
-        "*.color9" = cfg.colours.red9;
-        "*.color2" = cfg.colours.green2;
-        "*.color10" = cfg.colours.green10;
-        "*.color3" = cfg.colours.yellow3;
-        "*.color11" = cfg.colours.yellow11;
-        "*.color4" = cfg.colours.blue4;
-        "*.color12" = cfg.colours.blue12;
-        "*.color5" = cfg.colours.magenta5;
-        "*.color13" = cfg.colours.magenta13;
-        "*.color6" = cfg.colours.cyan6;
-        "*.color14" = cfg.colours.cyan14;
-        "*.color7" = cfg.colours.white7;
-        "*.color15" = cfg.colours.white15;
+        "*.background" = cfg.special.background;
+        "*.foreground" = cfg.special.foreground;
+        "*.cursorColor" = cfg.special.cursor;
+        "*.color0" = cfg.table."0";
+        "*.color8" = cfg.table."8";
+        "*.color1" = cfg.table."1";
+        "*.color9" = cfg.table."9";
+        "*.color2" = cfg.table."2";
+        "*.color10" = cfg.table."10";
+        "*.color3" = cfg.table."3";
+        "*.color11" = cfg.table."11";
+        "*.color4" = cfg.table."4";
+        "*.color12" = cfg.table."12";
+        "*.color5" = cfg.table."5";
+        "*.color13" = cfg.table."13";
+        "*.color6" = cfg.table."6";
+        "*.color14" = cfg.table."14";
+        "*.color7" = cfg.table."7";
+        "*.color15" = cfg.table."15";
       };
     };
 }
