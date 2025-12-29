@@ -16,11 +16,11 @@
       cfg = config.brumal.bash;
       opts = {
         rc = mkOption {
-          type = types.str;
+          type = types.lines;
           default = "";
         };
         profile = mkOption {
-          type = types.str;
+          type = types.lines;
           default = "";
         };
         inputrc = mkOption {

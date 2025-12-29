@@ -48,6 +48,7 @@
               default = [ ];
             };
             leader = mkOption { type = types.str; };
+            # TODO handle --release
             bindsym = mkOption {
               type = types.attrsOf types.str;
               default = { };

@@ -3,6 +3,7 @@
     { pkgs, config, ... }:
     let
       cfg = config.brumal.clipboard;
+      k = config.brumal.i3wm.keys;
     in
     {
       brumal.clipboard.package = pkgs.xclip;
@@ -15,5 +16,19 @@
         bind -T copy-mode-vi y send-keys -X copy-pipe "${cfg.yank}"
         bind C-p paste-buffer -p
       '';
+
+      brumal.bash.profile = ''
+        Y() {
+          ${cfg.yank}
+        }
+
+        P() {
+          ${cfg.paste}
+        }
+      '';
+
+      brumal.i3wm.body.directives = [
+        ''bindsym --release ${k.mod}+c exec "${pkgs.imagemagick}/bin/import png:- | ${cfg.yank} -t image/png"''
+      ];
     };
 }
