@@ -13,7 +13,10 @@
         mapAttrs
         mapAttrs'
         genAttrs
+        getAttr
         attrNames
+        attrValues
+        nameValuePair
         hexColourType
         ;
 
@@ -21,21 +24,21 @@
 
       colourNumberName = {
         "0" = "black";
-        "8" = "black";
         "1" = "red";
-        "9" = "red";
         "2" = "green";
-        "10" = "green";
         "3" = "yellow";
-        "11" = "yellow";
         "4" = "blue";
-        "12" = "blue";
         "5" = "magenta";
-        "13" = "magenta";
         "6" = "cyan";
-        "14" = "cyan";
         "7" = "white";
-        "15" = "white";
+        "8" = "bright-black";
+        "9" = "bright-red";
+        "10" = "bright-green";
+        "11" = "bright-yellow";
+        "12" = "bright-blue";
+        "13" = "bright-magenta";
+        "14" = "bright-cyan";
+        "15" = "bright-white";
       };
 
       opts = {
@@ -45,11 +48,16 @@
         special.selection.background = mkOption { type = hexColourType; };
         special.selection.foreground = mkOption { type = hexColourType; };
         table = genAttrs (attrNames colourNumberName) (name: mkOption { type = hexColourType; });
-      };
+      }
+      // genAttrs (attrValues colourNumberName) (name: mkOption { type = hexColourType; });
 
     in
     {
       options.brumal.colourscheme = opts;
+
+      config.brumal.colourscheme = mapAttrs' (
+        number: value: nameValuePair (getAttr number colourNumberName) value
+      ) cfg.table;
 
       config.brumal.xresources = {
         "*.background" = cfg.special.background;

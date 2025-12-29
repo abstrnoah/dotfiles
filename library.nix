@@ -29,6 +29,7 @@ let
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs
+      getAttr
       attrNames
       attrValues
       ;

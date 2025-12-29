@@ -11,6 +11,8 @@
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.agenix.inputs.darwin.follows = "";
 
+  inputs.wallpapers.url = "github:abstrnoah/wallpapers";
+
   outputs =
     inputs@{
       flake-parts,

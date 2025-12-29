@@ -1,5 +1,7 @@
+{ moduleWithSystem, ... }:
 {
-  flake.nixosModules.base =
+  flake.nixosModules.base = moduleWithSystem (
+    perSystem@{ inputs' }:
     {
       pkgs,
       library,
@@ -9,6 +11,9 @@
     let
       inherit (library) mapAttrs;
 
+      # TODO Do it better
+      wallpaper = inputs'.wallpapers.packages.pixel-city-at-night-png;
+
       fontName = "DejaVu Sans Mono";
       fontSize = builtins.toString 11;
       fontSizeSmall = builtins.toString 10;
@@ -17,6 +22,9 @@
       c = config.brumal.colourscheme;
     in
     {
+      brumal.i3wm.body.exec_always = [
+        "--no-startup-id ${pkgs.feh}/bin/feh --bg-fill ${wallpaper}"
+      ];
 
       brumal.colourscheme = {
         # From Kitty's "Solarized Dark - Patched" theme
@@ -66,17 +74,38 @@
           dims = library.mapAttrs (_: builtins.toString) config.brumal.i3wm.dimensions;
         in
         [
-          ''border_radius 2''
+          ''border_radius 8''
           ''default_border pixel ${dims.default_border}''
           ''gaps inner ${dims.base_gap_inner}''
+          #class titlebarborder bg text indicator child_border
+          "client.focused           ${c.black}  ${c.black}  ${c.bright-white}  ${c.green}  ${c.bright-yellow}"
+          "client.focused_inactive  ${c.black}  ${c.black}  ${c.bright-green}  ${c.green}  ${c.black}"
+          "client.unfocused         ${c.black}  ${c.black}  ${c.bright-green}  ${c.green}  ${c.black}"
         ];
+      brumal.i3wm.body.blocks.bar.body.blocks.colors.body.directives = [
+        "background ${c.black}"
+        "statusline ${c.bright-blue}"
+        "separator  ${c.bright-black}"
+        #class border bg text
+        "focused_workspace  ${c.bright-cyan}    ${c.black}  ${c.bright-white}"
+        "active_workspace   ${c.bright-black}   ${c.black}  ${c.white}"
+        "inactive_workspace ${c.bright-black}   ${c.black}  ${c.bright-blue}"
+        "urgent_workspace   ${c.bright-red}     ${c.black}  ${c.bright-red}"
+        "binding_mode       ${c.green}          ${c.black}  ${c.yellow}"
+      ];
+      brumal.i3status.blocks.general."" = {
+        color_good = "${c.green}";
+        color_degraded = "${c.yellow}";
+        color_bad = "${c.red}";
+      };
 
-      brumal.dunst.config.global.frame_color = ''"${c.table."2"}"'';
+      brumal.dunst.config.global.frame_color = ''"${c.green}"'';
       brumal.dunst.config.global.background = ''"${c.special.background}"'';
       brumal.dunst.config.global.foreground = ''"${c.special.foreground}"'';
       brumal.dunst.config.global.font = "${fontName} ${fontSizeSmall}";
       brumal.dunst.config.global.corner_radius = 3;
 
-    };
+    }
+  );
 
 }
