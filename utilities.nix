@@ -18,6 +18,8 @@ rec {
     writeShellApplication
     writeShellScript
     concatScript
+    mkShell
+    mkShellNoCC
     ;
 
   mergePackages =
