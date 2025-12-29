@@ -7,11 +7,10 @@
         types
         getName
         ;
-      opts.allowUnfree = mkOption { type = types.listOf types.str; };
       cfg = config.brumal.nixpkgs;
     in
     {
-      options.brumal.nixpkgs = opts;
+      options.brumal.nixpkgs.allowUnfree = mkOption { type = types.listOf types.str; };
       config.nixpkgs.config = {
         allowUnfreePredicate = pkg: builtins.elem (getName pkg) cfg.allowUnfree;
       };
