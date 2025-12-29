@@ -64,7 +64,10 @@
             windows:
               - htop: htop
               - temp: watch -n 300 cat /sys/class/thermal/thermal_zone*/temp
-              - log: journalctl -f
+              - log:
+                  panes:
+                    - journalctl -f
+                    - journalctl --user -f
           '';
 
         };
@@ -143,6 +146,7 @@
           bind T run-shell "gomux"
           bind N run-shell "gomux ~/store/notes"
           bind F run-shell "gomux ~/store/private-forest forest"
+          bind M run-shell "tmuxinator monitor"
 
           # Reload config.
           bind R source-file ~/.tmux.conf
