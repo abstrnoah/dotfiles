@@ -4,6 +4,7 @@
       library,
       config,
       utilities,
+      pkgs,
       ...
     }:
     let
@@ -20,7 +21,8 @@
         hexColourType
         ;
 
-      cfg = config.brumal.colourscheme;
+      c = config.brumal.colourscheme;
+      w = config.brumal.wallpaper;
 
       colourNumberName = {
         "0" = "black";
@@ -41,7 +43,9 @@
         "15" = "bright-white";
       };
 
-      opts = {
+    in
+    {
+      options.brumal.colourscheme = {
         special.background = mkOption { type = hexColourType; };
         special.foreground = mkOption { type = hexColourType; };
         special.cursor = mkOption { type = hexColourType; };
@@ -51,34 +55,42 @@
       }
       // genAttrs (attrValues colourNumberName) (name: mkOption { type = hexColourType; });
 
-    in
-    {
-      options.brumal.colourscheme = opts;
+      config.brumal.xresources = {
+        "*.background" = c.special.background;
+        "*.foreground" = c.special.foreground;
+        "*.cursorColor" = c.special.cursor;
+        "*.color0" = c.table."0";
+        "*.color8" = c.table."8";
+        "*.color1" = c.table."1";
+        "*.color9" = c.table."9";
+        "*.color2" = c.table."2";
+        "*.color10" = c.table."10";
+        "*.color3" = c.table."3";
+        "*.color11" = c.table."11";
+        "*.color4" = c.table."4";
+        "*.color12" = c.table."12";
+        "*.color5" = c.table."5";
+        "*.color13" = c.table."13";
+        "*.color6" = c.table."6";
+        "*.color14" = c.table."14";
+        "*.color7" = c.table."7";
+        "*.color15" = c.table."15";
+      };
 
       config.brumal.colourscheme = mapAttrs' (
         number: value: nameValuePair (getAttr number colourNumberName) value
-      ) cfg.table;
+      ) c.table;
 
-      config.brumal.xresources = {
-        "*.background" = cfg.special.background;
-        "*.foreground" = cfg.special.foreground;
-        "*.cursorColor" = cfg.special.cursor;
-        "*.color0" = cfg.table."0";
-        "*.color8" = cfg.table."8";
-        "*.color1" = cfg.table."1";
-        "*.color9" = cfg.table."9";
-        "*.color2" = cfg.table."2";
-        "*.color10" = cfg.table."10";
-        "*.color3" = cfg.table."3";
-        "*.color11" = cfg.table."11";
-        "*.color4" = cfg.table."4";
-        "*.color12" = cfg.table."12";
-        "*.color5" = cfg.table."5";
-        "*.color13" = cfg.table."13";
-        "*.color6" = cfg.table."6";
-        "*.color14" = cfg.table."14";
-        "*.color7" = cfg.table."7";
-        "*.color15" = cfg.table."15";
+      options.brumal.wallpaper = {
+        home = mkOption {type = types.path;};
+        lock = mkOption {type = types.path;};
       };
+
+      config.brumal.i3wm.body.exec_always = [
+        "--no-startup-id ${pkgs.feh}/bin/feh --bg-fill ${w.home}"
+      ];
+
+      config.services.xserver.displayManager.lightdm.background = w.lock;
+
     };
 }

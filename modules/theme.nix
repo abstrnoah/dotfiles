@@ -11,9 +11,6 @@
     let
       inherit (library) mapAttrs;
 
-      # TODO Do it better
-      wallpaper = inputs'.wallpapers.packages.pixel-city-at-night-png;
-
       fontName = "DejaVu Sans Mono";
       fontSize = builtins.toString 11;
       fontSizeSmall = builtins.toString 10;
@@ -22,9 +19,9 @@
       c = config.brumal.colourscheme;
     in
     {
-      brumal.i3wm.body.exec_always = [
-        "--no-startup-id ${pkgs.feh}/bin/feh --bg-fill ${wallpaper}"
-      ];
+      # TODO Do it better
+      brumal.wallpaper.home = inputs'.wallpapers.packages.pixel-city-at-night-png;
+      brumal.wallpaper.lock = inputs'.wallpapers.packages.solarized-stars-png;
 
       brumal.colourscheme = {
         # From Kitty's "Solarized Dark - Patched" theme

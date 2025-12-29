@@ -8,6 +8,8 @@
     in
     {
       programs.xss-lock.enable = true;
+      programs.xss-lock.lockerCommand = ''${pkgs.i3lock}/bin/i3lock --tiling --image ${config.brumal.wallpaper.lock}'';
+
       services.logind.settings.Login.HandleLidSwitch = sleep-operation;
       services.logind.settings.Login.HandlePowerKey = sleep-operation;
       services.logind.settings.Login.HandleSuspendKey = sleep-operation;
