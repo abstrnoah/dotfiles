@@ -24,6 +24,7 @@
         pkgs.firefox
         pkgs.ungoogled-chromium
       ];
+      # Overlay within nixos because contains my rc.
       nixpkgs.overlays = [
         (final: prev: {
           qutebrowser-t = writeShellApplication {

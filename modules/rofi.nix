@@ -1,15 +1,16 @@
 {
+  brumal.nixpkgs.overlays = [
+    (final: prev: {
+      dmenu = final.rofi.override { symlink-dmenu = true; };
+    })
+  ];
+
   flake.nixosModules.gui =
     {
       pkgs,
       ...
     }:
     {
-      nixpkgs.overlays = [
-        (final: prev: {
-          dmenu = final.rofi.override { symlink-dmenu = true; };
-        })
-      ];
       brumal.profile.packages = [ pkgs.rofi ];
       brumal.rofi.config = {
         configuration = {

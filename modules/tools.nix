@@ -1,17 +1,21 @@
 {
+  inputs,
   moduleWithSystem,
   ...
 }:
 {
+  perSystem =
+    { inputs', ... }:
+    {
+      overlayAttrs = {
+        emplacetree = inputs'.emplacetree.packages.emplacetree;
+      };
+    };
+
   flake.nixosModules.base = moduleWithSystem (
     perSystem@{ inputs' }:
     { pkgs, ... }:
     {
-      nixpkgs.overlays = [
-        (final: prev: {
-          emplacetree = inputs'.emplacetree.packages.emplacetree;
-        })
-      ];
       brumal.profile.packages = [
         pkgs.emplacetree
         pkgs.bat

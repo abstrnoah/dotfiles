@@ -1,4 +1,9 @@
-{ library, config, ... }:
+{
+  inputs,
+  library,
+  config,
+  ...
+}:
 let
   inherit (library)
     evalBrumalModule
@@ -12,9 +17,9 @@ let
     let
       e = evalBrumalModule {
         modules = [
-          module
-          config.flake.nixosModules.base
           config.flake.nixosModules.brumal
+          config.flake.nixosModules.base
+          module
         ];
       };
     in

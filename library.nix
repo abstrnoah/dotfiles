@@ -27,6 +27,10 @@ let
       readFile
       replaceStrings
       mkDerivedConfig
+      isFunction
+      mergeOneOption
+      mkOptionType
+      mkForce
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs
@@ -68,6 +72,14 @@ let
 
     hexColourType = types.strMatching "#[[:xdigit:]]{6}";
     nameType = types.strMatching "[a-zA-Z_-][0-9a-zA-Z_-]*";
+
+    # From nixpkgs/nixos/modules/misc/nixpkgs.nix
+    overlayType = mkOptionType {
+      name = "nixpkgs-overlay";
+      description = "nixpkgs overlay";
+      check = isFunction;
+      merge = mergeOneOption;
+    };
 
   };
 in

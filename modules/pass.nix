@@ -1,4 +1,11 @@
 {
+  brumal.nixpkgs.overlays = [
+    (final: prev: {
+      pass = prev.pass.overrideAttrs (
+        final: prev: { patches = prev.patches ++ [ ../src/pass/set-prompt.patch ]; }
+      );
+    })
+  ];
   flake.nixosModules.base =
     {
       pkgs,
@@ -18,12 +25,5 @@
     in
     {
       brumal.i3wm.body.bindsym."${k.alt}+p" = "exec ${pkgs.pass}/bin/passmenu";
-      nixpkgs.overlays = [
-        (final: prev: {
-          pass = prev.pass.overrideAttrs (
-            final: prev: { patches = prev.patches ++ [ ../src/pass/set-prompt.patch ]; }
-          );
-        })
-      ];
     };
 }

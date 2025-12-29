@@ -4,17 +4,19 @@
   ...
 }:
 {
+  perSystem =
+    { inputs', ... }:
+    {
+      overlayAttrs = {
+        agenix = inputs'.agenix.packages.default;
+      };
+    };
   flake.nixosModules.base = moduleWithSystem (
     perSystem@{ inputs' }:
     { pkgs, ... }:
     {
       imports = [ inputs.agenix.nixosModules.default ];
       config = {
-        nixpkgs.overlays = [
-          (final: prev: {
-            agenix = inputs'.agenix.packages.default;
-          })
-        ];
         environment.systemPackages = [
           pkgs.agenix
         ];
