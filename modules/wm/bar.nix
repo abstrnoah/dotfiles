@@ -37,7 +37,7 @@
           };
 
           ipv6."" = {
-            format_up = " %iface: %ip";
+            format_up = "%iface 󰩟 %ip";
             format_down = "";
           };
 
@@ -60,7 +60,7 @@
 
           battery."0" = {
             format = "%status₀ %percentage (%remaining)";
-            format_down = "󱉝";
+            format_down = "󱉝₀";
             format_percentage = "%.00f%s";
             last_full_capacity = "true";
             status_bat = "🔋";
@@ -72,7 +72,7 @@
 
           battery."1" = {
             format = "%status₁ %percentage (%remaining)";
-            format_down = "󱉝";
+            format_down = "󱉝₁";
             format_percentage = "%.00f%s";
             last_full_capacity = "true";
             status_bat = "🔋";
