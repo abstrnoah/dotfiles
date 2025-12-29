@@ -22,41 +22,10 @@
       inherit (utilities)
         writeText
         storeSymlinks
+        filesType
         ;
       cfg = config.brumal.files;
       env = config.brumal.env;
-      filesType = types.attrsOf (
-        types.submodule (
-          {
-            name,
-            config,
-            options,
-            ...
-          }:
-          {
-            options = {
-              target = mkOption {
-                description = "Relative path.";
-                type = types.str;
-              };
-              source = mkOption { type = types.path; };
-              text = mkOption {
-                default = null;
-                type = types.nullOr types.lines;
-              };
-            };
-            config = {
-              target = mkDefault name;
-              source = mkIf (config.text != null) (
-                let
-                  name' = "brumal-file-" + replaceStrings [ "/" ] [ "-" ] name;
-                in
-                mkDerivedConfig options.text (writeText name')
-              );
-            };
-          }
-        )
-      );
       generateFiles =
         name: destination: files:
         if files != { } then

@@ -35,6 +35,7 @@ let
     inherit (nixpkgs-lib.strings)
       concatStrings
       escapeShellArg
+      escapeXML
       ;
     pathAppend = nixpkgs-lib.path.append;
     attrsToINI = nixpkgs-lib.generators.toINI;
@@ -62,6 +63,9 @@ let
         inherit modules;
         specialArgs = { inherit library; };
       };
+
+    hexColourType = types.strMatching "#[[:xdigit:]]{6}";
+    nameType = types.strMatching "[a-zA-Z_-][0-9a-zA-Z_-]*";
 
   };
 in

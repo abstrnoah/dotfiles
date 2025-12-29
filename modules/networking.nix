@@ -11,7 +11,10 @@
       secrets = config.age.secrets;
     in
     {
-      environment.systemPackages = [ pkgs.dig ];
+      environment.systemPackages = [
+        pkgs.dig
+        pkgs.net-tools
+      ];
       users.users.${ownerName}.extraGroups = [ "networkmanager" ];
       networking.useDHCP = library.mkDefault true;
       services.mullvad-vpn.enable = true;

@@ -1,4 +1,14 @@
 { library, nixpkgs }:
+let
+  inherit (library)
+    replaceStrings
+    mkOption
+    types
+    mkDefault
+    mkIf
+    mkDerivedConfig
+    ;
+in
 rec {
   inherit (nixpkgs)
     buildEnv
@@ -77,5 +87,38 @@ rec {
     runCommandLocal name { inherit destination; } ''
       ${library.concatStrings commands}
     '';
+
+  fileType = types.submodule (
+    {
+      name,
+      config,
+      options,
+      ...
+    }:
+    {
+      options = {
+        target = mkOption {
+          description = "Relative path.";
+          type = types.str;
+        };
+        source = mkOption { type = types.path; };
+        text = mkOption {
+          default = null;
+          type = types.nullOr types.lines;
+        };
+      };
+      config = {
+        target = mkDefault name;
+        source = mkIf (config.text != null) (
+          let
+            name' = replaceStrings [ "/" ] [ "-" ] name;
+          in
+          mkDerivedConfig options.text (writeText name')
+        );
+      };
+    }
+  );
+
+  filesType = types.attrsOf fileType;
 
 }

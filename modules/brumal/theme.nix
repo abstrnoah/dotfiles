@@ -14,11 +14,10 @@
         mapAttrs'
         genAttrs
         attrNames
+        hexColourType
         ;
 
       cfg = config.brumal.colourscheme;
-
-      colourType = types.strMatching "#[[:xdigit:]]{6}";
 
       colourNumberName = {
         "0" = "black";
@@ -40,12 +39,12 @@
       };
 
       opts = {
-        special.background = mkOption { type = colourType; };
-        special.foreground = mkOption { type = colourType; };
-        special.cursor = mkOption { type = colourType; };
-        special.selection.background = mkOption { type = colourType; };
-        special.selection.foreground = mkOption { type = colourType; };
-        table = genAttrs (attrNames colourNumberName) (name: mkOption { type = colourType; });
+        special.background = mkOption { type = hexColourType; };
+        special.foreground = mkOption { type = hexColourType; };
+        special.cursor = mkOption { type = hexColourType; };
+        special.selection.background = mkOption { type = hexColourType; };
+        special.selection.foreground = mkOption { type = hexColourType; };
+        table = genAttrs (attrNames colourNumberName) (name: mkOption { type = hexColourType; });
       };
 
     in

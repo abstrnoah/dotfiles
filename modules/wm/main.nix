@@ -53,8 +53,6 @@ top@{ config, ... }:
 
         body.leader = k.mod;
 
-        body.blocks.bar.body.directives = [ ''status_command i3status'' ];
-
       };
 
     };
