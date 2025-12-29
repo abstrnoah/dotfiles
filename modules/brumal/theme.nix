@@ -82,8 +82,8 @@
       ) c.table;
 
       options.brumal.wallpaper = {
-        home = mkOption {type = types.path;};
-        lock = mkOption {type = types.path;};
+        home = mkOption { type = types.path; };
+        lock = mkOption { type = types.path; };
       };
 
       config.brumal.i3wm.body.exec_always = [
