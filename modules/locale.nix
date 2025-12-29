@@ -5,6 +5,7 @@
       i18n.defaultLocale = "en_US.UTF-8";
       time.timeZone = null;
       brumal.local.variables.TIMEZONE.default = "America/New_York";
+      # TODO Turns out geoclue2 has static file feature which may supersede brumal.local.
       brumal.local.variables.LATITUDE.default = "40.44";
       brumal.local.variables.LONGITUDE.default = "-79.94";
       brumal.local.hooks = [
