@@ -13,10 +13,15 @@
           set keymap vi
         '';
         rc = ''
-          alias T='${bin.tmux-go-last.source}'
+          alias T='${bin.gomux.source}'
         '';
       };
       programs.fzf.keybindings = true;
       programs.fzf.fuzzyCompletion = true;
+
+      brumal.files.bin.oops.text = ''
+        echo "$1" >/dev/stderr
+        exit 1
+      '';
     };
 }

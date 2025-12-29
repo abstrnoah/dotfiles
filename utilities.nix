@@ -174,27 +174,31 @@ rec {
             default = { };
             type = types.attrsOf types.str;
           };
+          package = mkOption {
+            default = null;
+            type = types.nullOr types.package;
+          };
         };
-        config = {
-          target = mkDefault name;
-          source = mkIf (config.text != null) (
-            let
-              name' = replaceStrings [ "/" ] [ "-" ] name;
-            in
-            mkDerivedConfig options.text (
-              text:
-              let
-                app = writeShellApplication {
+        config =
+          let
+            name' = replaceStrings [ "/" ] [ "-" ] name;
+          in
+          {
+            target = mkDefault name;
+            package = mkIf (config.text != null) (
+              mkDerivedConfig options.text (
+                text:
+                writeShellApplication {
                   name = name';
                   inherit text;
                   inherit (config) runtimeInputs runtimeEnv;
-                };
-              in
-              # Fucked up but we do this because writeShellApplication hardcodes destination and we want source to always be a file
-              "${app}/bin/${name'}"
-            )
-          );
-        };
+                }
+              )
+            );
+            source = mkIf (config.package != null) (
+              mkDerivedConfig options.package (package: "${package}/bin/${name'}")
+            );
+          };
       }
     );
 

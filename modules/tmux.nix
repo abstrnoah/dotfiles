@@ -1,9 +1,35 @@
 {
   flake.nixosModules.base =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
-      brumal.files.bin.tmux-go-last.text = ''
-        ${pkgs.tmux}/bin/tmux a >&2 2>/dev/null || ${pkgs.tmuxinator}/bin/tmuxinator main
+      brumal.files.bin.gomux.runtimeInputs = [
+        pkgs.coreutils
+        pkgs.tmux
+        config.brumal.files.bin.oops.package
+      ];
+      brumal.files.bin.gomux.text = ''
+        if test "$#" -eq 0; then
+          tmux a >&2 2>/dev/null || $0 "$HOME" home
+          exit
+        fi
+
+        startDirectory="$(readlink -f "$1")"
+        startDirectory="''${startDirectory:-.}"
+        sessionName="''${2:-''$(basename "$startDirectory")}"
+        # Dots confuse tmux
+        sessionName="''${sessionName//./_}"
+
+        if ! tmux has-session -t="$sessionName" 2>/dev/null; then
+          test -d "$startDirectory" \
+            || oops "Directory not found: $startDirectory" || exit
+          tmux new-session -d -s "$sessionName" -c "$startDirectory"
+        fi
+
+        if test -z "$TMUX"; then
+          tmux attach -t "$sessionName"
+        else
+          tmux switch-client -t "$sessionName"
+        fi
       '';
 
       brumal.tmux = {
@@ -101,9 +127,9 @@
           bind P last-window
 
           # Quick sessions.
-          bind T run-shell "tmuxinator main"
+          bind T run-shell "gomux"
           bind N run-shell "gomux ~/store/notes"
-          bind F run-shell "gomux ~/store/private-forest"
+          bind F run-shell "gomux ~/store/private-forest forest"
 
           # Reload config.
           bind R source-file ~/.tmux.conf

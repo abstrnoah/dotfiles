@@ -45,6 +45,7 @@
           null;
       home = generateFiles "home" env.HOME cfg.home;
       xdgConfig = generateFiles "xdg-config" env.XDG_CONFIG_HOME cfg.xdgConfig;
+      # TODO Optimise
       bin = generateFiles "bin" "/bin" cfg.bin;
     in
     {
