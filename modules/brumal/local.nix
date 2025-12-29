@@ -1,3 +1,4 @@
+# TODO Do it better
 {
   flake.nixosModules.brumal =
     {
@@ -27,7 +28,6 @@
         hooks = mkOption {
           description = ''
             Hooks to run when switching local config.
-            At runtime, the local config is sourced, making its variables available.
             These should be fast and idempotent.
           '';
           type = types.listOf types.lines;
@@ -37,6 +37,33 @@
           description = "Path to local env file.";
           type = types.str;
           default = "/persist/local.env";
+        };
+        values = mkOption {
+          type = types.attrsOf types.str;
+        };
+        variables = mkOption {
+          type = types.attrsOf (
+            types.submodule (
+              {
+                name,
+                config,
+                options,
+                ...
+              }:
+              {
+                options = {
+                  default = mkOption { type = types.str; };
+                  shellValue = mkOption { type = types.str; };
+                  name = mkOption { type = types.str; };
+                };
+                config = {
+                  inherit name;
+                  shellValue = ''"$(source ${escapeShellArg cfg.path} && echo "''${${config.name}:-${config.default}}")"'';
+                };
+              }
+            )
+          );
+          default = { };
         };
       };
       switchScript = writeShellApplication {
@@ -48,7 +75,6 @@
           fi
           # TODO
           # shellcheck source=/dev/null
-          source ${cfg.path}
           ${concatStringsSep "\n" cfg.hooks}
         '';
       };
