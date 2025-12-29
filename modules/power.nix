@@ -37,6 +37,9 @@
           "${k.shift}+s" = "exec i3-nagbar -t warning -m 'Reboot?' -b 'Yeah.' 'shutdown -r now'";
           r = "reload";
           "${k.shift}+r" = "restart";
+          l = "exec loginctl lock-session";
+          h = "exec systemctl suspend";
+          "${k.shift}+h" = "exec systemctl ${sleep-operation}";
         };
       };
     };
