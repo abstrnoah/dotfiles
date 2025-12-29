@@ -7,6 +7,7 @@ let
       mkOption
       types
       mkIf
+      mkAfter
       mkMerge
       mkDefault
       mapAttrs

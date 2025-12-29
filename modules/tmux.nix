@@ -2,6 +2,10 @@
   flake.nixosModules.base =
     { pkgs, ... }:
     {
+      brumal.files.bin.tmux-go-last.text = ''
+        ${pkgs.tmux}/bin/tmux a >&2 2>/dev/null || ${pkgs.tmuxinator}/bin/tmuxinator main
+      '';
+
       brumal.tmux = {
 
         # TODO finish deprecating tmuxinator and just use gomux instead, it is now out of date with tmux

@@ -10,5 +10,9 @@
         pkgs.ttdl
         rc
       ];
+      brumal.files.bin = {
+        ttdl-all.text = ''${pkgs.ttdl}/bin/ttdl list --all --completed none "$@"'';
+        ttdl-now.text = ''ttdl list --pri x+ "$@"'';
+      };
     };
 }

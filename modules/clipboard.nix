@@ -17,15 +17,10 @@
         bind C-p paste-buffer -p
       '';
 
-      brumal.bash.profile = ''
-        Y() {
-          ${cfg.yank}
-        }
-
-        P() {
-          ${cfg.paste}
-        }
-      '';
+      brumal.files.bin = {
+        Y.text = cfg.yank;
+        P.text = cfg.paste;
+      };
 
       brumal.i3wm.body.directives = [
         ''bindsym --release ${k.mod}+c exec "${pkgs.imagemagick}/bin/import png:- | ${cfg.yank} -t image/png"''

@@ -1,27 +1,22 @@
 {
-  flake.nixosModules.base = {
-    brumal.bash = {
-      inputrc = ''
-        set bell-style none
-        set editing-mode vi
-        set keymap vi
-      '';
-      profile = ''
-        ttdl-all() {
-            ttdl list --all --completed none "$@"
-        }
-
-        ttdl-unsorted() {
-            ttdl-all --pri none "$@"
-        }
-
-        ttdl-now() {
-            ttdl list --pri x+ "$@"
-        }
-      '';
-
+  flake.nixosModules.base =
+    { library, config, ... }:
+    let
+      inherit (library) mkAfter;
+      bin = config.brumal.files.bin;
+    in
+    {
+      brumal.bash = {
+        inputrc = ''
+          set bell-style none
+          set editing-mode vi
+          set keymap vi
+        '';
+        rc = ''
+          alias T='${bin.tmux-go-last.source}'
+        '';
+      };
+      programs.fzf.keybindings = true;
+      programs.fzf.fuzzyCompletion = true;
     };
-    programs.fzf.keybindings = true;
-    programs.fzf.fuzzyCompletion = true;
-  };
 }

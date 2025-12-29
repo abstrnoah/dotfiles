@@ -88,37 +88,114 @@ rec {
       ${library.concatStrings commands}
     '';
 
-  fileType = types.submodule (
+  fileType =
     {
-      name,
-      config,
-      options,
+      executable ? false,
       ...
     }:
-    {
-      options = {
-        target = mkOption {
-          description = "Relative path.";
-          type = types.str;
+    types.submodule (
+      {
+        name,
+        config,
+        options,
+        ...
+      }:
+      {
+        options = {
+          target = mkOption {
+            description = "Relative path.";
+            type = types.str;
+          };
+          source = mkOption { type = types.path; };
+          text = mkOption {
+            default = null;
+            type = types.nullOr types.lines;
+          };
+          executable = mkOption {
+            default = executable;
+            type = types.bool;
+          };
         };
-        source = mkOption { type = types.path; };
-        text = mkOption {
-          default = null;
-          type = types.nullOr types.lines;
+        config = {
+          target = mkDefault name;
+          source = mkIf (config.text != null) (
+            let
+              name' = replaceStrings [ "/" ] [ "-" ] name;
+            in
+            mkDerivedConfig options.text (
+              text:
+              writeTextFile {
+                name = name';
+                inherit text;
+                inherit (config) executable;
+              }
+            )
+          );
         };
-      };
-      config = {
-        target = mkDefault name;
-        source = mkIf (config.text != null) (
-          let
-            name' = replaceStrings [ "/" ] [ "-" ] name;
-          in
-          mkDerivedConfig options.text (writeText name')
-        );
-      };
-    }
-  );
+      }
+    );
 
-  filesType = types.attrsOf fileType;
+  filesType =
+    defaults@{
+      executable ? false,
+      ...
+    }:
+    types.attrsOf (fileType defaults);
+
+  # TODO remove redundancy?
+  scriptType =
+    {
+      executable ? true,
+      ...
+    }:
+    types.submodule (
+      {
+        name,
+        config,
+        options,
+        ...
+      }:
+      {
+        options = {
+          target = mkOption { type = types.str; };
+          source = mkOption {
+            type = types.path;
+            description = "Path to the _file_ (never should be a directory containing the file).";
+          };
+          text = mkOption {
+            default = null;
+            type = types.nullOr types.lines;
+          };
+          runtimeInputs = mkOption {
+            default = [ ];
+            type = types.listOf types.package;
+          };
+          runtimeEnv = mkOption {
+            default = { };
+            type = types.attrsOf types.str;
+          };
+        };
+        config = {
+          target = mkDefault name;
+          source = mkIf (config.text != null) (
+            let
+              name' = replaceStrings [ "/" ] [ "-" ] name;
+            in
+            mkDerivedConfig options.text (
+              text:
+              let
+                app = writeShellApplication {
+                  name = name';
+                  inherit text;
+                  inherit (config) runtimeInputs runtimeEnv;
+                };
+              in
+              # Fucked up but we do this because writeShellApplication hardcodes destination and we want source to always be a file
+              "${app}/bin/${name'}"
+            )
+          );
+        };
+      }
+    );
 
 }

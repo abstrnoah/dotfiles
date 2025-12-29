@@ -27,7 +27,7 @@
     {
       options.brumal.i3status = {
         configFile = mkOption {
-          type = fileType;
+          type = fileType { };
         };
         order = mkOption {
           type = types.listOf types.str;
