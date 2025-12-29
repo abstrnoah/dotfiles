@@ -35,13 +35,9 @@ _searchengines = {
     "!ddg": "https://duckduckgo.com/?q={}",
     "!ddt": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
     "!g": "https://www.google.com/search?q={}",
-    "!4get": "https://4get.ca/web?s={}",
     "!r": "https://old.reddit.com/search?q={}",
-    "!perpl": "https://www.perplexity.ai/search?s=o&q={}",
-    "!lov": "https://lov.linkeddata.es/dataset/lov/terms?q={}",
-    "!lovv": "https://lov.linkeddata.es/dataset/lov/vocabssms:+16263147355?q={}",
-    "!chatgpt": "https://chat.openai.com/?q={}",
     "!nixopts": "https://search.nixos.org/options?query={}",
+    "!noogle": "https://noogle.dev/q?term={}",
 }
 _searchengines["DEFAULT"] = _searchengines["!ddg"]
 c.url.searchengines = _searchengines
