@@ -11,8 +11,8 @@
         })
       ];
       brumal.profile.packages = [ pkgs.rofi ];
-      brumal.rofi = {
-        config.configuration = {
+      brumal.rofi.config = {
+        configuration = {
           modi = ''"window,run,combi,filebrowser"'';
           matching = ''"fuzzy"'';
           sorting-method = ''"fzf"'';
@@ -25,8 +25,9 @@
           kb-row-select = ''"Tab"'';
           kb-accept-entry = ''"Return"'';
           kb-accept-custom = ''"Control+Return"'';
-          location = ''2'';
+          location = ''1'';
         };
+        window.width = ''25%'';
       };
     };
 }

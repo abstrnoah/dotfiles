@@ -30,9 +30,9 @@
           makeSection = name: text: "${name} {\n${text}\n}";
         in
         ''
-          ${(concatMapAttrsStringSep "\n" (name: value: makeSection name (makeBody value)) cfg.config)}
-
           @theme "${cfg.theme}"
+
+          ${(concatMapAttrsStringSep "\n" (name: value: makeSection name (makeBody value)) cfg.config)}
         '';
     };
 }
