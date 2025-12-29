@@ -16,8 +16,7 @@
         startDirectory="$(readlink -f "$1")"
         startDirectory="''${startDirectory:-.}"
         sessionName="''${2:-''$(basename "$startDirectory")}"
-        # Dots confuse tmux
-        sessionName="''${sessionName//./_}"
+        sessionName="''${sessionName//./_}" # Dots confuse tmux
 
         if ! tmux has-session -t="$sessionName" 2>/dev/null; then
           test -d "$startDirectory" \
@@ -25,11 +24,25 @@
           tmux new-session -d -s "$sessionName" -c "$startDirectory"
         fi
 
-        if test -z "$TMUX"; then
+        if test -z "''${TMUX:-}"; then
           tmux attach -t "$sessionName"
         else
           tmux switch-client -t "$sessionName"
         fi
+      '';
+
+      brumal.files.bin.tmux-choose-session.runtimeInputs = [
+        pkgs.tmux
+        pkgs.fzf
+        config.brumal.files.bin.gomux.package
+      ];
+      brumal.files.bin.tmux-choose-session.text = ''
+        fzf() {
+          fzf-tmux -w 25 -- --prompt="session> "
+        }
+        read -ra args < <(tmux list-sessions -F '#S' | fzf)
+        args=("''${args[@]/'~'/$HOME}")
+        gomux "''${args[@]}"
       '';
 
       brumal.tmux = {
@@ -99,7 +112,7 @@
           set    -g status-keys vi
 
           # Select session in tree view.
-          bind s run 'tmux-choose-session || tmux choose-tree -sG'
+          bind s run 'tmux-choose-session || true'
 
           # TODO incorporate into fzf interface
           # Create new session in-group.

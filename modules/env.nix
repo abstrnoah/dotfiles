@@ -6,6 +6,7 @@
         HOME = "/home/${ownerName}";
         XDG_CONFIG_HOME = "${HOME}/.config";
         NIX_PROFILE = "${HOME}/.nix-profile";
+        BR_STORE = "${HOME}/store";
       };
     };
 }
