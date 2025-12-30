@@ -2,6 +2,10 @@
 let
   library = rec {
 
+    inherit (builtins)
+      readDir
+      ;
+
     inherit (nixpkgs-lib)
       evalModules
       mkOption

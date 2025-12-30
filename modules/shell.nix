@@ -44,6 +44,16 @@
         echo "$1" >/dev/stderr
         exit 1
       '';
+      brumal.files.bin.withcd.text = ''
+        if test "$#" -eq 0; then
+          exit 1
+        fi
+        old_path="$PWD"
+        cd "$1"
+        shift
+        "$@"
+        cd "$old_path"
+      '';
 
       programs.direnv.enable = true;
       programs.direnv.silent = true;
