@@ -74,6 +74,8 @@
         character.success_symbol = "[⊢](bold green)";
         character.error_symbol = "[⊢](bold red)";
 
+        jobs.symbol = "󰇘";
+
         battery.disabled = true;
 
         nix_shell.format = "[$symbol]($style)";
