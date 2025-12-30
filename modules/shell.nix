@@ -67,18 +67,21 @@
       programs.starship.enable = true;
       programs.starship.settings = {
 
-        format = ''$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$cmd_duration$nix_shell$line_break$jobs$character'';
+        format = ''$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$cmd_duration$nix_shell$status$line_break$jobs$character'';
 
         directory.format = "[$path]($style)[/](bold)[$read_only]($read_only_style) ";
 
         character.success_symbol = "[⊢](bold green)";
         character.error_symbol = "[⊢](bold red)";
 
+        status.disabled = false;
+        status.format = "[$status󰌑]($style) ";
+
         jobs.symbol = "󰇘";
 
         battery.disabled = true;
 
-        nix_shell.format = "[$symbol]($style)";
+        nix_shell.format = "[$symbol]($style) ";
         nix_shell.symbol = "❄️";
 
         # Starship has an open issue about direnv, so we disable for now
