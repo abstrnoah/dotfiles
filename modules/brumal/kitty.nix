@@ -23,6 +23,7 @@
         environment.systemPackages = [ pkgs.kitty ];
         environment.variables.TERMINAL = "kitty";
         brumal.files.xdgConfig."kitty/kitty.conf".text = cfg.conf;
+        programs.bash.interactiveShellInit = "alias ssh='${pkgs.kitty}/bin/kitten ssh'";
         brumal.kitty.conf = ''
           foreground            ${c.special.foreground}
           background            ${c.special.background}
