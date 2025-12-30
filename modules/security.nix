@@ -32,5 +32,11 @@
         '';
         mode = "0440";
       };
+      # TODO Make more robust like use slam after some timeout
+      powerManagement.powerDownCommands = ''
+        if ${pkgs.tomb}/bin/tomb list -q; then
+          ${pkgs.tomb}/bin/tomb close all -q
+        fi
+      '';
     };
 }
