@@ -70,6 +70,7 @@ c.content.blocking.method = "both"
 
 # # DARKMODE {{{1
 c.colors.webpage.preferred_color_scheme = "dark"
+config.source("selenized.py")
 
 # PER-DOMAIN SETTINGS {{{1
 with config.pattern("https://mail.google.com/") as p:
