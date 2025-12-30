@@ -1,8 +1,13 @@
 {
   flake.nixosModules.base =
-    { library, config, ... }:
+    {
+      library,
+      config,
+      pkgs,
+      ...
+    }:
     let
-      inherit (library) mkAfter;
+      inherit (library) mkAfter getExe;
       bin = config.brumal.files.bin;
     in
     {
@@ -39,5 +44,31 @@
         echo "$1" >/dev/stderr
         exit 1
       '';
+
+      programs.direnv.enable = true;
+      programs.direnv.silent = true;
+      # Because direnv-instant conflicts
+      programs.direnv.enableBashIntegration = false;
+      programs.bash.interactiveShellInit = ''
+        eval "$(direnv-instant hook bash)"
+      '';
+      environment.systemPackages = [ pkgs.direnv-instant ];
     };
+
+  # TODO Remove, for testing
+  perSystem =
+    {
+      utilities,
+      inputs',
+      pkgs,
+      ...
+    }:
+    {
+      overlayAttrs = {
+        direnv-instant = inputs'.direnv-instant.packages.default;
+      };
+      direnvs.default.variables.foo = "bar";
+      direnvs.default.packages = [ pkgs.cowsay ];
+    };
+
 }

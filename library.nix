@@ -31,6 +31,7 @@ let
       mergeOneOption
       mkOptionType
       mkForce
+      getExe
       ;
     inherit (nixpkgs-lib.attrsets)
       getAttrs

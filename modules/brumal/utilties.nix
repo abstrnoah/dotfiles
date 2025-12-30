@@ -3,7 +3,7 @@ let
   utilitiesPSM = flake-parts-lib.mkTransposedPerSystemModule {
     name = "utilities";
     option = library.mkOption {
-      type = library.types.pkgs;
+      type = library.types.anything;
     };
     file = ./utilties.nix;
   };
@@ -16,8 +16,14 @@ in
   imports = [ utilitiesPSM ];
 
   perSystem =
-    { pkgs, library, ... }:
     {
+      pkgs,
+      library,
+      config,
+      ...
+    }:
+    {
+      _module.args.utilities = config.utilities;
       utilities = import ../../utilities.nix {
         inherit library;
         nixpkgs = pkgs;

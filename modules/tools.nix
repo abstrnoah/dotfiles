@@ -8,7 +8,7 @@
     { inputs', ... }:
     {
       overlayAttrs = {
-        emplacetree = inputs'.emplacetree.packages.emplacetree;
+        emplacetree = inputs'.emplacetree.packages.default;
       };
     };
 

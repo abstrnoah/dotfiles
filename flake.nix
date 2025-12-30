@@ -11,6 +11,10 @@
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
   inputs.agenix.inputs.darwin.follows = "";
 
+  inputs.direnv-instant.url = "github:Mic92/direnv-instant";
+  inputs.direnv-instant.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.direnv-instant.inputs.flake-parts.follows = "flake-parts";
+
   inputs.wallpapers.url = "github:abstrnoah/wallpapers";
 
   outputs =

@@ -7,3 +7,4 @@ tags
 result
 repl-result-out
 nix-portable
+.direnv/
