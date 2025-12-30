@@ -32,11 +32,20 @@
         '';
         mode = "0440";
       };
+
       # TODO Make more robust like use slam after some timeout
-      powerManagement.powerDownCommands = ''
-        if ${pkgs.tomb}/bin/tomb list -q; then
-          ${pkgs.tomb}/bin/tomb close all -q
-        fi
-      '';
+      systemd.user.services.tomb-close = {
+        script = ''
+          if /run/wrappers/bin/sudo /run/current-system/sw/bin/tomb list -q; then
+            /run/wrappers/bin/sudo /run/current-system/sw/bin/tomb close all -q
+          fi
+        '';
+        wantedBy = [ "lock.target" ];
+        before = [
+          "sleep.target"
+          "lock.target"
+        ];
+      };
+
     };
 }
