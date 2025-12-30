@@ -29,7 +29,6 @@
         pkgs.tectonic
         pkgs.tree
         pkgs.uni
-        pkgs.curl # TODO config
         pkgs.zip
         pkgs.unzip
         pkgs.numbat
