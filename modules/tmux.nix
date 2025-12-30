@@ -60,6 +60,7 @@
 
           monitor = ''
             name: monitor
+            root: ~/
 
             windows:
               - htop: htop
