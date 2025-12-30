@@ -63,6 +63,41 @@
         eval "$(direnv-instant hook bash)"
       '';
       environment.systemPackages = [ pkgs.direnv-instant ];
+
+      programs.starship.enable = true;
+      programs.starship.settings = {
+
+        format = ''$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$cmd_duration$nix_shell$line_break$jobs$character'';
+
+        directory.format = "[$path]($style)[/](bold)[$read_only]($read_only_style) ";
+
+        character.success_symbol = "[⊢](bold green)";
+        character.error_symbol = "[⊢](bold red)";
+
+        battery.disabled = true;
+
+        nix_shell.format = "[$symbol]($style)";
+        nix_shell.symbol = "❄️";
+
+        # Starship has an open issue about direnv, so we disable for now
+        direnv.format = "[$loaded$allowed]($style) ";
+        direnv.disabled = true;
+        direnv.symbol = "";
+        direnv.not_allowed_msg = "󱧊 ";
+        direnv.denied_msg = "󰷌 ";
+        direnv.allowed_msg = "";
+        direnv.unloaded_msg = "󰕂 ";
+        direnv.loaded_msg = "󱥾 ";
+
+        git_branch.format = "[$symbol$branch(:$remote_branch)]($style) ";
+        git_branch.style = "bold yellow";
+        git_branch.symbol = "";
+
+        username.format = "[$user]($style) ";
+
+        hostname.format = "[$hostname]($style)$ssh_symbol ";
+        hostname.ssh_symbol = "󰢩";
+      };
     };
 
   # TODO Remove, for testing
