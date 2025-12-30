@@ -278,11 +278,9 @@ flake-utils.lib.eachDefaultSystem (
       # FIXME video issue
       zoom = upstreams.zoom.overrideAttrs (prev: {
         nativeBuildInputs = (prev.nativeBuildInputs or [ ]) ++ [ this-nixpkgs.makeWrapper ];
-        postFixup =
-          prev.postFixup
-          + ''
-            wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
-          '';
+        postFixup = prev.postFixup + ''
+          wrapProgram $out/bin/zoom --set QT_XCB_GL_INTEGRATION none
+        '';
       });
 
       zsh = this-config.bundle {
