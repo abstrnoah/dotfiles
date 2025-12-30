@@ -67,7 +67,7 @@
       programs.starship.enable = true;
       programs.starship.settings = {
 
-        format = ''$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$cmd_duration$nix_shell$status$line_break$jobs$character'';
+        format = ''$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$nix_shell$cmd_duration$status$line_break$jobs$character'';
 
         directory.format = "[$path]($style)[/](bold)[$read_only]($read_only_style) ";
 
@@ -76,6 +76,8 @@
 
         status.disabled = false;
         status.format = "[$status󰌑]($style) ";
+
+        cmd_duration.format = "[ $duration]($style) ";
 
         jobs.symbol = "󰇘";
 
