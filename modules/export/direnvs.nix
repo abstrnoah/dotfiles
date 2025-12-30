@@ -44,4 +44,9 @@ in
 {
   imports = [ module ];
   flake.flakeModules.direnvs = module;
+  perSystem =
+    { pkgs, ... }:
+    {
+      direnvs.default.packages = [ pkgs.neofetch ];
+    };
 }
