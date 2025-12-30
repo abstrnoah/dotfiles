@@ -109,7 +109,7 @@
         {
           options = {
             block = mkOption { type = types.submodule i3wmBlockModule; };
-            tips = mkOption { type = types.str; };
+            hint = mkOption { type = types.str; };
             address = mkOption {
               type = types.str;
               default = name;
@@ -118,7 +118,7 @@
             text = mkOption { type = types.str; };
           };
           config = {
-            address = mkIf options.tips.isDefined "${name}: ${config.tips}";
+            address = mkIf options.hint.isDefined "${name}: ${config.hint}";
             # TODO Escape address
             block.head = "mode \"${config.address}\"";
             block.body.bindsym = {

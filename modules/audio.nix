@@ -7,4 +7,38 @@
       services.pipewire.enable = true;
       brumal.profile.packages = [ pkgs.spotify ];
     };
+  flake.nixosModules.gui =
+    { pkgs, config, ... }:
+    let
+      k = config.brumal.i3wm.keys;
+      wpctl = "${pkgs.wireplumber}/bin/wpctl";
+      volume-step = "5%";
+      volume-up = "${wpctl} set-volume @DEFAULT_SINK@ ${volume-step}+";
+      volume-down = "${wpctl} set-volume @DEFAULT_SINK@ ${volume-step}-";
+      volume-mute = "${wpctl} set-mute @DEFAULT_SINK@ toggle";
+      mic-mute = "${wpctl} set-mute @DEFAULT_SOURCE@ toggle";
+      spotifycli = "${pkgs.spotify-cli-linux}/bin/spotifycli";
+    in
+    {
+      # Directives because global (not under k.mod) keys
+      # Reference: https://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
+      brumal.i3wm.body.directives = [
+        "bindsym XF86AudioRaiseVolume exec ${volume-up}"
+        "bindsym XF86AudioLowerVolume exec ${volume-down}"
+        "bindsym XF86AudioMute exec ${volume-mute}"
+        "bindsym XF86AudioMicMute exec ${mic-mute}"
+      ];
+      brumal.i3wm.body.modes.audio = {
+        key = "a";
+        hint = "[h]󰒭 [l]󰒮 [k]󰝝 [j]󰝞 [m]󰝟 [space]󰐎 ";
+        block.body.bindsym = {
+          k = "exec ${volume-up}";
+          j = "exec ${volume-down}";
+          m = "exec ${volume-mute}";
+          h = "exec ${spotifycli} --prev";
+          l = "exec ${spotifycli} --next";
+          space = "exec ${spotifycli} --playpause";
+        };
+      };
+    };
 }
