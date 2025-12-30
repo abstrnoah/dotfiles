@@ -44,7 +44,11 @@
 
       systemd.user.services.volume-mute = {
         script = volume-mute-true;
-        wantedBy = [ "lock.target" ];
+        wantedBy = [
+          "lock.target"
+          "shutdown.target"
+          "sleep.target"
+        ];
       };
     };
 }

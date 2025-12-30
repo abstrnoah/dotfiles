@@ -40,10 +40,13 @@
             /run/wrappers/bin/sudo /run/current-system/sw/bin/tomb close all -q
           fi
         '';
-        wantedBy = [ "lock.target" ];
-        before = [
-          "sleep.target"
+        wantedBy = [
           "lock.target"
+          "sleep.target"
+        ];
+        before = [
+          "lock.target"
+          "sleep.target"
         ];
       };
 

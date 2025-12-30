@@ -44,6 +44,12 @@
           "${k.shift}+h" = "exec systemctl ${sleep-operation}";
         };
       };
+
+      services.upower.enable = true;
+      services.upower.percentageLow = 15;
+      services.upower.percentageCritical = 11;
+      services.upower.percentageAction = 10;
+      services.upower.criticalPowerAction = "Hibernate";
     };
 
   flake.machineModules.porcupine = {
