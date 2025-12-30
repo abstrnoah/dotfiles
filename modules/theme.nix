@@ -27,6 +27,7 @@
         # From Kitty's "Solarized Dark - Patched" theme
         special.background = "#001e26";
         special.foreground = "#708183";
+        # TODO selection colours are scuffed
         special.selection.background = "#002731";
         special.selection.foreground = "#001e26";
         special.cursor = c.table."12";

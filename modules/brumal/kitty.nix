@@ -26,8 +26,6 @@
         brumal.kitty.conf = ''
           foreground            ${c.special.foreground}
           background            ${c.special.background}
-          selection_foreground  ${c.special.selection.foreground}
-          selection_background  ${c.special.selection.background}
           cursor                ${c.special.cursor}
           color0                ${c.table."0"}
           color8                ${c.table."8"}
