@@ -56,7 +56,7 @@
       '';
 
       programs.direnv.enable = true;
-      programs.direnv.silent = true;
+      programs.direnv.silent = false;
       # Because direnv-instant conflicts
       programs.direnv.enableBashIntegration = false;
       programs.bash.interactiveShellInit = ''
