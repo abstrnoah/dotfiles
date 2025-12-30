@@ -64,10 +64,8 @@
             windows:
               - htop: htop
               - temp: watch -n 300 cat /sys/class/thermal/thermal_zone*/temp
-              - log:
-                  panes:
-                    - journalctl -f
-                    - journalctl --user -f
+              - syslog: journalctl -f
+              - userlog: journalctl --user -f
           '';
 
         };
