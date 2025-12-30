@@ -16,6 +16,7 @@
       volume-up = "${wpctl} set-volume @DEFAULT_SINK@ ${volume-step}+";
       volume-down = "${wpctl} set-volume @DEFAULT_SINK@ ${volume-step}-";
       volume-mute = "${wpctl} set-mute @DEFAULT_SINK@ toggle";
+      volume-mute-true = "${wpctl} set-mute @DEFAULT_SINK@ 1";
       mic-mute = "${wpctl} set-mute @DEFAULT_SOURCE@ toggle";
       spotifycli = "${pkgs.spotify-cli-linux}/bin/spotifycli";
     in
@@ -39,6 +40,11 @@
           l = "exec ${spotifycli} --next";
           space = "exec ${spotifycli} --playpause";
         };
+      };
+
+      systemd.user.services.volume-mute = {
+        script = volume-mute-true;
+        wantedBy = [ "lock.target" ];
       };
     };
 }

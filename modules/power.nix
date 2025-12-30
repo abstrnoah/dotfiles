@@ -7,6 +7,8 @@
       sleep-operation = "suspend-then-hibernate";
     in
     {
+      services.systemd-lock-handler.enable = true;
+
       programs.xss-lock.enable = true;
       programs.xss-lock.lockerCommand = ''${pkgs.i3lock}/bin/i3lock --tiling --image ${config.brumal.wallpaper.lock}'';
 
@@ -15,7 +17,7 @@
       services.logind.settings.Login.HandleSuspendKey = sleep-operation;
       services.logind.settings.Login.IdleAction = sleep-operation;
       systemd.sleep.extraConfig = ''HibernateDelaySec=30min'';
-      # TODO Doesn't seem to work.
+      # TODO Does this work?
       services.logind.settings.Login.IdleActionSec = "5min";
 
       systemd.services.no-wakeup-on-lid = {
