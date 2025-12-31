@@ -11,6 +11,7 @@ let
       mkOption
       types
       mkIf
+      mkOrder
       mkAfter
       mkMerge
       mkDefault

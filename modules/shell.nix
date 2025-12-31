@@ -7,7 +7,7 @@
       ...
     }:
     let
-      inherit (library) mkAfter getExe;
+      inherit (library) mkAfter getExe mkOrder;
       bin = config.brumal.files.bin;
     in
     {
@@ -38,6 +38,21 @@
           fi
         '';
       };
+      # TODO
+      # For some reason I cannot understand this is necessary _for tmux only_.
+      # Yeah outside of tmux putting this block above works fine.
+      # Shouldn't my ~/.bashrc be sourced after /etc/bashrc?
+      # Apparently not? But just for tmux??!?!?!?!?!
+      # We have to use 1600 because fzf is already installed at mkAfter's 1500 🤡
+      programs.bash.promptPluginInit = mkOrder 1600 ''
+        # Remap fzf-cd to ctrl-g
+        bind -m emacs-standard -r '\ec'
+        bind -m vi-command -r '\ec'
+        bind -m vi-insert -r '\ec'
+        bind -m emacs-standard '"\C-g": " \C-b\C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-h\e \C-y\ey\C-x\C-x\C-d\C-y\ey\C-_"'
+        bind -m vi-command '"\C-g": "\C-z\C-g\C-z"'
+        bind -m vi-insert '"\C-g": "\C-z\C-g\C-z"'
+      '';
       programs.fzf.keybindings = true;
       programs.fzf.fuzzyCompletion = true;
 
