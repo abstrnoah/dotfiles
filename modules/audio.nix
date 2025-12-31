@@ -5,7 +5,10 @@
     {
       security.rtkit.enable = true;
       services.pipewire.enable = true;
-      brumal.profile.packages = [ pkgs.spotify ];
+      brumal.profile.packages = [
+        pkgs.spotify
+        pkgs.catt
+      ];
     };
   flake.nixosModules.gui =
     { pkgs, config, ... }:
