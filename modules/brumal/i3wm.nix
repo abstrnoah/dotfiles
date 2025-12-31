@@ -13,6 +13,7 @@
         mkOption
         types
         concatStringsSep
+        mapAttrs
         mapAttrs'
         nameValuePair
         mapAttrsToList
@@ -48,15 +49,22 @@
               default = [ ];
             };
             leader = mkOption { type = types.str; };
-            # TODO handle --release
+            # TODO handle --release (cannot do so easily bc need to intercept directive)
             bindsym = mkOption {
+              type = types.attrsOf types.str;
+              default = { };
+            };
+            bindsymAutoExit = mkOption {
               type = types.attrsOf types.str;
               default = { };
             };
             text = mkOption { type = types.str; };
           };
           config = {
-            bindsym = mapAttrs' (name: value: nameValuePair value.key ''mode ${value.address}'') config.modes;
+            bindsym = mkMerge [
+              (mapAttrs' (name: value: nameValuePair value.key "mode ${value.address}") config.modes)
+              (mapAttrs (_: value: "${value}; mode default") config.bindsymAutoExit)
+            ];
             directives =
               let
                 execDs = map (x: ''exec ${x}'') config.exec;
@@ -116,13 +124,17 @@
             };
             key = mkOption { type = types.str; };
             text = mkOption { type = types.str; };
+            autoExit = mkOption {
+              type = types.bool;
+              default = false;
+            };
           };
           config = {
             address = mkIf options.hint.isDefined "${name}: ${config.hint}";
             # TODO Escape address
             block.head = "mode \"${config.address}\"";
             block.body.bindsym = {
-              ${k.escringe} = " mode default";
+              ${k.escringe} = "mode default";
               ${k.esc} = "mode default";
             };
             text = config.block.text;
