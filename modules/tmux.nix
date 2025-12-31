@@ -40,7 +40,7 @@
         fzf() {
           fzf-tmux -w 25 -- --prompt="session> "
         }
-        read -ra args < <(tmux list-sessions -F '#S' | fzf)
+        read -ra args < <(tmux list-sessions -F '#S' | fzf) || exit 0
         args=("''${args[@]/'~'/$HOME}")
         gomux "''${args[@]}"
       '';
@@ -114,7 +114,7 @@
           set    -g status-keys vi
 
           # Select session in tree view.
-          bind s run 'tmux-choose-session || true'
+          bind s run 'tmux-choose-session'
 
           # TODO incorporate into fzf interface
           # Create new session in-group.
