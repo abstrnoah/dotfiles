@@ -11,6 +11,7 @@
           "ipv6"
           "wireless _first_"
           "ethernet _first_"
+          "battery all"
           "battery 0"
           "battery 1"
           "memory"
@@ -58,8 +59,20 @@
             format_down = "󰌊";
           };
 
+          battery.all = {
+            format = "%status %percentage (%remaining)";
+            format_down = "󱉝";
+            format_percentage = "%.00f%s";
+            last_full_capacity = "true";
+            status_bat = "🔋";
+            status_unk = "󰂑";
+            status_chr = "⚡";
+            status_idle = "󱟢";
+            status_full = "󱟣";
+          };
+
           battery."0" = {
-            format = "%status₀ %percentage (%remaining)";
+            format = "%status₀ %percentage";
             format_down = "󱉝₀";
             format_percentage = "%.00f%s";
             last_full_capacity = "true";
@@ -71,7 +84,7 @@
           };
 
           battery."1" = {
-            format = "%status₁ %percentage (%remaining)";
+            format = "%status₁ %percentage";
             format_down = "󱉝₁";
             format_percentage = "%.00f%s";
             last_full_capacity = "true";
