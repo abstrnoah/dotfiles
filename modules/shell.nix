@@ -26,6 +26,7 @@
           FZF_DEFAULT_OPTS+=" --bind change:first"
           FZF_DEFAULT_OPTS+=" --bind tab:replace-query"
           FZF_DEFAULT_OPTS+=" --bind alt-enter:print-query"
+          FZF_DEFAULT_OPTS+=" --bind enter:accept-or-print-query"
           FZF_DEFAULT_OPTS+=" --bind ctrl-space:toggle"
           FZF_DEFAULT_OPTS+=" --bind ctrl-t:toggle-all"
           FZF_DEFAULT_OPTS+=" --bind ctrl-a:select-all"
