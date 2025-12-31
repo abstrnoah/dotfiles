@@ -49,6 +49,12 @@
           "shutdown.target"
           "sleep.target"
         ];
+        before = [
+          "lock.target"
+          # TODO Is it still working inconsistently on shutdown?
+          "shutdown.target" # This should be unnecessary because DefaultDependencies
+          "sleep.target"
+        ];
       };
     };
 }
