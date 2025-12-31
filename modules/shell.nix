@@ -61,13 +61,15 @@
       programs.direnv.enableBashIntegration = false;
       programs.bash.interactiveShellInit = ''
         eval "$(direnv-instant hook bash)"
+        alias nix='BR_SHELL_NESTING="$BR_SHELL_NESTING " nix'
+        alias nix-shell='BR_SHELL_NESTING="$BR_SHELL_NESTING " nix-shell'
       '';
       environment.systemPackages = [ pkgs.direnv-instant ];
 
       programs.starship.enable = true;
       programs.starship.settings = {
 
-        format = ''$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$nix_shell$cmd_duration$status$line_break$jobs$character'';
+        format = "$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$cmd_duration$status$nix_shell$line_break\${env_var.BR_SHELL_NESTING}$jobs$character";
 
         directory.format = "[$path]($style)[/](bold)[$read_only]($read_only_style) ";
 
@@ -83,8 +85,12 @@
 
         battery.disabled = true;
 
+        # In practice, for me, nix_shell detects direnv
+        # and BR_SHELL_NESTING detects interactive invocation of 'nix shell'
         nix_shell.format = "[$symbol]($style) ";
         nix_shell.symbol = "❄️";
+        nix_shell.heuristic = false; # Doesn't work for me
+        env_var.BR_SHELL_NESTING.format = "$env_value"; # No trailing space bc value already spaced
 
         # Starship has an open issue about direnv, so we disable for now
         direnv.format = "[$loaded$allowed]($style) ";
