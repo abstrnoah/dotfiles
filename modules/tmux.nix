@@ -107,6 +107,8 @@
           set    -g status-right-length 50
           set    -g window-status-activity-style 'italics'
           set    -g window-status-bell-style 'reverse'
+          set    -g popup-style 'bg=colour0'
+          set    -g popup-border-lines none
 
           # BINDINGS
           set -s -g escape-time 10
@@ -151,7 +153,7 @@
           bind R source-file ~/.tmux.conf
 
           # time popup
-          bind t popup -w 24 -h 13 -EE "date '+%H:%M:%S' && ${pkgs.gcal}/bin/gcal && read _"
+          bind t popup -w 64 -h 10 -k "date '+%H:%M:%S' && ${pkgs.util-linux}/bin/cal -3m"
         '';
 
       };
