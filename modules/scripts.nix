@@ -17,6 +17,12 @@
             sleep "$interval"
           done
         '';
+        bropen.text = ''
+          for f in "$@"; do
+            xdg-open "$f" &
+            disown -h
+          done
+        '';
       };
     };
 }
