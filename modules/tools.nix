@@ -24,7 +24,6 @@
         pkgs.bat-extras.batwatch
         pkgs.silver-searcher
         pkgs.nnn
-        pkgs.zathura # TODO config
         pkgs.fd
         pkgs.tectonic
         pkgs.tree

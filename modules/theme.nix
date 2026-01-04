@@ -103,6 +103,21 @@
       brumal.dunst.config.global.font = "${fontName} ${fontSizeSmall}";
       brumal.dunst.config.global.corner_radius = 3;
 
+      brumal.files.xdgConfig."zathura/zathurarc".text = ''
+        set font "${fontName} ${fontSizeTiny}"
+        set index-bg "${c.special.background}"
+        set index-fg "${c.special.foreground}"
+        set index-active-bg "${c.table."8"}"
+        set index-active-fg "${c.table."15"}"
+        set render-loading-bg "${c.special.background}"
+        set render-loading-fg "${c.special.foreground}"
+        set default-bg "${c.special.background}"
+        set default-fg "${c.special.foreground}"
+        set statusbar-bg "${c.table."0"}"
+        set statusbar-fg "${c.table."14"}"
+        set inputbar-bg "${c.table."0"}"
+        set inputbar-fg "${c.green}"
+      '';
     }
   );
 
