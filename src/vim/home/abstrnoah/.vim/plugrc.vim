@@ -284,7 +284,7 @@ let g:wordmotion_mappings = {'<C-R><C-W>': '<C-R><leader><C-W>'}
 let g:wiki_root = "~/store/notes/wiki"
 let g:wiki_completion_case_sensitive = 0
 let g:wiki_mappings_prefix = g:br_leader_note
-let g:wiki_filetypes = ['tree', 'md', 'wiki']
+let g:wiki_filetypes = ['md', 'tree', 'wiki']
 " TODO is this sketchy???
 let g:wiki_journal= {'name': ''}
 
