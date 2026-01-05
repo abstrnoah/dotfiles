@@ -67,8 +67,8 @@
             status_bat = "🔋";
             status_unk = "󰂑";
             status_chr = "⚡";
-            status_idle = "󱟢";
-            status_full = "󱟣";
+            status_idle = "󱟣";
+            status_full = "󱟢";
           };
 
           battery."0" = {
@@ -79,8 +79,8 @@
             status_bat = "🔋";
             status_unk = "󰂑";
             status_chr = "⚡";
-            status_idle = "󱟢";
-            status_full = "󱟣";
+            status_idle = "󱟣";
+            status_full = "󱟢";
           };
 
           battery."1" = {
@@ -91,8 +91,8 @@
             status_bat = "🔋";
             status_unk = "󰂑";
             status_chr = "⚡";
-            status_idle = "󱟢";
-            status_full = "󱟣";
+            status_idle = "󱟣";
+            status_full = "󱟢";
           };
 
           run_watch.DHCP = {
