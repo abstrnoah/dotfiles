@@ -20,7 +20,7 @@
     {
 
       brumal.i3wm.body.bindsym = {
-        o = "focus output next"; # TODO TEST
+        o = "focus output right"; # TODO try s/right/next when i3 update
         "${k.alt}+o" = "move workspace to output next";
       };
 

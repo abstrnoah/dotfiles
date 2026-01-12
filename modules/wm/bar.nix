@@ -2,6 +2,10 @@
   flake.nixosModules.gui =
     { config, ... }:
     {
+      brumal.i3wm.body.blocks.bar.body.directives = [
+        "tray_output primary"
+      ];
+
       brumal.i3status = {
 
         order = [
