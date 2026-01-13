@@ -31,6 +31,7 @@
 
       services.tlp.enable = true;
 
+      brumal.i3wm.body.bindsym.${k.tilde} = "exec systemctl ${sleep-operation}";
       brumal.i3wm.body.modes.system = {
         key = "${k.grave}";
         block.body.bindsymAutoExit = {
