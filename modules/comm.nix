@@ -1,6 +1,7 @@
 {
   brumal.nixpkgs.allowUnfree = [
     "discord"
+    "zoom"
   ];
 
   flake.nixosModules.base =
@@ -10,6 +11,7 @@
         pkgs.discord
         pkgs.signal-desktop
         pkgs.telegram-desktop
+        pkgs.zoom-us
       ];
     };
 }
