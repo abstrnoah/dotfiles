@@ -26,11 +26,16 @@
     {
       # Directives because global (not under k.mod) keys
       # Reference: https://wiki.linuxquestions.org/wiki/XF86_keyboard_symbols
+      # We bypass body.bindsym to avoid mod+ leader (cringe I know TODO FIXME)
       brumal.i3wm.body.directives = [
         "bindsym XF86AudioRaiseVolume exec ${volume-up}"
         "bindsym XF86AudioLowerVolume exec ${volume-down}"
         "bindsym XF86AudioMute exec ${volume-mute}"
         "bindsym XF86AudioMicMute exec ${mic-mute}"
+        "bindsym XF86AudioPrev exec ${spotifycli} --prev"
+        "bindsym XF86AudioPlay exec ${spotifycli} --playpause"
+        "bindsym XF86AudioPause exec ${spotifycli} --playpause"
+        "bindsym XF86AudioNext exec ${spotifycli} --next"
       ];
       brumal.i3wm.body.modes.audio = {
         key = "a";
