@@ -28,7 +28,7 @@
           kb-accept-custom = ''"Control+Return"'';
           location = ''1'';
         };
-        window.width = ''25%'';
+        window.width = ''33%'';
       };
     };
 }
