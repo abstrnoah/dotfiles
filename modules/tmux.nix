@@ -146,7 +146,7 @@
           # Quick sessions.
           bind T run-shell "gomux"
           bind N run-shell "gomux ~/store/notes"
-          bind F run-shell "gomux ~/store/private-forest forest"
+          bind F run-shell "gomux ~/store/private-forest"
           bind M run-shell "tmuxinator monitor"
 
           # Reload config.
