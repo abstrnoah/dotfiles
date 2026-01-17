@@ -10,5 +10,6 @@
       diff- = "diff --color-words";
       update = "commit -a -m update";
     };
+    core.askPass = "";
   };
 }
