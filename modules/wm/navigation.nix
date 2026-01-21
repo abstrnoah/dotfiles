@@ -90,6 +90,8 @@
         j = "focus down";
         k = "focus up";
         l = "focus right";
+        u = "focus parent";
+        "${k.alt}+u" = "focus child";
 
         # Move focused window
         "${k.alt}+h" = "move left";
