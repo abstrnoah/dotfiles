@@ -70,6 +70,7 @@
         "$@"
         cd "$old_path"
       '';
+      brumal.files.bin.treeg.text = "${pkgs.tree}/bin/tree --gitignore";
 
       programs.direnv.enable = true;
       programs.direnv.silent = false;
