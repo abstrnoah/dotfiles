@@ -36,6 +36,7 @@
         pkgs.hydra-check
         pkgs.feh
         pkgs.timer
+        pkgs.pandoc
         # TODO FIXME Packages held back because they break on current nixpkgs
         inputs'.nixpkgs-heldback.legacyPackages.jabref # TODO config
       ];
