@@ -11,4 +11,8 @@ in
     publicKeys = keys.all;
     armor = true;
   };
+  "rclone.age" = {
+    publicKeys = keys.all;
+    armor = true;
+  };
 }

@@ -13,7 +13,12 @@
     };
   flake.nixosModules.base = moduleWithSystem (
     perSystem@{ inputs' }:
-    { pkgs, ... }:
+    {
+      pkgs,
+      ownerName,
+      config,
+      ...
+    }:
     {
       imports = [ inputs.agenix.nixosModules.default ];
       config = {
@@ -24,6 +29,11 @@
           file = ../secrets/networkmanager.age;
           owner = "root";
           group = "root";
+        };
+        age.secrets.rclone = {
+          file = ../secrets/rclone.age;
+          owner = ownerName;
+          group = config.brumal.sudoGroup;
         };
       };
     }

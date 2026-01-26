@@ -12,6 +12,7 @@
         name = mkOption { type = types.str; };
         email = mkOption { type = types.str; };
         pgpkey = mkOption { type = types.str; };
+        defaultGroup = mkOption { type = types.str; };
       };
     in
     {
@@ -20,6 +21,8 @@
         users.users.${ownerName} = {
           isNormalUser = true;
         };
+        # See https://github.com/NixOS/nixpkgs/issues/198296
+        brumal.owner.defaultGroup = "users";
         _module.args.ownerName = config.brumal.owner.name;
       };
     };
