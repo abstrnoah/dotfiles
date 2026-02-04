@@ -72,17 +72,6 @@
       '';
       brumal.files.bin.treeg.text = "${pkgs.tree}/bin/tree --gitignore";
 
-      programs.direnv.enable = true;
-      programs.direnv.silent = false;
-      # Because direnv-instant conflicts
-      programs.direnv.enableBashIntegration = false;
-      programs.bash.interactiveShellInit = ''
-        eval "$(direnv-instant hook bash)"
-        alias nix='BR_SHELL_NESTING="$BR_SHELL_NESTING " nix'
-        alias nix-shell='BR_SHELL_NESTING="$BR_SHELL_NESTING " nix-shell'
-      '';
-      environment.systemPackages = [ pkgs.direnv-instant ];
-
       programs.starship.enable = true;
       programs.starship.settings = {
 
@@ -129,21 +118,4 @@
         hostname.ssh_symbol = "󰢩";
       };
     };
-
-  # TODO Remove, for testing
-  perSystem =
-    {
-      utilities,
-      inputs',
-      pkgs,
-      ...
-    }:
-    {
-      overlayAttrs = {
-        direnv-instant = inputs'.direnv-instant.packages.default;
-      };
-      direnvs.default.variables.foo = "bar";
-      direnvs.default.packages = [ pkgs.cowsay ];
-    };
-
 }
