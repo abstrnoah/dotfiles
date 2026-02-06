@@ -53,6 +53,10 @@ top@{ config, ... }:
 
         body.leader = k.mod;
 
+        body.directives = [
+          "focus_on_window_activation focus"
+        ];
+
       };
 
     };
