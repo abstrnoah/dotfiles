@@ -105,10 +105,6 @@
 
       brumal.files.xdgConfig."zathura/zathurarc".text = ''
         set font "${fontName} ${fontSizeTiny}"
-        set index-bg "${c.special.background}"
-        set index-fg "${c.special.foreground}"
-        set index-active-bg "${c.table."8"}"
-        set index-active-fg "${c.table."15"}"
         set render-loading-bg "${c.special.background}"
         set render-loading-fg "${c.special.foreground}"
         set default-bg "${c.special.background}"
@@ -117,6 +113,11 @@
         set statusbar-fg "${c.table."14"}"
         set inputbar-bg "${c.table."0"}"
         set inputbar-fg "${c.green}"
+        # TODO Zathura reports "error: Variable '*' does not exist", yet these directives clearly alter appearance
+        set index-bg "${c.special.background}"
+        set index-fg "${c.special.foreground}"
+        set index-active-bg "${c.table."8"}"
+        set index-active-fg "${c.table."15"}"
       '';
     }
   );
