@@ -71,6 +71,12 @@
         cd "$old_path"
       '';
       brumal.files.bin.treeg.text = "${pkgs.tree}/bin/tree --gitignore";
+      brumal.files.bin.bathelp.text = ''
+        ${pkgs.bat}/bin/bat --plain --language help "$@"
+      '';
+      brumal.files.bin.belp.text = ''
+        ("$@" -h || "$@" --help) 2>/dev/null | ${bin.bathelp.source};
+      '';
 
       programs.starship.enable = true;
       programs.starship.settings = {
