@@ -31,6 +31,7 @@
         pkgs.zip
         pkgs.unzip
         pkgs.numbat
+        pkgs.num-utils
         pkgs.jq
         pkgs.lsof
         pkgs.hydra-check
