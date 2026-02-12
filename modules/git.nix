@@ -7,6 +7,7 @@
     tag.gpgSign = true;
     alias = {
       log- = "log --oneline --decorate --graph";
+      loga = "log- --all";
       diff- = "diff --color-words";
       update = "commit -a -m update";
     };
