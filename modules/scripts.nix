@@ -23,6 +23,17 @@
             disown -h
           done
         '';
+        base10To36.text = ''
+          if [ "$#" -ne 1 ]; then
+            exit 1
+          fi
+
+          base36bet=({0..9} {A..Z})
+
+          for i in $(${pkgs.bc}/bin/bc <<< "ibase=10; obase=36; $1"); do
+            echo -n "''${base36bet[$i]}"
+          done
+        '';
       };
     };
 }
