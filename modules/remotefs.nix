@@ -9,6 +9,7 @@
         pkgs.restic
         pkgs.rclone
       ];
-      brumal.files.xdgConfig."rclone/rclone.conf".source = secrets.rclone.path;
+      # TODO The token keeps expiring like every few hours...
+      # brumal.files.xdgConfig."rclone/rclone.conf".source = secrets.rclone.path;
     };
 }
