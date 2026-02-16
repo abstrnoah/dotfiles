@@ -17,6 +17,9 @@
     direnv-instant.inputs.flake-parts.follows = "flake-parts";
 
     wallpapers.url = "github:abstrnoah/wallpapers";
+
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
