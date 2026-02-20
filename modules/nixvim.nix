@@ -1,11 +1,32 @@
+{ library, ... }:
 {
   perSystem =
     { pkgs, inputs', ... }:
     let
       inherit (inputs'.nixvim.legacyPackages) makeNixvimWithModule;
+      inherit (library) mapAttrsToListRecursiveCond length elemAt;
+
+      genKeymaps =
+        common: modeMapSpec:
+        mapAttrsToListRecursiveCond (path: value: length path < 2) (
+          path: value:
+          common
+          // {
+            mode = elemAt path 0;
+            key = elemAt path 1;
+          }
+          // value
+        ) modeMapSpec;
+
+      tabstop = 2;
 
       nixvimModule =
-        { pkgs, ... }:
+        {
+          pkgs,
+          lib,
+          config,
+          ...
+        }:
         {
 
           colorschemes.nightfox.enable = true;
@@ -33,8 +54,8 @@
           opts.splitright = true;
           opts.swapfile = false;
           opts.expandtab = true;
-          opts.tabstop = 4; # One tab = four spaces.
-          opts.softtabstop = 4;
+          opts.tabstop = tabstop; # One tab = tabstop spaces.
+          opts.softtabstop = tabstop;
           opts.shiftwidth = 0; # 'shiftwidth=0' means fallback to 'tabstop'.
           opts.smarttab = true;
           opts.timeoutlen = 500;
@@ -210,13 +231,38 @@
             name = "";
           };
           globals.wiki_link_extension = "";
-          # TODO wiki MyWikiTextToLink
+          globals.wiki_map_text_to_link = lib.nixvim.mkRaw "function(text) return { text, text } end";
 
           globals.surround_no_insert_mappings = 1;
 
           globals.qf_auto_quit = 0;
 
           globals.gitgutter_set_sign_backgrounds = 0;
+
+          files."after/ftplugin/qf.lua" = {
+            localOpts.wrap = false;
+            keymaps =
+              genKeymaps
+                {
+                  options.buffer = true;
+                  options.silent = true;
+                }
+                {
+                  n.q.action = ":q<cr>";
+                  n."<cr>".action = "<cr>:cclose<cr>:lclose<cr>";
+                };
+          };
+
+          keymaps = genKeymaps { } {
+            n."<leader>m" = {
+              options.expr = true;
+              action = ''":'".nr2char(getchar())." m .<cr>"'';
+            };
+            n."<leader>M" = {
+              options.expr = true;
+              action = ''":'".nr2char(getchar())." m -1<cr>"'';
+            };
+          };
         };
 
     in

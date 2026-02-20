@@ -4,6 +4,8 @@ let
 
     inherit (builtins)
       readDir
+      length
+      elemAt
       ;
 
     inherit (nixpkgs-lib)
@@ -26,6 +28,8 @@ let
       pathExists
       concatStringsSep
       concatMapAttrsStringSep
+      mapAttrsToListRecursive
+      mapAttrsToListRecursiveCond
       collect
       isString
       genAttrs
