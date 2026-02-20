@@ -262,6 +262,22 @@
               options.expr = true;
               action = ''":'".nr2char(getchar())." m -1<cr>"'';
             };
+            n."<leader>ep".action = ":CtrlPMixed<cr>";
+            n."<leader>eb".action = ":CtrlPBuffer<cr>";
+            n."<leader>s".action = ":set spell!<cr>";
+            n."<esc>" = {
+              options.silent = true;
+              action = ":nohlsearch<cr><esc>";
+            };
+            n."<leader>/".action = ":S<space>";
+            n."<leader>?".action = ":SB<space>";
+            ""."f".action = "<plug>Sneak_f";
+            ""."F".action = "<plug>Sneak_F";
+            ""."t".action = "<plug>Sneak_t";
+            ""."T".action = "<plug>Sneak_T";
+            ""."<leader>y".action = ''"+y'';
+            ""."<leader>p".action = ''"+p'';
+            ""."<leader>P".action = ''"+P'';
           };
         };
 
