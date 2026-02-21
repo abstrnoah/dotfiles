@@ -252,6 +252,9 @@
 
           globals.gitgutter_set_sign_backgrounds = 0;
 
+          globals.lists_filetypes = [ "md" "markdown" "wiki" "vimwiki" "gitcommit" ];
+          globals.lists_maps_prefix = "<leader>n";
+
           files."after/ftplugin/qf.lua" = {
             localOpts.wrap = false;
             keymaps =
@@ -321,5 +324,3 @@
       brumal.profile.packages = [ pkgs.nvim ];
     };
 }
-# pkgs.universal-ctags # TODO
-# TODO luaify autoload
