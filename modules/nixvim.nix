@@ -1,7 +1,12 @@
 { library, ... }:
 {
   perSystem =
-    { pkgs, inputs', ... }:
+    {
+      pkgs,
+      self',
+      inputs',
+      ...
+    }:
     let
       inherit (inputs'.nixvim.legacyPackages) makeNixvimWithModule;
       inherit (library) mapAttrsToListRecursiveCond length elemAt;
@@ -30,6 +35,9 @@
           ...
         }:
         {
+
+          viAlias = true;
+          vimAlias = true;
 
           colorschemes.nightfox.enable = true;
           highlightOverride.CursorColumn.bold = true;
@@ -141,6 +149,8 @@
               p.vim-gitgutter
             ];
 
+          dependencies.ctags.enable = true;
+
           plugins.repeat.enable = true;
           plugins.commentary.enable = true;
           plugins.fugitive.enable = true;
@@ -204,6 +214,7 @@
             };
             indent_on_ampersands = false;
             indent_tikz_commands = false;
+            quickfix_mode = 0;
           };
 
           globals.ctrlp_map = "";
@@ -255,6 +266,10 @@
                 };
           };
 
+          extraFiles."after/ftplugin/tex.vim".text = ''
+            let b:surround_{char2nr('$')} = "\\(\r\\)"
+          '';
+
           keymaps = genKeymaps { } {
             n."<leader>m" = {
               options.expr = true;
@@ -296,6 +311,14 @@
         inherit pkgs;
         module = nixvimModule;
       };
+      overlayAttrs.nvim = self'.packages.nvim;
+    };
+
+  flake.nixosModules.base =
+    { pkgs, ... }:
+    {
+      environment.variables.EDITOR = "vim";
+      brumal.profile.packages = [ pkgs.nvim ];
     };
 }
 # pkgs.universal-ctags # TODO
