@@ -157,16 +157,19 @@
           plugins.abolish.enable = true;
           plugins.vim-surround.enable = true;
 
-          # TODO learn
           plugins.cmp = {
-            enable = true;
+            # Disable for now until I actually have a need beyond |ins-completion|
+            enable = false;
             autoEnableSources = true;
-            settings.source = [
+            settings.sources = [
               { name = "buffer"; }
               { name = "path"; }
               { name = "nvim_lsp"; }
-              { name = "tmux"; }
+              { name = "luasnip"; }
             ];
+            settings.mapping = {
+              "<c-space>" = lib.nixvim.mkRaw "cmp.mapping.complete()";
+            };
           };
 
           plugins.treesitter = {
