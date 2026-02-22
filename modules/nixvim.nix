@@ -150,6 +150,7 @@
             ];
 
           dependencies.ctags.enable = true;
+          dependencies.ctags.package = pkgs.universal-ctags;
 
           plugins.repeat.enable = true;
           plugins.commentary.enable = true;
