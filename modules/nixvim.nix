@@ -288,6 +288,7 @@
             };
             n."<leader>ep".action = ":CtrlPMixed<cr>";
             n."<leader>eb".action = ":CtrlPBuffer<cr>";
+            n."<leader>e]".action = ":CtrlPTag<cr>";
             n."<leader>s".action = ":set spell!<cr>";
             n."<esc>" = {
               options.silent = true;
