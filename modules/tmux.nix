@@ -139,6 +139,12 @@
           bind M-j swap-pane -s '{down-of}'
           bind M-k swap-pane -s '{up-of}'
           bind M-l swap-pane -s '{right-of}'
+          # Source: https://superuser.com/a/1601793
+          # Move pane to the far right/left/bottom/top
+          bind M-H split-window -fhb \; swap-pane -t ! \; kill-pane -t !
+          bind M-L split-window -fh  \; swap-pane -t ! \; kill-pane -t !
+          bind M-J split-window -fv  \; swap-pane -t ! \; kill-pane -t !
+          bind M-K split-window -fvb \; swap-pane -t ! \; kill-pane -t !
 
           # Go last window.
           bind P last-window
