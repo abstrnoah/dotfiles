@@ -253,12 +253,6 @@
           globals.surround_no_insert_mappings = 1;
 
           globals.qf_auto_quit = 0;
-
-          globals.gitgutter_set_sign_backgrounds = 0;
-
-          globals.lists_filetypes = [ "md" "markdown" "wiki" "vimwiki" "gitcommit" ];
-          globals.lists_maps_prefix = "<leader>n";
-
           files."after/ftplugin/qf.lua" = {
             localOpts.wrap = false;
             keymaps =
@@ -272,6 +266,11 @@
                   n."<cr>".action = "<cr>:cclose<cr>:lclose<cr>";
                 };
           };
+
+          globals.gitgutter_set_sign_backgrounds = 0;
+
+          globals.lists_filetypes = [ "md" "markdown" "wiki" "vimwiki" "gitcommit" ];
+          globals.lists_maps_prefix = "<leader>n";
 
           extraFiles."after/ftplugin/tex.vim".text = ''
             let b:surround_{char2nr('$')} = "\\(\r\\)"
@@ -310,6 +309,10 @@
             n."<leader>l".action = ":set list!<cr>";
             i."<c-u>".action = "<c-g>u<c-u>";
             i."<c-w>".action = "<c-g>u<c-w>";
+            n."<leader>qq".action = "<Plug>(qf_qf_toggle)";
+            n."<leader>qw".action = "<Plug>(qf_qf_switch)";
+            n."<leader>qp".action = "<Plug>(qf_qf_previous)";
+            n."<leader>qn".action = "<Plug>(qf_qf_next)";
           };
         };
 
