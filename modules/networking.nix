@@ -54,6 +54,33 @@
               method = "auto";
             };
           };
+          eduroam = {
+            connection = {
+              id = "eduroam";
+              type = "wifi";
+            };
+            wifi = {
+              mac-address-blacklist = "";
+              mode = "infrastructure";
+              ssid = "eduroam";
+            };
+            wifi-security = {
+              key-mgmt = "wpa-eap";
+            };
+            "802-1x" = {
+              eap = "peap";
+              identity = "$EDUROAM_IDENTITY";
+              password = "$EDUROAM_PSK";
+              phase2-autheap = "mschapv2";
+            };
+            ipv4 = {
+              method = "auto";
+            };
+            ipv6 = {
+              addr-gen-mode = "stable-privacy";
+              method = "auto";
+            };
+          };
         };
       };
     };
