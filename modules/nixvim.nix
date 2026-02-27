@@ -313,6 +313,8 @@
             n."<leader>qw".action = "<Plug>(qf_qf_switch)";
             n."<leader>qp".action = "<Plug>(qf_qf_previous)";
             n."<leader>qn".action = "<Plug>(qf_qf_next)";
+            # TODO FIXME only bind when lists enabled otherwise cringe
+            i."<c-a>".action = "<c-g>u<plug>(lists-new-element)";
           };
         };
 
