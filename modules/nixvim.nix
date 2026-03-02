@@ -235,7 +235,7 @@
             fallback = "${pkgs.findutils}/bin/find %s -type f";
           };
 
-          globals.gutentags_cache_dir = "~/cache/gutentags";
+          globals.gutentags_cache_dir = "~/.cache/gutentags";
 
           globals.wiki_root = "~/store/notes/wiki";
           globals.wiki_completion_case_sensitive = 0;
