@@ -5,6 +5,7 @@ let
     name = "direnvs";
     option = mkOption {
       type = types.attrsOf direnvType;
+      default = { };
     };
     file = ./direnv.nix;
   };
