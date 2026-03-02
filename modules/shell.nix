@@ -60,6 +60,7 @@
         echo "$1" >/dev/stderr
         exit 1
       '';
+      # TODO Robustly pass exit status
       brumal.files.bin.withcd.text = ''
         if test "$#" -eq 0; then
           exit 1
