@@ -147,6 +147,7 @@
                 };
               })
               p.vim-gitgutter
+              p.vim-vinegar
             ];
 
           dependencies.ctags.enable = true;
@@ -272,6 +273,8 @@
           globals.lists_filetypes = [ "md" "markdown" "wiki" "vimwiki" "gitcommit" ];
           globals.lists_maps_prefix = "<leader>n";
 
+          globals.netrw_winsize = 30;
+
           extraFiles."after/ftplugin/tex.vim".text = ''
             let b:surround_{char2nr('$')} = "\\(\r\\)"
           '';
@@ -284,6 +287,10 @@
             n."<leader>M" = {
               options.expr = true;
               action = ''":'".nr2char(getchar())." m -1<cr>"'';
+            };
+            n."<leader>en" = {
+              action = ":Lexplore<CR>";
+              options.silent = true;
             };
             n."<leader>ep".action = ":CtrlPMixed<cr>";
             n."<leader>eb".action = ":CtrlPBuffer<cr>";
