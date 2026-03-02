@@ -19,6 +19,10 @@ let
         type = types.listOf types.package;
         default = [ ];
       };
+      inputsFrom = mkOption {
+        type = types.listOf types.package;
+        default = [ ];
+      };
       args = mkOption {
         type = types.attrsOf types.anything;
         default = { };
@@ -36,7 +40,7 @@ let
           pkgs.mkShell (
             {
               inherit name;
-              inherit (value) packages;
+              inherit (value) packages inputsFrom;
             }
             // value.variables
             // value.args
