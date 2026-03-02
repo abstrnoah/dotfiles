@@ -270,7 +270,13 @@
 
           globals.gitgutter_set_sign_backgrounds = 0;
 
-          globals.lists_filetypes = [ "md" "markdown" "wiki" "vimwiki" "gitcommit" ];
+          globals.lists_filetypes = [
+            "md"
+            "markdown"
+            "wiki"
+            "vimwiki"
+            "gitcommit"
+          ];
           globals.lists_maps_prefix = "<leader>n";
 
           globals.netrw_winsize = 30;
