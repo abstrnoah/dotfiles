@@ -18,6 +18,10 @@ let
         type = types.listOf types.package;
         default = [ ];
       };
+      args = mkOption {
+        type = types.attrsOf types.anything;
+        default = { };
+      };
     };
     # We defer construction of the actual shell until we have access to system.
   });
@@ -28,12 +32,13 @@ let
       let
         direnvToShell =
           name: value:
-          pkgs.mkShellNoCC (
+          pkgs.mkShell (
             {
               inherit name;
               inherit (value) packages;
             }
             // value.variables
+            // value.args
           );
       in
       {
