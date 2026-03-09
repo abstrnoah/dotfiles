@@ -151,7 +151,6 @@
                 };
               })
               p.vim-gitgutter
-              p.vim-vinegar
             ];
 
           dependencies.ctags.enable = true;
