@@ -330,10 +330,10 @@
             ""."<leader>y".action = ''"+y'';
             ""."<leader>p".action = ''"+p'';
             ""."<leader>P".action = ''"+P'';
-            n."<c-w><c-h>".action = ":vertical resize -${resizeWidth}<cr";
-            n."<c-w><c-l>".action = ":vertical resize +${resizeWidth}<cr";
-            n."<c-w><c-j>".action = ":resize -${resizeHeight}<cr";
-            n."<c-w><c-k>".action = ":resize +${resizeHeight}<cr";
+            n."<c-w><c-h>".action = ":vertical resize -${resizeWidth}<cr>";
+            n."<c-w><c-l>".action = ":vertical resize +${resizeWidth}<cr>";
+            n."<c-w><c-j>".action = ":resize -${resizeHeight}<cr>";
+            n."<c-w><c-k>".action = ":resize +${resizeHeight}<cr>";
             n."<leader>l".action = ":set list!<cr>";
             i."<c-u>".action = "<c-g>u<c-u>";
             i."<c-w>".action = "<c-g>u<c-w>";
