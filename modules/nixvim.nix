@@ -1,4 +1,4 @@
-{ library, ... }:
+{ library, inputs, ... }:
 {
   perSystem =
     {
@@ -151,6 +151,14 @@
                 };
               })
               p.vim-gitgutter
+              (pkgs.vimUtils.buildVimPlugin {
+                name = "brumalwiki.nvim";
+                src = "${inputs.brumalwiki}/nvim";
+                dependencies = [
+                  p.telescope-nvim
+                  p.plenary-nvim
+                ];
+              })
             ];
 
           dependencies.ctags.enable = true;
@@ -179,6 +187,8 @@
               })
             '';
           };
+
+          plugins.telescope.enable = true;
 
           plugins.treesitter = {
             enable = true;
@@ -343,6 +353,8 @@
             n."<leader>qn".action = "<Plug>(qf_qf_next)";
             # TODO FIXME only bind when lists enabled otherwise cringe
             i."<c-a>".action = "<c-g>u<plug>(lists-new-element)";
+            n."<leader>np".action = '':lua require("brumalwiki").pick_node()<cr>'';
+            n."<leader>nn".action = '':lua require("brumalwiki").edit_new_node()<cr>'';
           };
         };
 

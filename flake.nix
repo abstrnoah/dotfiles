@@ -20,6 +20,10 @@
 
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+
+    # TODO Local in-development
+    brumalwiki.url = "git+file:../brumalwiki";
+    brumalwiki.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
