@@ -33,6 +33,7 @@
         pkgs.numbat
         pkgs.num-utils
         pkgs.jq
+        pkgs.yq-go
         pkgs.lsof
         pkgs.hydra-check
         pkgs.feh
