@@ -163,8 +163,7 @@
           plugins.vim-surround.enable = true;
 
           plugins.cmp = {
-            # Disable for now until I actually have a need beyond |ins-completion|
-            enable = false;
+            enable = true;
             autoEnableSources = true;
             settings.sources = [
               { name = "buffer"; }
@@ -172,9 +171,13 @@
               { name = "nvim_lsp"; }
               { name = "luasnip"; }
             ];
-            settings.mapping = {
-              "<c-space>" = lib.nixvim.mkRaw "cmp.mapping.complete()";
-            };
+            settings.completion.autocomplete = false;
+            # TODO
+            settings.mapping = lib.nixvim.mkRaw ''
+              cmp.mapping.preset.insert({
+                ["<c-space>"] = cmp.mapping.complete(),
+              })
+            '';
           };
 
           plugins.treesitter = {
@@ -200,6 +203,15 @@
                 p.xml
                 p.yaml
               ];
+          };
+
+          # TODO disambiguate lspconfig, lsp
+          plugins.lspconfig.enable = true;
+          plugins.lsp.enable = true;
+          plugins.lsp.servers.ocamllsp.enable = true;
+          plugins.lsp.servers.ocamllsp.package = null;
+          plugins.lsp.keymaps.diagnostic = {
+            "gE" = "open_float";
           };
 
           globals.auto_save = 1;
