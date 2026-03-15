@@ -151,14 +151,7 @@
                 };
               })
               p.vim-gitgutter
-              (pkgs.vimUtils.buildVimPlugin {
-                name = "brumalwiki.nvim";
-                src = "${inputs.brumalwiki}/nvim";
-                dependencies = [
-                  p.telescope-nvim
-                  p.plenary-nvim
-                ];
-              })
+              inputs'.brumalwiki.packages.brumalwiki-nvim
             ];
 
           dependencies.ctags.enable = true;

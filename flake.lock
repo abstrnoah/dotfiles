@@ -35,11 +35,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1773284375,
-        "narHash": "sha256-Na84DrtriHTEeBJcSvX/zCh89G73zNET4bKTHiZacb8=",
+        "lastModified": 1773534336,
+        "narHash": "sha256-DarfEvRvmVagGgaOi+R0GmmQaoKy6BoMNKJhUHGZsEo=",
         "ref": "refs/heads/main",
-        "rev": "b58695395bd9114a87054722c974ba1052ed0591",
-        "revCount": 21,
+        "rev": "acef1471bdf041f5d559e19c050e9e82a215d5ea",
+        "revCount": 22,
         "type": "git",
         "url": "file:../brumalwiki"
       },
