@@ -84,7 +84,7 @@
       config = {
         brumal.local.switch = switchScript;
         brumal.profile.postSwitch = [
-          ''sudo ${cfg.switch}/bin/${baseName + "-switch"}''
+          "sudo ${cfg.switch}/bin/${baseName + "-switch"}"
         ];
       };
     };

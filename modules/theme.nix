@@ -72,9 +72,9 @@
           dims = library.mapAttrs (_: builtins.toString) config.brumal.i3wm.dimensions;
         in
         [
-          ''border_radius 8''
-          ''default_border pixel ${dims.default_border}''
-          ''gaps inner ${dims.base_gap_inner}''
+          "border_radius 8"
+          "default_border pixel ${dims.default_border}"
+          "gaps inner ${dims.base_gap_inner}"
           #class titlebarborder bg text indicator child_border
           "client.focused           ${c.black}  ${c.black}  ${c.bright-white}  ${c.green}  ${c.yellow}"
           "client.focused_inactive  ${c.black}  ${c.black}  ${c.bright-green}  ${c.green}  ${c.black}"

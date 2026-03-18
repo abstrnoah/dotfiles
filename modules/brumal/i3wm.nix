@@ -67,10 +67,10 @@
             ];
             directives =
               let
-                execDs = map (x: ''exec ${x}'') config.exec;
-                execAlwaysDs = map (x: ''exec_always ${x}'') config.exec_always;
+                execDs = map (x: "exec ${x}") config.exec;
+                execAlwaysDs = map (x: "exec_always ${x}") config.exec_always;
                 makeKey = if options.leader.isDefined then (key: "${config.leader}+${key}") else (key: key);
-                bindsymDs = mapAttrsToList (key: cmd: ''bindsym ${makeKey key} ${cmd}'') config.bindsym;
+                bindsymDs = mapAttrsToList (key: cmd: "bindsym ${makeKey key} ${cmd}") config.bindsym;
               in
               execDs ++ execAlwaysDs ++ bindsymDs;
             text =
@@ -164,7 +164,7 @@
       options.brumal.i3wm = opts;
 
       config.brumal.i3wm.body.directives = mkIf options.brumal.i3wm.font.isDefined [
-        ''font ${cfg.font}''
+        "font ${cfg.font}"
       ];
 
       config.brumal.i3wm.dimstrs = library.mapAttrs (_: builtins.toString) cfg.dimensions;

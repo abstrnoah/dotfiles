@@ -26,9 +26,9 @@
           kb-row-select = ''"Tab"'';
           kb-accept-entry = ''"Return"'';
           kb-accept-custom = ''"Control+Return"'';
-          location = ''1'';
+          location = "1";
         };
-        window.width = ''33%'';
+        window.width = "33%";
       };
     };
 }

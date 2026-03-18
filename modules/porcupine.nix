@@ -60,7 +60,7 @@ top@{ self, config, ... }:
       };
 
       brumal.profile.preSwitch = [
-        ''sudo nixos-rebuild --flake ${self}'#'${config.networking.hostName} switch''
+        "sudo nixos-rebuild --flake ${self}'#'${config.networking.hostName} switch"
       ];
 
     };

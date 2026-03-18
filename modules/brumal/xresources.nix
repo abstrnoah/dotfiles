@@ -33,6 +33,6 @@
         ''
       ];
       config.brumal.files.home.".Xresources".text =
-        concatStringsSep "\n" (mapAttrsToList (resource: value: ''${resource}: ${value}'') cfg) + "\n";
+        concatStringsSep "\n" (mapAttrsToList (resource: value: "${resource}: ${value}") cfg) + "\n";
     };
 }

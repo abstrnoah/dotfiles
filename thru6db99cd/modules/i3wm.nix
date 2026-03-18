@@ -167,8 +167,8 @@
           body = {
             directives = [
               ''for_window [class=".*"] border pixel ${builtins.toString cfg.dimensions.default_border}''
-              ''gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}''
-              ''border_radius 2''
+              "gaps inner ${builtins.toString cfg.dimensions.base_gap_inner}"
+              "border_radius 2"
             ];
           };
 
