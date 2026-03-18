@@ -3,7 +3,7 @@
     { ownerName, pkgs, ... }:
     let
       step = toString 10;
-      xbacklight = "${pkgs.xbacklight}/bin/xbacklight";
+      xbacklight = "${pkgs.acpilight}/bin/xbacklight -perceived";
     in
     {
       hardware.acpilight.enable = true;
