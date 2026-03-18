@@ -15,7 +15,7 @@
     {
       # https://github.com/NixOS/nixpkgs/issues/299468
       services.xserver.displayManager.sessionCommands = ''
-        ${pkgs.xorg.xinput}/bin/xinput set-prop "${touchpadDeviceName}" "libinput Disable While Typing Enabled" 1
+        ${pkgs.xinput}/bin/xinput set-prop "${touchpadDeviceName}" "libinput Disable While Typing Enabled" 1
       '';
       # TODO Automatically map tablet to primary output
       services.xserver.wacom.enable = true;

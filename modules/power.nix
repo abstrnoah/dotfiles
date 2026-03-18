@@ -10,13 +10,13 @@
       services.systemd-lock-handler.enable = true;
 
       programs.xss-lock.enable = true;
-      programs.xss-lock.lockerCommand = ''${pkgs.i3lock}/bin/i3lock --tiling --image ${config.brumal.wallpaper.lock}'';
+      programs.xss-lock.lockerCommand = "${pkgs.i3lock}/bin/i3lock --tiling --image ${config.brumal.wallpaper.lock}";
 
       services.logind.settings.Login.HandleLidSwitch = sleep-operation;
       services.logind.settings.Login.HandlePowerKey = sleep-operation;
       services.logind.settings.Login.HandleSuspendKey = sleep-operation;
       services.logind.settings.Login.IdleAction = sleep-operation;
-      systemd.sleep.extraConfig = ''HibernateDelaySec=30min'';
+      systemd.sleep.settings.Sleep.HibernateDelaySec = "30min";
       # TODO Does this work?
       services.logind.settings.Login.IdleActionSec = "5min";
 

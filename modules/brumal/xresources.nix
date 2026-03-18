@@ -28,7 +28,7 @@
       options.brumal.xresources = opts;
       config.brumal.profile.postSwitch = [
         ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge ${out} \
+          ${pkgs.xrdb}/bin/xrdb -merge ${out} \
           || echo "Warning: xrdb cannot connect"
         ''
       ];
