@@ -41,10 +41,6 @@
 
           colorschemes.nightfox.enable = true;
           highlightOverride.CursorColumn.bold = true;
-          colorschemes.nightfox.settings.groups.all = {
-            markdownCode.fg = "syntax.string";
-            markdownCodeBlock.fg = "syntax.string";
-          };
 
           opts.cmdheight = 2;
           opts.list = true;
