@@ -305,6 +305,9 @@
           '';
           extraFiles."after/ftplugin/markdown.vim".text = ''
             let b:surround_{char2nr('L')} = "[[\r]]"
+            setlocal conceallevel=2
+            setlocal nonumber
+            setlocal signcolumn=no
           '';
 
           keymaps = genKeymaps { } {
