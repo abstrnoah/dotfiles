@@ -1,12 +1,16 @@
+{ inputs, ... }:
 {
   brumal.nixpkgs.allowUnfree = [ "spotify" ];
   flake.nixosModules.base =
-    { pkgs, ... }:
+    { pkgs, system, ... }:
     {
       security.rtkit.enable = true;
       services.pipewire.enable = true;
       brumal.profile.packages = [
         pkgs.spotify
+        # TODO Holdback because notification issue
+        # But can't until pass config to nixpkgs-heldback :skull:
+        # inputs.nixpkgs-heldback.legacyPackages.${system}.spotify
         pkgs.catt
       ];
     };
