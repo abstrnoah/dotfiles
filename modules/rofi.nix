@@ -21,10 +21,13 @@
           kb-remove-to-eol = ''""'';
           kb-row-tab = ''""'';
           # Custom binds.
-          kb-element-prev = ''"Control+k"'';
-          kb-element-next = ''"Control+j"'';
+          # Difference between row and element??
+          kb-row-up = ''"Up"'';
+          kb-row-down = ''"Down"'';
+          kb-element-prev = ''"Control+p"'';
+          kb-element-next = ''"Control+n"'';
           kb-row-select = ''"Tab"'';
-          kb-accept-entry = ''"Return"'';
+          kb-accept-entry = ''"Return,Control+j"'';
           kb-accept-custom = ''"Control+Return"'';
           location = "1";
         };
