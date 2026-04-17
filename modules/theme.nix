@@ -64,6 +64,7 @@
         default_border = 1;
         base_gap_inner = 7;
         base_gap_outer = 0;
+        # TODO lol this doesn't belong in theme
         resize_sm = 2;
         resize_lg = 50;
       };

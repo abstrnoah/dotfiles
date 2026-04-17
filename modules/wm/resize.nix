@@ -14,6 +14,10 @@
           j = "resize grow height ${dims.resize_sm} px or ${dims.resize_sm} ppt";
           k = "resize shrink height ${dims.resize_sm} px or ${dims.resize_sm} ppt";
           l = "resize grow width ${dims.resize_sm} px or ${dims.resize_sm} ppt";
+          "${k.shift}+h" = "resize shrink width ${dims.resize_lg} px or ${dims.resize_lg} ppt";
+          "${k.shift}+j" = "resize grow height ${dims.resize_lg} px or ${dims.resize_lg} ppt";
+          "${k.shift}+k" = "resize shrink height ${dims.resize_lg} px or ${dims.resize_lg} ppt";
+          "${k.shift}+l" = "resize grow width ${dims.resize_lg} px or ${dims.resize_lg} ppt";
         };
       };
     };
