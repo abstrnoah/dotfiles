@@ -56,7 +56,6 @@
           opts.updatetime = 300;
           opts.statusline = "%<%f %m%r%y%=(%l/%L %P, %c)";
           opts.cursorline = true;
-          opts.cursorcolumn = true;
           opts.spelllang = "en_gb";
           opts.spelloptions = "camel";
           opts.spellcapcheck = "";
