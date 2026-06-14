@@ -160,10 +160,13 @@
           plugins.vim-surround.enable = true;
 
           plugins.cmp = {
-            enable = true;
+            enable = false;
             autoEnableSources = true;
             settings.sources = [
-              { name = "buffer"; }
+              {
+                name = "buffer";
+                option.get_bufnrs = lib.nixvim.mkRaw "function() return vim.api.nvim_list_bufs() end";
+              }
               { name = "path"; }
               { name = "nvim_lsp"; }
               { name = "luasnip"; }
