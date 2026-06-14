@@ -33,7 +33,7 @@
           FZF_DEFAULT_OPTS+=" --bind ctrl-d:accept"
           export FZF_DEFAULT_OPTS
 
-          if test -z $TMUX && test -z $BR_NOMUX; then
+          if test -z "$TMUX" && test -n "$BR_MUX"; then
             ${bin.gomux.source}
           fi
         '';
