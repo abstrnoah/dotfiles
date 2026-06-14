@@ -68,6 +68,7 @@
           opts.shiftwidth = 0; # 'shiftwidth=0' means fallback to 'tabstop'.
           opts.smarttab = true;
           opts.timeoutlen = 500;
+          opts.fixendofline = false;
 
           globals.mapleader = " ";
           globals.maplocalleader = " ";
