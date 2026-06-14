@@ -324,6 +324,8 @@
             n."<leader>em".action = '':lua require("telescope.builtin").marks()<cr>'';
             n."<leader>eg".action = '':lua require("telescope.builtin").live_grep()<cr>'';
             n."<leader>eG".action = '':lua require("telescope.builtin").grep_string()<cr>'';
+            n."<leader>eq".action = '':lua require("telescope.builtin").quickfix()<cr>'';
+            n."<leader>EQ".action = '':lua require("telescope.builtin").loclist()<cr>'';
             n."<leader>s".action = ":set spell!<cr>";
             n."<esc>" = {
               options.silent = true;
@@ -358,6 +360,7 @@
             n."<leader>np".action = '':lua require("brumalwiki").pick_node()<cr>'';
             n."<leader>nn".action = '':lua require("brumalwiki").edit_new_node()<cr>'';
             n."<leader>nN".action = '':lua require("brumalwiki").link_to_new()<cr>'';
+            n."<leader>nb".action = ''<plug>(wiki-graph-find-backlinks):lclose<cr>:Telescope loclist<cr>'';
           };
         };
 
