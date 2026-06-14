@@ -349,6 +349,10 @@
             n."<leader>qw".action = "<Plug>(qf_qf_switch)";
             n."<leader>qp".action = "<Plug>(qf_qf_previous)";
             n."<leader>qn".action = "<Plug>(qf_qf_next)";
+            n."<leader>QQ".action = "<Plug>(qf_loc_toggle)";
+            n."<leader>QW".action = "<Plug>(qf_loc_switch)";
+            n."<leader>QP".action = "<Plug>(qf_loc_previous)";
+            n."<leader>QN".action = "<Plug>(qf_loc_next)";
             # TODO FIXME only bind when lists enabled otherwise cringe
             i."<c-a>".action = "<c-g>u<plug>(lists-new-element)";
             n."<leader>np".action = '':lua require("brumalwiki").pick_node()<cr>'';
