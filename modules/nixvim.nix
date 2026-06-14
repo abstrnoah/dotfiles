@@ -120,7 +120,6 @@
               p.vim-auto-save
               p.targets-vim
               p.vim-gutentags
-              p.ctrlp-vim
               p.vim-sneak
               p.vim-eunuch
               p.vim-wordmotion
@@ -152,6 +151,7 @@
 
           dependencies.ctags.enable = true;
           dependencies.ctags.package = pkgs.universal-ctags;
+          dependencies.ripgrep.enable = true;
 
           plugins.repeat.enable = true;
           plugins.commentary.enable = true;
@@ -178,6 +178,19 @@
           };
 
           plugins.telescope.enable = true;
+          plugins.telescope.extensions.fzf-native.enable = true;
+          plugins.telescope.settings.defaults.layout_config.prompt_position = "top";
+          plugins.telescope.settings.defaults.mappings = {
+            i = {
+              "<c-j>" = "select_default";
+              "<c-u>" = false;
+            };
+          };
+          plugins.telescope.settings.defaults.mappings = {
+            n = {
+              "<c-j>" = "select_default";
+            };
+          };
 
           plugins.treesitter = {
             enable = true;
@@ -234,19 +247,6 @@
             indent_on_ampersands = false;
             indent_tikz_commands = false;
             quickfix_mode = 0;
-          };
-
-          globals.ctrlp_map = "";
-          globals.ctrlp_cmd = "";
-          globals.ctrlp_working_path_mode = "ra";
-          globals.ctrlp_show_hidden = 1;
-          globals.ctrlp_mruf_relative = 1;
-          globals.ctrlp_user_command = {
-            types."1" = [
-              ".git"
-              "cd %s && ${pkgs.git}/bin/git ls-files -co --exclude-standard"
-            ];
-            fallback = "${pkgs.findutils}/bin/find %s -type f";
           };
 
           globals.gutentags_cache_dir = "~/.cache/gutentags";
@@ -315,13 +315,12 @@
               options.expr = true;
               action = ''":'".nr2char(getchar())." m -1<cr>"'';
             };
-            n."<leader>en" = {
-              action = ":Lexplore<CR>";
-              options.silent = true;
-            };
-            n."<leader>ep".action = ":CtrlPMixed<cr>";
-            n."<leader>eb".action = ":CtrlPBuffer<cr>";
-            n."<leader>e]".action = ":CtrlPTag<cr>";
+            n."<leader>ep".action = '':lua require("telescope.builtin").git_files({show_untracked=true})<cr>'';
+            n."<leader>eb".action = '':lua require("telescope.builtin").buffers()<cr>'';
+            n."<leader>e]".action = '':lua require("telescope.builtin").tags()<cr>'';
+            n."<leader>em".action = '':lua require("telescope.builtin").marks()<cr>'';
+            n."<leader>eg".action = '':lua require("telescope.builtin").live_grep()<cr>'';
+            n."<leader>eG".action = '':lua require("telescope.builtin").grep_string()<cr>'';
             n."<leader>s".action = ":set spell!<cr>";
             n."<esc>" = {
               options.silent = true;
