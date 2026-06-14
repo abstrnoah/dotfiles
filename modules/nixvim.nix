@@ -272,6 +272,10 @@
           globals.surround_no_insert_mappings = 1;
 
           globals.qf_auto_quit = 0;
+          globals.qf_auto_open_quickfix = 0;
+          globals.qf_auto_open_loclist = 0;
+          globals.qf_window_bottom = 0;
+          globals.qf_loclist_window_bottom = 0;
           files."after/ftplugin/qf.lua" = {
             localOpts.wrap = false;
             keymaps =
@@ -325,7 +329,7 @@
             n."<leader>eg".action = '':lua require("telescope.builtin").live_grep()<cr>'';
             n."<leader>eG".action = '':lua require("telescope.builtin").grep_string()<cr>'';
             n."<leader>eq".action = '':lua require("telescope.builtin").quickfix()<cr>'';
-            n."<leader>EQ".action = '':lua require("telescope.builtin").loclist()<cr>'';
+            n."<leader>eQ".action = '':lua require("telescope.builtin").loclist()<cr>'';
             n."<leader>s".action = ":set spell!<cr>";
             n."<esc>" = {
               options.silent = true;
@@ -347,11 +351,11 @@
             n."<leader>l".action = ":set list!<cr>";
             i."<c-u>".action = "<c-g>u<c-u>";
             i."<c-w>".action = "<c-g>u<c-w>";
-            n."<leader>qq".action = "<Plug>(qf_qf_toggle)";
+            n."<leader>qq".action = "<Plug>(qf_qf_toggle_stay)";
             n."<leader>qw".action = "<Plug>(qf_qf_switch)";
             n."<leader>qp".action = "<Plug>(qf_qf_previous)";
             n."<leader>qn".action = "<Plug>(qf_qf_next)";
-            n."<leader>QQ".action = "<Plug>(qf_loc_toggle)";
+            n."<leader>QQ".action = "<Plug>(qf_loc_toggle_stay)";
             n."<leader>QW".action = "<Plug>(qf_loc_switch)";
             n."<leader>QP".action = "<Plug>(qf_loc_previous)";
             n."<leader>QN".action = "<Plug>(qf_loc_next)";
