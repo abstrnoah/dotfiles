@@ -21,6 +21,9 @@
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
+    telescope-egrepify.url = "github:fdschmidt93/telescope-egrepify.nvim";
+    telescope-egrepify.flake = false;
+
     # TODO Local in-development
     brumalwiki.url = "git+file:../brumalwiki";
     brumalwiki.inputs.nixpkgs.follows = "nixpkgs";

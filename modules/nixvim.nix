@@ -147,6 +147,10 @@
               })
               p.vim-gitgutter
               inputs'.brumalwiki.packages.brumalwiki-nvim
+              (pkgs.vimUtils.buildVimPlugin {
+                name = "telescope-egrepify.nvim";
+                src = inputs.telescope-egrepify;
+              })
             ];
 
           dependencies.ctags.enable = true;
@@ -182,6 +186,7 @@
 
           plugins.telescope.enable = true;
           plugins.telescope.extensions.fzf-native.enable = true;
+          plugins.telescope.enabledExtensions = [ "egrepify" ];
           plugins.telescope.settings.defaults.layout_config.prompt_position = "top";
           plugins.telescope.settings.defaults.mappings = {
             i = {
@@ -326,7 +331,7 @@
             n."<leader>eb".action = '':lua require("telescope.builtin").buffers()<cr>'';
             n."<leader>e]".action = '':lua require("telescope.builtin").tags()<cr>'';
             n."<leader>em".action = '':lua require("telescope.builtin").marks()<cr>'';
-            n."<leader>eg".action = '':lua require("telescope.builtin").live_grep()<cr>'';
+            n."<leader>eg".action = '':lua require("telescope").extensions.egrepify.egrepify()<cr>'';
             n."<leader>eG".action = '':lua require("telescope.builtin").grep_string()<cr>'';
             n."<leader>eq".action = '':lua require("telescope.builtin").quickfix()<cr>'';
             n."<leader>eQ".action = '':lua require("telescope.builtin").loclist()<cr>'';

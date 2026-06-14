@@ -708,6 +708,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-heldback": "nixpkgs-heldback",
         "nixvim": "nixvim",
+        "telescope-egrepify": "telescope-egrepify",
         "wallpapers": "wallpapers"
       }
     },
@@ -798,6 +799,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "telescope-egrepify": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766305247,
+        "narHash": "sha256-jBKeAOKWlTaN11n8lfaxCdz5dXooy+bj//u6fPiTnKM=",
+        "owner": "fdschmidt93",
+        "repo": "telescope-egrepify.nvim",
+        "rev": "cd9342b95c1a8cff2e41ba5041ae3912f47595cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fdschmidt93",
+        "repo": "telescope-egrepify.nvim",
         "type": "github"
       }
     },
