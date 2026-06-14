@@ -61,7 +61,7 @@
       brumal.rofi.config.configuration.font = ''"${fontName} ${fontSize}"'';
 
       brumal.i3wm.dimensions = {
-        default_border = 1;
+        default_border = 5;
         base_gap_inner = 7;
         base_gap_outer = 0;
         # TODO lol this doesn't belong in theme
@@ -73,13 +73,14 @@
           dims = library.mapAttrs (_: builtins.toString) config.brumal.i3wm.dimensions;
         in
         [
+          ''for_window [all] title_format "%class %title"''
           "border_radius 8"
           "default_border pixel ${dims.default_border}"
           "gaps inner ${dims.base_gap_inner}"
           #class titlebarborder bg text indicator child_border
-          "client.focused           ${c.black}  ${c.black}  ${c.bright-white}  ${c.green}  ${c.yellow}"
-          "client.focused_inactive  ${c.black}  ${c.black}  ${c.bright-white}  ${c.green}  ${c.black}"
-          "client.unfocused         ${c.black}  ${c.black}  ${c.bright-green}  ${c.green}  ${c.black}"
+          "client.focused           ${c.bright-cyan}  ${c.black}  ${c.bright-white}  ${c.green}  ${c.yellow}"
+          "client.focused_inactive  ${c.bright-black} ${c.black}  ${c.white}         ${c.green}  ${c.black}"
+          "client.unfocused         ${c.bright-black} ${c.black}  ${c.bright-blue}   ${c.green}  ${c.black}"
         ];
       brumal.i3wm.body.blocks.bar.body.blocks.colors.body.directives = [
         "background ${c.black}"
