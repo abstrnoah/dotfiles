@@ -59,6 +59,8 @@ c.tabs.select_on_remove = "last-used"
 # Autoplay sucks.
 c.content.autoplay = False
 
+c.window.title_format = "[{current_title}]({current_url})"
+
 c.statusbar.show = "always"
 c.statusbar.position = "top"
 c.tabs.show = "never"
