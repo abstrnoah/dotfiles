@@ -350,6 +350,7 @@
             i."<c-a>".action = "<c-g>u<plug>(lists-new-element)";
             n."<leader>np".action = '':lua require("brumalwiki").pick_node()<cr>'';
             n."<leader>nn".action = '':lua require("brumalwiki").edit_new_node()<cr>'';
+            n."<leader>nN".action = '':lua require("brumalwiki").link_to_new()<cr>'';
           };
         };
 
