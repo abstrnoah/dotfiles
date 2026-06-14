@@ -82,7 +82,7 @@
       programs.starship.enable = true;
       programs.starship.settings = {
 
-        format = "$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$cmd_duration$status$nix_shell$line_break\${env_var.BR_SHELL_NESTING}$jobs$character";
+        format = "$username$hostname$directory$git_branch$git_commit$git_state$git_metrics$git_status$direnv$cmd_duration$time$status$nix_shell$line_break\${env_var.BR_SHELL_NESTING}$jobs$character";
 
         directory.format = "[$path]($style)[/](bold)[$read_only]($read_only_style) ";
 
@@ -93,6 +93,13 @@
         status.format = "[$status󰌑]($style) ";
 
         cmd_duration.format = "[ $duration]($style) ";
+
+        time.disabled = false;
+        time.utc_time_offset = "0";
+        time.use_12hr = false;
+        time.time_format = "%R";
+        time.format = "[󱇻 $time]($style) ";
+        time.style = "dimmed yellow";
 
         jobs.symbol = "󰇘";
 
