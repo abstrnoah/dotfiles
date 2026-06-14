@@ -99,6 +99,7 @@
         color_bad = "${c.red}";
       };
 
+      brumal.dunst.config.global.follow = "keyboard";
       brumal.dunst.config.global.frame_color = ''"${c.green}"'';
       brumal.dunst.config.global.background = ''"${c.special.background}"'';
       brumal.dunst.config.global.foreground = ''"${c.special.foreground}"'';
