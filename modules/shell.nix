@@ -92,6 +92,7 @@
         status.disabled = false;
         status.format = "[$status󰌑]($style) ";
 
+        cmd_duration.style = "dimmed yellow";
         cmd_duration.format = "[ $duration]($style) ";
 
         time.disabled = false;
