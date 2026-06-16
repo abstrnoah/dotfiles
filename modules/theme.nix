@@ -59,6 +59,7 @@
       fonts.fontconfig.defaultFonts.monospace = [ "${fontName}" ];
       brumal.i3wm.font = "pango:${fontName} ${fontSizeTiny}";
       brumal.rofi.config.configuration.font = ''"${fontName} ${fontSize}"'';
+      brumal.kitty.conf = "font_size 13";
 
       brumal.i3wm.dimensions = {
         default_border = 5;
