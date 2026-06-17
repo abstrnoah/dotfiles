@@ -271,7 +271,6 @@
             name = "";
           };
           globals.wiki_link_extension = "";
-          # globals.wiki_map_text_to_link = lib.nixvim.mkRaw "function(text) return { text, text } end";
           globals.wiki_link_toggle_on_follow = 0;
 
           globals.surround_no_insert_mappings = 1;
