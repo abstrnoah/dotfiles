@@ -24,6 +24,8 @@
       volume-down = "${wpctl} set-volume @DEFAULT_SINK@ ${volume-step}-";
       volume-mute = "${wpctl} set-mute @DEFAULT_SINK@ toggle";
       volume-mute-true = "${wpctl} set-mute @DEFAULT_SINK@ 1";
+      # TODO mic-mute select the built-in mic always with something like
+      # pw-dump | jq -r '.[] | select(.info.props."node.name" == "alsa_input.pci-0000_00_1f.3.analog-stereo") | .id'
       mic-mute = "${wpctl} set-mute @DEFAULT_SOURCE@ toggle";
       spotifycli = "${pkgs.spotify-cli-linux}/bin/spotifycli";
     in
