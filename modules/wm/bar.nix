@@ -21,7 +21,7 @@
           "memory"
           "load"
           "cpu_usage"
-          "cpu_temperature 0"
+          "cpu_temperature 2"
           "volume master"
           "tztime local"
           "tztime utc"
@@ -119,7 +119,8 @@
             format = " %usage";
           };
 
-          cpu_temperature."0" = {
+          # TODO By inspection I'm fairly sure zone 2 is one of the CPUs. But it would be nice to (1) be more sure and (2) actually report the average.
+          cpu_temperature."2" = {
             max_threshold = "50";
             format = " %degrees°C";
           };
