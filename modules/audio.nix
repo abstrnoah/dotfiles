@@ -19,13 +19,15 @@
     let
       k = config.brumal.i3wm.keys;
       wpctl = "${pkgs.wireplumber}/bin/wpctl";
+      pw-dump = "${pkgs.pipewire}/bin/pw-dump";
+      jq = "${pkgs.jq}/bin/jq";
       volume-step = "5%";
       volume-up = "${wpctl} set-volume @DEFAULT_SINK@ ${volume-step}+";
       volume-down = "${wpctl} set-volume @DEFAULT_SINK@ ${volume-step}-";
       volume-mute = "${wpctl} set-mute @DEFAULT_SINK@ toggle";
       volume-mute-true = "${wpctl} set-mute @DEFAULT_SINK@ 1";
       # TODO factor out hard-coded mic node.name
-      mic-mute = ''${wpctl} set-mute "$(pw-dump | jq -r '.[] | select(.info.props."node.name" == "alsa_input.pci-0000_00_1f.3.analog-stereo") | .id')" toggle'';
+      mic-mute = ''${wpctl} set-mute "$(${pw-dump} | ${jq} -r '.[] | select(.info.props."node.name" == "alsa_input.pci-0000_00_1f.3.analog-stereo") | .id')" toggle'';
       spotifycli = "${pkgs.spotify-cli-linux}/bin/spotifycli";
     in
     {
