@@ -47,7 +47,7 @@ c.url.default_page = "qute://start/"
 config.load_autoconfig(False)
 
 # Editor (and arguments) to use for the `edit-*` commands.
-c.editor.command = ["gvim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
+c.editor.command = ["kitty", "vim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
 
 
 # Close tab even if it's the last tab.
