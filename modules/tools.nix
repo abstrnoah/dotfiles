@@ -47,6 +47,7 @@
       environment.systemPackages = [
         pkgs.htop
       ];
+      services.atd.enable = true;
     }
   );
 }
