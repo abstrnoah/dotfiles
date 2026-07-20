@@ -17,6 +17,8 @@
       dims = library.mapAttrs (_: builtins.toString) cfg.dimensions;
       i3 = config.services.xserver.windowManager.i3.package;
 
+      i3-back = "${pkgs}/bin/i3-back";
+
       with-rofi-ws-script = writeShellApplication {
         name = "with-rofi-ws";
         runtimeInputs = [
@@ -66,6 +68,10 @@
 
       services.xserver.windowManager.i3.extraPackages = [ pkgs.rofi ];
 
+      brumal.i3wm.body.exec = [
+        "--no-startup-id ${pkgs.i3-back}/bin/i3-back"
+      ];
+
       brumal.i3wm.body.bindsym = {
 
         # Run
@@ -80,7 +86,8 @@
         # Change workspace
         n = "workspace next_on_output";
         p = "workspace prev_on_output";
-        comma = "workspace back_and_forth";
+        "${k.shift}+comma" = "workspace back_and_forth";
+        comma = "[con_mark=_back] focus";
         "${k.alt}+r" = "exec i3-input -F 'rename workspace to \"%s\"' -P 'rename ws: '";
         g = ''exec ${with-rofi-ws-bin} "go to" i3-msg workspace'';
         "${k.alt}+d" = ''exec ${with-rofi-ws-bin} "move to" i3-msg "move window to workspace"'';
