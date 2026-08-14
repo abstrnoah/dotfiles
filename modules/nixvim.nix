@@ -236,6 +236,14 @@
           globals.auto_save = 1;
           globals.auto_save_in_insert_mode = 0;
 
+          autoCmd = [
+            {
+              event = "User";
+              pattern = "targets#mappings#user";
+              command = "call targets#mappings#extend({'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]}})";
+            }
+          ];
+
           plugins.vimtex.enable = true;
           plugins.vimtex.settings = {
             compiler_enabled = true;
