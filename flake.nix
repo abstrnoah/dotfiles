@@ -24,6 +24,9 @@
     telescope-egrepify.url = "github:fdschmidt93/telescope-egrepify.nvim";
     telescope-egrepify.flake = false;
 
+    i3-new-workspace.url = "github:mivort/i3-new-workspace";
+    i3-new-workspace.flake = false;
+
     # TODO Local in-development
     brumalwiki.url = "git+file:../brumalwiki";
     brumalwiki.inputs.nixpkgs.follows = "nixpkgs";

@@ -295,6 +295,22 @@
         "type": "github"
       }
     },
+    "i3-new-workspace": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1678329989,
+        "narHash": "sha256-XEXEK+AtO61apFBDuFCFy5awJD+3JYdF8PsOcrNF/go=",
+        "owner": "mivort",
+        "repo": "i3-new-workspace",
+        "rev": "03d41d2d5eefab120cd5b4242f0772e7db610cac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mivort",
+        "repo": "i3-new-workspace",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1772999353,
@@ -704,6 +720,7 @@
         "direnv-instant": "direnv-instant",
         "emplacetree": "emplacetree",
         "flake-parts": "flake-parts_2",
+        "i3-new-workspace": "i3-new-workspace",
         "import-tree": "import-tree_2",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-heldback": "nixpkgs-heldback",

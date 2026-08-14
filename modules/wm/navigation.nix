@@ -87,6 +87,8 @@
         n = "workspace next_on_output";
         p = "workspace prev_on_output";
         comma = "workspace back_and_forth";
+        "${k.shift}+a" = "exec ${pkgs.i3-new-workspace}/bin/i3-new-workspace";
+        "${k.alt}+a" = "exec ${pkgs.i3-new-workspace}/bin/i3-new-workspace --carry";
         semicolon = "[con_mark=_back] focus";
         "${k.alt}+r" = "exec i3-input -F 'rename workspace to \"%s\"' -P 'rename ws: '";
         g = ''exec ${with-rofi-ws-bin} "go to" i3-msg workspace'';
