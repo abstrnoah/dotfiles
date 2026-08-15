@@ -31,7 +31,7 @@
         pkgs.uni
         pkgs.zip
         pkgs.unzip
-        pkgs.numbat
+        pkgs.libqalculate
         pkgs.num-utils
         pkgs.jq
         pkgs.yq-go
