@@ -5,6 +5,9 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-heldback.url = "github:NixOS/nixpkgs/nixos-25.11";
 
+    brumalpkgs.url = "github:abstrnoah/brumalpkgs";
+    brumalpkgs.inputs.nixpkgs.follows = "nixpkgs";
+
     emplacetree.url = "github:abstrnoah/emplacetree";
     emplacetree.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -23,9 +26,6 @@
 
     telescope-egrepify.url = "github:fdschmidt93/telescope-egrepify.nvim";
     telescope-egrepify.flake = false;
-
-    i3-new-workspace.url = "github:mivort/i3-new-workspace";
-    i3-new-workspace.flake = false;
 
     # TODO Local in-development
     brumalwiki.url = "git+file:../brumalwiki";

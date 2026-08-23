@@ -50,7 +50,7 @@ in
         # NOTE: This is the unique origin of flake-level `pkgs`.
         #       Which in turn should be passed read-only to nixos.
         _module.args.pkgs = mkForce (
-          import inputs.nixpkgs {
+          inputs.brumalpkgs.lib.pkgsFactory {
             inherit system;
             inherit (cfg) overlays;
             config.allowUnfreePredicate = pkg: builtins.elem (getName pkg) cfg.allowUnfree;

@@ -1,11 +1,4 @@
 {
-  brumal.nixpkgs.overlays = [
-    (final: prev: {
-      pass = prev.pass.overrideAttrs (
-        final: prev: { patches = prev.patches ++ [ ../src/pass/set-prompt.patch ]; }
-      );
-    })
-  ];
   flake.nixosModules.base =
     {
       pkgs,
