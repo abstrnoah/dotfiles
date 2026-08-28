@@ -1,12 +1,12 @@
 { inputs, ... }:
 {
-  imports = [ inputs.dotfiles.flakeModules.direnvs ];
   perSystem =
     { pkgs, ... }:
     {
-      direnvs.default = {
-        variables.foo = "bar";
+      devShells.default = pkgs.mkShell {
+        name = "default";
         packages = [ pkgs.cowsay ];
+        foo = "bar";
       };
     };
 }

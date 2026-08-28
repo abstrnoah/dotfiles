@@ -4,10 +4,8 @@
     import-tree.url = "github:vic/import-tree";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    dotfiles.url = "github:abstrnoah/dotfiles";
-    dotfiles.inputs.flake-parts.follows = "flake-parts";
-    dotfiles.inputs.import-tree.follows = "import-tree";
-    dotfiles.inputs.nixpkgs.follows = "nixpkgs";
+    brumalpkgs.url = "github:abstrnoah/brumalpkgs";
+    brumalpkgs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
