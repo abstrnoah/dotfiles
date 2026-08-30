@@ -2,3 +2,4 @@
 tags
 result*
 .direnv/
+_build/
