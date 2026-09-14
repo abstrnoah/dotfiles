@@ -31,7 +31,6 @@
         {
           pkgs,
           lib,
-          config,
           ...
         }:
         {
