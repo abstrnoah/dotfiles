@@ -377,6 +377,7 @@
             n."<leader>nN".action = '':lua require("brumalwiki").put_new()<cr>'';
             n."<leader>nb".action =
               ":call setloclist(0, [])<cr><plug>(wiki-graph-find-backlinks):lclose<cr>:Telescope loclist<cr>";
+            n."<leader>K".action = ''<cmd>!${pkgs.dict}/bin/dict <cword><cr>'';
           };
         };
 
