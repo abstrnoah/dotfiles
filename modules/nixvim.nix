@@ -332,6 +332,7 @@
               options.expr = true;
               action = ''":'".nr2char(getchar())." m -1<cr>"'';
             };
+            n."<leader>ee".action = ''<cmd>Telescope resume<cr>'';
             n."<leader>ep".action = '':lua require("telescope.builtin").git_files({show_untracked=true})<cr>'';
             n."<leader>eb".action = '':lua require("telescope.builtin").buffers()<cr>'';
             n."<leader>e]".action = '':lua require("telescope.builtin").tags()<cr>'';
