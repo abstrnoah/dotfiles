@@ -32,9 +32,9 @@ _leader_fork = _leader + "b"
 # former while generic opens go to the latter.
 c.url.start_pages = ["http://neverssl.com/"]
 _searchengines = {
-    "!ddg": "https://duckduckgo.com/?q={}",
+    "!ddg": "https://noai.duckduckgo.com/?q={}",
     "!ddt": "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion/?q={}",
-    "!g": "https://www.google.com/search?q={}",
+    "!g": "https://www.google.com/search?q={}&udm=14",
     "!r": "https://old.reddit.com/search?q={}",
     "!nixopts": "https://search.nixos.org/options?query={}",
     "!noogle": "https://noogle.dev/q?term={}",
