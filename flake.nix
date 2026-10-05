@@ -3,7 +3,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-heldback.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # nixpkgs-heldback.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     brumalpkgs.url = "github:abstrnoah/brumalpkgs";
     brumalpkgs.inputs.nixpkgs.follows = "nixpkgs";

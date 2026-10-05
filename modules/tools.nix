@@ -41,8 +41,9 @@
         pkgs.timer
         pkgs.pandoc
         pkgs.brumalwiki
+        pkgs.jabref # TODO config
         # TODO FIXME Packages held back because they break on current nixpkgs
-        inputs'.nixpkgs-heldback.legacyPackages.jabref # TODO config
+        # None right now :)
       ];
       environment.systemPackages = [
         pkgs.htop

@@ -630,22 +630,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-heldback": {
-      "locked": {
-        "lastModified": 1773814637,
-        "narHash": "sha256-GNU+ooRmrHLfjlMsKdn0prEKVa0faVanm0jrgu1J/gY=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "fea3b367d61c1a6592bc47c72f40a9f3e6a53e96",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1785031560,
@@ -904,7 +888,6 @@
         "flake-parts": "flake-parts_3",
         "import-tree": "import-tree_3",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-heldback": "nixpkgs-heldback",
         "nixvim": "nixvim",
         "telescope-egrepify": "telescope-egrepify",
         "wallpapers": "wallpapers"
